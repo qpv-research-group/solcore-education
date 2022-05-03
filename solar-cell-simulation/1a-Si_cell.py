@@ -1,4 +1,6 @@
-# In this first example, we will look at a very simple planar Si solar cell.
+# In this first set of examples, we will look at a very simple planar Si solar cell.
+# In this script, we will look at the difference between Beer-Lambert absorption calculations,
+# using the Fresnel equations for front-surface reflection, and using the transfer-matrix model.
 
 # First, lets import some very commonly-used Python packages:
 
@@ -186,7 +188,8 @@ plt.ylim(0, 100)
 plt.show()
 
 # PLOT 5: Compare the IV curves of the cells with and without an ARC. The efficiency is also shown on the
-# plot.
+# plot. Note that because we didn't specify a light source, Solcore will assume we want to use AM1.5G.
+
 plt.figure()
 plt.plot(voltages, -solar_cell_TMM[0].iv(voltages)/10, label="No ARC")
 plt.plot(voltages, -solar_cell_TMM_ARC[1].iv(voltages)/10, label="75 nm SiN")
@@ -199,3 +202,17 @@ plt.xlabel("V (V)")
 plt.ylabel(r"J (mA/cm$^2$)")
 plt.title("(5) IV curve of Si cell with and without ARC")
 plt.show()
+
+# We see that the cell with an ARC has a significantly higher Jsc, and a slightly higher Voc,
+# than the bare Si cell. In reality, most Si cells have a textured surface rather than a planar
+# surface with an ARC; this will be discussed later in the course.
+
+# Overall, some things we can take away from the examples in this script:
+# - The Beer-Lambert law is a very simple way to calculate absorption in a cell, but won't take into
+#   account import effects such as front-surface reflection or the effects of anti-reflection coatings
+# - Using the transfer-matrix method (TMM) we can account for front surface reflection and interference
+#   effects which make e.g. ARCs effective. In the simple situation of a thick cell without any front surface
+#   layers, it is equivalent to simply calculation the reflection with the Fresnel equations and assuming
+#   Beer-Lambert absorption in the cell.
+# - Adding a simple, one-layer ARC can significantly reduce front-surface reflection for a single-junction
+#   cell, leading to improved short-circuit current.
