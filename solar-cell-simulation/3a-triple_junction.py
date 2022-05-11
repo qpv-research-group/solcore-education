@@ -6,6 +6,7 @@ from solcore.solar_cell import SolarCell
 from solcore.structure import Junction, Layer
 from solcore.solar_cell_solver import solar_cell_solver
 from solcore.light_source import LightSource
+from solcore.absorption_calculator import search_db
 
 all_materials = []
 
@@ -15,8 +16,12 @@ light_source = LightSource(source_type='standard', x=wl, version='AM1.5g')
 # We need to build the solar cell layer by layer.
 # We start from the AR coating. In this case, we load it from an an external file
 
-MgF2 = material("234", nk_db=True)()
-ZnS = material("623", nk_db=True)()
+# Note: you need to have downloaded the refractiveindex.info database for these to work. See []
+
+MgF2_pageid = search_db("MgF2/Rodriguez-de Marcos")[0][0]
+ZnS_pageid = search_db("ZnS/Querry")[0][0]
+MgF2 = material(str(MgF2_pageid), nk_db=True)()
+ZnS = material(str(ZnS_pageid), nk_db=True)()
 
 ARC = [Layer(si("100nm"), MgF2), Layer(si("15nm"), ZnS), Layer(si("15nm"), MgF2), Layer(si("50nm"), ZnS)]
 
@@ -57,13 +62,12 @@ bot_cell_p_material = Ge(Na=siUnits(1e17, "cm-3"), electron_diffusion_length=si(
 all_materials.append(bot_cell_n_material)
 all_materials.append(bot_cell_p_material)
 
-
 # And, finally, we put everything together, adding also the surface recombination velocities. We also add some shading
 # due to the metallisation of the cell = 8%, and indicate it has an area of 0.7x0.7 mm2 (converted to m2)
 solar_cell = SolarCell(
     ARC +
-        [
-            Junction([Layer(si("20nm"), material=window_material, role='window'),
+    [
+        Junction([Layer(si("20nm"), material=window_material, role='window'),
                   Layer(si("100nm"), material=top_cell_n_material, role='emitter'),
                   Layer(si("560nm"), material=top_cell_p_material, role='base'),
                   ], sn=1, sp=1, kind='DA'),
@@ -75,8 +79,7 @@ solar_cell = SolarCell(
                   ], sn=1, sp=1, kind='DA'),
     ], shading=0.05, R_series=2e-6)
 
-
-position = len(solar_cell)*[0.1*1e-9]
+position = len(solar_cell) * [0.1 * 1e-9]
 position[-1] = 10e-9
 
 plt.figure()
@@ -87,7 +90,7 @@ solar_cell_solver(solar_cell, 'qe', user_options={'wavelength': wl, 'optics_meth
 plt.plot(wl * 1e9, solar_cell[4].eqe(wl) * 100, 'b', label='GaInP (TMM)')
 plt.plot(wl * 1e9, solar_cell[5].eqe(wl) * 100, 'g', label='InGaAs (TMM)')
 plt.plot(wl * 1e9, solar_cell[6].eqe(wl) * 100, 'r', label='Ge (TMM)')
-plt.plot(wl * 1e9, 100*(1-solar_cell.reflected), 'k--', label='1-R (TMM)')
+plt.plot(wl * 1e9, 100 * (1 - solar_cell.reflected), 'k--', label='1-R (TMM)')
 plt.plot(wl * 1e9, solar_cell[4].layer_absorption * 100, 'b--')
 plt.plot(wl * 1e9, solar_cell[5].layer_absorption * 100, 'g--')
 plt.plot(wl * 1e9, solar_cell[6].layer_absorption * 100, 'r--')
@@ -115,8 +118,8 @@ plt.plot(V, solar_cell.iv['IV'][1], 'k', linewidth=3, label='Total')
 plt.plot(V, -solar_cell[4].iv(V), 'b', label='GaInP')
 plt.plot(V, -solar_cell[5].iv(V), 'g', label='InGaAs')
 plt.plot(V, -solar_cell[6].iv(V), 'r', label='Ge')
-plt.text(1.4, 200, 'Efficieny (%): ' + str(np.round(solar_cell.iv['Eta']*100, 1)))
-plt.text(1.4, 180, 'FF (%): ' + str(np.round(solar_cell.iv['FF']*100, 1)))
+plt.text(1.4, 200, 'Efficieny (%): ' + str(np.round(solar_cell.iv['Eta'] * 100, 1)))
+plt.text(1.4, 180, 'FF (%): ' + str(np.round(solar_cell.iv['FF'] * 100, 1)))
 plt.text(1.4, 160, r'V$_{oc}$ (V): ' + str(np.round(solar_cell.iv["Voc"], 2)))
 plt.text(1.4, 140, r'I$_{sc}$ (A/m$^2$): ' + str(np.round(solar_cell.iv["Isc"], 2)))
 
@@ -140,16 +143,14 @@ Iscs = np.zeros_like(concentration)
 V = np.linspace(0, 3.5, 300)
 
 for i1, conc in enumerate(concentration):
-
     light_conc = LightSource(source_type='standard', x=wl, version='AM1.5d', concentration=conc)
     solar_cell_solver(solar_cell, 'iv', user_options={'voltages': V, 'light_iv': True,
                                                       'wavelength': wl, 'mpp': True,
                                                       'light_source': light_conc})
 
-    Effs[i1] = solar_cell.iv["Eta"]*100
+    Effs[i1] = solar_cell.iv["Eta"] * 100
     Vocs[i1] = solar_cell.iv["Voc"]
     Iscs[i1] = solar_cell.iv["Isc"]
-
 
 plt.figure(figsize=(10, 3))
 plt.subplot(131)
@@ -163,7 +164,7 @@ plt.ylabel(r'V$_{OC}$ (V)')
 plt.xlabel('Concentration')
 
 plt.subplot(133)
-plt.plot(concentration, Iscs/10000, '-o')
+plt.plot(concentration, Iscs / 10000, '-o')
 plt.ylabel(r'J$_{SC}$ (A/cm$^2$)')
 plt.xlabel('Concentration')
 plt.tight_layout()
