@@ -50,6 +50,7 @@ plt.plot(wl*1e9, np.real(eps_db), '--', label='Database values')
 plt.legend()
 plt.ylabel(r'$\epsilon_1$')
 plt.xlabel('Wavelength (nm)')
+plt.title("(1) Dielectric function for BK7 glass")
 plt.show()
 
 # Here, we have just looked at the real part of the dielectric function, you can include absorption (non-zero
@@ -113,6 +114,7 @@ ax1.plot(E, Output["components"][3].real, color=colours("gold"), ls='--', label=
 
 ax1.set_xlabel("Energy (eV)")
 ax1.set_ylabel("$\epsilon_1 (\omega)$")
+ax1.set_title("(2) CPPB model for GaAs compared with experimental data")
 ax1.text(0.05, 0.05, '(a)', transform=ax1.transAxes, fontsize=12)
 
 # Subplot II :: Imaginary part of the dielectric function.

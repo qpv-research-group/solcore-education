@@ -15,8 +15,6 @@ from rayflare.rigorous_coupled_wave_analysis.rcwa import rcwa_structure
 from rayflare.transfer_matrix_method.tmm import tmm_structure
 from rayflare.options import default_options
 
-
-
 file_path = os.path.dirname(os.path.abspath(__file__))
 
 # If True, run calculation; otherwise load from file.
@@ -178,10 +176,10 @@ pal = sns.color_palette("husl", 4)
 
 # assume 10% shading loss for the optical simulations when comparing with EQE
 fig = plt.figure(figsize=(6.4, 4.8))
-plt.plot(wavelengths*1e9, 0.9*100*Abs_onsubs, color=pal[0], label="On substrate")
-plt.plot(wavelengths*1e9, 0.9*100*Abs_TMM, color=pal[1], label="Planar mirror")
-plt.plot(wavelengths*1e9, 0.9*100*Abs_DTL, color=pal[2], label="Nanophotonic grating (no ARC)")
-plt.plot(wavelengths*1e9, 0.9*100*Abs_DTL_ARC, color=pal[3], label="Nanophotonic grating (with ARC)")
+plt.plot(wavelengths*1e9, 100*Abs_onsubs, color=pal[0], label="On substrate")
+plt.plot(wavelengths*1e9, 100*Abs_TMM, color=pal[1], label="Planar mirror")
+plt.plot(wavelengths*1e9, 100*Abs_DTL, color=pal[2], label="Nanophotonic grating (no ARC)")
+plt.plot(wavelengths*1e9, 100*Abs_DTL_ARC, color=pal[3], label="Nanophotonic grating (with ARC)")
 plt.xlim(300, 950)
 plt.ylim(0, 100)
 plt.xlabel('Wavelength (nm)')
@@ -191,7 +189,7 @@ plt.show()
 
 fig = plt.figure(figsize=(6.4, 4.8))
 plt.stackplot(wavelengths*1e9,
-              [0.9*100*Abs_TMM_GaAsonly, 0.9*100*Abs_TMM_InGaPonly, 0.9*100*Abs_TMM_InAlPonly],
+              [100*Abs_TMM_GaAsonly, 100*Abs_TMM_InGaPonly, 100*Abs_TMM_InAlPonly],
               colors=pal,
               labels=['Absorbed in GaAs', 'Absorbed in InGaP', 'Absorbed in InAlP'])
 plt.xlim(300, 950)
@@ -202,10 +200,10 @@ plt.legend(loc='upper right')
 plt.show()
 
 # Calculate photogenerated currents:
-Ag = 0.1 * q * np.trapz(0.9*Abs_TMM*AM0, wavelengths)
-DTL = 0.1 * q * np.trapz(0.9*Abs_DTL*AM0, wavelengths)
-onsubs = 0.1 * q * np.trapz(0.9*Abs_onsubs*AM0, wavelengths)
+Ag = 0.1 * q * np.trapz(Abs_TMM*AM0, wavelengths)
+DTL = 0.1 * q * np.trapz(Abs_DTL*AM0, wavelengths)
+onsubs = 0.1 * q * np.trapz(Abs_onsubs*AM0, wavelengths)
 
-print('On substrate device current (mA/cm2): ', onsubs)
-print('Planar Ag mirror device current (mA/cm2): ', Ag)
-print('Nanophotonic grating device current (mA/cm2): ', DTL)
+print('On substrate device current: %.1f mA/cm2 ' % onsubs)
+print('Planar Ag mirror device current: %.1f mA/cm2 ' % Ag)
+print('Nanophotonic grating device current: %.1f mA/cm2 ' % DTL)

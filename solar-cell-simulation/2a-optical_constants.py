@@ -10,7 +10,6 @@ from solcore.absorption_calculator import calculate_rat, OptiStack
 from solcore.material_system import create_new_material
 from solcore import material
 from solcore import si
-from solcore.solar_cell import SolarCell
 from solcore.structure import Layer
 
 import numpy as np
@@ -41,6 +40,7 @@ plt.plot(wl*1e9, Ge.k(wl), 'k--', label=r'Ge $\kappa$')
 plt.xlabel('Wavelength (nm)')
 plt.ylabel(r'SiGeSn n / $\kappa$')
 plt.legend()
+plt.title("(1) Optical constants of Ge and SiGeSn")
 plt.show()
 
 
@@ -60,6 +60,7 @@ search_db('Ag', exact=True)
 # "pageid"s 0 to 14 correspond to silver.
 
 # Let's compare the optical behaviour of some of those sources:
+# (The pageid values listed are for the 2021-07-18 version of the refractiveindex.info database)
 # pageid = 0, Johnson
 # pageid = 2, Jiang
 # pageid = 4, McPeak
@@ -84,15 +85,18 @@ Ag_Sol = material(name='Ag')() # Solcore built-in (from SOPRA)
 
 names = ['Johnson', 'Jiang', 'McPeak', 'Hagemann', 'Rakic', 'Solcore built-in']
 
-plt.figure()
-plt.plot(wl*1e9, np.array([Ag_Joh.n(wl), Ag_Jia.n(wl), Ag_McP.n(wl), Ag_Hag.n(wl), Ag_Rak.n(wl), Ag_Sol.n(wl)]).T)
+plt.figure(figsize=(8,4))
+plt.subplot(121)
+plt.plot(wl*1e9, np.array([Ag_Joh.n(wl), Ag_Jia.n(wl), Ag_McP.n(wl),
+                           Ag_Hag.n(wl), Ag_Rak.n(wl), Ag_Sol.n(wl)]).T)
 plt.legend(labels=names)
 plt.xlabel("Wavelength (nm)")
+plt.title("(2) $n$ and $\kappa$ values for Ag from different literature sources")
 plt.ylabel("n")
-plt.show()
 
-plt.figure()
-plt.plot(wl*1e9, np.array([Ag_Joh.k(wl), Ag_Jia.k(wl), Ag_McP.k(wl), Ag_Hag.k(wl), Ag_Rak.k(wl), Ag_Sol.k(wl)]).T)
+plt.subplot(122)
+plt.plot(wl*1e9, np.array([Ag_Joh.k(wl), Ag_Jia.k(wl), Ag_McP.k(wl),
+                           Ag_Hag.k(wl), Ag_Rak.k(wl), Ag_Sol.k(wl)]).T)
 plt.legend(labels=names)
 plt.xlabel("Wavelength (nm)")
 plt.ylabel("k")
@@ -108,7 +112,7 @@ GaAs = material('GaAs')()
 colors = sns.color_palette('husl', n_colors=len(names))
 
 plt.figure()
-for c, Ag_mat in enumerate([Ag_Joh, Ag_McP, Ag_Hag, Ag_Rak, Ag_Sol]):
+for c, Ag_mat in enumerate([Ag_Joh, Ag_Jia, Ag_McP, Ag_Hag, Ag_Rak, Ag_Sol]):
     my_solar_cell = OptiStack([Layer(width=si('50nm'), material = GaAs)], substrate=Ag_mat)
     RAT = calculate_rat(my_solar_cell, wl*1e9, no_back_reflection=False)
     GaAs_abs = RAT["A_per_layer"][1]
@@ -119,6 +123,7 @@ for c, Ag_mat in enumerate([Ag_Joh, Ag_McP, Ag_Hag, Ag_Rak, Ag_Sol]):
 plt.legend()
 plt.xlabel("Wavelength (nm)")
 plt.ylabel("Absorbed")
+plt.title("(3) Absorption in GaAs depending on silver optical constants")
 plt.show()
 
 results = search_db('Diamond')
@@ -130,6 +135,7 @@ Diamond = material('Diamond')()
 plt.figure()
 plt.plot(si(np.arange(100, 800, 5), 'nm') * 1e9, Diamond.n(si(np.arange(100, 800, 5), 'nm')))
 plt.plot(si(np.arange(100, 800, 5), 'nm') * 1e9, Diamond.k(si(np.arange(100, 800, 5), 'nm')))
+plt.title("(4) Optical constants for diamond")
 plt.show()
 
 # So, we have at least 4 different ways of getting optical constants:

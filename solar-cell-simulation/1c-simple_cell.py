@@ -75,7 +75,10 @@ plt.plot(*solar_cell_db.iv["IV"], label='Detailed balance (Eg = 1.44 eV, A = 0.8
 plt.plot(*solar_cell_2d.iv["IV"], '--', label='Two-diode')
 plt.xlim(0, 1.5)
 plt.ylim(0, 500)
+plt.xlabel("V (V)")
+plt.ylabel("J (A/m$^2$)")
 plt.legend()
+plt.title('(1) IV curves calculated through detailed balance and two-diode models')
 plt.show()
 
 # As we expect, the two DB solar cells have a very similar shape, but the A = 1 case has a higher Jsc.
@@ -127,6 +130,9 @@ plt.plot(*solar_cell_pdd.iv["IV"], '--', label="Poisson Drift Diffusion")
 plt.xlim(0, 1.2)
 plt.ylim(0, 330)
 plt.legend()
+plt.xlabel("V (V)")
+plt.ylabel("J (A/m$^2$)")
+plt.title('(2) IV curves from depletion approximation and drift-diffusion models')
 plt.show()
 
 
@@ -136,4 +142,7 @@ plt.plot(wavelengths*1e9, 100*solar_cell_pdd[2].eqe(wavelengths), 'k--', label="
 plt.plot(wavelengths*1e9, 100*solar_cell_da[2].layer_absorption, 'r-', label="A (DA)")
 plt.plot(wavelengths*1e9, 100*solar_cell_pdd[2].layer_absorption, 'b--', label="A (PDD)")
 plt.legend()
+plt.xlabel("Wavelength (nm)")
+plt.ylabel("EQE/A (%)")
+plt.title('(3) EQE and absorption from depletion approximation and drift-diffusion models')
 plt.show()

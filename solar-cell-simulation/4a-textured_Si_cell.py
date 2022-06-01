@@ -2,6 +2,8 @@
 # its optical capabilities. One of the features it has is a ray-tracer, which is useful when modelling e.g. Si solar
 # cells with textured surfaces. We will compare the result with PVLighthouse's wafer ray tracer.
 
+# Should give some info on how the ray-tracing works on reference background info for details
+
 import numpy as np
 import os
 
@@ -13,6 +15,7 @@ from rayflare.textures import regular_pyramids, planar_surface
 from rayflare.options import default_options
 from rayflare.utilities import make_absorption_function
 
+from solcore.absorption_calculator import search_db
 from solcore import material, si
 from solcore.solar_cell import SolarCell, Layer, Junction
 from solcore.solar_cell_solver import solar_cell_solver
@@ -24,8 +27,8 @@ pal = sns.color_palette("husl", 4)
 
 # setting up Solcore materials
 Air = material('Air')()
-Si_base = material("Si")
-Si_RT = Si_base()
+Si_Green = search_db("Si/Green-2008")[0][0]
+Si_RT = material(str(Si_Green), nk_db=True)()
 
 # number of x and y points to scan across. Decrease this to speed up the calculation (but increase noise in results).
 nxy = 25
@@ -46,7 +49,7 @@ options.nx = nxy
 options.ny = nxy
 
 # Number of rays to be traced at each wavelength:
-options.n_rays = 2 * nxy ** 2
+options.n_rays = 4 * nxy ** 2
 options.depth_spacing = si('50nm')
 options.parallel = True  # this is the default - if you do not want the code to run in parallel, change to False
 
@@ -101,6 +104,8 @@ _, diff_absorb_fn = make_absorption_function(profile_rt, rtstr, options, matrix_
 
 
 # Now feed profile into Solcore
+
+Si_base = material("Si")
 
 n_material_Si_width = si("500nm")
 p_material_Si_width = rtstr.widths[0] - n_material_Si_width
