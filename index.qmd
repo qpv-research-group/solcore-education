@@ -1,0 +1,6 @@
+---
+title: "solcore-education"
+---
+
+Welcome to the solcore-education website. The sidebar on the left lists the current
+examples for the course.
