@@ -1,11 +1,11 @@
-# In this first set of examples, we will look at a very simple planar Si solar cell.
-
 # In the first two scripts, we mostly focused on different optical models and how they can be applied to an Si cell.
-# Here we will look at different electrical models, roughly in increasing order of how realistic they are expected to be:
+# Here we will look at different electrical models, roughly in increasing order of how 'realistic' they are expected to be:
+#
 # 1. Two-diode model (2D)
 # 2. Detailed balance (DB)
 # 3. Depletion approximation (DA)
 # 4. Poisson drift-diffusion solver (PDD)
+
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -18,7 +18,7 @@ from solcore import material, si
 
 from solcore.interpolate import interp1d
 
-# define some materials:
+# Define some materials:
 
 GaAs = material("GaAs")()
 Al2O3 = material("Al2O3")()
@@ -26,22 +26,22 @@ Ag = material("Ag")()
 
 wavelengths = si(np.linspace(300, 950, 200), "nm")
 
-# we are going to do an optical calculation first to get absorption for a GaAs layer; we will use this as an
-# estimate for the EQE as input for the two-diode model
+# We are going to do an optical calculation first to get absorption for a GaAs layer; we will use this as an
+# estimate for the EQE as input for the two-diode model.
 
 OS = OptiStack([Layer(si("3um"), GaAs)], substrate=Ag)
 
-# calculate reflection/absorption/transmission (note that we have to give the wavelength to this function in
+# Calculate reflection/absorption/transmission (note that we have to give the wavelength to this function in
 # nm rather than m!)
-RAT = calculate_rat(OS, wavelength=wavelengths*1e9)
+RAT = calculate_rat(OS, wavelength=wavelengths*1e9, no_back_reflection=False)
 
-# create a function which interpolates the absorption - note that we pass a function which returns the absorption
+# Create a function which interpolates the absorption - note that we pass a function which returns the absorption
 # when given a wavelength to the Junction, rather than a table of values!
 eqe_func = interp1d(wavelengths, RAT["A"])
 
 # Define the 2D junction with reasonable parameters for GaAs. The units of j01 and j01 are A/m^2. The units
 # for the resistances are (Ohm m)^2. We use the standard ideality factors (1 and 2 respectively) for the two
-# diodes
+# diodes:
 twod_junction = Junction(kind='2D', n1=1, n2=2, j01=3e-17, j02=1e-7, Rseries=4e-3,
                          Rshunt=1e4, eqe=eqe_func)
 
@@ -52,22 +52,22 @@ db_junction_A1 = Junction(kind='DB', Eg=1.42, A=1, R_shunt=1e4, n=3.5)
 db_junction = Junction(kind='DB', Eg=1.42, A=0.8, R_shunt=1e4, n=3.5)
 
 V = np.linspace(0, 1.5, 200)
-Vin = np.linspace(-2, 2.61, 201)
 
-# set some options and define solar cells based on these junctions:
+# Set some options and define solar cells based on these junctions:
 
-opts = {'voltages': V, 'light_iv': True, 'wavelength': wavelengths,
-                                    'mpp': True, "internal_voltages": Vin}
+opts = {'voltages': V, 'light_iv': True, 'wavelength': wavelengths, 'mpp': True}
 
 solar_cell_db_A1 = SolarCell([db_junction_A1])
 solar_cell_db = SolarCell([db_junction])
 solar_cell_2d = SolarCell([twod_junction])
 
-# calculate and plot the IV curves:
+# Calculate and plot the IV curves:
 
 solar_cell_solver(solar_cell_db_A1, 'iv', user_options=opts)
 solar_cell_solver(solar_cell_db, 'iv', user_options=opts)
 solar_cell_solver(solar_cell_2d, 'iv', user_options=opts)
+
+# PLOT 1: IV curves for the DB and 2D models.
 
 plt.figure()
 plt.plot(*solar_cell_db_A1.iv["IV"], label='Detailed balance (Eg = 1.44 eV, A = 1)')
@@ -82,10 +82,17 @@ plt.title('(1) IV curves calculated through detailed balance and two-diode model
 plt.show()
 
 # As we expect, the two DB solar cells have a very similar shape, but the A = 1 case has a higher Jsc.
+# The two-diode model has a lower current, which makes sense as it's EQE is specified based on a more realistic
+# absorption calculation which includes front-surface reflection and an absorption edge which is not infinitely
+# sharp at the bandgap, as is assumed by the detailed balance model.
 
 
 # Now let's consider the two slightly more complex models, which will actually take into account the absorption profile
-# of light in the cell:
+# of light in the cell and the distribution of charge carriers; the depletion approximation and the Poisson drift-diffusion
+# solver.
+
+# Note: for the PDD example to work, the PDD solver must be installed correctly; see the Solcore documentation for more
+# information.
 
 T = 293 # ambient temperature
 
@@ -94,28 +101,32 @@ p_GaAs = material('GaAs')(T=T, Na=si("1e18cm-3"), electron_diffusion_length=si("
 n_GaAs = material('GaAs')(T=T, Nd=si("8e16cm-3"), hole_diffusion_length=si("8um"))
 bsf = material('GaAs')(T=T, Nd=si("2e18cm-3"))
 
-SC_layers = [
-                   Layer(width=si('150nm'), material=p_GaAs, role="Emitter"),
+SC_layers = [Layer(width=si('150nm'), material=p_GaAs, role="Emitter"),
                    Layer(width=si('2850nm'), material=n_GaAs, role="Base"),
                    Layer(width=si('200nm'), material=bsf, role="BSF")]
 
 # sn and sp are the surface recombination velocities (in m/sec). sn is the SRV for the n-doped junction, sp for the
 # p-doped junction.
 
+# Depletion approximation:
 solar_cell_da = SolarCell(
     [Layer(width=si("90nm"), material=Al2O3), Layer(width=si('20nm'), material=window, role="Window"),
      Junction(SC_layers, sn=5e4, sp=5e4, kind='DA')],
     R_series=0, substrate=Ag
 )
 
+# Drift-diffusion solver:
 solar_cell_pdd = SolarCell(
     [Layer(width=si("90nm"), material=Al2O3), Layer(width=si('20nm'), material=window, role="Window"),
      Junction(SC_layers, sn=5e4, sp=5e4, kind='PDD')],
     R_series=0, substrate=Ag
 )
 
-opts["optics_method"] = "TMM"
-opts["position"] = 1e-10
+# In both cases, we set the series resistance to 0. Other loss factors, such as shading, are also assumed to be zero
+# by default.
+
+opts["optics_method"] = "TMM" # Use the transfer-matrix method to calculate the cell's optics
+opts["position"] = 1e-10 # This is the spacing used when calculating the depth-dependent absorption (0.1 nm)
 opts["no_back_reflection"] = False
 
 solar_cell_solver(solar_cell_da, "iv", user_options=opts)
@@ -123,6 +134,8 @@ solar_cell_solver(solar_cell_da, "qe", user_options=opts)
 
 solar_cell_solver(solar_cell_pdd, "iv", user_options=opts)
 solar_cell_solver(solar_cell_pdd, "qe", user_options=opts)
+
+# PLOT 2: IV curves for the DA and PDD models
 
 plt.figure()
 plt.plot(*solar_cell_da.iv["IV"], label="Depletion approximation")
@@ -135,6 +148,7 @@ plt.ylabel("J (A/m$^2$)")
 plt.title('(2) IV curves from depletion approximation and drift-diffusion models')
 plt.show()
 
+# PLOT 3: EQE and absorption calculated for the PDD and DA models.
 
 plt.figure()
 plt.plot(wavelengths*1e9, 100*solar_cell_da[2].eqe(wavelengths), 'k-', label="EQE (DA)")

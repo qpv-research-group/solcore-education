@@ -1,4 +1,5 @@
-# In this first set of examples, we will look at a very simple planar Si solar cell.
+# In this first set of examples, we will look at simple planar solar cells.
+
 # In this script, we will look at the difference between Beer-Lambert absorption calculations,
 # using the Fresnel equations for front-surface reflection, and using the transfer-matrix model.
 
@@ -22,38 +23,39 @@ from solcore.interpolate import interp1d
 # To define our solar cell, we first want to define some materials. Then we want to organise those materials into Layers,
 # organise those layers into a Junction, and then finally define a SolarCell with that Junction.
 
-# First, let's define an Si material. Silicon, along with many other semiconductors, dielectrics, and metals common in
-# solar cells, is included in Solcore's database.
+# First, let's define a Si material. Silicon, along with many other semiconductors, dielectrics, and metals common in
+# solar cells, is included in Solcore's database:
 
 Si = material("Si")
 GaAs = material("GaAs")
 
 # This creates an instance of the Si and GaAs materials. However, to use this in a solar cell we need to do specify some more
-# information, such as the doping level.
+# information, such as the doping level. The 'si' function comes in handy here to convert all quantities to based units
+# e.g. m, m^(-3)...
 
 Si_n = Si(Nd=si("1e21cm-3"), hole_diffusion_length=si("10um"), relative_permittivity=11.7)
 Si_p = Si(Na=si("1e16cm-3"), electron_diffusion_length=si("400um"), relative_permittivity=11.7)
 
 # Now we define the emitter and base layers we will have in the solar cell; we specify their thickness, the material they
-# are made of and the role they play within the cell
+# are made of and the role they play within the cell (emitter or base)
 
 emitter_layer = Layer(width=si("600nm"), material=Si_n, role='emitter')
 base_layer = Layer(width=si("200um"), material=Si_p, role='base')
 
-# create the p-n junction using the layers defined above. We set kind="DA" to tell Solcore to use the depletion approximation
+# create the p-n junction using the layers defined above. We set kind="DA" to tell Solcore to use the Depletion Approximation
 # in the calculation (we will discuss the different electrical solver options more later on):
 Si_junction = Junction([emitter_layer, base_layer], kind="DA")
 
-# Wavelengths we want to use in the calculations:
+# Wavelengths we want to use in the calculations; wavelengths between 300 and 1200 nm, at 200 evenly spaced intervals:
 wavelengths = si(np.linspace(300, 1200, 200), "nm")
 
-# note that here and above in defining the layers and materials we have used the "si()" function: you can use this to automatically
+# Note that here and above in defining the layers and materials we have used the "si()" function: you can use this to automatically
 # convert quantities in other units to base SI units (e.g. nanometres to metres).
 
 # Now we specify some options for running the calculation. Initially we want to use the Beer-Lambert absorption law to
 # calculate the optics of the cell ("BL"). We set the wavelengths we want to use, and we set "recalculate_absorption" to
 # True so that further down in the script when we try different optics methods, Solcore knows we want to re-calculate the
-# optics of the cell.
+# optics of the cell. We specify the options in a Python format called a dictionary:
 
 options = {
     "recalculate_absorption": True,
@@ -61,7 +63,7 @@ options = {
     "wavelength": wavelengths
            }
 
-# Define the solar cell; in this case it is very simple and we just have a single junction.
+# Define the solar cell; in this case it is very simple and we just have a single junction:
 
 solar_cell = SolarCell([Si_junction])
 
@@ -82,7 +84,7 @@ plt.title("(1) QE of Si cell - Beer-Lambert absorption")
 plt.show()
 
 # Now, to make this calculation a bit more realistic, there are a few things we could do. We could load some measured front
-# surface reflectance from a file, or we could calculate the reflectance of reflectivity. To calculate the reflectivity,]
+# surface reflectance from a file, or we could calculate the reflectance. To calculate the reflectance,
 # there are many approaches we could take; we are going to explore two of them here.
 
 # If we assume the silicon is infinitely thick (or at least much thicker than the wavelengths we care about) then the
@@ -90,7 +92,7 @@ plt.show()
 # equation for reflectivity: https://en.wikipedia.org/wiki/Fresnel_equations
 
 def calculate_R_Fresnel(incidence_n, transmission_n, wl):
-    # return a function that gives the value of R at normal incidence at the input wavelengths
+    # return a function that gives the value of R (at normal incidence) at the input wavelengths
 
     Rs = np.abs((incidence_n - transmission_n)/(incidence_n + transmission_n))**2
 
@@ -115,6 +117,8 @@ Si_junction = Junction([emitter_layer, base_layer], kind="DA")
 
 solar_cell_TMM = SolarCell([Si_junction])
 
+# Set some more options:
+
 options["optics_method"] = "TMM"
 voltages = np.linspace(0, 1.1, 100)
 options["light_iv"] = True
@@ -122,7 +126,7 @@ options["mpp"] = True
 options["voltages"] = voltages
 
 # we calculate the QE and the IV (we set the light_iv option to True; if we don't do this, Solcore just calculates the
-# dark IV. We also ask Solcore to find the maximum power point (mpp) so we can get the efficiency.
+# dark IV). We also ask Solcore to find the maximum power point (mpp) so we can get the efficiency.
 
 solar_cell_solver(solar_cell_TMM, 'iv', options)
 solar_cell_solver(solar_cell_TMM, 'qe', options)
@@ -188,7 +192,8 @@ plt.ylim(0, 100)
 plt.show()
 
 # PLOT 5: Compare the IV curves of the cells with and without an ARC. The efficiency is also shown on the
-# plot. Note that because we didn't specify a light source, Solcore will assume we want to use AM1.5G.
+# plot. Note that because we didn't specify a light source, Solcore will assume we want to use AM1.5G; in later
+# examples we will set the light source used for IV simulations explicitly.
 
 plt.figure()
 plt.plot(voltages, -solar_cell_TMM[0].iv(voltages)/10, label="No ARC")
@@ -209,7 +214,7 @@ plt.show()
 
 # Overall, some things we can take away from the examples in this script:
 # - The Beer-Lambert law is a very simple way to calculate absorption in a cell, but won't take into
-#   account import effects such as front-surface reflection or the effects of anti-reflection coatings
+#   account important effects such as front-surface reflection or the effects of anti-reflection coatings
 # - Using the transfer-matrix method (TMM) we can account for front surface reflection and interference
 #   effects which make e.g. ARCs effective. In the simple situation of a thick cell without any front surface
 #   layers, it is equivalent to simply calculation the reflection with the Fresnel equations and assuming

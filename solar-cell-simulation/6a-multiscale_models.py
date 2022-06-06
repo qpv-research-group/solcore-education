@@ -1,4 +1,4 @@
-# In example 4a, we looked at a 'solar cell' made of a single layer of Si with pyramidal texturing. In reality, a
+# In example 4a, we looked at a solar cell made of a single layer of Si with pyramidal texturing. In reality, a
 # solar cell will have a more complicated structure with thin layers deposited on the front side to act as e.g. selective
 # transport layers for carriers. This adds a layer of complication to the ray-tracing process, because we can no longer
 # rely on the Fresnel equations to calculate the angle and wavelength-dependent reflection and transmission probabilities;
@@ -30,14 +30,14 @@ from cycler import cycler
 
 import os
 
-# new materials from data - uncomment to add to database
+# New materials from data files - uncomment to add to database
 
 from solcore.material_system import create_new_material
 cur_path = os.path.dirname(os.path.abspath(__file__))
 create_new_material('aSi_i', os.path.join(cur_path, 'data/model_i_a_silicon_n.txt'), os.path.join(cur_path, 'data/model_i_a_silicon_k.txt'))
 create_new_material('ITO_measured', os.path.join(cur_path, 'data/front_ITO_n.txt'), os.path.join(cur_path, 'data/front_ITO_k.txt'))
 
-# matrix multiplication
+# Matrix multiplication
 wavelengths = np.linspace(300, 1200, 80)*1e-9
 
 options = default_options()

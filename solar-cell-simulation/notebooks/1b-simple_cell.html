@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.520">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>b-simple_cell</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="1b-simple_cell_files/libs/clipboard/clipboard.min.js"></script>
+<script src="1b-simple_cell_files/libs/quarto-html/quarto.js"></script>
+<script src="1b-simple_cell_files/libs/quarto-html/popper.min.js"></script>
+<script src="1b-simple_cell_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="1b-simple_cell_files/libs/quarto-html/anchor.min.js"></script>
+<link href="1b-simple_cell_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="1b-simple_cell_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="1b-simple_cell_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="1b-simple_cell_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="1b-simple_cell_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="example-1b---basic-cell-optics" class="level1">
+<h1>Example 1b - Basic cell optics</h1>
+<p>In this script, we will build on the TMM model from example 1(a) and look at the effects of interference.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore <span class="im">import</span> material, si</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell <span class="im">import</span> Layer</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator <span class="im">import</span> calculate_rat, OptiStack</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>First, let’s define some materials:</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Si <span class="op">=</span> material(<span class="st">"Si"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>SiN <span class="op">=</span> material(<span class="st">"Si3N4"</span>)()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Ag <span class="op">=</span> material(<span class="st">"Ag"</span>)()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note the second set of brackets (or lack thereof). The Solcore material system essentially operates in two stages; we first call the <code>material</code> function with the name of the material we want to use, for example Si = material(“Si”), which creates a general Python class corresponding to that material. We then call this class to specify further details, such as the temperature, doping level, or alloy composition (where relavant). This happens below when defining Si_n and Si_p; both are use the Si class defined above, and adding further details to the material. For the definitions of SiN and Ag above, we do both steps in a single line, hence the two sets of brackets.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Si_n <span class="op">=</span> Si(Nd<span class="op">=</span>si(<span class="st">"1e21cm-3"</span>), hole_diffusion_length<span class="op">=</span>si(<span class="st">"10um"</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Si_p <span class="op">=</span> Si(Na<span class="op">=</span>si(<span class="st">"1e16cm-3"</span>), electron_diffusion_length<span class="op">=</span>si(<span class="st">"400um"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To look at the effect of interference in the Si layer at different thicknesses, we make a list of thicknesses to test (evenly spaced on a log scale from 400 nm to 300 um):</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Si_thicknesses <span class="op">=</span> np.linspace(np.log(<span class="fl">0.4e-6</span>), np.log(<span class="fl">300e-6</span>), <span class="dv">8</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Si_thicknesses <span class="op">=</span> np.exp(Si_thicknesses)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>wavelengths <span class="op">=</span> si(np.linspace(<span class="dv">300</span>, <span class="dv">1200</span>, <span class="dv">400</span>), <span class="st">"nm"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>options <span class="op">=</span> {</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"recalculate_absorption"</span>: <span class="va">True</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"optics_method"</span>: <span class="st">"TMM"</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"wavelength"</span>: wavelengths</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>           }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Make a color palette using the seaborn package to make the plots look nicer</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> sns.color_palette(<span class="st">'rocket'</span>, n_colors<span class="op">=</span><span class="bu">len</span>(Si_thicknesses))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>colors.reverse()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>create an ARC layer:</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ARC_layer <span class="op">=</span> Layer(width<span class="op">=</span>si(<span class="st">'75nm'</span>), material<span class="op">=</span>SiN)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we are going to loop through the different Si thicknesses generated above, and create a simple solar cell-like structure. Because we will only do an optical calculation, we don’t need to define a junction and can just make a simple stack of layers.</p>
+<p>We then calculate reflection, absorption and transmission (RAT) for two different situations: 1. a fully coherent stack 2. assuming the silicon layer is incoherent. This means that light which enters the Si layer cannot interfere with itself, but light in the ARC layer can still show interference. In very thick layers (much thicker than the wavelength of light being considered) this is likely to be more physically accurate because real light does not have infinite coherence length; i.e.&nbsp;if you measured wavelength-dependent transmission or reflection of a Si wafer hundreds of microns thick you would not expect to see interference fringes.</p>
+<p><strong>PLOT 1</strong></p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i1, Si_t <span class="kw">in</span> <span class="bu">enumerate</span>(Si_thicknesses):</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    base_layer <span class="op">=</span> Layer(width<span class="op">=</span>Si_t, material<span class="op">=</span>Si_p) <span class="co"># silicon layer</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    solar_cell <span class="op">=</span> OptiStack([ARC_layer, base_layer]) <span class="co"># OptiStack (optical stack) to feed into calculate_rat function</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Coherent calculation:</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    RAT_c <span class="op">=</span> calculate_rat(solar_cell, wavelengths<span class="op">*</span><span class="fl">1e9</span>, no_back_reflection<span class="op">=</span><span class="va">False</span>) <span class="co"># coherent calculation</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># For historical reasons, Solcore's default setting is to ignore reflection at the back of the cell (i.e. at the</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># interface between the final material in the stack and the substrate). Hence we need to tell the calculate_rat</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># function NOT to ignore this reflection (no_back_reflection=False).</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculation assuming no interference in the silicon ("incoherent"):</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    RAT_i <span class="op">=</span> calculate_rat(solar_cell, wavelengths<span class="op">*</span><span class="fl">1e9</span>, no_back_reflection<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                          coherent<span class="op">=</span><span class="va">False</span>, coherency_list<span class="op">=</span>[<span class="st">'c'</span>, <span class="st">'i'</span>]) <span class="co"># partially coherent: ARC is coherent, Si is not</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot the results:</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, RAT_c[<span class="st">"A"</span>], color<span class="op">=</span>colors[i1], label<span class="op">=</span><span class="bu">str</span>(<span class="bu">round</span>(Si_t<span class="op">*</span><span class="fl">1e6</span>, <span class="dv">1</span>)), alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, RAT_i[<span class="st">"A"</span>], <span class="st">'--'</span>, color<span class="op">=</span>colors[i1])</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>plt.legend(title<span class="op">=</span><span class="vs">r"Thickness ($\mu$m)"</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">300</span>, <span class="dv">1300</span>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="fl">1.02</span>)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Absorption"</span>)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(1) Absorption in Si with varying thickness"</span>)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="1b-simple_cell_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>We can see that the coherent calculations (solid lines) show clear interference fringes which depend on the Si thickness. The incoherent calculations do not have these fringes and seem to lie around the average of the interference fringes. For both sets of calculations, we see increasing absorption as the Si gets thicker, as expected.</p>
+<p>Now we repeat the calculation, but with an Ag substrate under the Si. Previously, we did not specify the substrate and so it was assumed by Solcore to be air (n=1, k=0).</p>
+<p><strong>PLOT 2</strong></p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i1, Si_t <span class="kw">in</span> <span class="bu">enumerate</span>(Si_thicknesses):</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    base_layer <span class="op">=</span> Layer(width<span class="op">=</span>Si_t, material<span class="op">=</span>Si_p)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># As before, but now we specify the substrate to be silver:</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    solar_cell <span class="op">=</span> OptiStack([ARC_layer, base_layer], substrate<span class="op">=</span>Ag)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    RAT_c <span class="op">=</span> calculate_rat(solar_cell, wavelengths<span class="op">*</span><span class="fl">1e9</span>, no_back_reflection<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    RAT_i <span class="op">=</span> calculate_rat(solar_cell, wavelengths<span class="op">*</span><span class="fl">1e9</span>, no_back_reflection<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>                          coherent<span class="op">=</span><span class="va">False</span>, coherency_list<span class="op">=</span>[<span class="st">'c'</span>, <span class="st">'i'</span>])</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, RAT_c[<span class="st">"A"</span>], color<span class="op">=</span>colors[i1],</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="bu">str</span>(<span class="bu">round</span>(Si_t<span class="op">*</span><span class="fl">1e6</span>, <span class="dv">1</span>)), alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, RAT_i[<span class="st">"A"</span>], <span class="st">'--'</span>, color<span class="op">=</span>colors[i1])</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>plt.legend(title<span class="op">=</span><span class="vs">r"Thickness ($\mu$m)"</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">300</span>, <span class="dv">1300</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="fl">1.02</span>)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Absorption"</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(2) Absorption in Si with varying thickness (Ag substrate)"</span>)</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="1b-simple_cell_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>We see that the interference fringes get more prominent in the coherent calculation, due to higher reflection at the rear Si/Ag surface compared to Ag/Air. We also see a slightly boosted absorption at long wavelengths at all thicknesses, again due to improved reflection at the rear surface</p>
+<p>Finally, we look at the effect of incidence angle and polarization of the light hitting the cell.</p>
+<p><strong>PLOT 3</strong></p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>angles <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">30</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">89</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ARC_layer <span class="op">=</span> Layer(width<span class="op">=</span>si(<span class="st">'75nm'</span>), material<span class="op">=</span>SiN)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>base_layer <span class="op">=</span> Layer(width<span class="op">=</span>si(<span class="st">"100um"</span>), material<span class="op">=</span>Si_p)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> sns.cubehelix_palette(n_colors<span class="op">=</span><span class="bu">len</span>(angles))</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i1, theta <span class="kw">in</span> <span class="bu">enumerate</span>(angles):</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    solar_cell <span class="op">=</span> OptiStack([ARC_layer, base_layer])</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    RAT_s <span class="op">=</span> calculate_rat(solar_cell, wavelengths<span class="op">*</span><span class="fl">1e9</span>, angle<span class="op">=</span>theta,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>                          pol<span class="op">=</span><span class="st">'s'</span>,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>                          no_back_reflection<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>                          coherent<span class="op">=</span><span class="va">False</span>, coherency_list<span class="op">=</span>[<span class="st">'c'</span>, <span class="st">'i'</span>])</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    RAT_p <span class="op">=</span> calculate_rat(solar_cell, wavelengths<span class="op">*</span><span class="fl">1e9</span>, angle<span class="op">=</span>theta,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>                          pol<span class="op">=</span><span class="st">'p'</span>,</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>                          no_back_reflection<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>                          coherent<span class="op">=</span><span class="va">False</span>, coherency_list<span class="op">=</span>[<span class="st">'c'</span>, <span class="st">'i'</span>])</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, RAT_s[<span class="st">"A"</span>], color<span class="op">=</span>colors[i1], label<span class="op">=</span><span class="bu">str</span>(<span class="bu">round</span>(theta)))</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, RAT_p[<span class="st">"A"</span>], <span class="st">'--'</span>, color<span class="op">=</span>colors[i1])</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>plt.legend(title<span class="op">=</span><span class="vs">r"$\theta (^\circ)$"</span>)</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">300</span>, <span class="dv">1300</span>)</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="fl">1.02</span>)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Absorption"</span>)</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(3) Absorption in Si with varying thickness"</span>)</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="1b-simple_cell_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>For normal incidence (<span class="math inline">\(\theta = 0^\circ\)</span>), <em>s</em> (solid lines) and <em>p</em> (dashed lines) polarization are equivalent. As the incidence angle increases, in general absorption is higher for p-polarized light (due to lower reflection). Usually, sunlight is modelled as unpolarized light, which computationally is usually done by averaging the results for s and p-polarized light.</p>
+<p>We have now seen some effects of interference in layers of different thicknesses, and seen the effect of adding a highly reflective substrate. So we already have two strategies for light-trapping/improving the absorption in a solar cell: adding an anti-reflection coating (in example 1a), to reduce front-surface reflection and get more light into the cell, and adding a highly reflective layer at the back, to reduce loss through the back of the cell and keep light trapped in the cell.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
