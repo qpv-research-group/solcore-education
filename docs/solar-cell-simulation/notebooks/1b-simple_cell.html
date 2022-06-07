@@ -122,7 +122,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -138,9 +138,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="../../index.html">Home</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../about.html">About</a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -159,7 +156,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
       <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -177,12 +174,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/1a-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1a - Simple Si solar cell</a>
+  <a href="../../solar-cell-simulation/notebooks/1a-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1a: Simple Si solar cell</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/1b-simple_cell.html" class="sidebar-item-text sidebar-link active">Example 1b - Basic cell optics</a>
+  <a href="../../solar-cell-simulation/notebooks/1b-simple_cell.html" class="sidebar-item-text sidebar-link active">Example 1b: Basic cell optics</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/1c-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1c: Electric models</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/2a-optical_constants.html" class="sidebar-item-text sidebar-link">Example 2a: Optical constant sources</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/2b-optical_constants.html" class="sidebar-item-text sidebar-link">Example 2b: Optical constant models</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/3a-triple_junction.html" class="sidebar-item-text sidebar-link">Example 3a: Triple junction cell</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/4a-textured_Si_cell.html" class="sidebar-item-text sidebar-link">4a-textured_Si_cell.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/5a-ultrathin_GaAs_cell.html" class="sidebar-item-text sidebar-link">5a-ultrathin_GaAs_cell.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/6a-multiscale_models.html" class="sidebar-item-text sidebar-link">6a-multiscale_models.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/6b-multiscale_models.html" class="sidebar-item-text sidebar-link">6b-multiscale_models.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/7a-optimization.html" class="sidebar-item-text sidebar-link">7a-optimization.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link">7b-optimization.html</a>
   </div>
 </li>
     </ul>
@@ -196,7 +243,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#example-1b---basic-cell-optics" id="toc-example-1b---basic-cell-optics" class="nav-link active" data-scroll-target="#example-1b---basic-cell-optics">Example 1b - Basic cell optics</a></li>
+  <li><a href="#example-1b-basic-cell-optics" id="toc-example-1b-basic-cell-optics" class="nav-link active" data-scroll-target="#example-1b-basic-cell-optics">Example 1b: Basic cell optics</a>
+  <ul class="collapse">
+  <li><a href="#setting-up" id="toc-setting-up" class="nav-link" data-scroll-target="#setting-up">Setting up</a></li>
+  <li><a href="#effect-of-si-thickness" id="toc-effect-of-si-thickness" class="nav-link" data-scroll-target="#effect-of-si-thickness">Effect of Si thickness</a></li>
+  <li><a href="#effect-of-reflective-substrate" id="toc-effect-of-reflective-substrate" class="nav-link" data-scroll-target="#effect-of-reflective-substrate">Effect of reflective substrate</a></li>
+  <li><a href="#effect-of-polarization-and-angle-of-incidence" id="toc-effect-of-polarization-and-angle-of-incidence" class="nav-link" data-scroll-target="#effect-of-polarization-and-angle-of-incidence">Effect of polarization and angle of incidence</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -205,8 +259,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<section id="example-1b---basic-cell-optics" class="level1">
-<h1>Example 1b - Basic cell optics</h1>
+<section id="example-1b-basic-cell-optics" class="level1">
+<h1>Example 1b: Basic cell optics</h1>
 <p>In this script, we will build on the TMM model from example 1(a) and look at the effects of interference.</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -217,6 +271,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator <span class="im">import</span> calculate_rat, OptiStack</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<section id="setting-up" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up">Setting up</h2>
 <p>First, let’s define some materials:</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Si <span class="op">=</span> material(<span class="st">"Si"</span>)</span>
@@ -250,6 +306,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ARC_layer <span class="op">=</span> Layer(width<span class="op">=</span>si(<span class="st">'75nm'</span>), material<span class="op">=</span>SiN)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="effect-of-si-thickness" class="level2">
+<h2 class="anchored" data-anchor-id="effect-of-si-thickness">Effect of Si thickness</h2>
 <p>Now we are going to loop through the different Si thicknesses generated above, and create a simple solar cell-like structure. Because we will only do an optical calculation, we don’t need to define a junction and can just make a simple stack of layers.</p>
 <p>We then calculate reflection, absorption and transmission (RAT) for two different situations: 1. a fully coherent stack 2. assuming the silicon layer is incoherent. This means that light which enters the Si layer cannot interfere with itself, but light in the ARC layer can still show interference. In very thick layers (much thicker than the wavelength of light being considered) this is likely to be more physically accurate because real light does not have infinite coherence length; i.e.&nbsp;if you measured wavelength-dependent transmission or reflection of a Si wafer hundreds of microns thick you would not expect to see interference fringes.</p>
 <p><strong>PLOT 1</strong></p>
@@ -282,10 +341,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(1) Absorption in Si with varying thickness"</span>)</span>
 <span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="1b-simple_cell_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+<p><img src="1b-simple_cell_files/figure-html/cell-8-output-1.png" width="586" height="424"></p>
 </div>
 </div>
 <p>We can see that the coherent calculations (solid lines) show clear interference fringes which depend on the Si thickness. The incoherent calculations do not have these fringes and seem to lie around the average of the interference fringes. For both sets of calculations, we see increasing absorption as the Si gets thicker, as expected.</p>
+</section>
+<section id="effect-of-reflective-substrate" class="level2">
+<h2 class="anchored" data-anchor-id="effect-of-reflective-substrate">Effect of reflective substrate</h2>
 <p>Now we repeat the calculation, but with an Ag substrate under the Si. Previously, we did not specify the substrate and so it was assumed by Solcore to be air (n=1, k=0).</p>
 <p><strong>PLOT 2</strong></p>
 <div class="cell" data-execution_count="8">
@@ -312,10 +374,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(2) Absorption in Si with varying thickness (Ag substrate)"</span>)</span>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="1b-simple_cell_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
+<p><img src="1b-simple_cell_files/figure-html/cell-9-output-1.png" width="586" height="424"></p>
 </div>
 </div>
 <p>We see that the interference fringes get more prominent in the coherent calculation, due to higher reflection at the rear Si/Ag surface compared to Ag/Air. We also see a slightly boosted absorption at long wavelengths at all thicknesses, again due to improved reflection at the rear surface</p>
+</section>
+<section id="effect-of-polarization-and-angle-of-incidence" class="level2">
+<h2 class="anchored" data-anchor-id="effect-of-polarization-and-angle-of-incidence">Effect of polarization and angle of incidence</h2>
 <p>Finally, we look at the effect of incidence angle and polarization of the light hitting the cell.</p>
 <p><strong>PLOT 3</strong></p>
 <div class="cell" data-execution_count="9">
@@ -351,13 +416,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(3) Absorption in Si with varying thickness"</span>)</span>
 <span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="1b-simple_cell_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+<p><img src="1b-simple_cell_files/figure-html/cell-10-output-1.png" width="586" height="424"></p>
 </div>
 </div>
 <p>For normal incidence (<span class="math inline">\(\theta = 0^\circ\)</span>), <em>s</em> (solid lines) and <em>p</em> (dashed lines) polarization are equivalent. As the incidence angle increases, in general absorption is higher for p-polarized light (due to lower reflection). Usually, sunlight is modelled as unpolarized light, which computationally is usually done by averaging the results for s and p-polarized light.</p>
+</section>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
 <p>We have now seen some effects of interference in layers of different thicknesses, and seen the effect of adding a highly reflective substrate. So we already have two strategies for light-trapping/improving the absorption in a solar cell: adding an anti-reflection coating (in example 1a), to reduce front-surface reflection and get more light into the cell, and adding a highly reflective layer at the back, to reduce loss through the back of the cell and keep light trapped in the cell.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.520">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>solcore-education – b-optical_constants</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">solcore-education</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">Home</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">(Untitled)</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Examples</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/1a-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1a: Simple Si solar cell</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/1b-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1b: Basic cell optics</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/1c-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1c: Electric models</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/2a-optical_constants.html" class="sidebar-item-text sidebar-link">Example 2a: Optical constant sources</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/2b-optical_constants.html" class="sidebar-item-text sidebar-link active">Example 2b: Optical constant models</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/3a-triple_junction.html" class="sidebar-item-text sidebar-link">Example 3a: Triple junction cell</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/4a-textured_Si_cell.html" class="sidebar-item-text sidebar-link">4a-textured_Si_cell.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/5a-ultrathin_GaAs_cell.html" class="sidebar-item-text sidebar-link">5a-ultrathin_GaAs_cell.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/6a-multiscale_models.html" class="sidebar-item-text sidebar-link">6a-multiscale_models.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/6b-multiscale_models.html" class="sidebar-item-text sidebar-link">6b-multiscale_models.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/7a-optimization.html" class="sidebar-item-text sidebar-link">7a-optimization.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link">7b-optimization.html</a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#example-2b-optical-constant-models" id="toc-example-2b-optical-constant-models" class="nav-link active" data-scroll-target="#example-2b-optical-constant-models">Example 2b: Optical constant models</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="example-2b-optical-constant-models" class="level1">
+<h1>Example 2b: Optical constant models</h1>
+<p>We may want to model the optical constants of a material using analytic expressions, rather than just take data from a table; this can be useful when e.g.&nbsp;fitting ellipsometry data for a material with unknown optical constants, or if you do not have refractive index data for a material but have some information about where critical points in the band structure occur. In this example we will consider a simple model for a dielectric material, and a more complex model for GaAs, a semiconductor.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator <span class="im">import</span> search_db</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator.cppm <span class="im">import</span> Custom_CPPB</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator.dielectric_constant_models <span class="im">import</span> Oscillator</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator.dielectric_constant_models <span class="im">import</span> DielectricConstantModel, Cauchy</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.structure <span class="im">import</span> Structure</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore <span class="im">import</span> material</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>wl <span class="op">=</span> np.linspace(<span class="dv">300</span>, <span class="dv">950</span>, <span class="dv">200</span>)<span class="op">*</span><span class="fl">1e-9</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We search the database for BK7 (borosilicate crown glass) and select the second entry, “Ohara” (index 1). We then select the first item in that list, which is the pageid of the entry - this is what we need to tell Solcore what item to access in the database.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pageid <span class="op">=</span> search_db(<span class="st">"BK7"</span>)[<span class="dv">1</span>][<span class="dv">0</span>]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>BK7 <span class="op">=</span> material(<span class="bu">str</span>(pageid), nk_db<span class="op">=</span><span class="va">True</span>)()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Database file found at /Users/phoebe/.solcore/nk/nk.db
+18 results found.
+pageid  shelf   book    page    filepath    hasrefractive   hasextinction   rangeMin    rangeMax    points
+963 glass   BK7 SCHOTT  glass/schott/N-BK7.yml  1   1   0.3 2.5 25
+964 glass   BK7 OHARA   glass/ohara/S-BSL7.yml  1   1   0.29    2.4 31
+965 glass   BK7 HIKARI  glass/hikari/J-BK7A.yml 1   1   0.365015    2.05809 33
+966 glass   BK7 CDGM    glass/cdgm/H-K9L.yml    1   1   0.365   1.711   34
+967 glass   BK7 HOYA    glass/hoya/BSC7.yml 1   1   0.36501 1.01398 38
+968 glass   BK7 SUMITA  glass/sumita/K-BK7.yml  1   1   0.36    1.55    25
+969 glass   BK7 LZOS    glass/lzos/K8.yml   1   0   0.365   2.3254  31
+1090    glass   SCHOTT-BK   BK7G18  glass/schott/BK7G18.yml 1   1   0.38    2.5 18
+1091    glass   SCHOTT-BK   N-BK7   glass/schott/N-BK7.yml  1   1   0.3 2.5 25
+1092    glass   SCHOTT-BK   N-BK7HT glass/schott/N-BK7HT.yml    1   1   0.3 2.5 25
+1093    glass   SCHOTT-BK   N-BK7HTi    glass/schott/N-BK7HTi.yml   1   1   0.3 2.5 25
+1095    glass   SCHOTT-BK   P-BK7   glass/schott/P-BK7.yml  1   1   0.31    2.5 24
+1683    glass   HIKARI-BK   E-BK7   glass/hikari/E-BK7.yml  1   1   0.4 0.7 32
+1684    glass   HIKARI-BK   J-BK7   glass/hikari/J-BK7.yml  1   1   0.365015    2.05809 33
+1685    glass   HIKARI-BK   J-BK7A  glass/hikari/J-BK7A.yml 1   1   0.365015    2.05809 33
+2452    glass   SUMITA-BK   K-BK7   glass/sumita/K-BK7.yml  1   1   0.36    1.55    25
+2819    other   BK7_matching_liquid Cargille    index-matching liquids/cargille/BK7_matching_liquid.yml 1   0   0.31    1.55    200
+2904    3d  glass   BK7 glass/schott/N-BK7.yml  1   1   0.3 2.5 25</code></pre>
+</div>
+</div>
+<p>Next, we define a Cauchy oscillator model. We put this into the DielectricConstantModel class; in theory, we could add as many oscillators as we want here.</p>
+<p>The parameters for the Cauchy model for BK7 are from Wikipedia: https://en.wikipedia.org/wiki/Cauchy%27s_equation</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cauchy <span class="op">=</span> Cauchy(An<span class="op">=</span><span class="fl">1.5046</span>, Bn<span class="op">=</span><span class="fl">0.00420</span>, Cn<span class="op">=</span><span class="dv">0</span>, Ak<span class="op">=</span><span class="dv">0</span>, Bk<span class="op">=</span><span class="dv">0</span>, Ck<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> DielectricConstantModel(e_inf<span class="op">=</span><span class="dv">0</span>, oscillators<span class="op">=</span>[cauchy])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Calculate the dielectric function which result from the Cauchy model, then get the <span class="math inline">\(n\)</span> and <span class="math inline">\(\kappa\)</span> data from the database BK7 material for the complex refractive index:</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>eps <span class="op">=</span> model.dielectric_constants(wl<span class="op">*</span><span class="fl">1e9</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>nk <span class="op">=</span> BK7.n(wl) <span class="op">+</span> <span class="ot">1j</span><span class="op">*</span>BK7.k(wl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Database file found at /Users/phoebe/.solcore/nk/nk.db
+Material glass/ohara/S-BSL7.yml loaded.
+Database file found at /Users/phoebe/.solcore/nk/nk.db
+Material glass/ohara/S-BSL7.yml loaded.</code></pre>
+</div>
+</div>
+<p>Calculate the dielectric function by squaring the refractive index:</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>eps_db <span class="op">=</span> nk<span class="op">**</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>PLOT 1</strong>: Plot the database values of e_1 (real part of the dielectric function) against the Cauchy model values:</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wl<span class="op">*</span><span class="fl">1e9</span>, np.real(eps), label<span class="op">=</span><span class="st">'Cauchy model'</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wl<span class="op">*</span><span class="fl">1e9</span>, np.real(eps_db), <span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Database values'</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="vs">r'$\epsilon_1$'</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wavelength (nm)'</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(1) Dielectric function for BK7 glass"</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2b-optical_constants_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Here, we have just looked at the real part of the dielectric function, but you can include absorption (non-zero e_2) in the dielectric constant models too.</p>
+<p>Now let’s look at a more complicated CPPB (Critical Point Parabolic Band) model for GaAs. First, read in experimental data for GaAs dielectric function (from Palik)…</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Palik_Eps1 <span class="op">=</span> np.loadtxt(<span class="st">"data/Palik_GaAs_Eps1.csv"</span>, delimiter<span class="op">=</span><span class="st">','</span>, unpack<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>Palik_Eps2 <span class="op">=</span> np.loadtxt(<span class="st">"data/Palik_GaAs_Eps2.csv"</span>, delimiter<span class="op">=</span><span class="st">','</span>, unpack<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Generate a list of energies over which to calculate the model dielectric function and create the CPPB_model Class object:</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>E <span class="op">=</span> np.linspace(<span class="fl">0.2</span>, <span class="dv">5</span>, <span class="dv">1000</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>CPPB_Model <span class="op">=</span> Custom_CPPB()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The Material_Params method loads in the desired material parameters as a dictionary (for some common materials):</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>MatParams <span class="op">=</span> CPPB_Model.Material_Params(<span class="st">"GaAs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Parameters can be customised by assigning to the correct dictionary key:</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>MatParams[<span class="st">"B1"</span>] <span class="op">=</span> <span class="fl">5.8</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>MatParams[<span class="st">"B1s"</span>] <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>MatParams[<span class="st">"Gamma_Eg_ID"</span>] <span class="op">=</span> <span class="fl">0.3</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>MatParams[<span class="st">"Alpha_Eg_ID"</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>MatParams[<span class="st">"E1"</span>] <span class="op">=</span> <span class="fl">2.8</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>MatParams[<span class="st">"E1_d1"</span>] <span class="op">=</span> <span class="fl">2.9</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>MatParams[<span class="st">"Gamma_E1"</span>] <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>MatParams[<span class="st">"E2"</span>] <span class="op">=</span> <span class="fl">4.72</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>MatParams[<span class="st">"C"</span>] <span class="op">=</span> <span class="fl">3.0</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>MatParams[<span class="st">"Alpha_E2"</span>] <span class="op">=</span> <span class="fl">0.04</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>MatParams[<span class="st">"Gamma_E2"</span>] <span class="op">=</span> <span class="fl">0.19</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Must define a structure object containing the required oscillator functions. The oscillator type and material parameters are both passed to individual ‘Oscillators’ in the structure:</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Adachi_GaAs <span class="op">=</span> Structure([</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    Oscillator(oscillator_type<span class="op">=</span><span class="st">"E0andE0_d0"</span>, material_parameters<span class="op">=</span>MatParams),</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    Oscillator(oscillator_type<span class="op">=</span><span class="st">"E1andE1_d1"</span>, material_parameters<span class="op">=</span>MatParams),</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    Oscillator(oscillator_type<span class="op">=</span><span class="st">"E_ID"</span>, material_parameters<span class="op">=</span>MatParams),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    Oscillator(oscillator_type<span class="op">=</span><span class="st">"E2"</span>, material_parameters<span class="op">=</span>MatParams)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>Output <span class="op">=</span> CPPB_Model.eps_calc(Adachi_GaAs, E)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>PLOT 2</strong>: real and imaginary part of the dielectric constant, showing the individual contributions of the critical points.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">1</span>, ncols<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="fl">4.5</span>))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Subplot I :: Real part of the dielectric function.</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>ax1.set_xlim(<span class="dv">0</span>, <span class="fl">5.3</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>ax1.set_ylim(<span class="op">-</span><span class="dv">14</span>, <span class="dv">27</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>ax1.plot(Palik_Eps1[:, <span class="dv">0</span>], Palik_Eps1[:, <span class="dv">1</span>], label<span class="op">=</span><span class="st">"Exp. Data (Palik)"</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>         marker<span class="op">=</span><span class="st">'o'</span>, ls<span class="op">=</span><span class="st">'none'</span>, markerfacecolor<span class="op">=</span><span class="st">'none'</span>, markeredgecolor<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>ax1.plot(E, Output[<span class="st">"eps"</span>].real, color<span class="op">=</span><span class="st">"navy"</span>, label<span class="op">=</span><span class="st">"Total"</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>ax1.plot(E, Output[<span class="st">"components"</span>][<span class="dv">0</span>].real, color<span class="op">=</span><span class="st">"orangered"</span>, ls<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">"$E_0$ and $E_0+\Delta_0$"</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>ax1.plot(E, Output[<span class="st">"components"</span>][<span class="dv">1</span>].real, color<span class="op">=</span><span class="st">"dodgerblue"</span>, ls<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">"$E_1$ and $E_1+\Delta_1$"</span>)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>ax1.plot(E, Output[<span class="st">"components"</span>][<span class="dv">2</span>].real, color<span class="op">=</span><span class="st">"limegreen"</span>, ls<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">"$E_</span><span class="sc">{ID}</span><span class="st">$ (Indirect)"</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>ax1.plot(E, Output[<span class="st">"components"</span>][<span class="dv">3</span>].real, color<span class="op">=</span><span class="st">"gold"</span>, ls<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">"$E_2$"</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">"Energy (eV)"</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">"$\epsilon_1 (\omega)$"</span>)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"(2) CPPB model for GaAs compared with experimental data"</span>)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>ax1.text(<span class="fl">0.05</span>, <span class="fl">0.05</span>, <span class="st">'(a)'</span>, transform<span class="op">=</span>ax1.transAxes, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Subplot II :: Imaginary part of the dielectric function.</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>ax2.plot(Palik_Eps2[:, <span class="dv">0</span>], Palik_Eps2[:, <span class="dv">1</span>], label<span class="op">=</span><span class="st">"Exp. Data (Palik)"</span>,</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>         marker<span class="op">=</span><span class="st">'o'</span>, ls<span class="op">=</span><span class="st">'none'</span>, markerfacecolor<span class="op">=</span><span class="st">'none'</span>, markeredgecolor<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>ax2.plot(E, Output[<span class="st">"eps"</span>].imag, color<span class="op">=</span><span class="st">"Navy"</span>, label<span class="op">=</span><span class="st">"Total"</span>)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>ax2.plot(E, Output[<span class="st">"components"</span>][<span class="dv">0</span>].imag, color<span class="op">=</span><span class="st">"orangered"</span>, ls<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">"$E_0$ and $E_0+\Delta_0$"</span>)</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>ax2.plot(E, Output[<span class="st">"components"</span>][<span class="dv">1</span>].imag, color<span class="op">=</span><span class="st">"dodgerblue"</span>, ls<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">"$E_1$ and $E_1+\Delta_1$"</span>)</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>ax2.plot(E, Output[<span class="st">"components"</span>][<span class="dv">2</span>].imag, color<span class="op">=</span><span class="st">"limegreen"</span>, ls<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">"$E_</span><span class="sc">{ID}</span><span class="st">$ (Indirect)"</span>)</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>ax2.plot(E, Output[<span class="st">"components"</span>][<span class="dv">3</span>].imag, color<span class="op">=</span><span class="st">"gold"</span>, ls<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">"$E_2$"</span>)</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>ax2.set_xlim(<span class="dv">0</span>, <span class="fl">5.3</span>)</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>ax2.set_ylim(<span class="dv">0</span>, <span class="dv">27</span>)</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">"Energy (eV)"</span>)</span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">"$\epsilon_2 (\omega)$"</span>)</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>ax2.text(<span class="fl">0.05</span>, <span class="fl">0.05</span>, <span class="st">'(b)'</span>, transform<span class="op">=</span>ax2.transAxes, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>ax2.legend(loc<span class="op">=</span><span class="st">"upper left"</span>, frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2b-optical_constants_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

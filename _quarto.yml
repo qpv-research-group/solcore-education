@@ -1,0 +1,38 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "solcore-education"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+
+  sidebar:
+    style: "floating"
+    search: true
+    contents:
+      - section: "Examples"
+        contents:
+          - solar-cell-simulation/notebooks/1a-simple_cell.ipynb
+          - solar-cell-simulation/notebooks/1b-simple_cell.ipynb
+          - solar-cell-simulation/notebooks/1c-simple_cell.ipynb
+          - solar-cell-simulation/notebooks/2a-optical_constants.ipynb
+          - solar-cell-simulation/notebooks/2b-optical_constants.ipynb
+          - solar-cell-simulation/notebooks/3a-triple_junction.ipynb
+          - solar-cell-simulation/notebooks/4a-textured_Si_cell.ipynb
+          - solar-cell-simulation/notebooks/5a-ultrathin_GaAs_cell.ipynb
+          - solar-cell-simulation/notebooks/6a-multiscale_models.ipynb
+          - solar-cell-simulation/notebooks/6b-multiscale_models.ipynb
+          - solar-cell-simulation/notebooks/7a-optimization.ipynb
+          - solar-cell-simulation/notebooks/7b-optimization.ipynb
+
+format:
+  html:
+    theme: flatly
+    css: styles.css
+    toc: true
+
+
+

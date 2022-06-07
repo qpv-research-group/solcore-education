@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.520">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>solcore-education – b-optimization</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">solcore-education</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">Home</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">(Untitled)</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Examples</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/1a-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1a: Simple Si solar cell</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/1b-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1b: Basic cell optics</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/1c-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1c: Electric models</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/2a-optical_constants.html" class="sidebar-item-text sidebar-link">Example 2a: Optical constant sources</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/2b-optical_constants.html" class="sidebar-item-text sidebar-link">Example 2b: Optical constant models</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/3a-triple_junction.html" class="sidebar-item-text sidebar-link">Example 3a: Triple junction cell</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/4a-textured_Si_cell.html" class="sidebar-item-text sidebar-link">4a-textured_Si_cell.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/5a-ultrathin_GaAs_cell.html" class="sidebar-item-text sidebar-link">5a-ultrathin_GaAs_cell.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/6a-multiscale_models.html" class="sidebar-item-text sidebar-link">6a-multiscale_models.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/6b-multiscale_models.html" class="sidebar-item-text sidebar-link">6b-multiscale_models.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/7a-optimization.html" class="sidebar-item-text sidebar-link">7a-optimization.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link active">7b-optimization.html</a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PyCharm issue with this example!</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore <span class="im">import</span> material, si</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.optics.tmm <span class="im">import</span> OptiStack</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.optics.tmm <span class="im">import</span> calculate_rat</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the DE implementation</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.optimization <span class="im">import</span> PDE, DE</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.light_source <span class="im">import</span> LightSource</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell <span class="im">import</span> SolarCell</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.structure <span class="im">import</span> Junction, Layer</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell_solver <span class="im">import</span> solar_cell_solver</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.constants <span class="im">import</span> q, kb</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.material_system <span class="im">import</span> create_new_material</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator <span class="im">import</span> search_db</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># The "if __name__ == "__main__" construction is used to avoid issues with parallel processing on Windows.</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># The issue arises because the multiprocessing module uses a different process on Windows than on UNIX</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># systems which will throw errors if this construction is not used.</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Optimizing a four-junction cell using SiGeSn as the second-lowest bandgap material.</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co"># First, using a purely optical TMM simulation to calculate the photogenerated current in each sub-cell. The thing to</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co"># optimize is then the current of the current-limiting cell in the structure; in other words we want to *maximize* the</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co"># lowest sub-cell current, to achieve current-matching with the highest possible current.</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Since the differential evolution algorithm as implemented does a minimization, we are actually minimizing the negative of</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co"># this value.</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Once we have good initial values for the total layer thicknesses, we use full electrical simulation to determine the</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co"># n and p type layer thicknesses to calculate a maximum possible efficiency for the 4J device.</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co"># To use yabox/the optimization module for the DE, we need to define a class which sets up the problem and has an</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co"># 'evaluate' function, which</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co"># will actually calculate the value we are trying to minimize for a set of parameters.</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="co"># add SiGeSn optical constants to the database</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="co"># create_new_material('SiGeSn', 'data/SiGeSn_n.txt', 'data/SiGeSn_k.txt', 'data/SiGeSn_params.txt') # Note: comment out this line after the material</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="co"># has been added to avoid being asked if you want to overwrite it.</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="co"># define class for the optimization:</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> calc_min_Jsc():</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>        <span class="co"># initialize an instance of the class; set some information which will be used in each iteration of the calculation:</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>        <span class="co"># materials, wavelengths, the light source</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>        wl <span class="op">=</span> np.linspace(<span class="dv">300</span>, <span class="dv">1900</span>, <span class="dv">800</span>)</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>        <span class="co"># materials</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>        SiGeSn <span class="op">=</span> material(<span class="st">'SiGeSn'</span>)()</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>        GaAs <span class="op">=</span> material(<span class="st">'GaAs'</span>)()</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>        InGaP <span class="op">=</span> material(<span class="st">'GaInP'</span>)(In<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>        Ge <span class="op">=</span> material(<span class="st">'Ge'</span>)()</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>        Ta2O5_index <span class="op">=</span> search_db(<span class="st">"Ta2O5/Rodriguez"</span>)[<span class="dv">0</span>][<span class="dv">0</span>]</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>        <span class="co"># make these attributes of 'self' so they can be accessed by the class object</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>        <span class="co"># here I am also creating lists of wavelengths and corresponding n and k data from</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>        <span class="co"># the Solcore materials - the reason for this is that there is currently an issue with using the Solcore</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>        <span class="co"># material class in parallel computations. Thus the information for the n and k data is saved here as a list</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>        <span class="co"># rather than a material object (see the documentation of OptiStack for the different acceptable formats</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>        <span class="co"># to pass optical constants for an OptiStack)</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.wl <span class="op">=</span> wl</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.SiGeSn <span class="op">=</span> [<span class="va">self</span>.wl, SiGeSn.n(<span class="va">self</span>.wl<span class="op">*</span><span class="fl">1e-9</span>), SiGeSn.k(<span class="va">self</span>.wl<span class="op">*</span><span class="fl">1e-9</span>)]</span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Ge <span class="op">=</span> [<span class="va">self</span>.wl, Ge.n(<span class="va">self</span>.wl<span class="op">*</span><span class="fl">1e-9</span>), Ge.k(<span class="va">self</span>.wl<span class="op">*</span><span class="fl">1e-9</span>)]</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.InGaP <span class="op">=</span> [<span class="va">self</span>.wl, InGaP.n(<span class="va">self</span>.wl<span class="op">*</span><span class="fl">1e-9</span>), InGaP.k(<span class="va">self</span>.wl<span class="op">*</span><span class="fl">1e-9</span>)]</span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.GaAs <span class="op">=</span> [<span class="va">self</span>.wl, GaAs.n(<span class="va">self</span>.wl<span class="op">*</span><span class="fl">1e-9</span>), GaAs.k(<span class="va">self</span>.wl<span class="op">*</span><span class="fl">1e-9</span>)]</span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.MgF2 <span class="op">=</span> [<span class="va">self</span>.wl, material(<span class="st">'MgF2'</span>)().n(<span class="va">self</span>.wl<span class="op">*</span><span class="fl">1e-9</span>), material(<span class="st">'MgF2'</span>)().k(<span class="va">self</span>.wl<span class="op">*</span><span class="fl">1e-9</span>)]</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Ta2O5 <span class="op">=</span> [<span class="va">self</span>.wl, material(<span class="bu">str</span>(Ta2O5_index),</span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>                                        nk_db<span class="op">=</span><span class="va">True</span>)().n(<span class="va">self</span>.wl<span class="op">*</span><span class="fl">1e-9</span>), material(<span class="bu">str</span>(Ta2O5_index),</span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>                                                                                nk_db<span class="op">=</span><span class="va">True</span>)().k(<span class="va">self</span>.wl<span class="op">*</span><span class="fl">1e-9</span>)]</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>        <span class="co"># assuming an AM1.5G spectrum</span></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.spectr <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'standard'</span>, version<span class="op">=</span><span class="st">'AM1.5g'</span>, x<span class="op">=</span><span class="va">self</span>.wl,</span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>                           output_units<span class="op">=</span><span class="st">'photon_flux_per_nm'</span>, concentration<span class="op">=</span><span class="dv">1</span>).spectrum(<span class="va">self</span>.wl)[<span class="dv">1</span>]</span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> calculate(<span class="va">self</span>, x):</span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>        <span class="co"># x[0] = MgF2 thickness (anti-reflection coating)</span></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>        <span class="co"># x[1] = Ta2O5 thickness (anti-reflection coating)</span></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>        <span class="co"># x[2]  = InGaP (top junction) thickness</span></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>        <span class="co"># x[3] = GaAs (second junction) thickness</span></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>        <span class="co"># x[4] = SiGeSn (third junction) thickness</span></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>        <span class="co"># keep the thickness of the bottom cell constant; from a purely optical point of view, this should be infinitely thick,</span></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>        <span class="co"># so there is no point in optimizing the thickness</span></span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>        SC <span class="op">=</span> [[x[<span class="dv">0</span>]] <span class="op">+</span> <span class="va">self</span>.MgF2, [x[<span class="dv">1</span>]] <span class="op">+</span> <span class="va">self</span>.Ta2O5, [x[<span class="dv">2</span>]] <span class="op">+</span> <span class="va">self</span>.InGaP, [x[<span class="dv">3</span>]] <span class="op">+</span> <span class="va">self</span>.GaAs, [x[<span class="dv">4</span>]] <span class="op">+</span> <span class="va">self</span>.SiGeSn,</span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>              [<span class="fl">300e3</span>] <span class="op">+</span> <span class="va">self</span>.Ge]  <span class="co"># , [x[5]] + self.Ge]</span></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>        <span class="co"># create the OptiStack</span></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>        full_stack <span class="op">=</span> OptiStack(SC, no_back_reflection<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>        <span class="co"># calculate reflection, transmission, and absorption in each layer. We are specifying that the last layer,</span></span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>        <span class="co"># a very thick Ge substrate, should be treated incoherently, otherwise we would see very narrow, unphysical oscillations</span></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>        <span class="co"># in the R/A/T spectra.</span></span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>        RAT <span class="op">=</span> calculate_rat(full_stack, <span class="va">self</span>.wl, no_back_reflection<span class="op">=</span><span class="va">False</span>, coherent<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>                            coherency_list<span class="op">=</span>[<span class="st">'c'</span>, <span class="st">'c'</span>, <span class="st">'c'</span>, <span class="st">'c'</span>, <span class="st">'c'</span>, <span class="st">'i'</span>])</span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>        <span class="co"># extract absorption per layer</span></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>        A_InGaP <span class="op">=</span> RAT[<span class="st">'A_per_layer'</span>][<span class="dv">3</span>]</span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>        A_GaAs <span class="op">=</span> RAT[<span class="st">'A_per_layer'</span>][<span class="dv">4</span>]</span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>        A_SiGeSn <span class="op">=</span> RAT[<span class="st">'A_per_layer'</span>][<span class="dv">5</span>]</span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>        A_Ge <span class="op">=</span> RAT[<span class="st">'A_per_layer'</span>][<span class="dv">6</span>]</span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> A_InGaP, A_GaAs, A_SiGeSn, A_Ge, RAT[<span class="st">'T'</span>], RAT[<span class="st">'R'</span>]</span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> evaluate(<span class="va">self</span>, x):</span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a>        A_InGaP, A_GaAs, A_SiGeSn, A_Ge, _, _ <span class="op">=</span>  <span class="va">self</span>.calculate(x)</span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a>        <span class="co"># calculate photo-generated currents using the AM1.5 G spectrum for each layer -- this is the current with 100%</span></span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a>        <span class="co"># internal quantum efficiency (i.e. every absorbed photon generates an electron-hole pair which is collected).</span></span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a>        Jsc_InGaP <span class="op">=</span> <span class="fl">0.1</span> <span class="op">*</span> q <span class="op">*</span> np.trapz(A_InGaP <span class="op">*</span> <span class="va">self</span>.spectr, <span class="va">self</span>.wl)</span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>        Jsc_GaAs <span class="op">=</span> <span class="fl">0.1</span> <span class="op">*</span> q <span class="op">*</span> np.trapz(A_GaAs <span class="op">*</span> <span class="va">self</span>.spectr, <span class="va">self</span>.wl)</span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a>        Jsc_SiGeSn <span class="op">=</span> <span class="fl">0.1</span> <span class="op">*</span> q <span class="op">*</span> np.trapz(A_SiGeSn <span class="op">*</span> <span class="va">self</span>.spectr, <span class="va">self</span>.wl)</span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>        Jsc_Ge <span class="op">=</span> <span class="fl">0.1</span> <span class="op">*</span> q <span class="op">*</span> np.trapz(A_Ge <span class="op">*</span> <span class="va">self</span>.spectr, <span class="va">self</span>.wl)</span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a>        <span class="co"># find the limiting current by checking which junction has the lowest current. Then take the negative since</span></span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a>        <span class="co"># we need to minimize (not maximize)</span></span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a>        limiting_Jsc <span class="op">=</span> <span class="op">-</span><span class="bu">min</span>([Jsc_InGaP, Jsc_GaAs, Jsc_SiGeSn, Jsc_Ge])</span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> limiting_Jsc</span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> plot(<span class="va">self</span>, x):</span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a>        A_InGaP, A_GaAs, A_SiGeSn, A_Ge, T, R <span class="op">=</span> <span class="va">self</span>.calculate(x)</span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>        plt.figure()</span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>        plt.plot(<span class="va">self</span>.wl, A_InGaP, label<span class="op">=</span><span class="st">'InGaP'</span>)</span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>        plt.plot(<span class="va">self</span>.wl, A_GaAs, label<span class="op">=</span><span class="st">'A_GaAs'</span>)</span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>        plt.plot(<span class="va">self</span>.wl, A_SiGeSn, label<span class="op">=</span><span class="st">'SiGeSn'</span>)</span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a>        plt.plot(<span class="va">self</span>.wl, A_Ge, label <span class="op">=</span> <span class="st">'Ge'</span>)</span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>        plt.plot(<span class="va">self</span>.wl, T, label<span class="op">=</span><span class="st">'T'</span>)</span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a>        plt.plot(<span class="va">self</span>.wl, R, label<span class="op">=</span><span class="st">'R'</span>)</span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>        plt.legend()</span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a>        plt.xlabel(<span class="st">'Wavelength (nm)'</span>)</span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>        plt.ylabel(<span class="st">'R/A/T'</span>)</span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a>        plt.show()</span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> calc_min_Jsc_DA():</span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, ARC_thickness):</span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.ARC <span class="op">=</span> ARC_thickness</span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> make_cell(<span class="va">self</span>, x):</span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a>        <span class="co">#x[0]: total InGaP thickness</span></span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>        <span class="co">#x[1]: total InGaAs thickness</span></span>
+<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a>        <span class="co">#x[2]: total SiGeSn thickness</span></span>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>        <span class="co">#x[3]: total Ge thickness</span></span>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a>        <span class="co">#x[4]: InGaP n thickness</span></span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>        <span class="co">#x[5]: InGaAs n thickness</span></span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a>        <span class="co">#x[6]: SiGeSn n thickness</span></span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a>        <span class="co">#x[7]: Ge n thickness</span></span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a>        e_charge <span class="op">=</span> si(<span class="st">'1eV'</span>)</span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>        Ta2O5_index <span class="op">=</span> search_db(<span class="st">"Ta2O5/Rodriguez"</span>)[<span class="dv">0</span>][<span class="dv">0</span>]</span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a>        <span class="co"># materials</span></span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>        SiGeSn <span class="op">=</span> material(<span class="st">'SiGeSn'</span>)</span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a>        GaAs <span class="op">=</span> material(<span class="st">'GaAs'</span>)</span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a>        InGaP <span class="op">=</span> material(<span class="st">'GaInP'</span>)</span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a>        Ge <span class="op">=</span> material(<span class="st">'Ge'</span>)</span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>        MgF2 <span class="op">=</span> material(<span class="st">'MgF2'</span>)()</span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>        Ta2O5 <span class="op">=</span> material(<span class="bu">str</span>(Ta2O5_index), nk_db<span class="op">=</span><span class="va">True</span>)()</span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>        AlInP <span class="op">=</span> material(<span class="st">"AlInP"</span>)</span>
+<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a>        window_material <span class="op">=</span> AlInP(Al<span class="op">=</span><span class="fl">0.52</span>)</span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a>        GaInP_mobility_h <span class="op">=</span> <span class="fl">0.03</span>  <span class="co">#</span></span>
+<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a>        GaInP_lifetime_h <span class="op">=</span> <span class="fl">1e-8</span></span>
+<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a>        GaInP_D_h <span class="op">=</span> GaInP_mobility_h <span class="op">*</span> kb <span class="op">*</span> <span class="dv">300</span> <span class="op">/</span> e_charge</span>
+<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a>        GaInP_L_h <span class="op">=</span> np.sqrt(GaInP_D_h <span class="op">*</span> GaInP_lifetime_h)</span>
+<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a>        GaInP_mobility_e <span class="op">=</span> <span class="fl">0.015</span></span>
+<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a>        GaInP_lifetime_e <span class="op">=</span> <span class="fl">1e-8</span></span>
+<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a>        GaInP_D_e <span class="op">=</span> GaInP_mobility_e <span class="op">*</span> kb <span class="op">*</span> <span class="dv">300</span> <span class="op">/</span> e_charge</span>
+<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a>        GaInP_L_e <span class="op">=</span> np.sqrt(GaInP_D_e <span class="op">*</span> GaInP_lifetime_e)</span>
+<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a>        top_cell_n_material <span class="op">=</span> InGaP(In<span class="op">=</span><span class="fl">0.5</span>, Nd<span class="op">=</span>si(<span class="st">"2e18cm-3"</span>), hole_diffusion_length<span class="op">=</span>GaInP_L_h,</span>
+<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a>                                    relative_permittivity<span class="op">=</span><span class="fl">11.75</span>, hole_mobility<span class="op">=</span>GaInP_mobility_h)</span>
+<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a>        top_cell_p_material <span class="op">=</span> InGaP(In<span class="op">=</span><span class="fl">0.5</span>, Na<span class="op">=</span>si(<span class="st">"2e17cm-3"</span>), electron_diffusion_length<span class="op">=</span>GaInP_L_e,</span>
+<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a>                                    relative_permittivity<span class="op">=</span><span class="fl">11.75</span>, electron_mobility<span class="op">=</span>GaInP_mobility_e)</span>
+<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a>        <span class="co"># MID CELL  - GaAs</span></span>
+<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a>        GaAs_mobility_h <span class="op">=</span> <span class="fl">0.85</span>  <span class="co">#</span></span>
+<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a>        GaAs_lifetime_h <span class="op">=</span> <span class="fl">1e-8</span></span>
+<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a>        GaAs_D_h <span class="op">=</span> GaAs_mobility_h <span class="op">*</span> kb <span class="op">*</span> <span class="dv">300</span> <span class="op">/</span> e_charge</span>
+<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a>        GaAs_L_h <span class="op">=</span> np.sqrt(GaAs_D_h <span class="op">*</span> GaAs_lifetime_h)</span>
+<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a>        GaAs_mobility_e <span class="op">=</span> <span class="fl">0.08</span></span>
+<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a>        GaAs_lifetime_e <span class="op">=</span> <span class="fl">1e-8</span></span>
+<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a>        GaAs_D_e <span class="op">=</span> GaAs_mobility_e <span class="op">*</span> kb <span class="op">*</span> <span class="dv">300</span> <span class="op">/</span> e_charge</span>
+<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a>        GaAs_L_e <span class="op">=</span> np.sqrt(GaAs_D_e <span class="op">*</span> GaAs_lifetime_e)</span>
+<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a>        mid_cell_n_material <span class="op">=</span> GaAs(Nd<span class="op">=</span>si(<span class="st">"1e18cm-3"</span>), hole_diffusion_length<span class="op">=</span>GaAs_L_h,</span>
+<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a>                                   relative_permittivity<span class="op">=</span><span class="fl">13.1</span>, hole_mobility<span class="op">=</span>GaAs_mobility_h)</span>
+<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a>        mid_cell_p_material <span class="op">=</span> GaAs(Na<span class="op">=</span>si(<span class="st">"1e17cm-3"</span>), electron_diffusion_length<span class="op">=</span>GaAs_L_e,</span>
+<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a>                                   relative_permittivity<span class="op">=</span><span class="fl">13.1</span>, electron_mobility<span class="op">=</span>GaAs_mobility_e)</span>
+<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a>        SiGeSn.band_gap <span class="op">=</span> si(<span class="st">'0.77eV'</span>) <span class="co"># from PL measurement</span></span>
+<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a>        SiGeSn_L_h <span class="op">=</span> si(<span class="st">'0.35um'</span>)</span>
+<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a>        SiGeSn_L_e <span class="op">=</span> si(<span class="st">'5um'</span>)</span>
+<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a>        SiGeSn_lifetime_e <span class="op">=</span> <span class="fl">1e-6</span></span>
+<span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a>        SiGeSn_lifetime_h <span class="op">=</span> <span class="fl">1e-6</span></span>
+<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a>        SiGeSn_mobility_h <span class="op">=</span> SiGeSn_L_h <span class="op">**</span> <span class="dv">2</span> <span class="op">*</span> e_charge <span class="op">/</span> (SiGeSn_lifetime_h <span class="op">*</span> kb <span class="op">*</span> <span class="dv">300</span>)</span>
+<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a>        SiGeSn_mobility_e <span class="op">=</span> SiGeSn_L_e <span class="op">**</span> <span class="dv">2</span> <span class="op">*</span> e_charge <span class="op">/</span> (SiGeSn_lifetime_e <span class="op">*</span> kb <span class="op">*</span> <span class="dv">300</span>)</span>
+<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a>        pen_cell_n_material <span class="op">=</span> SiGeSn(Nd<span class="op">=</span>si(<span class="st">"1e18cm-3"</span>), hole_diffusion_length<span class="op">=</span>SiGeSn_L_h,</span>
+<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a>                                     relative_permittivity<span class="op">=</span><span class="dv">16</span>, hole_mobility<span class="op">=</span>SiGeSn_mobility_h)</span>
+<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a>        pen_cell_p_material <span class="op">=</span> SiGeSn(Na<span class="op">=</span>si(<span class="st">"1e17cm-3"</span>), electron_diffusion_length<span class="op">=</span>SiGeSn_L_e,</span>
+<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a>                                     relative_permittivity<span class="op">=</span><span class="dv">16</span>, electron_mobility<span class="op">=</span>SiGeSn_mobility_e)</span>
+<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Ge_mobility_h = 0.38 #</span></span>
+<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a>        Ge_lifetime_h <span class="op">=</span> <span class="fl">1e-6</span></span>
+<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Ge_D_h = Ge_mobility_h*kb*300/e_charge</span></span>
+<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Ge_L_h = np.sqrt(Ge_D_h*Ge_lifetime_h)</span></span>
+<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a>        Ge_L_h <span class="op">=</span> si(<span class="st">'500nm'</span>)</span>
+<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a>        Ge_mobility_h <span class="op">=</span> Ge_L_h <span class="op">**</span> <span class="dv">2</span> <span class="op">*</span> e_charge <span class="op">/</span> (Ge_lifetime_h <span class="op">*</span> kb <span class="op">*</span> <span class="dv">300</span>)</span>
+<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a>        Ge_mobility_e <span class="op">=</span> <span class="fl">0.18</span></span>
+<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a>        Ge_lifetime_e <span class="op">=</span> <span class="fl">1e-6</span></span>
+<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a>        Ge_D_e <span class="op">=</span> Ge_mobility_e <span class="op">*</span> kb <span class="op">*</span> <span class="dv">300</span> <span class="op">/</span> e_charge</span>
+<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a>        Ge_L_e <span class="op">=</span> np.sqrt(Ge_D_e <span class="op">*</span> Ge_lifetime_e)</span>
+<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a>        bot_cell_n_material <span class="op">=</span> Ge(Nd<span class="op">=</span>si(<span class="st">"2e18cm-3"</span>), hole_diffusion_length<span class="op">=</span>Ge_L_h,</span>
+<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a>                                 relative_permittivity<span class="op">=</span><span class="dv">16</span>, hole_mobility<span class="op">=</span>Ge_mobility_h)</span>
+<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a>        bot_cell_p_material <span class="op">=</span> Ge(Na<span class="op">=</span>si(<span class="st">"1e17cm-3"</span>), electron_diffusion_length<span class="op">=</span>Ge_L_e,</span>
+<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a>                                 relative_permittivity<span class="op">=</span><span class="dv">16</span>, electron_mobility<span class="op">=</span>Ge_mobility_e)</span>
+<span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a>        <span class="co"># And, finally, we put everything together, adding also the surface recombination velocities. We also add some shading</span></span>
+<span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a>        <span class="co"># due to the metallisation of the cell = 8%, and indicate it has an area of 0.7x0.7 mm2 (converted to m2)</span></span>
+<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a>        solar_cell <span class="op">=</span> SolarCell([</span>
+<span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Layer(si('110nm'), material = MgF2), Layer(si('55nm'), material = ZnS),</span></span>
+<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a>            Layer(si(<span class="va">self</span>.ARC[<span class="dv">0</span>], <span class="st">'nm'</span>), material<span class="op">=</span>MgF2), Layer(si(<span class="va">self</span>.ARC[<span class="dv">1</span>], <span class="st">'nm'</span>), material<span class="op">=</span>Ta2O5),</span>
+<span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a>            Junction([Layer(si(<span class="dv">25</span>, <span class="st">'nm'</span>), material<span class="op">=</span>window_material, role<span class="op">=</span><span class="st">'window'</span>),</span>
+<span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a>                      Layer(si(x[<span class="dv">4</span>], <span class="st">'nm'</span>), material<span class="op">=</span>top_cell_n_material, role<span class="op">=</span><span class="st">'emitter'</span>),</span>
+<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a>                      Layer(si(x[<span class="dv">0</span>]<span class="op">-</span>x[<span class="dv">4</span>], <span class="st">'nm'</span>), material<span class="op">=</span>top_cell_p_material, role<span class="op">=</span><span class="st">'base'</span>),</span>
+<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a>                      ], sn<span class="op">=</span><span class="dv">1</span>, sp<span class="op">=</span><span class="dv">1</span>, kind<span class="op">=</span><span class="st">'DA'</span>),</span>
+<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a>            Junction([Layer(si(x[<span class="dv">5</span>], <span class="st">'nm'</span>), material<span class="op">=</span>mid_cell_n_material, role<span class="op">=</span><span class="st">'emitter'</span>),</span>
+<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a>                      Layer(si(x[<span class="dv">1</span>]<span class="op">-</span>x[<span class="dv">5</span>], <span class="st">'nm'</span>), material<span class="op">=</span>mid_cell_p_material, role<span class="op">=</span><span class="st">'base'</span>),</span>
+<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a>                      ], sn<span class="op">=</span><span class="dv">1</span>, sp<span class="op">=</span><span class="dv">1</span>, kind<span class="op">=</span><span class="st">'DA'</span>),</span>
+<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a>            Junction([Layer(si(x[<span class="dv">6</span>], <span class="st">'nm'</span>), material<span class="op">=</span>pen_cell_n_material, role<span class="op">=</span><span class="st">'emitter'</span>),</span>
+<span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a>                      Layer(si(x[<span class="dv">2</span>]<span class="op">-</span>x[<span class="dv">6</span>], <span class="st">'nm'</span>), material<span class="op">=</span>pen_cell_p_material, role<span class="op">=</span><span class="st">'base'</span>),</span>
+<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a>                      ], sn<span class="op">=</span><span class="dv">1</span>, sp<span class="op">=</span><span class="dv">1</span>, kind<span class="op">=</span><span class="st">'DA'</span>),</span>
+<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a>            Junction([Layer(si(x[<span class="dv">7</span>], <span class="st">'nm'</span>), material<span class="op">=</span>bot_cell_n_material, role<span class="op">=</span><span class="st">'emitter'</span>),</span>
+<span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a>                      Layer(si(x[<span class="dv">3</span>]<span class="op">-</span>x[<span class="dv">7</span>], <span class="st">'nm'</span>), material<span class="op">=</span>bot_cell_p_material, role<span class="op">=</span><span class="st">'base'</span>),</span>
+<span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a>                      ], sn<span class="op">=</span><span class="dv">1</span>, sp<span class="op">=</span><span class="dv">1</span>, kind<span class="op">=</span><span class="st">'DA'</span>),</span>
+<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a>        ], shading<span class="op">=</span><span class="fl">0.0</span>, substrate<span class="op">=</span>bot_cell_n_material)</span>
+<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> solar_cell</span>
+<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> calculate(<span class="va">self</span>, x):</span>
+<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a>        light_source <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'standard'</span>, version<span class="op">=</span><span class="st">'AM1.5g'</span>)</span>
+<span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a>        wl <span class="op">=</span> np.linspace(<span class="dv">300</span>, <span class="dv">1850</span>, <span class="dv">500</span>) <span class="op">*</span> <span class="fl">1e-9</span></span>
+<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a>        solar_cell <span class="op">=</span> <span class="va">self</span>.make_cell(x)</span>
+<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a>        position <span class="op">=</span> [<span class="fl">1e-10</span>] <span class="op">*</span> <span class="dv">10</span> <span class="op">+</span> [<span class="fl">5e-8</span>]</span>
+<span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a>        V <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="fl">3.5</span>, <span class="dv">300</span>)</span>
+<span id="cb1-279"><a href="#cb1-279" aria-hidden="true" tabindex="-1"></a>        solar_cell_solver(solar_cell, <span class="st">'iv'</span>,</span>
+<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a>                          user_options<span class="op">=</span>{<span class="st">'voltages'</span>: V, <span class="st">'light_iv'</span>: <span class="va">True</span>, <span class="st">'wavelength'</span>: wl, <span class="st">'mpp'</span>: <span class="va">True</span>,</span>
+<span id="cb1-281"><a href="#cb1-281" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">'light_source'</span>: light_source,</span>
+<span id="cb1-282"><a href="#cb1-282" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">'optics_method'</span>: <span class="st">'TMM'</span>, <span class="st">'BL_correction'</span>: <span class="va">True</span>, <span class="st">'position'</span>: position})</span>
+<span id="cb1-283"><a href="#cb1-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> wl, solar_cell</span>
+<span id="cb1-285"><a href="#cb1-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> evaluate(<span class="va">self</span>, x):</span>
+<span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a>        _, solar_cell <span class="op">=</span> <span class="va">self</span>.calculate(x)</span>
+<span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a>        efficiency <span class="op">=</span> solar_cell.iv[<span class="st">"Eta"</span>]</span>
+<span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-291"><a href="#cb1-291" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">-</span>efficiency</span>
+<span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-293"><a href="#cb1-293" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> plot(<span class="va">self</span>, x):</span>
+<span id="cb1-294"><a href="#cb1-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-295"><a href="#cb1-295" aria-hidden="true" tabindex="-1"></a>        wl, solar_cell <span class="op">=</span> <span class="va">self</span>.calculate(x)</span>
+<span id="cb1-296"><a href="#cb1-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-297"><a href="#cb1-297" aria-hidden="true" tabindex="-1"></a>        V <span class="op">=</span> solar_cell.iv[<span class="st">'IV'</span>][<span class="dv">0</span>]</span>
+<span id="cb1-298"><a href="#cb1-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-299"><a href="#cb1-299" aria-hidden="true" tabindex="-1"></a>        efficiency <span class="op">=</span> solar_cell.iv[<span class="st">"Eta"</span>]</span>
+<span id="cb1-300"><a href="#cb1-300" aria-hidden="true" tabindex="-1"></a>        pmax <span class="op">=</span> solar_cell.iv[<span class="st">"Pmpp"</span>]</span>
+<span id="cb1-301"><a href="#cb1-301" aria-hidden="true" tabindex="-1"></a>        ff <span class="op">=</span> solar_cell.iv[<span class="st">"FF"</span>]</span>
+<span id="cb1-302"><a href="#cb1-302" aria-hidden="true" tabindex="-1"></a>        voc <span class="op">=</span> solar_cell.iv[<span class="st">"Voc"</span>]</span>
+<span id="cb1-303"><a href="#cb1-303" aria-hidden="true" tabindex="-1"></a>        isc <span class="op">=</span> solar_cell.iv[<span class="st">"Isc"</span>]</span>
+<span id="cb1-304"><a href="#cb1-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-305"><a href="#cb1-305" aria-hidden="true" tabindex="-1"></a>        plt.figure()</span>
+<span id="cb1-306"><a href="#cb1-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-307"><a href="#cb1-307" aria-hidden="true" tabindex="-1"></a>        plt.plot(V, solar_cell.iv[<span class="st">'IV'</span>][<span class="dv">1</span>] <span class="op">/</span> <span class="dv">10</span>, <span class="st">'k'</span>, linewidth<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">'Total'</span>)</span>
+<span id="cb1-308"><a href="#cb1-308" aria-hidden="true" tabindex="-1"></a>        plt.plot(V, <span class="op">-</span>solar_cell[<span class="dv">2</span>].iv(V) <span class="op">/</span> <span class="dv">10</span>, <span class="st">'b'</span>, label<span class="op">=</span><span class="st">'GaInP'</span>)</span>
+<span id="cb1-309"><a href="#cb1-309" aria-hidden="true" tabindex="-1"></a>        plt.plot(V, <span class="op">-</span>solar_cell[<span class="dv">3</span>].iv(V) <span class="op">/</span> <span class="dv">10</span>, <span class="st">'g'</span>, label<span class="op">=</span><span class="st">'GaAs'</span>)</span>
+<span id="cb1-310"><a href="#cb1-310" aria-hidden="true" tabindex="-1"></a>        plt.plot(V, <span class="op">-</span>solar_cell[<span class="dv">4</span>].iv(V) <span class="op">/</span> <span class="dv">10</span>, <span class="st">'r'</span>, label<span class="op">=</span><span class="st">'SiGeSn'</span>)</span>
+<span id="cb1-311"><a href="#cb1-311" aria-hidden="true" tabindex="-1"></a>        plt.plot(V, <span class="op">-</span>solar_cell[<span class="dv">5</span>].iv(V) <span class="op">/</span> <span class="dv">10</span>, <span class="st">'y'</span>, label<span class="op">=</span><span class="st">'Ge'</span>)</span>
+<span id="cb1-312"><a href="#cb1-312" aria-hidden="true" tabindex="-1"></a>        plt.text(<span class="dv">2</span>, <span class="dv">10</span>, <span class="st">'$\eta = $'</span> <span class="op">+</span> <span class="bu">str</span>(<span class="bu">round</span>(efficiency <span class="op">*</span> <span class="dv">100</span>, <span class="dv">1</span>)) <span class="op">+</span> <span class="st">'%'</span>)</span>
+<span id="cb1-313"><a href="#cb1-313" aria-hidden="true" tabindex="-1"></a>        plt.text(<span class="dv">2</span>, <span class="dv">8</span>,<span class="st">'Pmax='</span><span class="op">+</span><span class="bu">str</span>(<span class="bu">round</span>(pmax,<span class="dv">1</span>))<span class="op">+</span><span class="st">'W/m$^2$'</span>)</span>
+<span id="cb1-314"><a href="#cb1-314" aria-hidden="true" tabindex="-1"></a>        plt.text(<span class="dv">2</span>, <span class="dv">9</span>, <span class="st">'FF = '</span> <span class="op">+</span> <span class="bu">str</span>(<span class="bu">round</span>(ff <span class="op">*</span> <span class="dv">100</span>, <span class="dv">1</span>)) <span class="op">+</span> <span class="st">'%'</span>)</span>
+<span id="cb1-315"><a href="#cb1-315" aria-hidden="true" tabindex="-1"></a>        plt.text(<span class="dv">2</span>,<span class="dv">7</span>,<span class="st">'Voc='</span><span class="op">+</span><span class="bu">str</span>(<span class="bu">round</span>(voc,<span class="dv">1</span>))<span class="op">+</span><span class="st">'V'</span>)</span>
+<span id="cb1-316"><a href="#cb1-316" aria-hidden="true" tabindex="-1"></a>        plt.text(<span class="dv">2</span>,<span class="dv">6</span>, <span class="st">'Jsc='</span><span class="op">+</span><span class="bu">str</span>(<span class="bu">round</span>(<span class="fl">0.1</span><span class="op">*</span>isc,<span class="dv">1</span>))<span class="op">+</span><span class="st">'mA/cm$^2$'</span>)</span>
+<span id="cb1-317"><a href="#cb1-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-318"><a href="#cb1-318" aria-hidden="true" tabindex="-1"></a>        plt.legend()</span>
+<span id="cb1-319"><a href="#cb1-319" aria-hidden="true" tabindex="-1"></a>        plt.ylim(<span class="dv">0</span>, <span class="dv">18</span>)</span>
+<span id="cb1-320"><a href="#cb1-320" aria-hidden="true" tabindex="-1"></a>        plt.xlim(<span class="dv">0</span>, <span class="fl">3.5</span>)</span>
+<span id="cb1-321"><a href="#cb1-321" aria-hidden="true" tabindex="-1"></a>        plt.ylabel(<span class="st">'Current (mA/cm$^2$)'</span>)</span>
+<span id="cb1-322"><a href="#cb1-322" aria-hidden="true" tabindex="-1"></a>        plt.xlabel(<span class="st">'Voltage (V)'</span>)</span>
+<span id="cb1-323"><a href="#cb1-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-324"><a href="#cb1-324" aria-hidden="true" tabindex="-1"></a>        plt.show()</span>
+<span id="cb1-325"><a href="#cb1-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-326"><a href="#cb1-326" aria-hidden="true" tabindex="-1"></a>        solar_cell_solver(solar_cell, <span class="st">'qe'</span>,</span>
+<span id="cb1-327"><a href="#cb1-327" aria-hidden="true" tabindex="-1"></a>                         user_options<span class="op">=</span>{<span class="st">'wavelength'</span>: wl, <span class="st">'optics_method'</span>: <span class="st">'TMM'</span>, <span class="st">'BL_correction'</span>: <span class="va">True</span>, <span class="st">'position'</span>: position})</span>
+<span id="cb1-328"><a href="#cb1-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-329"><a href="#cb1-329" aria-hidden="true" tabindex="-1"></a>        plt.figure()</span>
+<span id="cb1-330"><a href="#cb1-330" aria-hidden="true" tabindex="-1"></a>        plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, solar_cell[<span class="dv">2</span>].eqe(wl) <span class="op">*</span> <span class="dv">100</span>, <span class="st">'b'</span>, label<span class="op">=</span><span class="st">'InGaP'</span>)</span>
+<span id="cb1-331"><a href="#cb1-331" aria-hidden="true" tabindex="-1"></a>        plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, solar_cell[<span class="dv">3</span>].eqe(wl) <span class="op">*</span> <span class="dv">100</span>, <span class="st">'g'</span>, label<span class="op">=</span><span class="st">'InGaAs'</span>)</span>
+<span id="cb1-332"><a href="#cb1-332" aria-hidden="true" tabindex="-1"></a>        plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, solar_cell[<span class="dv">4</span>].eqe(wl) <span class="op">*</span> <span class="dv">100</span>, <span class="st">'r'</span>, label<span class="op">=</span><span class="st">'SiGeSn'</span>)</span>
+<span id="cb1-333"><a href="#cb1-333" aria-hidden="true" tabindex="-1"></a>        plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, solar_cell[<span class="dv">5</span>].eqe(wl) <span class="op">*</span> <span class="dv">100</span>, <span class="st">'y'</span>, label<span class="op">=</span><span class="st">'Ge'</span>)</span>
+<span id="cb1-334"><a href="#cb1-334" aria-hidden="true" tabindex="-1"></a>        plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, solar_cell.absorbed <span class="op">*</span> <span class="dv">100</span>, <span class="st">'k--'</span>, label<span class="op">=</span><span class="st">'Absorption'</span>)</span>
+<span id="cb1-335"><a href="#cb1-335" aria-hidden="true" tabindex="-1"></a>        <span class="co"># plt.plot(wl * 1e9, solar_cell[5].eqe(wl)*100, 'y', label='Ge')</span></span>
+<span id="cb1-336"><a href="#cb1-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-337"><a href="#cb1-337" aria-hidden="true" tabindex="-1"></a>        plt.legend(loc<span class="op">=</span><span class="st">'upper right'</span>)</span>
+<span id="cb1-338"><a href="#cb1-338" aria-hidden="true" tabindex="-1"></a>        plt.xlim(<span class="dv">290</span>, <span class="dv">1850</span>)</span>
+<span id="cb1-339"><a href="#cb1-339" aria-hidden="true" tabindex="-1"></a>        plt.ylim(<span class="dv">0</span>, <span class="dv">100</span>)</span>
+<span id="cb1-340"><a href="#cb1-340" aria-hidden="true" tabindex="-1"></a>        plt.ylabel(<span class="st">'EQE (%)'</span>)</span>
+<span id="cb1-341"><a href="#cb1-341" aria-hidden="true" tabindex="-1"></a>        plt.xlabel(<span class="st">'Wavelength (nm)'</span>)</span>
+<span id="cb1-342"><a href="#cb1-342" aria-hidden="true" tabindex="-1"></a>        plt.show()</span>
+<span id="cb1-343"><a href="#cb1-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-344"><a href="#cb1-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-345"><a href="#cb1-345" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
+<span id="cb1-346"><a href="#cb1-346" aria-hidden="true" tabindex="-1"></a>    <span class="co"># number of iterations for Differential Evolution optimization of the optical stack</span></span>
+<span id="cb1-347"><a href="#cb1-347" aria-hidden="true" tabindex="-1"></a>    maxiters<span class="op">=</span><span class="dv">30</span></span>
+<span id="cb1-348"><a href="#cb1-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-349"><a href="#cb1-349" aria-hidden="true" tabindex="-1"></a>    <span class="co"># make an instance of the class the DE algorithm is going to use, as defined above</span></span>
+<span id="cb1-350"><a href="#cb1-350" aria-hidden="true" tabindex="-1"></a>    DE_class <span class="op">=</span> calc_min_Jsc()</span>
+<span id="cb1-351"><a href="#cb1-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-352"><a href="#cb1-352" aria-hidden="true" tabindex="-1"></a>    <span class="co"># pass the function which will be minimized to the PDE (parallel differential evolution) solver. PDE calculates the</span></span>
+<span id="cb1-353"><a href="#cb1-353" aria-hidden="true" tabindex="-1"></a>    <span class="co"># results for each population in parallel to speed up the overall process. The bounds argument sets upper and lower bounds</span></span>
+<span id="cb1-354"><a href="#cb1-354" aria-hidden="true" tabindex="-1"></a>    <span class="co"># for each parameter. PDE_obj contains all the information to run the DE but does not actually invoke the calculation....</span></span>
+<span id="cb1-355"><a href="#cb1-355" aria-hidden="true" tabindex="-1"></a>    PDE_obj <span class="op">=</span> PDE(DE_class.evaluate, bounds<span class="op">=</span>[[<span class="dv">10</span>,<span class="dv">150</span>], [<span class="dv">10</span>,<span class="dv">105</span>], [<span class="dv">200</span>, <span class="dv">1000</span>], [<span class="dv">500</span>, <span class="dv">10000</span>], [<span class="dv">500</span>, <span class="dv">10000</span>]], maxiters<span class="op">=</span>maxiters)</span>
+<span id="cb1-356"><a href="#cb1-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-357"><a href="#cb1-357" aria-hidden="true" tabindex="-1"></a>    <span class="co"># this will run the calculation in parallel, with all the cores available. If you don't want this, use 'DE' instead of 'PDE'</span></span>
+<span id="cb1-358"><a href="#cb1-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-359"><a href="#cb1-359" aria-hidden="true" tabindex="-1"></a>    <span class="co"># to run the DE, use the .solve() function of the PDE object class</span></span>
+<span id="cb1-360"><a href="#cb1-360" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> PDE_obj.solve()</span>
+<span id="cb1-361"><a href="#cb1-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-362"><a href="#cb1-362" aria-hidden="true" tabindex="-1"></a>    <span class="co"># PDE_obj.solve() returns 5 things:</span></span>
+<span id="cb1-363"><a href="#cb1-363" aria-hidden="true" tabindex="-1"></a>    <span class="co"># res[0] is a list of the parameters which gave the minimized value</span></span>
+<span id="cb1-364"><a href="#cb1-364" aria-hidden="true" tabindex="-1"></a>    <span class="co"># res[1] is that minimized value</span></span>
+<span id="cb1-365"><a href="#cb1-365" aria-hidden="true" tabindex="-1"></a>    <span class="co"># res[2] is the evolution of the best population (the best population from each iteration</span></span>
+<span id="cb1-366"><a href="#cb1-366" aria-hidden="true" tabindex="-1"></a>    <span class="co"># res[3] is the evolution of the minimized value, i.e. the fitness over each iteration</span></span>
+<span id="cb1-367"><a href="#cb1-367" aria-hidden="true" tabindex="-1"></a>    <span class="co"># res[4] is the evolution of the mean fitness over the iterations</span></span>
+<span id="cb1-368"><a href="#cb1-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-369"><a href="#cb1-369" aria-hidden="true" tabindex="-1"></a>    <span class="co"># best population:</span></span>
+<span id="cb1-370"><a href="#cb1-370" aria-hidden="true" tabindex="-1"></a>    best_pop <span class="op">=</span> res[<span class="dv">0</span>]</span>
+<span id="cb1-371"><a href="#cb1-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-372"><a href="#cb1-372" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'parameters for best result:'</span>, best_pop, <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>, <span class="st">'optimized Jsc value (mA/cm2):'</span>, <span class="op">-</span>res[<span class="dv">1</span>])</span>
+<span id="cb1-373"><a href="#cb1-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-374"><a href="#cb1-374" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot the result at these best parameters</span></span>
+<span id="cb1-375"><a href="#cb1-375" aria-hidden="true" tabindex="-1"></a>    DE_class.plot(best_pop)</span>
+<span id="cb1-376"><a href="#cb1-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-377"><a href="#cb1-377" aria-hidden="true" tabindex="-1"></a>    best_pop_evo <span class="op">=</span> res[<span class="dv">2</span>]</span>
+<span id="cb1-378"><a href="#cb1-378" aria-hidden="true" tabindex="-1"></a>    best_fitn_evo <span class="op">=</span> res[<span class="dv">3</span>]</span>
+<span id="cb1-379"><a href="#cb1-379" aria-hidden="true" tabindex="-1"></a>    mean_fitn_evo <span class="op">=</span> res[<span class="dv">4</span>]</span>
+<span id="cb1-380"><a href="#cb1-380" aria-hidden="true" tabindex="-1"></a>    final_fitness <span class="op">=</span> res[<span class="dv">1</span>]</span>
+<span id="cb1-381"><a href="#cb1-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-382"><a href="#cb1-382" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot evolution of the fitness of the best population per iteration</span></span>
+<span id="cb1-383"><a href="#cb1-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-384"><a href="#cb1-384" aria-hidden="true" tabindex="-1"></a>    plt.figure()</span>
+<span id="cb1-385"><a href="#cb1-385" aria-hidden="true" tabindex="-1"></a>    plt.plot(<span class="op">-</span>best_fitn_evo, <span class="st">'-k'</span>, label<span class="op">=</span><span class="st">'Best fitness'</span>)</span>
+<span id="cb1-386"><a href="#cb1-386" aria-hidden="true" tabindex="-1"></a>    plt.plot(<span class="op">-</span>mean_fitn_evo, <span class="st">'-r'</span>, label<span class="op">=</span><span class="st">'Mean fitness'</span>)</span>
+<span id="cb1-387"><a href="#cb1-387" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'Iteration'</span>)</span>
+<span id="cb1-388"><a href="#cb1-388" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'Fitness'</span>)</span>
+<span id="cb1-389"><a href="#cb1-389" aria-hidden="true" tabindex="-1"></a>    plt.legend()</span>
+<span id="cb1-390"><a href="#cb1-390" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb1-391"><a href="#cb1-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-392"><a href="#cb1-392" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-393"><a href="#cb1-393" aria-hidden="true" tabindex="-1"></a>    <span class="co"># these plots show that the fitness of the best population 'jumps' every few iterations as a new best population is found,</span></span>
+<span id="cb1-394"><a href="#cb1-394" aria-hidden="true" tabindex="-1"></a>    <span class="co"># while the mean fitness converges slowly as the whole population gradually improves</span></span>
+<span id="cb1-395"><a href="#cb1-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-396"><a href="#cb1-396" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-397"><a href="#cb1-397" aria-hidden="true" tabindex="-1"></a>    <span class="co">## Now that the layer thicknesses have been optimized from an optical point of view, we want to design the device (or</span></span>
+<span id="cb1-398"><a href="#cb1-398" aria-hidden="true" tabindex="-1"></a>    <span class="co"># at least a simplified version, by calculating a more realistic EQE. Obviously additional parameters like the doping of the</span></span>
+<span id="cb1-399"><a href="#cb1-399" aria-hidden="true" tabindex="-1"></a>    <span class="co"># layers could be varied too.</span></span>
+<span id="cb1-400"><a href="#cb1-400" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-401"><a href="#cb1-401" aria-hidden="true" tabindex="-1"></a>    <span class="co"># x[0]: total InGaP thickness</span></span>
+<span id="cb1-402"><a href="#cb1-402" aria-hidden="true" tabindex="-1"></a>    <span class="co"># x[1]: total InGaAs thickness</span></span>
+<span id="cb1-403"><a href="#cb1-403" aria-hidden="true" tabindex="-1"></a>    <span class="co"># x[2]: total SiGeSn thickness</span></span>
+<span id="cb1-404"><a href="#cb1-404" aria-hidden="true" tabindex="-1"></a>    <span class="co"># x[3]: total Ge thickness</span></span>
+<span id="cb1-405"><a href="#cb1-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-406"><a href="#cb1-406" aria-hidden="true" tabindex="-1"></a>    <span class="co"># x[4]: InGaP n thickness</span></span>
+<span id="cb1-407"><a href="#cb1-407" aria-hidden="true" tabindex="-1"></a>    <span class="co"># x[5]: InGaAs n thickness</span></span>
+<span id="cb1-408"><a href="#cb1-408" aria-hidden="true" tabindex="-1"></a>    <span class="co"># x[6]: SiGeSn n thickness</span></span>
+<span id="cb1-409"><a href="#cb1-409" aria-hidden="true" tabindex="-1"></a>    <span class="co"># x[7]: Ge n thickness</span></span>
+<span id="cb1-410"><a href="#cb1-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-411"><a href="#cb1-411" aria-hidden="true" tabindex="-1"></a>    <span class="co"># keep the ARC thicknesses fixed at the values obtained in the optical simulation</span></span>
+<span id="cb1-412"><a href="#cb1-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-413"><a href="#cb1-413" aria-hidden="true" tabindex="-1"></a>    <span class="co"># generate upper and lower bounds: total layer thickness between 75% and 125% of values fitted in TMM calculation. Ge</span></span>
+<span id="cb1-414"><a href="#cb1-414" aria-hidden="true" tabindex="-1"></a>    <span class="co"># starting value is 200 um</span></span>
+<span id="cb1-415"><a href="#cb1-415" aria-hidden="true" tabindex="-1"></a>    starting_params <span class="op">=</span> np.append(best_pop[<span class="dv">2</span>:], [<span class="dv">200000</span>])</span>
+<span id="cb1-416"><a href="#cb1-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-417"><a href="#cb1-417" aria-hidden="true" tabindex="-1"></a>    lower <span class="op">=</span> <span class="fl">0.75</span><span class="op">*</span>starting_params</span>
+<span id="cb1-418"><a href="#cb1-418" aria-hidden="true" tabindex="-1"></a>    upper <span class="op">=</span> <span class="fl">1.25</span><span class="op">*</span>starting_params</span>
+<span id="cb1-419"><a href="#cb1-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-420"><a href="#cb1-420" aria-hidden="true" tabindex="-1"></a>    <span class="co"># upper and lower bounds for the n-type (highly doped) layers</span></span>
+<span id="cb1-421"><a href="#cb1-421" aria-hidden="true" tabindex="-1"></a>    lower_ntype <span class="op">=</span> [<span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">20</span>]</span>
+<span id="cb1-422"><a href="#cb1-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-423"><a href="#cb1-423" aria-hidden="true" tabindex="-1"></a>    upper_ntype <span class="op">=</span> [<span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">300</span>, <span class="dv">500</span>]</span>
+<span id="cb1-424"><a href="#cb1-424" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-425"><a href="#cb1-425" aria-hidden="true" tabindex="-1"></a>    all_lower <span class="op">=</span> np.append(lower, lower_ntype)</span>
+<span id="cb1-426"><a href="#cb1-426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-427"><a href="#cb1-427" aria-hidden="true" tabindex="-1"></a>    all_upper <span class="op">=</span> np.append(upper, upper_ntype)</span>
+<span id="cb1-428"><a href="#cb1-428" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-429"><a href="#cb1-429" aria-hidden="true" tabindex="-1"></a>    <span class="co"># full list of bounds</span></span>
+<span id="cb1-430"><a href="#cb1-430" aria-hidden="true" tabindex="-1"></a>    all_bounds <span class="op">=</span> np.stack((all_lower, all_upper)).T</span>
+<span id="cb1-431"><a href="#cb1-431" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-432"><a href="#cb1-432" aria-hidden="true" tabindex="-1"></a>    <span class="co"># DE calculation for the electrical simulation</span></span>
+<span id="cb1-433"><a href="#cb1-433" aria-hidden="true" tabindex="-1"></a>    maxiters_DA <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb1-434"><a href="#cb1-434" aria-hidden="true" tabindex="-1"></a>    DE_class_DA <span class="op">=</span> calc_min_Jsc_DA(best_pop[<span class="dv">0</span>:<span class="dv">2</span>])</span>
+<span id="cb1-435"><a href="#cb1-435" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-436"><a href="#cb1-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-437"><a href="#cb1-437" aria-hidden="true" tabindex="-1"></a>    <span class="co"># default population size = 5*number of params</span></span>
+<span id="cb1-438"><a href="#cb1-438" aria-hidden="true" tabindex="-1"></a>    PDE_obj_DA <span class="op">=</span> PDE(DE_class_DA.evaluate, bounds<span class="op">=</span>all_bounds, maxiters<span class="op">=</span>maxiters_DA)</span>
+<span id="cb1-439"><a href="#cb1-439" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-440"><a href="#cb1-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-441"><a href="#cb1-441" aria-hidden="true" tabindex="-1"></a>    <span class="co"># solve, i.e. minimize the problem</span></span>
+<span id="cb1-442"><a href="#cb1-442" aria-hidden="true" tabindex="-1"></a>    res_DA <span class="op">=</span> PDE_obj_DA.solve()</span>
+<span id="cb1-443"><a href="#cb1-443" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-444"><a href="#cb1-444" aria-hidden="true" tabindex="-1"></a>    best_pop_DA <span class="op">=</span> res_DA[<span class="dv">0</span>]</span>
+<span id="cb1-445"><a href="#cb1-445" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-446"><a href="#cb1-446" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'parameters for best result:'</span>, best_pop_DA, <span class="st">'optimized efficiency (%)'</span>, res_DA[<span class="dv">1</span>]<span class="op">*</span><span class="dv">100</span>)</span>
+<span id="cb1-447"><a href="#cb1-447" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-448"><a href="#cb1-448" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot the result at these best parameters</span></span>
+<span id="cb1-449"><a href="#cb1-449" aria-hidden="true" tabindex="-1"></a>    DE_class_DA.plot(best_pop_DA)</span>
+<span id="cb1-450"><a href="#cb1-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-451"><a href="#cb1-451" aria-hidden="true" tabindex="-1"></a>    best_pop_evo <span class="op">=</span> res_DA[<span class="dv">2</span>]</span>
+<span id="cb1-452"><a href="#cb1-452" aria-hidden="true" tabindex="-1"></a>    best_fitn_evo <span class="op">=</span> res_DA[<span class="dv">3</span>]</span>
+<span id="cb1-453"><a href="#cb1-453" aria-hidden="true" tabindex="-1"></a>    mean_fitn_evo <span class="op">=</span> res_DA[<span class="dv">4</span>]</span>
+<span id="cb1-454"><a href="#cb1-454" aria-hidden="true" tabindex="-1"></a>    final_fitness <span class="op">=</span> res_DA[<span class="dv">1</span>]</span>
+<span id="cb1-455"><a href="#cb1-455" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-456"><a href="#cb1-456" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot evolution of the fitness of the best population per iteration, and the mean fitness</span></span>
+<span id="cb1-457"><a href="#cb1-457" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-458"><a href="#cb1-458" aria-hidden="true" tabindex="-1"></a>    plt.figure()</span>
+<span id="cb1-459"><a href="#cb1-459" aria-hidden="true" tabindex="-1"></a>    plt.plot(<span class="op">-</span>best_fitn_evo, <span class="st">'-k'</span>)</span>
+<span id="cb1-460"><a href="#cb1-460" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'iteration'</span>)</span>
+<span id="cb1-461"><a href="#cb1-461" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'fitness'</span>)</span>
+<span id="cb1-462"><a href="#cb1-462" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">'Best fitness'</span>)</span>
+<span id="cb1-463"><a href="#cb1-463" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb1-464"><a href="#cb1-464" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-465"><a href="#cb1-465" aria-hidden="true" tabindex="-1"></a>    plt.figure()</span>
+<span id="cb1-466"><a href="#cb1-466" aria-hidden="true" tabindex="-1"></a>    plt.plot(<span class="op">-</span>mean_fitn_evo, <span class="st">'-k'</span>)</span>
+<span id="cb1-467"><a href="#cb1-467" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'iteration'</span>)</span>
+<span id="cb1-468"><a href="#cb1-468" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'fitness'</span>)</span>
+<span id="cb1-469"><a href="#cb1-469" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">'Mean fitness'</span>)</span>
+<span id="cb1-470"><a href="#cb1-470" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb1-471"><a href="#cb1-471" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-472"><a href="#cb1-472" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-473"><a href="#cb1-473" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">'__main__'</span>:</span>
+<span id="cb1-474"><a href="#cb1-474" aria-hidden="true" tabindex="-1"></a>    main()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

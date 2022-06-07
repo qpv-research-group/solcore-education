@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.520">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>solcore-education – a-optical_constants</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">solcore-education</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">Home</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">(Untitled)</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Examples</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/1a-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1a: Simple Si solar cell</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/1b-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1b: Basic cell optics</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/1c-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1c: Electric models</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/2a-optical_constants.html" class="sidebar-item-text sidebar-link active">Example 2a: Optical constant sources</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/2b-optical_constants.html" class="sidebar-item-text sidebar-link">Example 2b: Optical constant models</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/3a-triple_junction.html" class="sidebar-item-text sidebar-link">Example 3a: Triple junction cell</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/4a-textured_Si_cell.html" class="sidebar-item-text sidebar-link">4a-textured_Si_cell.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/5a-ultrathin_GaAs_cell.html" class="sidebar-item-text sidebar-link">5a-ultrathin_GaAs_cell.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/6a-multiscale_models.html" class="sidebar-item-text sidebar-link">6a-multiscale_models.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/6b-multiscale_models.html" class="sidebar-item-text sidebar-link">6b-multiscale_models.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/7a-optimization.html" class="sidebar-item-text sidebar-link">7a-optimization.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link">7b-optimization.html</a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#example-2a-optical-constant-sources" id="toc-example-2a-optical-constant-sources" class="nav-link active" data-scroll-target="#example-2a-optical-constant-sources">Example 2a: Optical constant sources</a>
+  <ul class="collapse">
+  <li><a href="#adding-custom-materials" id="toc-adding-custom-materials" class="nav-link" data-scroll-target="#adding-custom-materials">Adding custom materials</a></li>
+  <li><a href="#using-the-refractiveindex.info-database" id="toc-using-the-refractiveindex.info-database" class="nav-link" data-scroll-target="#using-the-refractiveindex.info-database">Using the refractiveindex.info database</a></li>
+  <li><a href="#adding-refractiveindex.info-materials-to-solcores-database" id="toc-adding-refractiveindex.info-materials-to-solcores-database" class="nav-link" data-scroll-target="#adding-refractiveindex.info-materials-to-solcores-database">Adding refractiveindex.info materials to Solcore’s database</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="example-2a-optical-constant-sources" class="level1">
+<h1>Example 2a: Optical constant sources</h1>
+<p>In the first set of scripts focusing on the Si cell, we used different optical models to calculate total absorption and absorption profiles. These absorption profiles are used by the electrical models (if using the DA or PDD model). However, we didn’t discuss what actually goes into these optical models, which are the optical constants (either the complex refractive index, <span class="math inline">\(n + i \kappa\)</span> (<span class="math inline">\(\kappa\)</span> is the extinction coefficient), or equivalently the dielectric function <span class="math inline">\(\epsilon_1 + i \epsilon_2\)</span>). In these two examples we will discuss what these values are, how to get them, and how to model them.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="50">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator.nk_db <span class="im">import</span> download_db, search_db, create_nk_txt</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator <span class="im">import</span> calculate_rat, OptiStack</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.material_system <span class="im">import</span> create_new_material</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore <span class="im">import</span> material</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore <span class="im">import</span> si</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.structure <span class="im">import</span> Layer</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> os <span class="im">import</span> remove</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="adding-custom-materials" class="level2">
+<h2 class="anchored" data-anchor-id="adding-custom-materials">Adding custom materials</h2>
+<p>If we want to use a material which is not in Solcore’s database, or perhaps we want to use measured data rather than data from a literature source, we can add a material to the database. We need to have n and k data, and (optionally) a parameter file in the correct format - see examples of parameter files in e.g.&nbsp;material_data/Adachi/binaries.txt inside Solcore’s source files. These parameter files contain things like the bandgap, lattice constant, effective carrier masses, etc.</p>
+<p>Here, we create a new material, silicon-germanium-tin, from input files. Here, the parameters in SiGeSn_params.txt have been copied directly from Ge. The last argument, with the parameters file, is optional; if you exclude it the material will be added with just the n and k values and no further information specified (useful if you just want to do optical calculations).</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="51">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>create_new_material(<span class="st">'SiGeSn'</span>, <span class="st">'data/SiGeSn_n.txt'</span>, <span class="st">'data/SiGeSn_k.txt'</span>, <span class="st">'data/SiGeSn_params.txt'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>When adding custom materials - or getting the refractive index database - the information will be stored by default in your home directory. You can change thethe SOLCORE_USER_DATA environmental variable in the config file to your prefered location or, by default, it will be in your home directory, in a (hidden) directory called .solcore.</p>
+<p>We can now create an instance of it like any Solcore material:</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="52">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>wl <span class="op">=</span> si(np.arange(<span class="dv">300</span>, <span class="dv">1700</span>, <span class="dv">5</span>), <span class="st">'nm'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>SiGeSn <span class="op">=</span> material(<span class="st">'SiGeSn'</span>)()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>Ge <span class="op">=</span> material(<span class="st">'Ge'</span>)()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>PLOT 1</strong>: Comparing the optical constants of SiGeSn and Ge.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="53">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wl<span class="op">*</span><span class="fl">1e9</span>, SiGeSn.n(wl), <span class="st">'r-'</span>, label<span class="op">=</span><span class="st">'SiGeSn n'</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wl<span class="op">*</span><span class="fl">1e9</span>, SiGeSn.k(wl), <span class="st">'k-'</span>, label<span class="op">=</span><span class="vs">r'SiGeSn $\kappa$'</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.plot(wl<span class="op">*</span><span class="fl">1e9</span>, Ge.n(wl), <span class="st">'r--'</span>, label<span class="op">=</span><span class="st">'Ge n'</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>plt.plot(wl<span class="op">*</span><span class="fl">1e9</span>, Ge.k(wl), <span class="st">'k--'</span>, label<span class="op">=</span><span class="vs">r'Ge $\kappa$'</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wavelength (nm)'</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="vs">r'SiGeSn n / $\kappa$'</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(1) Optical constants of Ge and SiGeSn"</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2a-optical_constants_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="using-the-refractiveindex.info-database" class="level2">
+<h2 class="anchored" data-anchor-id="using-the-refractiveindex.info-database">Using the refractiveindex.info database</h2>
+<p>Solcore can also directly interface with the database from <a href="https://www.refractiveindex.info">www.refractiveindex.info</a>, which contains around 3000 sets of <span class="math inline">\(n\)</span>/<span class="math inline">\(\kappa\)</span> data for a large number of different materials. Before the first use, it is necessary to download the database. This only needs to be done once, so you can comment this line out after it’s done:</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="54">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>download_db()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Database file found at /Users/phoebe/.solcore/nk/nk.db
+Making request to https://refractiveindex.info/download/database/rii-database-2021-07-18.zip
+Downloaded and extracting...
+Wrote /var/folders/60/mjbn28rj1ql_r4w004g_ryt00000gq/T/tmpn030pe9k/database from https://refractiveindex.info/download/database/rii-database-2021-07-18.zip</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/phoebe/Documents/develop/solcore5/solcore/material_data/refractiveindex_info_DB/dbmaterial.py:278: RuntimeWarning: invalid value encountered in sqrt
+  n = numpy.sqrt(nsq)
+/Users/phoebe/Documents/develop/solcore5/solcore/material_data/refractiveindex_info_DB/dbmaterial.py:299: RuntimeWarning: invalid value encountered in sqrt
+  n = numpy.sqrt(n)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>LOG: 2746,other,PtAl2,Chen : Bad Material YAML File.
+***Wrote SQLite DB on  /Users/phoebe/.solcore/nk/nk.db</code></pre>
+</div>
+</div>
+<p>Now we can search the database to select an appropriate entry. Search by element/chemical formula, or by the name of the author who published the data. In this case, we look for silver.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;,&quot;is_executing&quot;:true}">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>search_db(<span class="st">'Ag'</span>, exact<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This prints out, line by line, matching entries. This shows us entries with “pageid”s 0 to 16 correspond to silver.</p>
+<p>Let’s compare the optical behaviour of some of those sources:</p>
+<ul>
+<li>pageid = 0, Johnson</li>
+<li>pageid = 2, Jiang</li>
+<li>pageid = 4, McPeak</li>
+<li>pageid = 10, Hagemann</li>
+<li>pageid = 14, Rakic (BB)</li>
+</ul>
+<p>(The pageid values listed here are for the 2021-07-18 version of the refractiveindex.info database; this can change with different versions of the database)</p>
+<p>Now, we create instances of materials with the optical constants from the database. The name (when using Solcore’s built-in materials, this would just be the name of the material or alloy, like ‘GaAs’) is the pageid, AS A STRING, while the flag nk_db must be set to True to tell Solcore to look in the previously downloaded database from refractiveindex.info</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="56">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Ag_Joh <span class="op">=</span> material(name<span class="op">=</span><span class="st">'0'</span>, nk_db<span class="op">=</span><span class="va">True</span>)()</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Ag_Jia <span class="op">=</span> material(name<span class="op">=</span><span class="st">'2'</span>, nk_db<span class="op">=</span><span class="va">True</span>)()</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>Ag_McP <span class="op">=</span> material(name<span class="op">=</span><span class="st">'4'</span>, nk_db<span class="op">=</span><span class="va">True</span>)()</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>Ag_Hag <span class="op">=</span> material(name<span class="op">=</span><span class="st">'10'</span>, nk_db<span class="op">=</span><span class="va">True</span>)()</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>Ag_Rak <span class="op">=</span> material(name<span class="op">=</span><span class="st">'14'</span>, nk_db<span class="op">=</span><span class="va">True</span>)()</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>Ag_Sol <span class="op">=</span> material(name<span class="op">=</span><span class="st">'Ag'</span>)() <span class="co"># Solcore built-in (from SOPRA)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we plot the <span class="math inline">\(n\)</span> and <span class="math inline">\(\kappa\)</span> data. Note that not all the data covers the full wavelength range, so the <span class="math inline">\(n\)</span>/<span class="math inline">\(\kappa\)</span> value gets extrapolated from the last point in the dataset to cover any missing values.</p>
+<p><strong>PLOT 2</strong>: <span class="math inline">\(n\)</span> and <span class="math inline">\(\kappa\)</span> values for Ag from different literature sources</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;,&quot;is_executing&quot;:true}">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>names <span class="op">=</span> [<span class="st">'Johnson'</span>, <span class="st">'Jiang'</span>, <span class="st">'McPeak'</span>, <span class="st">'Hagemann'</span>, <span class="st">'Rakic'</span>, <span class="st">'Solcore built-in'</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>wl <span class="op">=</span> si(np.arange(<span class="dv">250</span>, <span class="dv">900</span>, <span class="dv">5</span>), <span class="st">'nm'</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">4</span>))</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">121</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># We can plot all the n values in one line:</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>plt.plot(wl<span class="op">*</span><span class="fl">1e9</span>, np.array([Ag_Joh.n(wl), Ag_Jia.n(wl), Ag_McP.n(wl),</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                           Ag_Hag.n(wl), Ag_Rak.n(wl), Ag_Sol.n(wl)]).T)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>plt.legend(labels<span class="op">=</span>names)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(2) $n$ and $\kappa$ values for Ag from different literature sources"</span>)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"n"</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">122</span>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>plt.plot(wl<span class="op">*</span><span class="fl">1e9</span>, np.array([Ag_Joh.k(wl), Ag_Jia.k(wl), Ag_McP.k(wl),</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>                           Ag_Hag.k(wl), Ag_Rak.k(wl), Ag_Sol.k(wl)]).T)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>plt.legend(labels<span class="op">=</span>names)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"$\kappa$"</span>)</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Compare performance as a back mirror on a GaAs ‘cell’; we make a solar cell-like structure with a very thin GaAs absorber (50 nm) and a silver back mirror.</p>
+<p><strong>PLOT 3</strong>: compare absorption in GaAs and Ag for a solar cell-like structure, using Ag data from different sources</p>
+<p>Solid line: absorption in GaAs Dashed line: absorption in Ag</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="58">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>GaAs <span class="op">=</span> material(<span class="st">'GaAs'</span>)()</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> sns.color_palette(<span class="st">'husl'</span>, n_colors<span class="op">=</span><span class="bu">len</span>(names))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> c, Ag_mat <span class="kw">in</span> <span class="bu">enumerate</span>([Ag_Joh, Ag_Jia, Ag_McP, Ag_Hag, Ag_Rak, Ag_Sol]):</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    my_solar_cell <span class="op">=</span> OptiStack([Layer(width<span class="op">=</span>si(<span class="st">'50nm'</span>), material <span class="op">=</span> GaAs)], substrate<span class="op">=</span>Ag_mat)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    RAT <span class="op">=</span> calculate_rat(my_solar_cell, wl<span class="op">*</span><span class="fl">1e9</span>, no_back_reflection<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    GaAs_abs <span class="op">=</span> RAT[<span class="st">"A_per_layer"</span>][<span class="dv">1</span>]</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    Ag_abs <span class="op">=</span> RAT[<span class="st">"T"</span>]</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    plt.plot(wl<span class="op">*</span><span class="fl">1e9</span>, GaAs_abs, color<span class="op">=</span>colors[c], linestyle<span class="op">=</span><span class="st">'-'</span>, label<span class="op">=</span>names[c])</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    plt.plot(wl<span class="op">*</span><span class="fl">1e9</span>, Ag_abs, color<span class="op">=</span>colors[c], linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Absorbed"</span>)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(3) Absorption in GaAs depending on silver optical constants"</span>)</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2a-optical_constants_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="adding-refractiveindex.info-materials-to-solcores-database" class="level2">
+<h2 class="anchored" data-anchor-id="adding-refractiveindex.info-materials-to-solcores-database">Adding refractiveindex.info materials to Solcore’s database</h2>
+<p>Finally, we can combine the two methods above and add a material from the refractiveindex.info database to Solcore’s database.</p>
+<p>The search_db function will print the search results, but it also creates a list of lists with details of all the search results. <code>results[0]</code> contains the first entry; <code>results[0][0]</code> is the ‘pageid’ of the first search result.</p>
+<p>The function create_nk_txt creates files containing the optical constant data in the format required by Solcore. These are saved in the current working directory.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="59">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> search_db(<span class="st">'Diamond'</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>create_nk_txt(pageid<span class="op">=</span>results[<span class="dv">0</span>][<span class="dv">0</span>], <span class="bu">file</span><span class="op">=</span><span class="st">'C_Diamond'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Database file found at /Users/phoebe/.solcore/nk/nk.db
+1 results found.
+pageid  shelf   book    page    filepath    hasrefractive   hasextinction   rangeMin    rangeMax    points
+2897    3d  crystals    diamond main/C/Phillip.yml  1   1   0.035424054 10.0    176
+Database file found at /Users/phoebe/.solcore/nk/nk.db
+Material main/C/Phillip.yml loaded.
+Wrote C_Diamond_n.txt
+Wrote C_Diamond_k.txt</code></pre>
+</div>
+</div>
+<p>We now use these files to create a new material in the Solcore database:</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="60">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>create_new_material(mat_name<span class="op">=</span><span class="st">'Diamond'</span>, n_source<span class="op">=</span><span class="st">'C_Diamond_n.txt'</span>, k_source<span class="op">=</span><span class="st">'C_Diamond_k.txt'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Material created with optical constants n and k only.</code></pre>
+</div>
+</div>
+<p>We can now delete the files with the Diamond data, since they have been copied into the user-defined materials directory:</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="61">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>remove(<span class="st">"C_diamond_n.txt"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>remove(<span class="st">"C_diamond_k.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we can use this material as we would any material from Solcore’s database:</p>
+<p><strong>PLOT 4</strong>: Optical constants of diamond</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="62">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Diamond <span class="op">=</span> material(<span class="st">'Diamond'</span>)()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>plt.plot(si(np.arange(<span class="dv">100</span>, <span class="dv">800</span>, <span class="dv">5</span>), <span class="st">'nm'</span>) <span class="op">*</span> <span class="fl">1e9</span>, Diamond.n(si(np.arange(<span class="dv">100</span>, <span class="dv">800</span>, <span class="dv">5</span>), <span class="st">'nm'</span>)))</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>plt.plot(si(np.arange(<span class="dv">100</span>, <span class="dv">800</span>, <span class="dv">5</span>), <span class="st">'nm'</span>) <span class="op">*</span> <span class="fl">1e9</span>, Diamond.k(si(np.arange(<span class="dv">100</span>, <span class="dv">800</span>, <span class="dv">5</span>), <span class="st">'nm'</span>)))</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(4) Optical constants for diamond"</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2a-optical_constants_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
+<p>So, we have at least 4 different ways of getting optical constants:</p>
+<ol type="1">
+<li>From Solcore’s database</li>
+<li>By adding our own material data to Solcore’s database</li>
+<li>By using the refractiveindex.info database directly</li>
+<li>Similarly, we can add materials from the refractiveindex.info database to Solcore’s database</li>
+</ol>
+<p>If we add materials to the database, we can also choose to add non-optical parameters.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

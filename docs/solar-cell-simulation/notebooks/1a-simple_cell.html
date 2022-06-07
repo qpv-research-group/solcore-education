@@ -121,7 +121,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -137,9 +137,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="../../index.html">Home</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../about.html">About</a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -158,7 +155,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
       <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -176,12 +173,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/1a-simple_cell.html" class="sidebar-item-text sidebar-link active">Example 1a - Simple Si solar cell</a>
+  <a href="../../solar-cell-simulation/notebooks/1a-simple_cell.html" class="sidebar-item-text sidebar-link active">Example 1a: Simple Si solar cell</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/1b-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1b - Basic cell optics</a>
+  <a href="../../solar-cell-simulation/notebooks/1b-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1b: Basic cell optics</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/1c-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1c: Electric models</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/2a-optical_constants.html" class="sidebar-item-text sidebar-link">Example 2a: Optical constant sources</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/2b-optical_constants.html" class="sidebar-item-text sidebar-link">Example 2b: Optical constant models</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/3a-triple_junction.html" class="sidebar-item-text sidebar-link">Example 3a: Triple junction cell</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/4a-textured_Si_cell.html" class="sidebar-item-text sidebar-link">4a-textured_Si_cell.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/5a-ultrathin_GaAs_cell.html" class="sidebar-item-text sidebar-link">5a-ultrathin_GaAs_cell.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/6a-multiscale_models.html" class="sidebar-item-text sidebar-link">6a-multiscale_models.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/6b-multiscale_models.html" class="sidebar-item-text sidebar-link">6b-multiscale_models.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/7a-optimization.html" class="sidebar-item-text sidebar-link">7a-optimization.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link">7b-optimization.html</a>
   </div>
 </li>
     </ul>
@@ -195,7 +242,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#example-1a---simple-si-solar-cell" id="toc-example-1a---simple-si-solar-cell" class="nav-link active" data-scroll-target="#example-1a---simple-si-solar-cell">Example 1a - Simple Si solar cell</a></li>
+  <li><a href="#example-1a-simple-si-solar-cell" id="toc-example-1a-simple-si-solar-cell" class="nav-link active" data-scroll-target="#example-1a-simple-si-solar-cell">Example 1a: Simple Si solar cell</a>
+  <ul class="collapse">
+  <li><a href="#defining-materials" id="toc-defining-materials" class="nav-link" data-scroll-target="#defining-materials">Defining materials</a></li>
+  <li><a href="#defining-layers" id="toc-defining-layers" class="nav-link" data-scroll-target="#defining-layers">Defining layers</a></li>
+  <li><a href="#setting-user-options" id="toc-setting-user-options" class="nav-link" data-scroll-target="#setting-user-options">Setting user options</a></li>
+  <li><a href="#running-cell-simulations" id="toc-running-cell-simulations" class="nav-link" data-scroll-target="#running-cell-simulations">Running cell simulations</a></li>
+  <li><a href="#adding-front-surface-reflection-fresnel" id="toc-adding-front-surface-reflection-fresnel" class="nav-link" data-scroll-target="#adding-front-surface-reflection-fresnel">Adding front-surface reflection: Fresnel</a></li>
+  <li><a href="#adding-front-surface-reflection-tmm" id="toc-adding-front-surface-reflection-tmm" class="nav-link" data-scroll-target="#adding-front-surface-reflection-tmm">Adding front surface reflection: TMM</a></li>
+  <li><a href="#adding-an-arc" id="toc-adding-an-arc" class="nav-link" data-scroll-target="#adding-an-arc">Adding an ARC</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -204,8 +261,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<section id="example-1a---simple-si-solar-cell" class="level1">
-<h1>Example 1a - Simple Si solar cell</h1>
+<section id="example-1a-simple-si-solar-cell" class="level1">
+<h1>Example 1a: Simple Si solar cell</h1>
 <p>In this first set of examples, we will look at simple planar solar cells (Si and GaAs).</p>
 <p>In this script, we will look at the difference between Beer-Lambert absorption calculations, using the Fresnel equations for front-surface reflection, and using the transfer-matrix model.</p>
 <p>First, lets import some very commonly-used Python packages:</p>
@@ -221,6 +278,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell_solver <span class="im">import</span> solar_cell_solver</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.interpolate <span class="im">import</span> interp1d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<section id="defining-materials" class="level2">
+<h2 class="anchored" data-anchor-id="defining-materials">Defining materials</h2>
 <p>To define our solar cell, we first want to define some materials. Then we want to organise those materials into Layers, organise those layers into a Junction, and then finally define a SolarCell with that Junction.</p>
 <p>First, let’s define a Si material. Silicon, along with many other semiconductors, dielectrics, and metals common in solar cells, is included in Solcore’s database:</p>
 <div class="cell" data-execution_count="3">
@@ -232,6 +291,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Si_n <span class="op">=</span> Si(Nd<span class="op">=</span>si(<span class="st">"1e21cm-3"</span>), hole_diffusion_length<span class="op">=</span>si(<span class="st">"10um"</span>), relative_permittivity<span class="op">=</span><span class="fl">11.7</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Si_p <span class="op">=</span> Si(Na<span class="op">=</span>si(<span class="st">"1e16cm-3"</span>), electron_diffusion_length<span class="op">=</span>si(<span class="st">"400um"</span>), relative_permittivity<span class="op">=</span><span class="fl">11.7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="defining-layers" class="level2">
+<h2 class="anchored" data-anchor-id="defining-layers">Defining layers</h2>
 <p>Now we define the emitter and base layers we will have in the solar cell; we specify their thickness, the material they are made of and the role they play within the cell (emitter or base)</p>
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>emitter_layer <span class="op">=</span> Layer(width<span class="op">=</span>si(<span class="st">"600nm"</span>), material<span class="op">=</span>Si_n, role<span class="op">=</span><span class="st">'emitter'</span>)</span>
@@ -241,6 +303,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Si_junction <span class="op">=</span> Junction([emitter_layer, base_layer], kind<span class="op">=</span><span class="st">"DA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="setting-user-options" class="level2">
+<h2 class="anchored" data-anchor-id="setting-user-options">Setting user options</h2>
 <p>Wavelengths we want to use in the calculations; wavelengths between 300 and 1200 nm, at 200 evenly spaced intervals:</p>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>wavelengths <span class="op">=</span> si(np.linspace(<span class="dv">300</span>, <span class="dv">1200</span>, <span class="dv">200</span>), <span class="st">"nm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -254,6 +319,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"wavelength"</span>: wavelengths</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>           }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="running-cell-simulations" class="level2">
+<h2 class="anchored" data-anchor-id="running-cell-simulations">Running cell simulations</h2>
 <p>Define the solar cell; in this case it is very simple and we just have a single junction:</p>
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>solar_cell <span class="op">=</span> SolarCell([Si_junction])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -278,9 +346,12 @@ Solving QE of the solar cell...</code></pre>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(1) QE of Si cell - Beer-Lambert absorption"</span>)</span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="1a-simple_cell_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+<p><img src="1a-simple_cell_files/figure-html/cell-12-output-1.png" width="590" height="442"></p>
 </div>
 </div>
+</section>
+<section id="adding-front-surface-reflection-fresnel" class="level2">
+<h2 class="anchored" data-anchor-id="adding-front-surface-reflection-fresnel">Adding front-surface reflection: Fresnel</h2>
 <p>Now, to make this calculation a bit more realistic, there are a few things we could do. We could load some measured front surface reflectance from a file, or we could calculate the reflectance. To calculate the reflectance, there are many approaches we could take; we are going to explore two of them here.</p>
 <p>If we assume the silicon is infinitely thick (or at least much thicker than the wavelengths we care about) then the reflectance will approach the reflectivity of a simple air/Si interface. We can calculate what this is using the Fresnel equation for reflectivity: https://en.wikipedia.org/wiki/Fresnel_equations</p>
 <div class="cell" data-execution_count="12">
@@ -305,6 +376,9 @@ Solving QE of the solar cell...</code></pre>
 <pre><code>Solving optics of the solar cell...</code></pre>
 </div>
 </div>
+</section>
+<section id="adding-front-surface-reflection-tmm" class="level2">
+<h2 class="anchored" data-anchor-id="adding-front-surface-reflection-tmm">Adding front surface reflection: TMM</h2>
 <p>Finally, we do the same again but now instead of supplying the external reflectivity we ask set the optics_method to “TMM” (Transfer Matrix Method), to correctly calculate reflection at the front surface:</p>
 <div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Si_junction <span class="op">=</span> Junction([emitter_layer, base_layer], kind<span class="op">=</span><span class="st">"DA"</span>)</span>
@@ -334,61 +408,68 @@ Solving IV of the total solar cell...
 Solving optics of the solar cell...
 Treating layer(s) 1 incoherently
 Calculating RAT...
-Calculating absorption profile...
-Solving QE of the solar cell...</code></pre>
+Calculating absorption profile...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Solving QE of the solar cell...</code></pre>
 </div>
 </div>
 <p><strong>PLOT 2</strong>: here we plot the reflection, transmission, and absorption calculated with the Fresnel equation defined above, and with the TMM solver in Solcore, showing that for this simple situation (no anti-reflection coating, thick Si junction) they are exactly equivalent.</p>
 <div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM.reflected, color<span class="op">=</span><span class="st">'firebrick'</span>, label <span class="op">=</span> <span class="st">"R (TMM)"</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_fresnel.reflected, <span class="st">'--'</span>, color<span class="op">=</span><span class="st">'orangered'</span>, label <span class="op">=</span> <span class="st">"R (Fresnel)"</span>)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM.absorbed, color<span class="op">=</span><span class="st">'dimgrey'</span>, label <span class="op">=</span> <span class="st">"A (TMM)"</span>)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_fresnel.absorbed, <span class="st">'--'</span>, color<span class="op">=</span><span class="st">'lightgrey'</span>, label <span class="op">=</span> <span class="st">"A (Fresnel)"</span>)</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM.transmitted, color<span class="op">=</span><span class="st">'blue'</span>, label <span class="op">=</span> <span class="st">"T (TMM)"</span>)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_fresnel.transmitted, <span class="st">'--'</span>, color<span class="op">=</span><span class="st">'dodgerblue'</span>, label <span class="op">=</span> <span class="st">"T (Fresnel)"</span>)</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">100</span>)</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(2) Optics of Si cell - Fresnel/TMM"</span>)</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM.reflected, color<span class="op">=</span><span class="st">'firebrick'</span>, label <span class="op">=</span> <span class="st">"R (TMM)"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_fresnel.reflected, <span class="st">'--'</span>, color<span class="op">=</span><span class="st">'orangered'</span>, label <span class="op">=</span> <span class="st">"R (Fresnel)"</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM.absorbed, color<span class="op">=</span><span class="st">'dimgrey'</span>, label <span class="op">=</span> <span class="st">"A (TMM)"</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_fresnel.absorbed, <span class="st">'--'</span>, color<span class="op">=</span><span class="st">'lightgrey'</span>, label <span class="op">=</span> <span class="st">"A (Fresnel)"</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM.transmitted, color<span class="op">=</span><span class="st">'blue'</span>, label <span class="op">=</span> <span class="st">"T (TMM)"</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_fresnel.transmitted, <span class="st">'--'</span>, color<span class="op">=</span><span class="st">'dodgerblue'</span>, label <span class="op">=</span> <span class="st">"T (Fresnel)"</span>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">100</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(2) Optics of Si cell - Fresnel/TMM"</span>)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="1a-simple_cell_files/figure-html/cell-19-output-1.png" class="img-fluid"></p>
+<p><img src="1a-simple_cell_files/figure-html/cell-19-output-1.png" width="572" height="424"></p>
 </div>
 </div>
 <p><strong>PLOT 3</strong>: As above for the TMM calculation, plotting the EQE as well, which will be slightly lower than the absorption because not all the carriers are collected. Comparing to plot (1), we can see we now have lower absorption due to the inclusion of front surface reflection.</p>
 <div class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM[<span class="dv">0</span>].eqe(wavelengths), <span class="st">'k-'</span>, label<span class="op">=</span><span class="st">"EQE"</span>)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM[<span class="dv">0</span>].layer_absorption, label<span class="op">=</span><span class="st">'A'</span>)</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM.reflected, label<span class="op">=</span><span class="st">"R"</span>)</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM.transmitted, label<span class="op">=</span><span class="st">"T"</span>)</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(3) QE of Si cell (no ARC) - TMM"</span>)</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"QE/Absorptance (%)"</span>)</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">100</span>)</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM[<span class="dv">0</span>].eqe(wavelengths), <span class="st">'k-'</span>, label<span class="op">=</span><span class="st">"EQE"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM[<span class="dv">0</span>].layer_absorption, label<span class="op">=</span><span class="st">'A'</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM.reflected, label<span class="op">=</span><span class="st">"R"</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM.transmitted, label<span class="op">=</span><span class="st">"T"</span>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(3) QE of Si cell (no ARC) - TMM"</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"QE/Absorptance (%)"</span>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">100</span>)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="1a-simple_cell_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+<p><img src="1a-simple_cell_files/figure-html/cell-20-output-1.png" width="590" height="442"></p>
 </div>
 </div>
+</section>
+<section id="adding-an-arc" class="level2">
+<h2 class="anchored" data-anchor-id="adding-an-arc">Adding an ARC</h2>
 <p>Now we will try adding a simple anti-reflection coating (ARC), a single layer of silicon nitride (Si3N4):</p>
 <div class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>SiN <span class="op">=</span> material(<span class="st">"Si3N4"</span>)()</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>Si_junction <span class="op">=</span> Junction([emitter_layer, base_layer], kind<span class="op">=</span><span class="st">"DA"</span>)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>solar_cell_TMM_ARC <span class="op">=</span> SolarCell([Layer(width<span class="op">=</span>si(<span class="dv">75</span>, <span class="st">"nm"</span>), material<span class="op">=</span>SiN), Si_junction])</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_TMM_ARC, <span class="st">'qe'</span>, options)</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_TMM_ARC, <span class="st">'iv'</span>, options)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>SiN <span class="op">=</span> material(<span class="st">"Si3N4"</span>)()</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>Si_junction <span class="op">=</span> Junction([emitter_layer, base_layer], kind<span class="op">=</span><span class="st">"DA"</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>solar_cell_TMM_ARC <span class="op">=</span> SolarCell([Layer(width<span class="op">=</span>si(<span class="dv">75</span>, <span class="st">"nm"</span>), material<span class="op">=</span>SiN), Si_junction])</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_TMM_ARC, <span class="st">'qe'</span>, options)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_TMM_ARC, <span class="st">'iv'</span>, options)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Solving optics of the solar cell...
 Treating layer(s) 2 incoherently
 Calculating RAT...
 Calculating absorption profile...
-Solving QE of the solar cell...
-Solving optics of the solar cell...
+Solving QE of the solar cell...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Solving optics of the solar cell...
 Treating layer(s) 2 incoherently
 Calculating RAT...
 Calculating absorption profile...
@@ -399,43 +480,47 @@ Solving IV of the total solar cell...</code></pre>
 </div>
 <p><strong>PLOT 4</strong>: Absorption, EQE, reflection and transmission for the cell with a simple one-layer ARC. We see the reflection is significantly reduced from the previous plot leading to higher absorption/EQE.</p>
 <div class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM_ARC[<span class="dv">1</span>].eqe(wavelengths), <span class="st">'k-'</span>, label<span class="op">=</span><span class="st">"EQE"</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM_ARC[<span class="dv">1</span>].layer_absorption, label<span class="op">=</span><span class="st">'A'</span>)</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM_ARC.reflected, label<span class="op">=</span><span class="st">"R"</span>)</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM_ARC.transmitted, label<span class="op">=</span><span class="st">"T"</span>)</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(4) QE of Si cell (ARC) - TMM"</span>)</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"QE/Absorptance (%)"</span>)</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">100</span>)</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM_ARC[<span class="dv">1</span>].eqe(wavelengths), <span class="st">'k-'</span>, label<span class="op">=</span><span class="st">"EQE"</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM_ARC[<span class="dv">1</span>].layer_absorption, label<span class="op">=</span><span class="st">'A'</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM_ARC.reflected, label<span class="op">=</span><span class="st">"R"</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_TMM_ARC.transmitted, label<span class="op">=</span><span class="st">"T"</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(4) QE of Si cell (ARC) - TMM"</span>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"QE/Absorptance (%)"</span>)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">100</span>)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="1a-simple_cell_files/figure-html/cell-22-output-1.png" class="img-fluid"></p>
+<p><img src="1a-simple_cell_files/figure-html/cell-22-output-1.png" width="590" height="442"></p>
 </div>
 </div>
 <p><strong>PLOT 5</strong>: Compare the IV curves of the cells with and without an ARC. The efficiency is also shown on the plot. Note that because we didn’t specify a light source, Solcore will assume we want to use AM1.5G; in later examples we will set the light source used for IV simulations explicitly.</p>
 <div class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>plt.plot(voltages, <span class="op">-</span>solar_cell_TMM[<span class="dv">0</span>].iv(voltages)<span class="op">/</span><span class="dv">10</span>, label<span class="op">=</span><span class="st">"No ARC"</span>)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>plt.plot(voltages, <span class="op">-</span>solar_cell_TMM_ARC[<span class="dv">1</span>].iv(voltages)<span class="op">/</span><span class="dv">10</span>, label<span class="op">=</span><span class="st">"75 nm SiN"</span>)</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="fl">0.5</span>, solar_cell_TMM.iv[<span class="st">"Isc"</span>]<span class="op">/</span><span class="dv">10</span>, <span class="bu">str</span>(<span class="bu">round</span>(solar_cell_TMM.iv[<span class="st">"Eta"</span>]<span class="op">*</span><span class="dv">100</span>, <span class="dv">1</span>)) <span class="op">+</span> <span class="st">' %'</span>)</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="fl">0.5</span>, solar_cell_TMM_ARC.iv[<span class="st">"Isc"</span>]<span class="op">/</span><span class="dv">10</span>, <span class="bu">str</span>(<span class="bu">round</span>(solar_cell_TMM_ARC.iv[<span class="st">"Eta"</span>]<span class="op">*</span><span class="dv">100</span>, <span class="dv">1</span>)) <span class="op">+</span> <span class="st">' %'</span>)</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">38</span>)</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="fl">0.8</span>)</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"V (V)"</span>)</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="vs">r"J (mA/cm$^2$)"</span>)</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(5) IV curve of Si cell with and without ARC"</span>)</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>plt.plot(voltages, <span class="op">-</span>solar_cell_TMM[<span class="dv">0</span>].iv(voltages)<span class="op">/</span><span class="dv">10</span>, label<span class="op">=</span><span class="st">"No ARC"</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>plt.plot(voltages, <span class="op">-</span>solar_cell_TMM_ARC[<span class="dv">1</span>].iv(voltages)<span class="op">/</span><span class="dv">10</span>, label<span class="op">=</span><span class="st">"75 nm SiN"</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="fl">0.5</span>, solar_cell_TMM.iv[<span class="st">"Isc"</span>]<span class="op">/</span><span class="dv">10</span>, <span class="bu">str</span>(<span class="bu">round</span>(solar_cell_TMM.iv[<span class="st">"Eta"</span>]<span class="op">*</span><span class="dv">100</span>, <span class="dv">1</span>)) <span class="op">+</span> <span class="st">' %'</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="fl">0.5</span>, solar_cell_TMM_ARC.iv[<span class="st">"Isc"</span>]<span class="op">/</span><span class="dv">10</span>, <span class="bu">str</span>(<span class="bu">round</span>(solar_cell_TMM_ARC.iv[<span class="st">"Eta"</span>]<span class="op">*</span><span class="dv">100</span>, <span class="dv">1</span>)) <span class="op">+</span> <span class="st">' %'</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">38</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="fl">0.8</span>)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"V (V)"</span>)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="vs">r"J (mA/cm$^2$)"</span>)</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"(5) IV curve of Si cell with and without ARC"</span>)</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="1a-simple_cell_files/figure-html/cell-23-output-1.png" class="img-fluid"></p>
+<p><img src="1a-simple_cell_files/figure-html/cell-23-output-1.png" width="596" height="442"></p>
 </div>
 </div>
+</section>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
 <p>We see that the cell with an ARC has a significantly higher Jsc, and a slightly higher Voc, than the bare Si cell. In reality, most Si cells have a textured surface rather than a planar surface with an ARC; this will be discussed later in the course.</p>
 <p>Overall, some things we can take away from the examples in this script: - The Beer-Lambert law is a very simple way to calculate absorption in a cell, but won’t take into account important effects such as front-surface reflection or the effects of anti-reflection coatings - Using the transfer-matrix method (TMM) we can account for front surface reflection and interference effects which make e.g.&nbsp;ARCs effective. In the simple situation of a thick cell without any front surface layers, it is equivalent to simply calculation the reflection with the Fresnel equations and assuming Beer-Lambert absorption in the cell. - Adding a simple, one-layer ARC can significantly reduce front-surface reflection for a single-junction cell, leading to improved short-circuit current.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

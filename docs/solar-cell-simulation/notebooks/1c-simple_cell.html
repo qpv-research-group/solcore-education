@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.520">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>solcore-education – c-simple_cell</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">solcore-education</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">Home</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">(Untitled)</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Examples</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/1a-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1a: Simple Si solar cell</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/1b-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1b: Basic cell optics</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/1c-simple_cell.html" class="sidebar-item-text sidebar-link active">Example 1c: Electric models</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/2a-optical_constants.html" class="sidebar-item-text sidebar-link">Example 2a: Optical constant sources</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/2b-optical_constants.html" class="sidebar-item-text sidebar-link">Example 2b: Optical constant models</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/3a-triple_junction.html" class="sidebar-item-text sidebar-link">Example 3a: Triple junction cell</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/4a-textured_Si_cell.html" class="sidebar-item-text sidebar-link">4a-textured_Si_cell.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/5a-ultrathin_GaAs_cell.html" class="sidebar-item-text sidebar-link">5a-ultrathin_GaAs_cell.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/6a-multiscale_models.html" class="sidebar-item-text sidebar-link">6a-multiscale_models.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/6b-multiscale_models.html" class="sidebar-item-text sidebar-link">6b-multiscale_models.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/7a-optimization.html" class="sidebar-item-text sidebar-link">7a-optimization.html</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link">7b-optimization.html</a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#example-1c-electric-models" id="toc-example-1c-electric-models" class="nav-link active" data-scroll-target="#example-1c-electric-models">Example 1c: Electric models</a>
+  <ul class="collapse">
+  <li><a href="#setting-up" id="toc-setting-up" class="nav-link" data-scroll-target="#setting-up">Setting up</a></li>
+  <li><a href="#d-and-db-junctions" id="toc-d-and-db-junctions" class="nav-link" data-scroll-target="#d-and-db-junctions">2D and DB junctions</a></li>
+  <li><a href="#da-and-pdd-junctions" id="toc-da-and-pdd-junctions" class="nav-link" data-scroll-target="#da-and-pdd-junctions">DA and PDD junctions</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="example-1c-electric-models" class="level1">
+<h1>Example 1c: Electric models</h1>
+<p>In the first two scripts, we mostly focused on different optical models and how they can be applied to an Si cell. Here we will look at different electrical models, roughly in increasing order of how ‘realistic’ they are expected to be:</p>
+<ol type="1">
+<li>Two-diode model (2D)</li>
+<li>Detailed balance (DB)</li>
+<li>Depletion approximation (DA)</li>
+<li>Poisson drift-diffusion solver (PDD)</li>
+</ol>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell <span class="im">import</span> SolarCell, Layer, Junction</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell_solver <span class="im">import</span> solar_cell_solver</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator <span class="im">import</span> OptiStack, calculate_rat</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore <span class="im">import</span> material, si</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.interpolate <span class="im">import</span> interp1d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="setting-up" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up">Setting up</h2>
+<p>Define some materials:</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>GaAs <span class="op">=</span> material(<span class="st">"GaAs"</span>)()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Al2O3 <span class="op">=</span> material(<span class="st">"Al2O3"</span>)()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Ag <span class="op">=</span> material(<span class="st">"Ag"</span>)()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>wavelengths <span class="op">=</span> si(np.linspace(<span class="dv">300</span>, <span class="dv">950</span>, <span class="dv">200</span>), <span class="st">"nm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We are going to do an optical calculation first to get absorption for a GaAs layer; we will use this as an estimate for the EQE as input for the two-diode model.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>OS <span class="op">=</span> OptiStack([Layer(si(<span class="st">"3um"</span>), GaAs)], substrate<span class="op">=</span>Ag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Calculate reflection/absorption/transmission (note that we have to give the wavelength to this function in nm rather than m!)</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>RAT <span class="op">=</span> calculate_rat(OS, wavelength<span class="op">=</span>wavelengths<span class="op">*</span><span class="fl">1e9</span>, no_back_reflection<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Create a function which interpolates the absorption - note that we pass a function which returns the absorption when given a wavelength to the Junction, rather than a table of values!</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>eqe_func <span class="op">=</span> interp1d(wavelengths, RAT[<span class="st">"A"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="d-and-db-junctions" class="level2">
+<h2 class="anchored" data-anchor-id="d-and-db-junctions">2D and DB junctions</h2>
+<p>Define the 2D junction with reasonable parameters for GaAs. The units of j01 and j01 are A/m^2. The units for the resistances are (Ohm m)^2. We use the standard ideality factors (1 and 2 respectively) for the two diodes:</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>twod_junction <span class="op">=</span> Junction(kind<span class="op">=</span><span class="st">'2D'</span>, n1<span class="op">=</span><span class="dv">1</span>, n2<span class="op">=</span><span class="dv">2</span>, j01<span class="op">=</span><span class="fl">3e-17</span>, j02<span class="op">=</span><span class="fl">1e-7</span>, Rseries<span class="op">=</span><span class="fl">4e-3</span>,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                         Rshunt<span class="op">=</span><span class="fl">1e4</span>, eqe<span class="op">=</span>eqe_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Define two instances of a detailed-balance type junction. In both cases, there will be a sharp absorption onset at the bandgap (1.42 eV for GaAs). By specifying A, we set the fraction of light above the bandgap that is absorbed (A = 1 means 100% absorption above the gap).</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>db_junction_A1 <span class="op">=</span> Junction(kind<span class="op">=</span><span class="st">'DB'</span>, Eg<span class="op">=</span><span class="fl">1.42</span>, A<span class="op">=</span><span class="dv">1</span>, R_shunt<span class="op">=</span><span class="fl">1e4</span>, n<span class="op">=</span><span class="fl">3.5</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>db_junction <span class="op">=</span> Junction(kind<span class="op">=</span><span class="st">'DB'</span>, Eg<span class="op">=</span><span class="fl">1.42</span>, A<span class="op">=</span><span class="fl">0.8</span>, R_shunt<span class="op">=</span><span class="fl">1e4</span>, n<span class="op">=</span><span class="fl">3.5</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="fl">1.5</span>, <span class="dv">200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Set some options and define solar cells based on these junctions:</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>opts <span class="op">=</span> {<span class="st">'voltages'</span>: V, <span class="st">'light_iv'</span>: <span class="va">True</span>, <span class="st">'wavelength'</span>: wavelengths, <span class="st">'mpp'</span>: <span class="va">True</span>}</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>solar_cell_db_A1 <span class="op">=</span> SolarCell([db_junction_A1])</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>solar_cell_db <span class="op">=</span> SolarCell([db_junction])</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>solar_cell_2d <span class="op">=</span> SolarCell([twod_junction])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Calculate and plot the IV curves:</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_db_A1, <span class="st">'iv'</span>, user_options<span class="op">=</span>opts)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_db, <span class="st">'iv'</span>, user_options<span class="op">=</span>opts)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_2d, <span class="st">'iv'</span>, user_options<span class="op">=</span>opts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Solving optics of the solar cell...
+Solving IV of the junctions...
+Solving IV of the tunnel junctions...
+Solving IV of the total solar cell...
+Solving optics of the solar cell...
+Solving IV of the junctions...
+Solving IV of the tunnel junctions...
+Solving IV of the total solar cell...
+Solving optics of the solar cell...
+Warning: A junction of kind "2D" found. Junction ignored in the optics calculation!
+Solving IV of the junctions...
+Solving IV of the tunnel junctions...
+Solving IV of the total solar cell...</code></pre>
+</div>
+</div>
+<p><strong>PLOT 1</strong>: IV curves for the DB and 2D models.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>solar_cell_db_A1.iv[<span class="st">"IV"</span>], label<span class="op">=</span><span class="st">'Detailed balance (Eg = 1.44 eV, A = 1)'</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>solar_cell_db.iv[<span class="st">"IV"</span>], label<span class="op">=</span><span class="st">'Detailed balance (Eg = 1.44 eV, A = 0.8)'</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>solar_cell_2d.iv[<span class="st">"IV"</span>], <span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Two-diode'</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="fl">1.5</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">500</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"V (V)"</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"J (A/m$^2$)"</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'(1) IV curves calculated through detailed balance and two-diode models'</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="1c-simple_cell_files/figure-html/cell-11-output-1.png" width="594" height="442"></p>
+</div>
+</div>
+<p>As we expect, the two DB solar cells have a very similar shape, but the A = 1 case has a higher Jsc. The two-diode model has a lower current, which makes sense as it’s EQE is specified based on a more realistic absorption calculation which includes front-surface reflection and an absorption edge which is not infinitely sharp at the bandgap, as is assumed by the detailed balance model.</p>
+</section>
+<section id="da-and-pdd-junctions" class="level2">
+<h2 class="anchored" data-anchor-id="da-and-pdd-junctions">DA and PDD junctions</h2>
+<p>Now let’s consider the two slightly more complex models, which will actually take into account the absorption profile of light in the cell and the distribution of charge carriers; the depletion approximation and the Poisson drift-diffusion solver.</p>
+<p><em>Note:</em> for the PDD example to work, the PDD solver must be installed correctly; see the <a href="http://docs.solcore.solar/en/master/Installation/installation.html">Solcore documentation</a> for more information.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">293</span> <span class="co"># ambient temperature</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>window <span class="op">=</span> material(<span class="st">'AlGaAs'</span>)(T<span class="op">=</span>T, Na<span class="op">=</span>si(<span class="st">"5e18cm-3"</span>), Al<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>p_GaAs <span class="op">=</span> material(<span class="st">'GaAs'</span>)(T<span class="op">=</span>T, Na<span class="op">=</span>si(<span class="st">"1e18cm-3"</span>), electron_diffusion_length<span class="op">=</span>si(<span class="st">"400nm"</span>))</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>n_GaAs <span class="op">=</span> material(<span class="st">'GaAs'</span>)(T<span class="op">=</span>T, Nd<span class="op">=</span>si(<span class="st">"8e16cm-3"</span>), hole_diffusion_length<span class="op">=</span>si(<span class="st">"8um"</span>))</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>bsf <span class="op">=</span> material(<span class="st">'GaAs'</span>)(T<span class="op">=</span>T, Nd<span class="op">=</span>si(<span class="st">"2e18cm-3"</span>))</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>SC_layers <span class="op">=</span> [Layer(width<span class="op">=</span>si(<span class="st">'150nm'</span>), material<span class="op">=</span>p_GaAs, role<span class="op">=</span><span class="st">"Emitter"</span>),</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                   Layer(width<span class="op">=</span>si(<span class="st">'2850nm'</span>), material<span class="op">=</span>n_GaAs, role<span class="op">=</span><span class="st">"Base"</span>),</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                   Layer(width<span class="op">=</span>si(<span class="st">'200nm'</span>), material<span class="op">=</span>bsf, role<span class="op">=</span><span class="st">"BSF"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>sn</code> and <code>sp</code> are the surface recombination velocities (in m/sec). <code>sn</code> is the SRV for the n-doped junction, <code>sp</code> for the p-doped junction.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Depletion approximation:</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>solar_cell_da <span class="op">=</span> SolarCell(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    [Layer(width<span class="op">=</span>si(<span class="st">"90nm"</span>), material<span class="op">=</span>Al2O3), Layer(width<span class="op">=</span>si(<span class="st">'20nm'</span>), material<span class="op">=</span>window, role<span class="op">=</span><span class="st">"Window"</span>),</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>     Junction(SC_layers, sn<span class="op">=</span><span class="fl">5e4</span>, sp<span class="op">=</span><span class="fl">5e4</span>, kind<span class="op">=</span><span class="st">'DA'</span>)],</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    R_series<span class="op">=</span><span class="dv">0</span>, substrate<span class="op">=</span>Ag</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drift-diffusion solver:</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>solar_cell_pdd <span class="op">=</span> SolarCell(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    [Layer(width<span class="op">=</span>si(<span class="st">"90nm"</span>), material<span class="op">=</span>Al2O3), Layer(width<span class="op">=</span>si(<span class="st">'20nm'</span>), material<span class="op">=</span>window, role<span class="op">=</span><span class="st">"Window"</span>),</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>     Junction(SC_layers, sn<span class="op">=</span><span class="fl">5e4</span>, sp<span class="op">=</span><span class="fl">5e4</span>, kind<span class="op">=</span><span class="st">'PDD'</span>)],</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    R_series<span class="op">=</span><span class="dv">0</span>, substrate<span class="op">=</span>Ag</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In both cases, we set the series resistance to 0. Other loss factors, such as shading, are also assumed to be zero by default.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>opts[<span class="st">"optics_method"</span>] <span class="op">=</span> <span class="st">"TMM"</span> <span class="co"># Use the transfer-matrix method to calculate the cell's optics</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>opts[<span class="st">"position"</span>] <span class="op">=</span> <span class="fl">1e-10</span> <span class="co"># This is the spacing used when calculating the depth-dependent absorption (0.1 nm)</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>opts[<span class="st">"no_back_reflection"</span>] <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_da, <span class="st">"iv"</span>, user_options<span class="op">=</span>opts)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_da, <span class="st">"qe"</span>, user_options<span class="op">=</span>opts)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_pdd, <span class="st">"iv"</span>, user_options<span class="op">=</span>opts)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_pdd, <span class="st">"qe"</span>, user_options<span class="op">=</span>opts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Solving optics of the solar cell...
+Calculating RAT...
+Calculating absorption profile...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Solving IV of the junctions...
+Solving IV of the tunnel junctions...
+Solving IV of the total solar cell...
+Solving optics of the solar cell...
+Already calculated reflection, transmission and absorption profile - not recalculating. Set recalculate_absorption to True in the options if you want absorption to be calculated again.
+Solving QE of the solar cell...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/phoebe/Documents/develop/solcore5/solcore/analytic_solar_cells/depletion_approximation.py:617: RuntimeWarning:
+
+invalid value encountered in true_divide
+</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Solving optics of the solar cell...
+Calculating RAT...
+Calculating absorption profile...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Solving IV of the junctions...
+Solving IV...
+Solving equilibrium...
+Processing structure...
+...done!
+
+ CREATE MESH...
+ Masternodes at (nm):
+       0.0
+     149.9
+     150.0
+    2999.9
+    3000.0
+    3200.0
+  
+ Initial number of nodes (M+1):          299
+ Refining mesh... 
+ ... Finished!
+ Mesh with          105  nodes.
+ ----------------------------------
+  
+ Starting EQUILIBRIUM... 
+ Remeshing...  M+1 =          135  nodes.
+ EQUILIBRIUM Output Code: Reached Absolute Tolerance.                       
+     Res:    5.55010459E-29
+ Elapsed time =    4.97689992E-02 s
+  
+...done!
+</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>...done!
+  
+ Starting LIGHTSC... 
+
+      step  Jtot (A/m^2)          Res          Res-h    Res Poisson     Res-e        Info
+         1   -0.2703E-18    0.3289E-19    0.9817E-22    0.6197E-28    0.3289E-19         2
+         2   -0.2703E-17    0.9766E-19    0.1149E-21    0.3541E-26    0.9766E-19         2
+         3   -0.2703E-16    0.2674E-19    0.1225E-20    0.3542E-24    0.2671E-19         2
+         4   -0.2703E-15    0.9640E-19    0.8997E-19    0.3547E-22    0.3463E-19         2
+         5   -0.2702E-14    0.9365E-17    0.9103E-17    0.3595E-20    0.2200E-17         2
+         6   -0.2703E-13    0.6059E-18    0.6032E-18    0.1519E-21    0.5643E-19         2
+         7   -0.2703E-12    0.1498E-16    0.1498E-16    0.2272E-20    0.2843E-18         2
+         8   -0.2703E-11    0.1607E-17    0.1582E-17    0.2959E-21    0.2819E-18         2
+         9   -0.2703E-10    0.1795E-17    0.1570E-17    0.3950E-21    0.8712E-18         2
+        10   -0.2703E-09    0.3941E-19    0.1360E-19    0.1123E-25    0.3699E-19         2
+        11   -0.2703E-08    0.2068E-18    0.1456E-18    0.1315E-24    0.1469E-18         2
+        12   -0.2703E-07    0.2071E-17    0.1466E-17    0.1336E-23    0.1463E-17         2
+        13   -0.2703E-06    0.2073E-16    0.1467E-16    0.1338E-22    0.1464E-16         2
+        14   -0.2703E-05    0.9740E-19    0.5797E-19    0.4274E-28    0.7828E-19         2
+        15   -0.2703E-04    0.8229E-18    0.5797E-18    0.1930E-27    0.5841E-18         2
+        16   -0.2703E-03    0.8193E-17    0.5797E-17    0.1706E-26    0.5790E-17         2
+        17   -0.2703E-02    0.4485E-19    0.1383E-19    0.3302E-28    0.4266E-19         2
+        18   -0.2703E-01    0.2027E-18    0.1383E-18    0.7052E-28    0.1482E-18         2
+        19   -0.2703        0.1955E-17    0.1383E-17    0.2986E-28    0.1381E-17         2
+        20    -2.703        0.1955E-16    0.1383E-16    0.4849E-28    0.1382E-16         2
+        21    -27.03        0.9171E-19    0.2627E-19    0.3431E-28    0.8787E-19         2
+        22    -270.3        0.3768E-18    0.2622E-18    0.2825E-28    0.2707E-18         2
+ LIGHTSC Output Code: Reached Absolute Tolerance.                       
+     Res:    3.76834174E-19
+     J:   -270.300262      A/m2
+     V:    1.38166822E-09  V
+ Elapsed time =   0.912029028     s
+  
+  
+ Starting RUNIV... 
+ nvolt   nit   info    Vapp       Jtot (A/m^2)       Res
+     0     1     2   0.00000      -270.300      0.450185E-19
+     1     7     2  0.100100E-01  -270.285      0.557644E-18
+     2     7     2  0.200200E-01  -270.270      0.555465E-18
+     3     7     2  0.300300E-01  -270.254      0.554833E-18
+     4     7     2  0.400400E-01  -270.239      0.554198E-18
+     5     7     2  0.500501E-01  -270.223      0.558092E-18
+     6     7     2  0.600601E-01  -270.207      0.553061E-18
+     7     7     2  0.700701E-01  -270.192      0.552682E-18
+     8     7     2  0.800801E-01  -270.176      0.551684E-18
+     9     7     2  0.900901E-01  -270.160      0.553204E-18
+    10     7     2  0.100100      -270.144      0.550230E-18
+    11     7     2  0.110110      -270.128      0.552847E-18
+    12     7     2  0.120120      -270.112      0.549306E-18
+    13     7     2  0.130130      -270.096      0.554059E-18
+    14     7     2  0.140140      -270.080      0.547399E-18
+    15     7     2  0.150150      -270.063      0.553312E-18
+    16     7     2  0.160160      -270.047      0.545997E-18
+    17     7     2  0.170170      -270.030      0.551923E-18
+    18     7     2  0.180180      -270.014      0.543551E-18
+    19     7     2  0.190190      -269.997      0.544135E-18
+    20     7     2  0.200200      -269.980      0.545816E-18
+    21     7     2  0.210210      -269.964      0.540715E-18
+    22     7     2  0.220220      -269.947      0.539658E-18
+    23     7     2  0.230230      -269.930      0.538678E-18
+    24     7     2  0.240240      -269.913      0.537382E-18
+    25     7     2  0.250250      -269.895      0.537613E-18
+    26     7     2  0.260260      -269.878      0.535238E-18
+    27     7     2  0.270270      -269.861      0.537520E-18
+    28     7     2  0.280280      -269.843      0.532900E-18
+    29     7     2  0.290290      -269.826      0.536493E-18
+    30     7     2  0.300300      -269.808      0.531174E-18
+    31     7     2  0.310310      -269.790      0.532822E-18
+    32     7     2  0.320320      -269.772      0.528064E-18
+    33     7     2  0.330330      -269.754      0.527872E-18
+    34     7     2  0.340340      -269.736      0.531578E-18
+    35     7     2  0.350350      -269.718      0.523944E-18
+    36     7     2  0.360360      -269.700      0.522723E-18
+    37     7     2  0.370370      -269.681      0.522006E-18
+    38     7     2  0.380380      -269.663      0.519390E-18
+    39     7     2  0.390390      -269.644      0.519499E-18
+    40     7     2  0.400400      -269.625      0.517919E-18
+    41     7     2  0.410410      -269.606      0.514753E-18
+    42     7     2  0.420420      -269.587      0.513976E-18
+    43     7     2  0.430430      -269.568      0.511044E-18
+    44     7     2  0.440440      -269.549      0.509830E-18
+    45     7     2  0.450450      -269.529      0.508942E-18
+    46     7     2  0.460460      -269.510      0.506088E-18
+    47     7     2  0.470470      -269.490      0.506341E-18
+    48     7     2  0.480480      -269.470      0.501798E-18
+    49     7     2  0.490490      -269.450      0.500856E-18
+    50     7     2  0.500501      -269.430      0.498631E-18
+    51     7     2  0.510511      -269.410      0.499235E-18
+    52     7     2  0.520521      -269.389      0.494106E-18
+    53     7     2  0.530531      -269.369      0.495517E-18
+    54     7     2  0.540541      -269.348      0.489060E-18
+    55     7     2  0.550551      -269.327      0.488074E-18
+    56     7     2  0.560561      -269.306      0.487225E-18
+    57     7     2  0.570571      -269.285      0.482332E-18
+    58     7     2  0.580581      -269.263      0.482115E-18
+    59     7     2  0.590591      -269.241      0.476790E-18
+    60     7     2  0.600601      -269.220      0.481449E-18
+    61     7     2  0.610611      -269.197      0.472458E-18
+    62     7     2  0.620621      -269.175      0.470882E-18
+    63     7     2  0.630631      -269.152      0.471002E-18
+    64     7     2  0.640641      -269.129      0.463080E-18
+    65     7     2  0.650651      -269.106      0.461098E-18
+    66     7     2  0.660661      -269.082      0.462214E-18
+    67     7     2  0.670671      -269.058      0.454485E-18
+    68     7     2  0.680681      -269.033      0.450503E-18
+    69     7     2  0.690691      -269.007      0.451871E-18
+    70     7     2  0.700701      -268.980      0.451011E-18
+    71     7     2  0.710711      -268.952      0.447901E-18
+    72     7     2  0.720721      -268.921      0.437723E-18
+    73     7     2  0.730731      -268.887      0.440464E-18
+    74     7     2  0.740741      -268.848      0.430234E-18
+    75     7     2  0.750751      -268.803      0.429160E-18
+    76     7     2  0.760761      -268.748      0.420778E-18
+    77     7     2  0.770771      -268.680      0.416501E-18
+    78     7     2  0.780781      -268.591      0.411720E-18
+    79     7     2  0.790791      -268.473      0.406112E-18
+    80     7     2  0.800801      -268.311      0.399488E-18
+    81     7     2  0.810811      -268.086      0.397994E-18
+    82     7     2  0.820821      -267.767      0.382765E-18
+    83     7     2  0.830831      -267.311      0.374347E-18
+    84     7     2  0.840841      -266.654      0.367084E-18
+    85     7     2  0.850851      -265.699      0.343455E-18
+    86     7     2  0.860861      -264.308      0.330813E-18
+    87     7     2  0.870871      -262.274      0.299027E-18
+    88     7     2  0.880881      -259.293      0.273807E-18
+    89     7     2  0.890891      -254.921      0.232832E-18
+    90     7     2  0.900901      -248.498      0.202406E-18
+    91     7     2  0.910911      -239.057      0.145136E-18
+    92     7     2  0.920921      -225.172      0.105149E-18
+    93     7     2  0.930931      -204.745      0.745406E-19
+    94     7     2  0.940941      -174.684      0.939804E-19
+    95     7     2  0.950951      -130.439      0.285790E-19
+    96     6     2  0.960961      -65.3093      0.202662E-16
+    97     6     2  0.970971       30.5738      0.412098E-17
+    98     6     2  0.980981       171.740      0.535724E-17
+    99     6     2  0.990991       379.584      0.911952E-17
+   100     6     2   1.00100       685.611      0.117351E-16
+   101     6     2   1.01101       1136.21      0.125744E-16
+   102     6     2   1.02102       1799.67      0.107706E-16
+   103     6     2   1.03103       2776.58      0.743563E-17
+   104     6     2   1.04104       4214.99      0.152404E-16
+   105     7     2   1.05105       6332.87      0.672464E-19
+   106     7     2   1.06106       9451.12      0.324305E-19
+   107     7     2   1.07107       14042.0      0.429233E-19
+   108     7     2   1.08108       20800.6      0.635027E-19
+   109     7     2   1.09109       30749.3      0.100021E-18
+   110     7     2   1.10110       45391.9      0.178986E-18
+   111     7     2   1.11111       66938.2      0.274396E-18
+   112     7     2   1.12112       98633.3      0.416153E-18
+   113     7     2   1.13113       145236.      0.626955E-18
+   114     7     2   1.14114       213715.      0.897153E-18
+   115     7     2   1.15115       314243.      0.119264E-17
+   116     7     2   1.16116       461620.      0.142293E-17
+   117     7     2   1.17117       677267.      0.142902E-17
+   118     7     2   1.18118       991954.      0.103926E-17
+   119     7     2   1.19119      0.144946E+07  0.175633E-18
+   120     7     2   1.20120      0.211122E+07  0.113773E-17
+   121     7     2   1.21121      0.306207E+07  0.270762E-17
+   122     7     2   1.22122      0.441663E+07  0.453397E-17
+   123     7     2   1.23123      0.632624E+07  0.689539E-17
+   124     7     2   1.24124      0.898558E+07  0.104969E-16
+   125     7     2   1.25125      0.126389E+08  0.168047E-16
+   126     7     2   1.26126      0.175854E+08  0.290275E-16
+   127     8     2   1.27127      0.241839E+08  0.442965E-19
+   128     8     2   1.28128      0.328561E+08  0.402304E-19
+   129     8     2   1.29129      0.440874E+08  0.613707E-19
+   130     8     2   1.30130      0.584249E+08  0.131208E-18
+   131     8     2   1.31131      0.764708E+08  0.323581E-18
+   132     8     2   1.32132      0.988714E+08  0.880818E-18
+   133     8     2   1.33133      0.126303E+09  0.243478E-17
+   134     8     2   1.34134      0.159451E+09  0.676198E-17
+   135     8     2   1.35135      0.198994E+09  0.186557E-16
+   136     9     2   1.36136      0.245579E+09  0.359817E-19
+   137     9     2   1.37137      0.299806E+09  0.107119E-18
+   138     9     2   1.38138      0.362209E+09  0.173255E-18
+   139     9     2   1.39139      0.433245E+09  0.464352E-18
+   140     9     2   1.40140      0.513285E+09  0.941107E-18
+   141     9     2   1.41141      0.602608E+09  0.260113E-17
+   142    10     2   1.42142      0.701406E+09  0.140995E-18
+   143    12     2   1.43143      0.809781E+09  0.486102E-17
+   144    16     2   1.44144      0.927753E+09  0.612565E-19
+   145    11     2   1.45145      0.105527E+10  0.295003E-18
+   146    10     2   1.46146      0.119220E+10  0.330150E-17
+   147    10     2   1.47147      0.133839E+10  0.450385E-18
+   148    10     2   1.48148      0.149358E+10  0.133760E-18
+   149    10     2   1.49149      0.165753E+10  0.887937E-19
+   150     9     2   1.50150      0.182992E+10  0.311404E-16
+ Elapsed time =    5.14868307     s
+  
+Solving equilibrium...
+Processing structure...
+...done!
+
+ CREATE MESH...
+ Masternodes at (nm):
+       0.0
+     149.9
+     150.0
+    2999.9
+    3000.0
+    3200.0
+...done!
+  
+ Initial number of nodes (M+1):          299
+ Refining mesh... 
+ ... Finished!
+ Mesh with          105  nodes.
+ ----------------------------------
+  
+ Starting EQUILIBRIUM... 
+ Remeshing...  M+1 =          135  nodes.
+ EQUILIBRIUM Output Code: Reached Absolute Tolerance.                       
+     Res:    5.55010459E-29
+ Elapsed time =    4.94190007E-02 s
+  
+
+  
+ Starting LIGHTSC... </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>...done!
+      step  Jtot (A/m^2)          Res          Res-h    Res Poisson     Res-e        Info
+         1   -0.2703E-18    0.3289E-19    0.9817E-22    0.6197E-28    0.3289E-19         2
+         2   -0.2703E-17    0.9766E-19    0.1149E-21    0.3541E-26    0.9766E-19         2
+         3   -0.2703E-16    0.2674E-19    0.1225E-20    0.3542E-24    0.2671E-19         2
+         4   -0.2703E-15    0.9640E-19    0.8997E-19    0.3547E-22    0.3463E-19         2
+         5   -0.2702E-14    0.9365E-17    0.9103E-17    0.3595E-20    0.2200E-17         2
+         6   -0.2703E-13    0.6059E-18    0.6032E-18    0.1519E-21    0.5643E-19         2
+         7   -0.2703E-12    0.1498E-16    0.1498E-16    0.2272E-20    0.2843E-18         2
+         8   -0.2703E-11    0.1607E-17    0.1582E-17    0.2959E-21    0.2819E-18         2
+         9   -0.2703E-10    0.1795E-17    0.1570E-17    0.3950E-21    0.8712E-18         2
+        10   -0.2703E-09    0.3941E-19    0.1360E-19    0.1123E-25    0.3699E-19         2
+        11   -0.2703E-08    0.2068E-18    0.1456E-18    0.1315E-24    0.1469E-18         2
+        12   -0.2703E-07    0.2071E-17    0.1466E-17    0.1336E-23    0.1463E-17         2
+        13   -0.2703E-06    0.2073E-16    0.1467E-16    0.1338E-22    0.1464E-16         2
+        14   -0.2703E-05    0.9740E-19    0.5797E-19    0.4274E-28    0.7828E-19         2
+        15   -0.2703E-04    0.8229E-18    0.5797E-18    0.1930E-27    0.5841E-18         2
+        16   -0.2703E-03    0.8193E-17    0.5797E-17    0.1706E-26    0.5790E-17         2
+        17   -0.2703E-02    0.4485E-19    0.1383E-19    0.3302E-28    0.4266E-19         2
+        18   -0.2703E-01    0.2027E-18    0.1383E-18    0.7052E-28    0.1482E-18         2
+        19   -0.2703        0.1955E-17    0.1383E-17    0.2986E-28    0.1381E-17         2
+        20    -2.703        0.1955E-16    0.1383E-16    0.4849E-28    0.1382E-16         2
+        21    -27.03        0.9171E-19    0.2627E-19    0.3431E-28    0.8787E-19         2
+        22    -270.3        0.3768E-18    0.2622E-18    0.2825E-28    0.2707E-18         2
+ LIGHTSC Output Code: Reached Absolute Tolerance.                       
+     Res:    3.76834174E-19
+     J:   -270.300262      A/m2
+     V:    1.38166822E-09  V
+ Elapsed time =   0.908883989     s
+  
+</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>...done!
+  
+ Starting RUNIV... 
+ nvolt   nit   info    Vapp       Jtot (A/m^2)       Res
+     0     1     2   0.00000      -270.300      0.450185E-19
+     1     7     2 -0.100100E-01  -270.316      0.137473E-17
+     2     7     2 -0.200200E-01  -270.331      0.137769E-17
+     3     7     2 -0.300300E-01  -270.346      0.137917E-17
+     4     7     2 -0.400400E-01  -270.361      0.138124E-17
+     5     7     2 -0.500501E-01  -270.376      0.138387E-17
+     6     7     2 -0.600601E-01  -270.391      0.138500E-17
+     7     7     2 -0.700701E-01  -270.406      0.138668E-17
+     8     7     2 -0.800801E-01  -270.420      0.138898E-17
+     9     7     2 -0.900901E-01  -270.435      0.139045E-17
+    10     7     2 -0.100100      -270.450      0.139203E-17
+    11     7     2 -0.110110      -270.464      0.139372E-17
+    12     7     2 -0.120120      -270.479      0.139603E-17
+    13     7     2 -0.130130      -270.493      0.139701E-17
+    14     7     2 -0.140140      -270.508      0.139857E-17
+    15     7     2 -0.150150      -270.522      0.139990E-17
+    16     7     2 -0.160160      -270.536      0.140291E-17
+    17     7     2 -0.170170      -270.551      0.140378E-17
+    18     7     2 -0.180180      -270.565      0.140436E-17
+    19     7     2 -0.190190      -270.579      0.140563E-17
+    20     7     2 -0.200200      -270.593      0.140722E-17
+    21     7     2 -0.210210      -270.607      0.140846E-17
+    22     7     2 -0.220220      -270.621      0.141017E-17
+    23     7     2 -0.230230      -270.635      0.141261E-17
+    24     7     2 -0.240240      -270.648      0.141230E-17
+    25     7     2 -0.250250      -270.662      0.141411E-17
+    26     7     2 -0.260260      -270.676      0.141565E-17
+    27     7     2 -0.270270      -270.689      0.141607E-17
+    28     7     2 -0.280280      -270.703      0.141783E-17
+    29     7     2 -0.290290      -270.716      0.141811E-17
+    30     7     2 -0.300300      -270.730      0.141957E-17
+    31     7     2 -0.310310      -270.743      0.142013E-17
+    32     7     2 -0.320320      -270.757      0.142140E-17
+    33     7     2 -0.330330      -270.770      0.142271E-17
+    34     7     2 -0.340340      -270.783      0.142310E-17
+    35     7     2 -0.350350      -270.796      0.142538E-17
+    36     7     2 -0.360360      -270.809      0.142669E-17
+    37     7     2 -0.370370      -270.822      0.142594E-17
+    38     7     2 -0.380380      -270.835      0.142647E-17
+    39     7     2 -0.390390      -270.848      0.142725E-17
+    40     7     2 -0.400400      -270.861      0.143153E-17
+    41     7     2 -0.410410      -270.874      0.142905E-17
+    42     7     2 -0.420420      -270.887      0.142978E-17
+    43     7     2 -0.430430      -270.900      0.143249E-17
+    44     7     2 -0.440440      -270.912      0.143242E-17
+    45     7     2 -0.450450      -270.925      0.143222E-17
+    46     7     2 -0.460460      -270.938      0.143398E-17
+    47     7     2 -0.470470      -270.950      0.143492E-17
+    48     7     2 -0.480480      -270.963      0.143362E-17
+    49     7     2 -0.490490      -270.975      0.143444E-17
+    50     7     2 -0.500501      -270.988      0.143493E-17
+    51     7     2 -0.510511      -271.000      0.143574E-17
+    52     7     2 -0.520521      -271.013      0.143582E-17
+    53     7     2 -0.530531      -271.025      0.143826E-17
+    54     7     2 -0.540541      -271.037      0.143694E-17
+    55     7     2 -0.550551      -271.050      0.143743E-17
+    56     7     2 -0.560561      -271.062      0.143901E-17
+    57     7     2 -0.570571      -271.074      0.143870E-17
+    58     7     2 -0.580581      -271.087      0.143943E-17
+    59     7     2 -0.590591      -271.099      0.143887E-17
+    60     7     2 -0.600601      -271.111      0.143956E-17
+    61     7     2 -0.610611      -271.123      0.143965E-17
+    62     7     2 -0.620621      -271.136      0.144021E-17
+    63     7     2 -0.630631      -271.148      0.144132E-17
+    64     7     2 -0.640641      -271.160      0.144042E-17
+    65     7     2 -0.650651      -271.172      0.144148E-17
+    66     7     2 -0.660661      -271.184      0.144087E-17
+    67     7     2 -0.670671      -271.196      0.144207E-17
+    68     7     2 -0.680681      -271.208      0.144119E-17
+    69     7     2 -0.690691      -271.220      0.144140E-17
+    70     7     2 -0.700701      -271.232      0.144183E-17
+    71     7     2 -0.710711      -271.244      0.144169E-17
+    72     7     2 -0.720721      -271.256      0.144171E-17
+    73     7     2 -0.730731      -271.268      0.144182E-17
+    74     7     2 -0.740741      -271.280      0.144245E-17
+    75     7     2 -0.750751      -271.292      0.144199E-17
+    76     7     2 -0.760761      -271.304      0.144283E-17
+    77     7     2 -0.770771      -271.316      0.144224E-17
+    78     7     2 -0.780781      -271.328      0.144259E-17
+    79     7     2 -0.790791      -271.339      0.144210E-17
+    80     7     2 -0.800801      -271.351      0.144181E-17
+    81     7     2 -0.810811      -271.363      0.144215E-17
+    82     7     2 -0.820821      -271.375      0.144175E-17
+    83     7     2 -0.830831      -271.387      0.144373E-17
+    84     7     2 -0.840841      -271.398      0.144251E-17
+    85     7     2 -0.850851      -271.410      0.144201E-17
+    86     7     2 -0.860861      -271.422      0.144346E-17
+    87     7     2 -0.870871      -271.433      0.144208E-17
+    88     7     2 -0.880881      -271.445      0.144316E-17
+    89     7     2 -0.890891      -271.456      0.144374E-17
+    90     7     2 -0.900901      -271.468      0.144159E-17
+    91     7     2 -0.910911      -271.479      0.144061E-17
+    92     7     2 -0.920921      -271.491      0.144097E-17
+    93     7     2 -0.930931      -271.502      0.143998E-17
+    94     7     2 -0.940941      -271.513      0.144005E-17
+    95     7     2 -0.950951      -271.525      0.143987E-17
+    96     7     2 -0.960961      -271.536      0.144108E-17
+    97     7     2 -0.970971      -271.547      0.143905E-17
+    98     7     2 -0.980981      -271.558      0.143876E-17
+    99     7     2 -0.990991      -271.569      0.143869E-17
+   100     7     2  -1.00100      -271.580      0.143901E-17
+   101     7     2  -1.01101      -271.591      0.143836E-17
+   102     7     2  -1.02102      -271.602      0.143793E-17
+   103     7     2  -1.03103      -271.613      0.143814E-17
+   104     7     2  -1.04104      -271.624      0.143736E-17
+   105     7     2  -1.05105      -271.635      0.143707E-17
+   106     7     2  -1.06106      -271.646      0.143706E-17
+   107     7     2  -1.07107      -271.656      0.143660E-17
+   108     7     2  -1.08108      -271.667      0.143633E-17
+   109     7     2  -1.09109      -271.677      0.143616E-17
+   110     7     2  -1.10110      -271.688      0.143675E-17
+   111     7     2  -1.11111      -271.698      0.143572E-17
+   112     7     2  -1.12112      -271.709      0.143578E-17
+   113     7     2  -1.13113      -271.719      0.143633E-17
+   114     7     2  -1.14114      -271.729      0.143495E-17
+   115     7     2  -1.15115      -271.740      0.143496E-17
+   116     7     2  -1.16116      -271.750      0.143472E-17
+   117     7     2  -1.17117      -271.760      0.143425E-17
+   118     7     2  -1.18118      -271.770      0.143429E-17
+   119     7     2  -1.19119      -271.780      0.143364E-17
+   120     7     2  -1.20120      -271.790      0.143364E-17
+   121     7     2  -1.21121      -271.800      0.143361E-17
+   122     7     2  -1.22122      -271.810      0.143343E-17
+   123     7     2  -1.23123      -271.820      0.143384E-17
+   124     7     2  -1.24124      -271.830      0.143439E-17
+   125     7     2  -1.25125      -271.839      0.143354E-17
+   126     7     2  -1.26126      -271.849      0.143262E-17
+   127     7     2  -1.27127      -271.859      0.143213E-17
+   128     7     2  -1.28128      -271.869      0.143158E-17
+   129     7     2  -1.29129      -271.878      0.143169E-17
+   130     7     2  -1.30130      -271.888      0.143192E-17
+   131     7     2  -1.31131      -271.897      0.143088E-17
+   132     7     2  -1.32132      -271.907      0.143134E-17
+   133     7     2  -1.33133      -271.916      0.143026E-17
+   134     7     2  -1.34134      -271.926      0.143006E-17
+   135     7     2  -1.35135      -271.935      0.143088E-17
+   136     7     2  -1.36136      -271.945      0.143008E-17
+   137     7     2  -1.37137      -271.954      0.143286E-17
+   138     7     2  -1.38138      -271.963      0.143202E-17
+   139     7     2  -1.39139      -271.973      0.142883E-17
+   140     7     2  -1.40140      -271.982      0.142829E-17
+   141     7     2  -1.41141      -271.991      0.142991E-17
+   142     7     2  -1.42142      -272.000      0.142775E-17
+   143     7     2  -1.43143      -272.010      0.142743E-17
+   144     7     2  -1.44144      -272.019      0.142753E-17
+   145     7     2  -1.45145      -272.028      0.142684E-17
+   146     7     2  -1.46146      -272.037      0.142656E-17
+   147     7     2  -1.47147      -272.046      0.142704E-17
+   148     7     2  -1.48148      -272.056      0.142837E-17
+   149     7     2  -1.49149      -272.065      0.142559E-17
+   150     7     2  -1.50150      -272.074      0.142522E-17
+   151     7     2  -1.51151      -272.083      0.142490E-17
+   152     7     2  -1.52152      -272.092      0.142464E-17
+   153     7     2  -1.53153      -272.101      0.142557E-17
+   154     7     2  -1.54154      -272.110      0.142403E-17
+   155     7     2  -1.55155      -272.119      0.142366E-17
+   156     7     2  -1.56156      -272.128      0.142688E-17
+   157     7     2  -1.57157      -272.137      0.142279E-17
+   158     7     2  -1.58158      -272.146      0.142252E-17
+   159     7     2  -1.59159      -272.155      0.142216E-17
+   160     7     2  -1.60160      -272.165      0.142185E-17
+   161     7     2  -1.61161      -272.174      0.142144E-17
+   162     7     2  -1.62162      -272.183      0.142102E-17
+   163     7     2  -1.63163      -272.192      0.142319E-17
+   164     7     2  -1.64164      -272.201      0.142015E-17
+   165     7     2  -1.65165      -272.210      0.142053E-17
+   166     7     2  -1.66166      -272.219      0.142136E-17
+   167     7     2  -1.67167      -272.228      0.141914E-17
+   168     7     2  -1.68168      -272.237      0.141857E-17
+   169     7     2  -1.69169      -272.245      0.141820E-17
+   170     7     2  -1.70170      -272.254      0.141771E-17
+   171     7     2  -1.71171      -272.263      0.141816E-17
+   172     7     2  -1.72172      -272.272      0.141953E-17
+   173     7     2  -1.73173      -272.281      0.141604E-17
+   174     7     2  -1.74174      -272.290      0.141834E-17
+   175     7     2  -1.75175      -272.299      0.141497E-17
+   176     7     2  -1.76176      -272.308      0.141528E-17
+   177     7     2  -1.77177      -272.317      0.141489E-17
+   178     7     2  -1.78178      -272.326      0.141344E-17
+   179     7     2  -1.79179      -272.335      0.141421E-17
+   180     7     2  -1.80180      -272.344      0.141532E-17
+   181     7     2  -1.81181      -272.353      0.141226E-17
+   182     7     2  -1.82182      -272.362      0.141123E-17
+   183     7     2  -1.83183      -272.371      0.141133E-17
+   184     7     2  -1.84184      -272.380      0.141050E-17
+   185     7     2  -1.85185      -272.389      0.141029E-17
+   186     7     2  -1.86186      -272.398      0.141081E-17
+   187     7     2  -1.87187      -272.407      0.140833E-17
+   188     7     2  -1.88188      -272.416      0.140862E-17
+   189     7     2  -1.89189      -272.425      0.140821E-17
+   190     7     2  -1.90190      -272.434      0.140703E-17
+   191     7     2  -1.91191      -272.443      0.140617E-17
+   192     7     2  -1.92192      -272.452      0.140617E-17
+   193     7     2  -1.93193      -272.461      0.140441E-17
+   194     7     2  -1.94194      -272.470      0.140395E-17
+   195     7     2  -1.95195      -272.479      0.140307E-17
+   196     7     2  -1.96196      -272.489      0.140371E-17
+   197     7     2  -1.97197      -272.498      0.140227E-17
+   198     7     2  -1.98198      -272.507      0.140088E-17
+   199     7     2  -1.99199      -272.516      0.140016E-17
+   200     7     2  -2.00200      -272.525      0.139950E-17
+   201     7     2  -2.01201      -272.534      0.140057E-17
+   202     7     2  -2.02202      -272.543      0.139808E-17
+   203     7     2  -2.03203      -272.552      0.140157E-17
+   204     7     2  -2.04204      -272.561      0.139736E-17
+   205     7     2  -2.05205      -272.570      0.139579E-17
+   206     7     2  -2.06206      -272.579      0.139561E-17
+   207     7     2  -2.07207      -272.589      0.139468E-17
+   208     7     2  -2.08208      -272.598      0.139527E-17
+   209     7     2  -2.09209      -272.607      0.139261E-17
+   210     7     2  -2.10210      -272.616      0.139163E-17
+   211     7     2  -2.11211      -272.625      0.139068E-17
+   212     7     2  -2.12212      -272.634      0.138982E-17
+   213     7     2  -2.13213      -272.643      0.138974E-17
+   214     7     2  -2.14214      -272.653      0.138976E-17
+   215     7     2  -2.15215      -272.662      0.138714E-17
+   216     7     2  -2.16216      -272.671      0.138671E-17
+   217     7     2  -2.17217      -272.680      0.138614E-17
+   218     7     2  -2.18218      -272.689      0.138508E-17
+   219     7     2  -2.19219      -272.698      0.138562E-17
+   220     7     2  -2.20220      -272.708      0.138275E-17
+   221     7     2  -2.21221      -272.717      0.138245E-17
+   222     7     2  -2.22222      -272.726      0.138090E-17
+   223     7     2  -2.23223      -272.735      0.138007E-17
+   224     7     2  -2.24224      -272.744      0.137980E-17
+   225     7     2  -2.25225      -272.753      0.137792E-17
+   226     7     2  -2.26226      -272.762      0.137797E-17
+   227     7     2  -2.27227      -272.772      0.137989E-17
+   228     7     2  -2.28228      -272.781      0.137484E-17
+   229     7     2  -2.29229      -272.790      0.137389E-17
+   230     7     2  -2.30230      -272.799      0.137512E-17
+   231     7     2  -2.31231      -272.808      0.137190E-17
+   232     7     2  -2.32232      -272.817      0.137464E-17
+   233     7     2  -2.33233      -272.826      0.136998E-17
+   234     7     2  -2.34234      -272.835      0.137151E-17
+   235     7     2  -2.35235      -272.844      0.137034E-17
+   236     7     2  -2.36236      -272.853      0.136852E-17
+   237     7     2  -2.37237      -272.862      0.136664E-17
+   238     7     2  -2.38238      -272.871      0.136569E-17
+   239     7     2  -2.39239      -272.879      0.136579E-17
+   240     7     2  -2.40240      -272.888      0.136355E-17
+   241     7     2  -2.41241      -272.897      0.136453E-17
+   242     7     2  -2.42242      -272.906      0.136132E-17
+   243     7     2  -2.43243      -272.914      0.136048E-17
+   244     7     2  -2.44244      -272.923      0.135933E-17
+   245     7     2  -2.45245      -272.932      0.135846E-17
+   246     7     2  -2.46246      -272.940      0.135770E-17
+   247     7     2  -2.47247      -272.949      0.135657E-17
+   248     7     2  -2.48248      -272.957      0.135564E-17
+   249     7     2  -2.49249      -272.966      0.135539E-17
+   250     7     2  -2.50250      -272.974      0.135410E-17
+   251     7     2  -2.51251      -272.982      0.135340E-17
+   252     7     2  -2.52252      -272.990      0.135319E-17
+   253     7     2  -2.53253      -272.999      0.135242E-17
+   254     7     2  -2.54254      -273.007      0.135056E-17
+   255     7     2  -2.55255      -273.015      0.135043E-17
+   256     7     2  -2.56256      -273.023      0.134893E-17
+   257     7     2  -2.57257      -273.031      0.134880E-17
+   258     7     2  -2.58258      -273.039      0.134763E-17
+   259     7     2  -2.59259      -273.047      0.134714E-17
+   260     7     2  -2.60260      -273.055      0.134679E-17
+   261     7     2  -2.61261      -273.062      0.134599E-17
+   262     7     2  -2.62262      -273.070      0.134442E-17
+   263     7     2  -2.63263      -273.078      0.134469E-17
+   264     7     2  -2.64264      -273.086      0.134508E-17
+   265     7     2  -2.65265      -273.093      0.134336E-17
+   266     7     2  -2.66266      -273.101      0.134437E-17
+   267     7     2  -2.67267      -273.108      0.134236E-17
+   268     7     2  -2.68268      -273.116      0.134034E-17
+   269     7     2  -2.69269      -273.123      0.133941E-17
+   270     7     2  -2.70270      -273.130      0.133870E-17
+   271     7     2  -2.71271      -273.138      0.133919E-17
+   272     7     2  -2.72272      -273.145      0.133780E-17
+   273     7     2  -2.73273      -273.152      0.133674E-17
+   274     7     2  -2.74274      -273.160      0.133670E-17
+   275     7     2  -2.75275      -273.167      0.133552E-17
+   276     7     2  -2.76276      -273.174      0.133550E-17
+   277     7     2  -2.77277      -273.181      0.133478E-17
+   278     7     2  -2.78278      -273.188      0.133601E-17
+   279     7     2  -2.79279      -273.195      0.133418E-17
+   280     7     2  -2.80280      -273.202      0.133489E-17
+   281     7     2  -2.81281      -273.209      0.133270E-17
+   282     7     2  -2.82282      -273.216      0.133284E-17
+   283     7     2  -2.83283      -273.223      0.133216E-17
+   284     7     2  -2.84284      -273.230      0.133014E-17
+   285     7     2  -2.85285      -273.237      0.132980E-17
+   286     7     2  -2.86286      -273.244      0.132923E-17
+   287     7     2  -2.87287      -273.251      0.133068E-17
+   288     7     2  -2.88288      -273.258      0.132801E-17
+   289     7     2  -2.89289      -273.264      0.132768E-17
+   290     7     2  -2.90290      -273.271      0.132746E-17
+   291     7     2  -2.91291      -273.278      0.132689E-17
+   292     7     2  -2.92292      -273.285      0.132761E-17
+   293     7     2  -2.93293      -273.291      0.132750E-17
+   294     7     2  -2.94294      -273.298      0.132465E-17
+   295     7     2  -2.95295      -273.305      0.132522E-17
+   296     7     2  -2.96296      -273.311      0.132500E-17
+   297     7     2  -2.97297      -273.318      0.132308E-17
+   298     7     2  -2.98298      -273.325      0.132266E-17
+   299     7     2  -2.99299      -273.331      0.132213E-17
+   300     7     2  -3.00300      -273.338      0.132362E-17
+   301     7     2  -3.01301      -273.345      0.132219E-17
+   302     7     2  -3.02302      -273.351      0.132234E-17
+   303     7     2  -3.03303      -273.358      0.132127E-17
+   304     7     2  -3.04304      -273.364      0.131969E-17
+   305     7     2  -3.05305      -273.371      0.132112E-17
+   306     7     2  -3.06306      -273.377      0.131913E-17
+   307     7     2  -3.07307      -273.384      0.131869E-17
+   308     7     2  -3.08308      -273.390      0.131745E-17
+   309     7     2  -3.09309      -273.397      0.131743E-17
+   310     7     2  -3.10310      -273.403      0.131945E-17
+   311     7     2  -3.11311      -273.410      0.131623E-17
+   312     7     2  -3.12312      -273.416      0.131594E-17
+   313     7     2  -3.13313      -273.423      0.131542E-17
+   314     7     2  -3.14314      -273.429      0.131516E-17
+   315     7     2  -3.15315      -273.436      0.131434E-17
+   316     7     2  -3.16316      -273.442      0.131384E-17
+   317     7     2  -3.17317      -273.449      0.131390E-17
+   318     7     2  -3.18318      -273.455      0.131352E-17
+   319     7     2  -3.19319      -273.461      0.131353E-17
+   320     7     2  -3.20320      -273.468      0.131264E-17
+   321     7     2  -3.21321      -273.474      0.131363E-17
+   322     7     2  -3.22322      -273.481      0.131072E-17
+   323     7     2  -3.23323      -273.487      0.131295E-17
+   324     7     2  -3.24324      -273.493      0.130970E-17
+   325     7     2  -3.25325      -273.500      0.131022E-17
+   326     7     2  -3.26326      -273.506      0.130861E-17
+   327     7     2  -3.27327      -273.512      0.130
+867E-17
+   328     7     2  -3.28328      -273.519      0.130786E-17
+   329     7     2  -3.29329      -273.525      0.130706E-17
+   330     7     2  -3.30330      -273.531      0.130652E-17
+   331     7     2  -3.31331      -273.538      0.130609E-17
+   332     7     2  -3.32332      -273.544      0.130589E-17
+   333     7     2  -3.33333      -273.550      0.130506E-17
+   334     7     2  -3.34334      -273.557      0.130465E-17
+   335     7     2  -3.35335      -273.563      0.130703E-17
+   336     7     2  -3.36336      -273.569      0.130410E-17
+   337     7     2  -3.37337      -273.576      0.130386E-17
+   338     7     2  -3.38338      -273.582      0.130268E-17
+   339     7     2  -3.39339      -273.588      0.130264E-17
+   340     7     2  -3.40340      -273.595      0.130151E-17
+   341     7     2  -3.41341      -273.601      0.130286E-17
+   342     7     2  -3.42342      -273.607      0.130539E-17
+   343     7     2  -3.43343      -273.614      0.130031E-17
+   344     7     2  -3.44344      -273.620      0.130035E-17
+   345     7     2  -3.45345      -273.626      0.129923E-17
+   346     7     2  -3.46346      -273.632      0.129881E-17
+   347     7     2  -3.47347      -273.639      0.129813E-17
+   348     7     2  -3.48348      -273.645      0.129801E-17
+   349     7     2  -3.49349      -273.651      0.129883E-17
+   350     7     2  -3.50350      -273.658      0.129799E-17
+   351     7     2  -3.51351      -273.664      0.129584E-17
+   352     7     2  -3.52352      -273.670      0.129600E-17
+   353     7     2  -3.53353      -273.676      0.129516E-17
+   354     7     2  -3.54354      -273.683      0.129431E-17
+   355     7     2  -3.55355      -273.689      0.129527E-17
+   356     7     2  -3.56356      -273.695      0.129343E-17
+   357     7     2  -3.57357      -273.702      0.129285E-17
+   358     7     2  -3.58358      -273.708      0.129218E-17
+   359     7     2  -3.59359      -273.714      0.129302E-17
+   360     7     2  -3.60360      -273.720      0.129104E-17
+   361     7     2  -3.61361      -273.727      0.129167E-17
+   362     7     2  -3.62362      -273.733      0.129038E-17
+   363     7     2  -3.63363      -273.739      0.129183E-17
+   364     7     2  -3.64364      -273.746      0.128899E-17
+   365     7     2  -3.65365      -273.752      0.128867E-17
+   366     7     2  -3.66366      -273.758      0.128780E-17
+   367     7     2  -3.67367      -273.764      0.128715E-17
+   368     7     2  -3.68368      -273.771      0.128743E-17
+   369     7     2  -3.69369      -273.777      0.128636E-17
+   370     7     2  -3.70370      -273.783      0.128674E-17
+   371     7     2  -3.71371      -273.790      0.128593E-17
+   372     7     2  -3.72372      -273.796      0.128756E-17
+   373     7     2  -3.73373      -273.802      0.128389E-17
+   374     7     2  -3.74374      -273.808      0.128504E-17
+   375     7     2  -3.75375      -273.815      0.128406E-17
+   376     7     2  -3.76376      -273.821      0.128219E-17
+   377     7     2  -3.77377      -273.827      0.128153E-17
+   378     7     2  -3.78378      -273.834      0.128207E-17
+   379     7     2  -3.79379      -273.840      0.128372E-17
+   380     7     2  -3.80380      -273.846      0.127972E-17
+   381     7     2  -3.81381      -273.853      0.127931E-17
+   382     7     2  -3.82382      -273.859      0.127928E-17
+   383     7     2  -3.83383      -273.865      0.127938E-17
+   384     7     2  -3.84384      -273.872      0.127743E-17
+   385     7     2  -3.85385      -273.878      0.127713E-17
+   386     7     2  -3.86386      -273.884      0.127720E-17
+   387     7     2  -3.87387      -273.891      0.127561E-17
+   388     7     2  -3.88388      -273.897      0.127493E-17
+   389     7     2  -3.89389      -273.903      0.127438E-17
+   390     7     2  -3.90390      -273.910      0.127510E-17
+   391     7     2  -3.91391      -273.916      0.127470E-17
+   392     7     2  -3.92392      -273.922      0.127479E-17
+   393     7     2  -3.93393      -273.929      0.127212E-17
+   394     7     2  -3.94394      -273.935      0.127189E-17
+   395     7     2  -3.95395      -273.941      0.127069E-17
+   396     7     2  -3.96396      -273.948      0.126990E-17
+   397     7     2  -3.97397      -273.954      0.127333E-17
+   398     7     2  -3.98398      -273.961      0.126871E-17
+   399     7     2  -3.99399      -273.967      0.126913E-17
+   400     7     2  -4.00400      -273.973      0.126798E-17
+   401     7     2  -4.01401      -273.980      0.126739E-17
+   402     7     2  -4.02402      -273.986      0.126611E-17
+   403     7     2  -4.03403      -273.992      0.126600E-17
+   404     7     2  -4.04404      -273.999      0.126517E-17
+   405     7     2  -4.05405      -274.005      0.126456E-17
+   406     7     2  -4.06406      -274.012      0.126545E-17
+   407     7     2  -4.07407      -274.018      0.126301E-17
+   408     7     2  -4.08408      -274.025      0.126218E-17
+   409     7     2  -4.09409      -274.031      0.126344E-17
+   410     7     2  -4.10410      -274.037      0.126072E-17
+   411     7     2  -4.11411      -274.044      0.126020E-17
+   412     7     2  -4.12412      -274.050      0.125949E-17
+   413     7     2  -4.13413      -274.057      0.126112E-17
+   414     7     2  -4.14414      -274.063      0.125859E-17
+   415     7     2  -4.15415      -274.070      0.125783E-17
+   416     7     2  -4.16416      -274.076      0.125708E-17
+   417     7     2  -4.17417      -274.083      0.125804E-17
+   418     7     2  -4.18418      -274.089      0.125580E-17
+   419     7     2  -4.19419      -274.096      0.125475E-17
+   420     7     2  -4.20420      -274.102      0.125412E-17
+   421     7     2  -4.21421      -274.109      0.125294E-17
+   422     7     2  -4.22422      -274.115      0.125482E-17
+   423     7     2  -4.23423      -274.122      0.125156E-17
+   424     7     2  -4.24424      -274.128      0.125218E-17
+   425     7     2  -4.25425      -274.135      0.124978E-17
+   426     7     2  -4.26426      -274.141      0.124993E-17
+   427     7     2  -4.27427      -274.148      0.125114E-17
+   428     7     2  -4.28428      -274.154      0.124773E-17
+   429     7     2  -4.29429      -274.161      0.125025E-17
+   430     7     2  -4.30430      -274.168      0.124611E-17
+   431     7     2  -4.31431      -274.174      0.124530E-17
+   432     7     2  -4.32432      -274.181      0.124442E-17
+   433     7     2  -4.33433      -274.187      0.124357E-17
+   434     7     2  -4.34434      -274.194      0.124572E-17
+   435     7     2  -4.35435      -274.201      0.124203E-17
+   436     7     2  -4.36436      -274.207      0.124116E-17
+   437     7     2  -4.37437      -274.214      0.124125E-17
+   438     7     2  -4.38438      -274.221      0.123958E-17
+   439     7     2  -4.39439      -274.227      0.123885E-17
+   440     7     2  -4.40440      -274.234      0.123955E-17
+   441     7     2  -4.41441      -274.241      0.123690E-17
+   442     7     2  -4.42442      -274.247      0.123928E-17
+   443     7     2  -4.43443      -274.254      0.123528E-17
+   444     7     2  -4.44444      -274.261      0.123437E-17
+   445     7     2  -4.45445      -274.267      0.123352E-17
+   446     7     2  -4.46446      -274.274      0.123269E-17
+   447     7     2  -4.47447      -274.281      0.123174E-17
+   448     7     2  -4.48448      -274.288      0.123175E-17
+   449     7     2  -4.49449      -274.294      0.123024E-17
+   450     7     2  -4.50450      -274.301      0.122911E-17
+   451     7     2  -4.51451      -274.308      0.122924E-17
+   452     7     2  -4.52452      -274.315      0.122728E-17
+   453     7     2  -4.53453      -274.322      0.122710E-17
+   454     7     2  -4.54454      -274.328      0.122545E-17
+   455     7     2  -4.55455      -274.335      0.122448E-17
+   456     7     2  -4.56456      -274.342      0.122373E-17
+   457     7     2  -4.57457      -274.349      0.122248E-17
+   458     7     2  -4.58458      -274.356      0.122161E-17
+   459     7     2  -4.59459      -274.363      0.122140E-17
+   460     7     2  -4.60460      -274.370      0.121964E-17
+   461     7     2  -4.61461      -274.377      0.121887E-17
+   462     7     2  -4.62462      -274.383      0.121764E-17
+   463     7     2  -4.63463      -274.390      0.122126E-17
+   464     7     2  -4.64464      -274.397      0.121694E-17
+   465     7     2  -4.65465      -274.404      0.121665E-17
+   466     7     2  -4.66466      -274.411      0.121477E-17
+   467     7     2  -4.67467      -274.418      0.121468E-17
+   468     7     2  -4.68468      -274.425      0.121299E-17
+   469     7     2  -4.69469      -274.432      0.121387E-17
+   470     7     2  -4.70470      -274.439      0.120983E-17
+   471     7     2  -4.71471      -274.446      0.120907E-17
+   472     7     2  -4.72472      -274.453      0.120759E-17
+   473     7     2  -4.73473      -274.460      0.120694E-17
+   474     7     2  -4.74474      -274.467      0.120542E-17
+   475     7     2  -4.75475      -274.474      0.120486E-17
+   476     7     2  -4.76476      -274.481      0.120493E-17
+   477     7     2  -4.77477      -274.488      0.120434E-17
+   478     7     2  -4.78478      -274.495      0.120124E-17
+   479     7     2  -4.79479      -274.502      0.120046E-17
+   480     7     2  -4.80480      -274.509      0.119914E-17
+   481     7     2  -4.81481      -274.516      0.119810E-17
+   482     7     2  -4.82482      -274.523      0.119885E-17
+   483     7     2  -4.83483      -274.530      0.119587E-17
+   484     7     2  -4.84484      -274.537      0.119930E-17
+   485     7     2  -4.85485      -274.544      0.119392E-17
+   486     7     2  -4.86486      -274.551      0.119227E-17
+   487     7     2  -4.87487      -274.558      0.119404E-17
+   488     7     2  -4.88488      -274.565      0.119071E-17
+   489     7     2  -4.89489      -274.572      0.118996E-17
+   490     7     2  -4.90490      -274.579      0.118957E-17
+   491     7     2  -4.91491      -274.586      0.118968E-17
+   492     7     2  -4.92492      -274.593      0.118607E-17
+   493     7     2  -4.93493      -274.600      0.118467E-17
+   494     7     2  -4.94494      -274.607      0.118480E-17
+   495     7     2  -4.95495      -274.614      0.118270E-17
+   496     7     2  -4.96496      -274.621      0.118350E-17
+   497     7     2  -4.97497      -274.627      0.118047E-17
+   498     7     2  -4.98498      -274.634      0.117960E-17
+   499     7     2  -4.99499      -274.641      0.117838E-17
+   500     7     2  -5.00501      -274.648      0.117751E-17
+   501     7     2  -5.01502      -274.654      0.117658E-17
+   502     7     2  -5.02503      -274.661      0.117532E-17
+   503     7     2  -5.03504      -274.668      0.117463E-17
+   504     7     2  -5.04505      -274.674      0.117823E-17
+   505     7     2  -5.05506      -274.681      0.117229E-17
+   506     7     2  -5.06507      -274.687      0.117227E-17
+   507     7     2  -5.07508      -274.694      0.117160E-17
+   508     7     2  -5.08509      -274.700      0.116940E-17
+   509     7     2  -5.09510      -274.706      0.116851E-17
+   510     7     2  -5.10511      -274.713      0.116771E-17
+   511     7     2  -5.11512      -274.719      0.116664E-17
+   512     7     2  -5.12513      -274.725      0.116675E-17
+   513     7     2  -5.13514      -274.731      0.116805E-17
+   514     7     2  -5.14515      -274.737      0.116435E-17
+   515     7     2  -5.15516      -274.744      0.116461E-17
+   516     7     2  -5.16517      -274.750      0.116347E-17
+   517     7     2  -5.17518      -274.756      0.116289E-17
+   518     7     2  -5.18519      -274.762      0.116090E-17
+   519     7     2  -5.19520      -274.767      0.116061E-17
+   520     7     2  -5.20521      -274.773      0.115893E-17
+   521     7     2  -5.21522      -274.779      0.115833E-17
+   522     7     2  -5.22523      -274.785      0.115798E-17
+   523     7     2  -5.23524      -274.791      0.115713E-17
+   524     7     2  -5.24525      -274.796      0.115664E-17
+   525     7     2  -5.25526      -274.802      0.115517E-17
+   526     7     2  -5.26527      -274.808      0.115606E-17
+   527     7     2  -5.27528      -274.813      0.115690E-17
+   528     7     2  -5.28529      -274.819      0.115489E-17
+   529     7     2  -5.29530      -274.825      0.115420E-17
+   530     7     2  -5.30531      -274.830      0.115191E-17
+   531     7     2  -5.31532      -274.836      0.115390E-17
+   532     7     2  -5.32533      -274.841      0.115168E-17
+   533     7     2  -5.33534      -274.846      0.115038E-17
+   534     7     2  -5.34535      -274.852      0.114898E-17
+   535     7     2  -5.35536      -274.857      0.114972E-17
+   536     7     2  -5.36537      -274.863      0.114770E-17
+   537     7     2  -5.37538      -274.868      0.114839E-17
+   538     7     2  -5.38539      -274.873      0.114690E-17
+   539     7     2  -5.39540      -274.878      0.114912E-17
+   540     7     2  -5.40541      -274.884      0.115030E-17
+   541     7     2  -5.41542      -274.889      0.114501E-17
+   542     7     2  -5.42543      -274.894      0.114526E-17
+   543     7     2  -5.43544      -274.899      0.114914E-17
+   544     7     2  -5.44545      -274.904      0.114319E-17
+   545     7     2  -5.45546      -274.909      0.114231E-17
+   546     7     2  -5.46547      -274.914      0.114737E-17
+   547     7     2  -5.47548      -274.920      0.114199E-17
+   548     7     2  -5.48549      -274.925      0.114103E-17
+   549     7     2  -5.49550      -274.930      0.113993E-17
+   550     7     2  -5.50551      -274.935      0.114016E-17
+   551     7     2  -5.51552      -274.940      0.114421E-17
+   552     7     2  -5.52553      -274.945      0.113946E-17
+   553     7     2  -5.53554      -274.950      0.113802E-17
+   554     7     2  -5.54555      -274.955      0.113755E-17
+   555     7     2  -5.55556      -274.959      0.113716E-17
+   556     7     2  -5.56557      -274.964      0.113793E-17
+   557     7     2  -5.57558      -274.969      0.113569E-17
+   558     7     2  -5.58559      -274.974      0.113604E-17
+   559     7     2  -5.59560      -274.979      0.113665E-17
+   560     7     2  -5.60561      -274.984      0.113468E-17
+   561     7     2  -5.61562      -274.989      0.113438E-17
+   562     7     2  -5.62563      -274.994      0.113326E-17
+   563     7     2  -5.63564      -274.998      0.113299E-17
+   564     7     2  -5.64565      -275.003      0.113249E-17
+   565     7     2  -5.65566      -275.008      0.113310E-17
+   566     7     2  -5.66567      -275.013      0.113253E-17
+   567     7     2  -5.67568      -275.017      0.113186E-17
+   568     7     2  -5.68569      -275.022      0.113132E-17
+   569     7     2  -5.69570      -275.027      0.113244E-17
+   570     7     2  -5.70571      -275.032      0.112987E-17
+   571     7     2  -5.71572      -275.036      0.113018E-17
+   572     7     2  -5.72573      -275.041      0.113033E-17
+   573     7     2  -5.73574      -275.046      0.112782E-17
+   574     7     2  -5.74575      -275.051      0.112933E-17
+   575     7     2  -5.75576      -275.055      0.112748E-17
+   576     7     2  -5.76577      -275.060      0.112722E-17
+   577     7     2  -5.77578      -275.065      0.112745E-17
+   578     7     2  -5.78579      -275.069      0.112562E-17
+   579     7     2  -5.79580      -275.074      0.112562E-17
+   580     7     2  -5.80581      -275.079      0.112470E-17
+   581     7     2  -5.81582      -275.083      0.112443E-17
+   582     7     2  -5.82583      -275.088      0.112399E-17
+   583     7     2  -5.83584      -275.092      0.112352E-17
+   584     7     2  -5.84585      -275.097      0.112362E-17
+   585     7     2  -5.85586      -275.102      0.112243E-17
+   586     7     2  -5.86587      -275.106      0.112318E-17
+   587     7     2  -5.87588      -275.111      0.112246E-17
+   588     7     2  -5.88589      -275.115      0.112202E-17
+   589     7     2  -5.89590      -275.120      0.112192E-17
+   590    Solving IV of the tunnel junctions...
+Solving IV of the total solar cell...
+Solving optics of the solar cell...
+Already calculated reflection, transmission and absorption profile - not recalculating. Set recalculate_absorption to True in the options if you want absorption to be calculated again.
+Solving QE of the solar cell...
+Solving quantum efficiency...
+ 7     2  -5.90591      -275.125      0.112170E-17
+   591     7     2  -5.91592      -275.129      0.112111E-17
+   592     7     2  -5.92593      -275.134      0.112047E-17
+   593     7     2  -5.93594      -275.138      0.111917E-17
+   594     7     2  -5.94595      -275.143      0.112062E-17
+   595     7     2  -5.95596      -275.147      0.111827E-17
+   596     7     2  -5.96597      -275.152      0.111817E-17
+   597     7     2  -5.97598      -275.156      0.111731E-17
+   598     7     2  -5.98599      -275.161      0.111709E-17
+   599     7     2  -5.99600      -275.165      0.111665E-17
+ Elapsed time =    19.0136909     s
+  
+Solving equilibrium...
+Processing structure...
+...done!
+
+...done!
+ CREATE MESH...
+ Masternodes at (nm):
+       0.0
+     149.9
+     150.0
+    2999.9
+    3000.0
+    3200.0
+  
+ Initial number of nodes (M+1):          299
+ Refining mesh... 
+ ... Finished!
+ Mesh with          105  nodes.
+ ----------------------------------
+  
+ Starting EQUILIBRIUM... 
+ Remeshing...  M+1 =          135  nodes.
+ EQUILIBRIUM Output Code: Reached Absolute Tolerance.                       
+     Res:    5.55010459E-29
+ Elapsed time =    5.03429994E-02 s
+  
+</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  
+ Starting LIGHTSC... 
+...done!
+      step  Jtot (A/m^2)          Res          Res-h    Res Poisson     Res-e        Info
+         1   -0.2703E-18    0.3289E-19    0.9817E-22    0.6197E-28    0.3289E-19         2
+         2   -0.2703E-17    0.9766E-19    0.1149E-21    0.3541E-26    0.9766E-19         2
+         3   -0.2703E-16    0.2674E-19    0.1225E-20    0.3542E-24    0.2671E-19         2
+         4   -0.2703E-15    0.9640E-19    0.8997E-19    0.3547E-22    0.3463E-19         2
+         5   -0.2702E-14    0.9365E-17    0.9103E-17    0.3595E-20    0.2200E-17         2
+         6   -0.2703E-13    0.6059E-18    0.6032E-18    0.1519E-21    0.5643E-19         2
+         7   -0.2703E-12    0.1498E-16    0.1498E-16    0.2272E-20    0.2843E-18         2
+         8   -0.2703E-11    0.1607E-17    0.1582E-17    0.2959E-21    0.2819E-18         2
+         9   -0.2703E-10    0.1795E-17    0.1570E-17    0.3950E-21    0.8712E-18         2
+        10   -0.2703E-09    0.3941E-19    0.1360E-19    0.1123E-25    0.3699E-19         2
+
+...done!
+        11   -0.2703E-08    0.2068E-18    0.1456E-18    0.1315E-24    0.1469E-18         2
+        12   -0.2703E-07    0.2071E-17    0.1466E-17    0.1336E-23    0.1463E-17         2
+        13   -0.2703E-06    0.2073E-16    0.1467E-16    0.1338E-22    0.1464E-16         2
+        14   -0.2703E-05    0.9740E-19    0.5797E-19    0.4274E-28    0.7828E-19         2
+        15   -0.2703E-04    0.8229E-18    0.5797E-18    0.1930E-27    0.5841E-18         2
+        16   -0.2703E-03    0.8193E-17    0.5797E-17    0.1706E-26    0.5790E-17         2
+        17   -0.2703E-02    0.4485E-19    0.1383E-19    0.3302E-28    0.4266E-19         2
+        18   -0.2703E-01    0.2027E-18    0.1383E-18    0.7052E-28    0.1482E-18         2
+        19   -0.2703        0.1955E-17    0.1383E-17    0.2986E-28    0.1381E-17         2
+        20    -2.703        0.1955E-16    0.1383E-16    0.4849E-28    0.1382E-16         2
+        21    -27.03        0.9171E-19    0.2627E-19    0.3431E-28    0.8787E-19         2
+
+        22    -270.3        0.3768E-18    0.2622E-18    0.2825E-28    0.2707E-18         2
+ LIGHTSC Output Code: Reached Absolute Tolerance.                       
+     Res:    3.76834174E-19
+     J:   -270.300262      A/m2
+     V:    1.38166822E-09  V
+ Elapsed time =   0.924980998     s
+  
+  
+ Starting RunIQE... 
+ WLindex  nit   info    Wavelength (nm)    IQE (%)       Res
+     0     2     2   300.000       7.22283      0.696564E-19
+     1     2     2   303.266       7.37840      0.350430E-19
+     2     2     2   306.533       7.50739      0.305888E-19
+     3     2     2   309.799       7.61872      0.439507E-19
+     4     2     2   313.065       7.71949      0.233001E-19
+     5     2     2   316.332       7.82078      0.977377E-19
+     6     2     2   319.598       7.93951      0.263830E-19
+     7     2     2   322.864       8.10943      0.639599E-19
+     8     2     2   326.131       8.37943      0.293763E-19
+     9     2     2   329.397       8.78835      0.233351E-19
+    10     2     2   332.663       9.33494      0.519777E-19
+    11     2     2   335.930       10.0041      0.210139E-19
+    12     2     2   339.196       10.7482      0.538411E-19
+    13     2     2   342.462       11.6213      0.179197E-19
+    14     2     2   345.729       12.6882      0.166139E-19
+    15     2     2   348.995       14.0101      0.188921E-19
+    16     2     2   352.261       15.6569      0.238334E-19
+    17     2     2   355.528       17.4690      0.433499E-19
+    18     2     2   358.794       19.4494      0.366824E-19
+    19     2     2   362.060       21.4984      0.493684E-19
+    20     2     2   365.327       23.6379      0.273211E-19
+    21     2     2   368.593       25.7964      0.345053E-19
+    22     2     2   371.859       28.0235      0.263040E-19
+    23     2     2   375.126       30.2342      0.310130E-19
+    24     2     2   378.392       32.4938      0.533816E-19
+    25     2     2   381.658       34.7322      0.319046E-19
+    26     2     2   384.925       37.0077      0.353074E-19
+    27     2     2   388.191       39.3015      0.299469E-19
+    28     2     2   391.457       41.5656      0.513854E-19
+    29     2     2   394.724       43.7325      0.623458E-19
+    30     2     2   397.990       45.7152      0.342815E-19
+    31     2     2   401.256       47.4928      0.263018E-19
+    32     2     2   404.523       49.1681      0.715488E-19
+    33     2     2   407.789       50.7524      0.381917E-19
+    34     2     2   411.055       52.1496      0.264077E-19
+    35     2     2   414.322       53.5466      0.258143E-19
+    36     2     2   417.588       54.8354      0.727710E-19
+    37     2     2   420.854       55.9432      0.306008E-19
+    38     2     2   424.121       57.0429      0.358161E-19
+    39     2     2   427.387       58.0471      0.211315E-19
+    40     2     2   430.653       59.1219      0.308893E-19
+    41     2     2   433.920       60.1929      0.642774E-19
+    42     2     2   437.186       61.2014      0.230483E-18
+    43     2     2   440.452       62.3799      0.957656E-18
+    44     2     2   443.719       63.6358      0.311022E-17
+    45     2     2   446.985       64.7818      0.475693E-17
+    46     2     2   450.251       65.7290      0.987365E-17
+    47     2     2   453.518       66.8436      0.126814E-16
+    48     2     2   456.784       67.7937      0.183251E-16
+    49     2     2   460.050       68.7179      0.270483E-16
+    50     3     2   463.317       69.6761      0.278527E-19
+    51     3     2   466.583       70.6427      0.814546E-19
+    52     3     2   469.849       71.6837      0.687271E-19
+    53     3     2   473.116       72.8272      0.320016E-19
+    54     3     2   476.382       74.0768      0.436591E-19
+    55     3     2   479.648       75.3879      0.430381E-19
+    56     3     2   482.915       76.7758      0.409995E-19
+    57     3     2   486.181       78.2071      0.100932E-18
+    58     3     2   489.447       79.6602      0.862177E-19
+    59     3     2   492.714       80.8660      0.630486E-19
+    60     3     2   495.980       81.8501      0.725474E-19
+    61     3     2   499.246       82.6527      0.755532E-19
+    62     3     2   502.513       83.3176      0.804175E-19
+    63     3     2   505.779       83.8328      0.914977E-19
+    64     3     2   509.045       84.1954      0.971043E-19
+    65     3     2   512.312       84.5842      0.984610E-19
+    66     3     2   515.578       85.0073      0.134313E-18
+    67     3     2   518.844       85.4222      0.113080E-18
+    68     3     2   522.111       85.8256      0.114478E-18
+    69     3     2   525.377       86.1815      0.134255E-18
+    70     3     2   528.643       86.5273      0.137364E-18
+    71     3     2   531.910       86.8642      0.131752E-18
+    72     3     2   535.176       87.2449      0.143349E-18
+    73     3     2   538.442       87.6063      0.164233E-18
+    74     3     2   541.709       87.9384      0.170855E-18
+    75     3     2   544.975       88.2529      0.170392E-18
+    76     3     2   548.241       88.6152      0.188450E-18
+    77     3     2   551.508       88.9621      0.198100E-18
+    78     3     2   554.774       89.2647      0.198511E-18
+    79     3     2   558.040       89.5432      0.206252E-18
+    80     3     2   561.307       89.8156      0.225993E-18
+    81     3     2   564.573       90.0773      0.244858E-18
+    82     3     2   567.839       90.3190      0.223029E-18
+    83     3     2   571.106       90.5528      0.237285E-18
+    84     3     2   574.372       90.7789      0.267988E-18
+    85     3     2   577.638       90.9939      0.264107E-18
+    86     3     2   580.905       91.1918      0.262129E-18
+    87     3     2   584.171       91.3823      0.261041E-18
+    88     3     2   587.437       91.5660      0.274338E-18
+    89     3     2   590.704       91.7416      0.291409E-18
+    90     3     2   593.970       91.8977      0.269148E-18
+    91     3     2   597.236       92.0466      0.272854E-18
+    92     3     2   600.503       92.1884      0.289722E-18
+    93     3     2   603.769       92.3233      0.299428E-18
+    94     3     2   607.035       92.4476      0.297182E-18
+    95     3     2   610.302       92.5628      0.316471E-18
+    96     3     2   613.568       92.6707      0.319136E-18
+    97     3     2   616.834       92.7712      0.324432E-18
+    98     3     2   620.101       92.8647      0.336613E-18
+    99     3     2   623.367       92.9523      0.367040E-18
+   100     3     2   626.633       93.0327      0.380676E-18
+   101     3     2   629.900       93.1051      0.402461E-18
+   102     3     2   633.166       93.1693      0.410413E-18
+   103     3     2   636.432       93.2259      0.423730E-18
+   104     3     2   639.699       93.2759      0.428538E-18
+   105     3     2   642.965       93.3211      0.447725E-18
+   106     3     2   646.231       93.3577      0.459181E-18
+   107     3     2   649.498       93.3814      0.471814E-18
+   108     3     2   652.764       93.3927      0.478428E-18
+   109     3     2   656.030       93.3930      0.420820E-18
+   110     3     2   659.297       93.3913      0.435579E-18
+   111     3     2   662.563       93.3870      0.467204E-18
+   112     3     2   665.829       93.3787      0.476010E-18
+   113     3     2   669.095       93.3666      0.494844E-18
+   114     3     2   672.362       93.3504      0.508008E-18
+   115     3     2   675.628       93.3252      0.515738E-18
+   116     3     2   678.894       93.2825      0.518998E-18
+   117     3     2   682.161       93.2184      0.518893E-18
+   118     3     2   685.427       93.1408      0.537566E-18
+   119     3     2   688.693       93.0657      0.552022E-18
+   120     3     2   691.960       92.9982      0.720775E-18
+   121     3     2   695.226       92.9383      0.765671E-18
+   122     3     2   698.492       92.8689      0.798571E-18
+   123     3     2   701.759       92.7707      0.821999E-18
+   124     3     2   705.025       92.6377      0.845621E-18
+   125     3     2   708.291       92.4826      0.857521E-18
+   126     3     2   711.558       92.3384      0.809443E-18
+   127     3     2   714.824       92.2201      0.833378E-18
+   128     3     2   718.090       92.1168      0.869571E-18
+   129     3     2   721.357       91.9841      0.902500E-18
+   130     3     2   724.623       91.7743      0.931048E-18
+   131     3     2   727.889       91.4949      0.958806E-18
+   132     3     2   731.156       91.2640      0.815319E-18
+   133     3     2   734.422       91.1917      0.723769E-18
+   134     3     2   737.688       91.2599      0.776982E-18
+   135     3     2   740.955       91.3233      0.789582E-18
+   136     3     2   744.221       91.1829      0.743601E-18
+   137     3     2   747.487       90.7679      0.668189E-18
+   138     3     2   750.754       90.2471      0.643558E-18
+   139     3     2   754.020       89.9598      0.558811E-18
+   140     3     2   757.286       90.0565      0.643922E-18
+   141     3     2   760.553       90.3935      0.723051E-18
+   142     3     2   763.819       90.6011      0.673431E-18
+   143     3     2   767.085       90.3475      0.494772E-18
+   144     3     2   770.352       89.6209      0.325737E-18
+   145     3     2   773.618       88.7678      0.286613E-18
+   146     3     2   776.884       88.2984      0.197793E-18
+   147     3     2   780.151       88.3745      0.243865E-18
+   148     3     2   783.417       88.7711      0.339140E-18
+   149     3     2   786.683       89.0957      0.276408E-18
+   150     3     2   789.950       89.0169      0.111177E-18
+   151     3     2   793.216       88.4784      0.101153E-18
+   152     3     2   796.482       87.7035      0.178441E-18
+   153     3     2   799.749       87.0201      0.108063E-18
+   154     3     2   803.015       86.5602      0.347314E-18
+   155     3     2   806.281       86.4494      0.517998E-18
+   156     3     2   809.548       86.5470      0.571716E-18
+   157     3     2   812.814       86.6200      0.525765E-18
+   158     3     2   816.080       86.5117      0.425282E-18
+   159     3     2   819.347       86.2259      0.365403E-18
+   160     3     2   822.613       85.8736      0.404660E-18
+   161     3     2   825.879       85.5501      0.519197E-18
+   162     3     2   829.146       84.9171      0.161166E-17
+   163     3     2   832.412       84.1029      0.203150E-17
+   164     3     2   835.678       83.0204      0.203099E-17
+   165     3     2   838.945       81.6294      0.183260E-17
+   166     3     2   842.211       80.2812      0.166811E-17
+   167     3     2   845.477       79.6824      0.192487E-17
+   168     3     2   848.744       80.5249      0.286041E-17
+   169     3     2   852.010       83.0303      0.436030E-17
+   170     3     2   855.276       86.3695      0.572781E-17
+   171     3     2   858.543       87.7478      0.509895E-17
+   172     3     2   861.809       82.9509      0.157598E-17
+   173     3     2   865.075       71.7438      0.581683E-17
+   174     3     2   868.342       59.5499      0.849060E-17
+   175     3     2   871.608       51.1560      0.681519E-17
+   176     3     2   874.874       47.6040      0.339715E-17
+   177     3     2   878.141       47.8870      0.427088E-18
+   178     3     2   881.407       48.4678      0.327451E-18
+   179     3     2   884.673       34.0814      0.134475E-16
+   180     3     2   887.940       18.9013      0.139029E-16
+   181     3     2   891.206       10.5676      0.754547E-17
+   182     3     2   894.472       5.92827      0.422804E-17
+   183     3     2   897.739       3.91338      0.185490E-17
+   184     3     2   901.005       3.14767      0.724538E-18
+   185     3     2   904.271       3.10075      0.120197E-18
+   186     3     2   907.538       3.62024      0.417812E-18
+   187     3     2   910.804       4.20438      0.415518E-18
+   188     3     2   914.070       2.81557      0.138871E-17
+   189     3     2   917.337      0.483844      0.209511E-17
+   190     3     2   920.603     -0.253392E-11  0.422847E-18
+   191     1     2   923.869     -0.159613E-11  0.444460E-19
+   192     1     2   927.136     -0.159643E-11  0.444459E-19
+   193     1     2   930.402     -0.159643E-11  0.444459E-19
+   194     1     2   933.668     -0.159643E-11  0.444459E-19
+   195     1     2   936.935     -0.159643E-11  0.444459E-19
+   196     1     2   940.201     -0.159643E-11  0.444459E-19
+   197     1     2   943.467     -0.159643E-11  0.444459E-19
+   198     1     2   946.734     -0.159643E-11  0.444459E-19
+ Elapsed time =    2.48232508     s
+  </code></pre>
+</div>
+</div>
+<p><strong>PLOT 2</strong>: IV curves for the DA and PDD models</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>solar_cell_da.iv[<span class="st">"IV"</span>], label<span class="op">=</span><span class="st">"Depletion approximation"</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>solar_cell_pdd.iv[<span class="st">"IV"</span>], <span class="st">'--'</span>, label<span class="op">=</span><span class="st">"Poisson Drift Diffusion"</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="fl">1.2</span>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">330</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"V (V)"</span>)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"J (A/m$^2$)"</span>)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'(2) IV curves from depletion approximation and drift-diffusion models'</span>)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="1c-simple_cell_files/figure-html/cell-16-output-1.png" width="603" height="442"></p>
+</div>
+</div>
+<p><strong>PLOT 3</strong>: EQE and absorption calculated for the PDD and DA models.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_da[<span class="dv">2</span>].eqe(wavelengths), <span class="st">'k-'</span>, label<span class="op">=</span><span class="st">"EQE (DA)"</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_pdd[<span class="dv">2</span>].eqe(wavelengths), <span class="st">'k--'</span>, label<span class="op">=</span><span class="st">"EQE (PDD)"</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_da[<span class="dv">2</span>].layer_absorption, <span class="st">'r-'</span>, label<span class="op">=</span><span class="st">"A (DA)"</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_pdd[<span class="dv">2</span>].layer_absorption, <span class="st">'b--'</span>, label<span class="op">=</span><span class="st">"A (PDD)"</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"EQE/A (%)"</span>)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'(3) EQE and absorption from depletion approximation and drift-diffusion models'</span>)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="1c-simple_cell_files/figure-html/cell-17-output-1.png" width="611" height="442"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
