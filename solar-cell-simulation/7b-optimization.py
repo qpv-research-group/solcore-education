@@ -191,10 +191,8 @@ class calc_min_Jsc_DA():
         GaInP_D_e = GaInP_mobility_e * kb * 300 / e_charge
         GaInP_L_e = np.sqrt(GaInP_D_e * GaInP_lifetime_e)
 
-        top_cell_n_material = InGaP(In=0.5, Nd=si("2e18cm-3"), hole_diffusion_length=GaInP_L_h,
-                                    relative_permittivity=11.75, hole_mobility=GaInP_mobility_h)
-        top_cell_p_material = InGaP(In=0.5, Na=si("2e17cm-3"), electron_diffusion_length=GaInP_L_e,
-                                    relative_permittivity=11.75, electron_mobility=GaInP_mobility_e)
+        top_cell_n_material = InGaP(In=0.5, Nd=si("2e18cm-3"), hole_diffusion_length=GaInP_L_h, hole_mobility=GaInP_mobility_h)
+        top_cell_p_material = InGaP(In=0.5, Na=si("2e17cm-3"), electron_diffusion_length=GaInP_L_e, electron_mobility=GaInP_mobility_e)
 
         # MID CELL  - GaAs
 
@@ -207,10 +205,8 @@ class calc_min_Jsc_DA():
         GaAs_D_e = GaAs_mobility_e * kb * 300 / e_charge
         GaAs_L_e = np.sqrt(GaAs_D_e * GaAs_lifetime_e)
 
-        mid_cell_n_material = GaAs(Nd=si("1e18cm-3"), hole_diffusion_length=GaAs_L_h,
-                                   relative_permittivity=13.1, hole_mobility=GaAs_mobility_h)
-        mid_cell_p_material = GaAs(Na=si("1e17cm-3"), electron_diffusion_length=GaAs_L_e,
-                                   relative_permittivity=13.1, electron_mobility=GaAs_mobility_e)
+        mid_cell_n_material = GaAs(Nd=si("1e18cm-3"), hole_diffusion_length=GaAs_L_h, hole_mobility=GaAs_mobility_h)
+        mid_cell_p_material = GaAs(Na=si("1e17cm-3"), electron_diffusion_length=GaAs_L_e, electron_mobility=GaAs_mobility_e)
 
 
         SiGeSn.band_gap = si('0.77eV') # from PL measurement
@@ -238,10 +234,8 @@ class calc_min_Jsc_DA():
         Ge_L_e = np.sqrt(Ge_D_e * Ge_lifetime_e)
 
 
-        bot_cell_n_material = Ge(Nd=si("2e18cm-3"), hole_diffusion_length=Ge_L_h,
-                                 relative_permittivity=16, hole_mobility=Ge_mobility_h)
-        bot_cell_p_material = Ge(Na=si("1e17cm-3"), electron_diffusion_length=Ge_L_e,
-                                 relative_permittivity=16, electron_mobility=Ge_mobility_e)
+        bot_cell_n_material = Ge(Nd=si("2e18cm-3"), hole_diffusion_length=Ge_L_h, hole_mobility=Ge_mobility_h)
+        bot_cell_p_material = Ge(Na=si("1e17cm-3"), electron_diffusion_length=Ge_L_e, electron_mobility=Ge_mobility_e)
 
 
         # And, finally, we put everything together, adding also the surface recombination velocities. We also add some shading

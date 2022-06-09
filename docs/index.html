@@ -110,62 +110,62 @@ ul.task-list{list-style: none;}
     <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./solar-cell-simulation/notebooks/1a-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1a - Simple Si solar cell</a>
+  <a href="./solar-cell-simulation/notebooks/1a-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1a: Simple Si solar cell</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./solar-cell-simulation/notebooks/1b-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1b - Basic cell optics</a>
+  <a href="./solar-cell-simulation/notebooks/1b-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1b: Basic cell optics</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./solar-cell-simulation/notebooks/1c-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1c - Electric models</a>
+  <a href="./solar-cell-simulation/notebooks/1c-simple_cell.html" class="sidebar-item-text sidebar-link">Example 1c: Electrical models</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./solar-cell-simulation/notebooks/2a-optical_constants.html" class="sidebar-item-text sidebar-link">Example 2a - Optical constant sources</a>
+  <a href="./solar-cell-simulation/notebooks/2a-optical_constants.html" class="sidebar-item-text sidebar-link">Example 2a: Optical constant sources</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./solar-cell-simulation/notebooks/2b-optical_constants.html" class="sidebar-item-text sidebar-link">2b-optical_constants.html</a>
+  <a href="./solar-cell-simulation/notebooks/2b-optical_constants.html" class="sidebar-item-text sidebar-link">Example 2b: Optical constant models</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./solar-cell-simulation/notebooks/3a-triple_junction.html" class="sidebar-item-text sidebar-link">3a-triple_junction.html</a>
+  <a href="./solar-cell-simulation/notebooks/3a-triple_junction.html" class="sidebar-item-text sidebar-link">Example 3a: Triple junction cell</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./solar-cell-simulation/notebooks/4a-textured_Si_cell.html" class="sidebar-item-text sidebar-link">4a-textured_Si_cell.html</a>
+  <a href="./solar-cell-simulation/notebooks/4a-textured_Si_cell.html" class="sidebar-item-text sidebar-link">Example 4a: Textured Si cell</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./solar-cell-simulation/notebooks/5a-ultrathin_GaAs_cell.html" class="sidebar-item-text sidebar-link">5a-ultrathin_GaAs_cell.html</a>
+  <a href="./solar-cell-simulation/notebooks/5a-ultrathin_GaAs_cell.html" class="sidebar-item-text sidebar-link">Example 5a: Ultra-thin GaAs cell with diffraction grating</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./solar-cell-simulation/notebooks/6a-multiscale_models.html" class="sidebar-item-text sidebar-link">6a-multiscale_models.html</a>
+  <a href="./solar-cell-simulation/notebooks/6a-multiscale_models.html" class="sidebar-item-text sidebar-link">Example 6a: Silicon HIT cell</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./solar-cell-simulation/notebooks/6b-multiscale_models.html" class="sidebar-item-text sidebar-link">6b-multiscale_models.html</a>
+  <a href="./solar-cell-simulation/notebooks/6b-multiscale_models.html" class="sidebar-item-text sidebar-link">Example 6b: Angular redistribution matrix method</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./solar-cell-simulation/notebooks/7a-optimization.html" class="sidebar-item-text sidebar-link">7a-optimization.html</a>
+  <a href="./solar-cell-simulation/notebooks/7a-optimization.html" class="sidebar-item-text sidebar-link">Example 7a: Simple optimization</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link">7b-optimization.html</a>
+  <a href="./solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link">Example 7b: More advanced optimization</a>
   </div>
 </li>
     </ul>
@@ -196,8 +196,14 @@ ul.task-list{list-style: none;}
 
 </header>
 
-<p>This is a Quarto website.</p>
-<p>To learn more about Quarto websites visit <a href="https://quarto.org/docs/websites" class="uri">https://quarto.org/docs/websites</a>.</p>
+<p>This is the website for the solcore-education GitHub, where we host readable versions of Solcore and RayFlare examples, which are linked on the left. Note that this is not an introductory Python course, or a course about the fundamentals of solar cells.</p>
+<p>The examples on this website are hosted in Jupyter Notebook (.ipynb) format for readability. To run the examples yourself, you can find standard .py versions on the GitHub <a href="https://github.com/qpv-research-group/solcore-education/tree/main/solar-cell-simulation">here</a>. We recommend using these rather than the Notebook versions.</p>
+<p><strong>Package requirements</strong></p>
+<p>To use these examples, you will need to install <a href="http://docs.solcore.solar/en/master/Installation/installation.html">Solcore</a> and <a href="https://rayflare.readthedocs.io/en/latest/Installation/installation.html">RayFlare</a> (the links take you to installation instructions for each package). In the simplest case, you can install them with:</p>
+<pre><code>pip install solcore rayflare</code></pre>
+<p>But this will not install all functionality, as detailed in the documentation for both packages.</p>
+<p>The only other dependency, which is used for plotting, is <code>seaborn</code>, which you can install simply with:</p>
+<pre><code>pip install seaborn</code></pre>
 
 
 

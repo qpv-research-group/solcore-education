@@ -183,7 +183,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/1c-simple_cell.html" class="sidebar-item-text sidebar-link active">Example 1c: Electric models</a>
+  <a href="../../solar-cell-simulation/notebooks/1c-simple_cell.html" class="sidebar-item-text sidebar-link active">Example 1c: Electrical models</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -203,7 +203,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/4a-textured_Si_cell.html" class="sidebar-item-text sidebar-link">4a-textured_Si_cell.html</a>
+  <a href="../../solar-cell-simulation/notebooks/4a-textured_Si_cell.html" class="sidebar-item-text sidebar-link">Example 4a: Textured Si cell</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -242,7 +242,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#example-1c-electric-models" id="toc-example-1c-electric-models" class="nav-link active" data-scroll-target="#example-1c-electric-models">Example 1c: Electric models</a>
+  <li><a href="#example-1c-electrical-models" id="toc-example-1c-electrical-models" class="nav-link active" data-scroll-target="#example-1c-electrical-models">Example 1c: Electrical models</a>
   <ul class="collapse">
   <li><a href="#setting-up" id="toc-setting-up" class="nav-link" data-scroll-target="#setting-up">Setting up</a></li>
   <li><a href="#d-and-db-junctions" id="toc-d-and-db-junctions" class="nav-link" data-scroll-target="#d-and-db-junctions">2D and DB junctions</a></li>
@@ -256,8 +256,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<section id="example-1c-electric-models" class="level1">
-<h1>Example 1c: Electric models</h1>
+<section id="example-1c-electrical-models" class="level1">
+<h1>Example 1c: Electrical models</h1>
 <p>In the first two scripts, we mostly focused on different optical models and how they can be applied to an Si cell. Here we will look at different electrical models, roughly in increasing order of how ‘realistic’ they are expected to be:</p>
 <ol type="1">
 <li>Two-diode model (2D)</li>
@@ -265,7 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Depletion approximation (DA)</li>
 <li>Poisson drift-diffusion solver (PDD)</li>
 </ol>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="1">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="49">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -280,7 +280,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="setting-up" class="level2">
 <h2 class="anchored" data-anchor-id="setting-up">Setting up</h2>
 <p>Define some materials:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="2">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="50">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>GaAs <span class="op">=</span> material(<span class="st">"GaAs"</span>)()</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Al2O3 <span class="op">=</span> material(<span class="st">"Al2O3"</span>)()</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Ag <span class="op">=</span> material(<span class="st">"Ag"</span>)()</span>
@@ -288,34 +288,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>wavelengths <span class="op">=</span> si(np.linspace(<span class="dv">300</span>, <span class="dv">950</span>, <span class="dv">200</span>), <span class="st">"nm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We are going to do an optical calculation first to get absorption for a GaAs layer; we will use this as an estimate for the EQE as input for the two-diode model.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="3">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="51">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>OS <span class="op">=</span> OptiStack([Layer(si(<span class="st">"3um"</span>), GaAs)], substrate<span class="op">=</span>Ag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Calculate reflection/absorption/transmission (note that we have to give the wavelength to this function in nm rather than m!)</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="4">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="52">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>RAT <span class="op">=</span> calculate_rat(OS, wavelength<span class="op">=</span>wavelengths<span class="op">*</span><span class="fl">1e9</span>, no_back_reflection<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Create a function which interpolates the absorption - note that we pass a function which returns the absorption when given a wavelength to the Junction, rather than a table of values!</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="5">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="53">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>eqe_func <span class="op">=</span> interp1d(wavelengths, RAT[<span class="st">"A"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="d-and-db-junctions" class="level2">
 <h2 class="anchored" data-anchor-id="d-and-db-junctions">2D and DB junctions</h2>
 <p>Define the 2D junction with reasonable parameters for GaAs. The units of j01 and j01 are A/m^2. The units for the resistances are (Ohm m)^2. We use the standard ideality factors (1 and 2 respectively) for the two diodes:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="6">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="54">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>twod_junction <span class="op">=</span> Junction(kind<span class="op">=</span><span class="st">'2D'</span>, n1<span class="op">=</span><span class="dv">1</span>, n2<span class="op">=</span><span class="dv">2</span>, j01<span class="op">=</span><span class="fl">3e-17</span>, j02<span class="op">=</span><span class="fl">1e-7</span>, Rseries<span class="op">=</span><span class="fl">4e-3</span>,</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                         Rshunt<span class="op">=</span><span class="fl">1e4</span>, eqe<span class="op">=</span>eqe_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Define two instances of a detailed-balance type junction. In both cases, there will be a sharp absorption onset at the bandgap (1.42 eV for GaAs). By specifying A, we set the fraction of light above the bandgap that is absorbed (A = 1 means 100% absorption above the gap).</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="7">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="55">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>db_junction_A1 <span class="op">=</span> Junction(kind<span class="op">=</span><span class="st">'DB'</span>, Eg<span class="op">=</span><span class="fl">1.42</span>, A<span class="op">=</span><span class="dv">1</span>, R_shunt<span class="op">=</span><span class="fl">1e4</span>, n<span class="op">=</span><span class="fl">3.5</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>db_junction <span class="op">=</span> Junction(kind<span class="op">=</span><span class="st">'DB'</span>, Eg<span class="op">=</span><span class="fl">1.42</span>, A<span class="op">=</span><span class="fl">0.8</span>, R_shunt<span class="op">=</span><span class="fl">1e4</span>, n<span class="op">=</span><span class="fl">3.5</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="fl">1.5</span>, <span class="dv">200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Set some options and define solar cells based on these junctions:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="8">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="56">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>opts <span class="op">=</span> {<span class="st">'voltages'</span>: V, <span class="st">'light_iv'</span>: <span class="va">True</span>, <span class="st">'wavelength'</span>: wavelengths, <span class="st">'mpp'</span>: <span class="va">True</span>}</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>solar_cell_db_A1 <span class="op">=</span> SolarCell([db_junction_A1])</span>
@@ -323,7 +323,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>solar_cell_2d <span class="op">=</span> SolarCell([twod_junction])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Calculate and plot the IV curves:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="9">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="57">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_db_A1, <span class="st">'iv'</span>, user_options<span class="op">=</span>opts)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_db, <span class="st">'iv'</span>, user_options<span class="op">=</span>opts)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_2d, <span class="st">'iv'</span>, user_options<span class="op">=</span>opts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -344,7 +344,7 @@ Solving IV of the total solar cell...</code></pre>
 </div>
 </div>
 <p><strong>PLOT 1</strong>: IV curves for the DB and 2D models.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="10">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="58">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>solar_cell_db_A1.iv[<span class="st">"IV"</span>], label<span class="op">=</span><span class="st">'Detailed balance (Eg = 1.44 eV, A = 1)'</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>solar_cell_db.iv[<span class="st">"IV"</span>], label<span class="op">=</span><span class="st">'Detailed balance (Eg = 1.44 eV, A = 0.8)'</span>)</span>
@@ -357,7 +357,7 @@ Solving IV of the total solar cell...</code></pre>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'(1) IV curves calculated through detailed balance and two-diode models'</span>)</span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="1c-simple_cell_files/figure-html/cell-11-output-1.png" width="594" height="442"></p>
+<p><img src="1c-simple_cell_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>As we expect, the two DB solar cells have a very similar shape, but the A = 1 case has a higher Jsc. The two-diode model has a lower current, which makes sense as it’s EQE is specified based on a more realistic absorption calculation which includes front-surface reflection and an absorption edge which is not infinitely sharp at the bandgap, as is assumed by the detailed balance model.</p>
@@ -366,7 +366,7 @@ Solving IV of the total solar cell...</code></pre>
 <h2 class="anchored" data-anchor-id="da-and-pdd-junctions">DA and PDD junctions</h2>
 <p>Now let’s consider the two slightly more complex models, which will actually take into account the absorption profile of light in the cell and the distribution of charge carriers; the depletion approximation and the Poisson drift-diffusion solver.</p>
 <p><em>Note:</em> for the PDD example to work, the PDD solver must be installed correctly; see the <a href="http://docs.solcore.solar/en/master/Installation/installation.html">Solcore documentation</a> for more information.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="11">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="59">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">293</span> <span class="co"># ambient temperature</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>window <span class="op">=</span> material(<span class="st">'AlGaAs'</span>)(T<span class="op">=</span>T, Na<span class="op">=</span>si(<span class="st">"5e18cm-3"</span>), Al<span class="op">=</span><span class="fl">0.8</span>)</span>
@@ -379,7 +379,7 @@ Solving IV of the total solar cell...</code></pre>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                   Layer(width<span class="op">=</span>si(<span class="st">'200nm'</span>), material<span class="op">=</span>bsf, role<span class="op">=</span><span class="st">"BSF"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>sn</code> and <code>sp</code> are the surface recombination velocities (in m/sec). <code>sn</code> is the SRV for the n-doped junction, <code>sp</code> for the p-doped junction.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="12">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="60">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Depletion approximation:</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>solar_cell_da <span class="op">=</span> SolarCell(</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    [Layer(width<span class="op">=</span>si(<span class="st">"90nm"</span>), material<span class="op">=</span>Al2O3), Layer(width<span class="op">=</span>si(<span class="st">'20nm'</span>), material<span class="op">=</span>window, role<span class="op">=</span><span class="st">"Window"</span>),</span>
@@ -387,7 +387,7 @@ Solving IV of the total solar cell...</code></pre>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    R_series<span class="op">=</span><span class="dv">0</span>, substrate<span class="op">=</span>Ag</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="13">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="61">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drift-diffusion solver:</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>solar_cell_pdd <span class="op">=</span> SolarCell(</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    [Layer(width<span class="op">=</span>si(<span class="st">"90nm"</span>), material<span class="op">=</span>Al2O3), Layer(width<span class="op">=</span>si(<span class="st">'20nm'</span>), material<span class="op">=</span>window, role<span class="op">=</span><span class="st">"Window"</span>),</span>
@@ -396,75 +396,20 @@ Solving IV of the total solar cell...</code></pre>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In both cases, we set the series resistance to 0. Other loss factors, such as shading, are also assumed to be zero by default.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="14">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="62">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>opts[<span class="st">"optics_method"</span>] <span class="op">=</span> <span class="st">"TMM"</span> <span class="co"># Use the transfer-matrix method to calculate the cell's optics</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>opts[<span class="st">"position"</span>] <span class="op">=</span> <span class="fl">1e-10</span> <span class="co"># This is the spacing used when calculating the depth-dependent absorption (0.1 nm)</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>opts[<span class="st">"no_back_reflection"</span>] <span class="op">=</span> <span class="va">False</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_da, <span class="st">"iv"</span>, user_options<span class="op">=</span>opts)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_da, <span class="st">"qe"</span>, user_options<span class="op">=</span>opts)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_da, <span class="st">"iv"</span>, user_options<span class="op">=</span>opts)<span class="op">;</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_da, <span class="st">"qe"</span>, user_options<span class="op">=</span>opts)<span class="op">;</span></span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_pdd, <span class="st">"iv"</span>, user_options<span class="op">=</span>opts)</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_pdd, <span class="st">"qe"</span>, user_options<span class="op">=</span>opts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_pdd, <span class="st">"iv"</span>, user_options<span class="op">=</span>opts)<span class="op">;</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_pdd, <span class="st">"qe"</span>, user_options<span class="op">=</span>opts)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Solving optics of the solar cell...
-Calculating RAT...
-Calculating absorption profile...</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Solving IV of the junctions...
-Solving IV of the tunnel junctions...
-Solving IV of the total solar cell...
-Solving optics of the solar cell...
-Already calculated reflection, transmission and absorption profile - not recalculating. Set recalculate_absorption to True in the options if you want absorption to be calculated again.
-Solving QE of the solar cell...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/Users/phoebe/Documents/develop/solcore5/solcore/analytic_solar_cells/depletion_approximation.py:617: RuntimeWarning:
-
-invalid value encountered in true_divide
-</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Solving optics of the solar cell...
-Calculating RAT...
-Calculating absorption profile...</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Solving IV of the junctions...
-Solving IV...
-Solving equilibrium...
-Processing structure...
-...done!
-
- CREATE MESH...
- Masternodes at (nm):
-       0.0
-     149.9
-     150.0
-    2999.9
-    3000.0
-    3200.0
-  
- Initial number of nodes (M+1):          299
- Refining mesh... 
- ... Finished!
- Mesh with          105  nodes.
- ----------------------------------
-  
- Starting EQUILIBRIUM... 
- Remeshing...  M+1 =          135  nodes.
- EQUILIBRIUM Output Code: Reached Absolute Tolerance.                       
-     Res:    5.55010459E-29
- Elapsed time =    4.97689992E-02 s
-  
-...done!
-</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>...done!
-  
+<pre><code>  
  Starting LIGHTSC... 
+...done!
 
       step  Jtot (A/m^2)          Res          Res-h    Res Poisson     Res-e        Info
          1   -0.2703E-18    0.3289E-19    0.9817E-22    0.6197E-28    0.3289E-19         2
@@ -493,7 +438,7 @@ Processing structure...
      Res:    3.76834174E-19
      J:   -270.300262      A/m2
      V:    1.38166822E-09  V
- Elapsed time =   0.912029028     s
+ Elapsed time =   0.925665021     s
   
   
  Starting RUNIV... 
@@ -649,40 +594,40 @@ Processing structure...
    148    10     2   1.48148      0.149358E+10  0.133760E-18
    149    10     2   1.49149      0.165753E+10  0.887937E-19
    150     9     2   1.50150      0.182992E+10  0.311404E-16
- Elapsed time =    5.14868307     s
+ Elapsed time =    5.33061504     s
   
 Solving equilibrium...
 Processing structure...
-...done!
-
  CREATE MESH...
  Masternodes at (nm):
+...done!
        0.0
      149.9
      150.0
     2999.9
     3000.0
     3200.0
-...done!
   
  Initial number of nodes (M+1):          299
  Refining mesh... 
  ... Finished!
  Mesh with          105  nodes.
  ----------------------------------
+
+...done!
   
  Starting EQUILIBRIUM... 
+
  Remeshing...  M+1 =          135  nodes.
  EQUILIBRIUM Output Code: Reached Absolute Tolerance.                       
      Res:    5.55010459E-29
- Elapsed time =    4.94190007E-02 s
+ Elapsed time =    5.34050018E-02 s
   
+...done!
+  
+ Starting LIGHTSC... 
 
-  
- Starting LIGHTSC... </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>...done!
+...done!
       step  Jtot (A/m^2)          Res          Res-h    Res Poisson     Res-e        Info
          1   -0.2703E-18    0.3289E-19    0.9817E-22    0.6197E-28    0.3289E-19         2
          2   -0.2703E-17    0.9766E-19    0.1149E-21    0.3541E-26    0.9766E-19         2
@@ -694,6 +639,7 @@ Processing structure...
          8   -0.2703E-11    0.1607E-17    0.1582E-17    0.2959E-21    0.2819E-18         2
          9   -0.2703E-10    0.1795E-17    0.1570E-17    0.3950E-21    0.8712E-18         2
         10   -0.2703E-09    0.3941E-19    0.1360E-19    0.1123E-25    0.3699E-19         2
+
         11   -0.2703E-08    0.2068E-18    0.1456E-18    0.1315E-24    0.1469E-18         2
         12   -0.2703E-07    0.2071E-17    0.1466E-17    0.1336E-23    0.1463E-17         2
         13   -0.2703E-06    0.2073E-16    0.1467E-16    0.1338E-22    0.1464E-16         2
@@ -710,12 +656,8 @@ Processing structure...
      Res:    3.76834174E-19
      J:   -270.300262      A/m2
      V:    1.38166822E-09  V
- Elapsed time =   0.908883989     s
+ Elapsed time =   0.939823985     s
   
-</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>...done!
   
  Starting RUNIV... 
  nvolt   nit   info    Vapp       Jtot (A/m^2)       Res
@@ -1046,8 +988,7 @@ Processing structure...
    324     7     2  -3.24324      -273.493      0.130970E-17
    325     7     2  -3.25325      -273.500      0.131022E-17
    326     7     2  -3.26326      -273.506      0.130861E-17
-   327     7     2  -3.27327      -273.512      0.130
-867E-17
+   327     7     2  -3.27327      -273.512      0.130867E-17
    328     7     2  -3.28328      -273.519      0.130786E-17
    329     7     2  -3.29329      -273.525      0.130706E-17
    330     7     2  -3.30330      -273.531      0.130652E-17
@@ -1310,13 +1251,7 @@ Processing structure...
    587     7     2  -5.87588      -275.111      0.112246E-17
    588     7     2  -5.88589      -275.115      0.112202E-17
    589     7     2  -5.89590      -275.120      0.112192E-17
-   590    Solving IV of the tunnel junctions...
-Solving IV of the total solar cell...
-Solving optics of the solar cell...
-Already calculated reflection, transmission and absorption profile - not recalculating. Set recalculate_absorption to True in the options if you want absorption to be calculated again.
-Solving QE of the solar cell...
-Solving quantum efficiency...
- 7     2  -5.90591      -275.125      0.112170E-17
+   590     7     2  -5.90591      -275.125      0.112170E-17
    591     7     2  -5.91592      -275.129      0.112111E-17
    592     7     2  -5.92593      -275.134      0.112047E-17
    593     7     2  -5.93594      -275.138      0.111917E-17
@@ -1326,13 +1261,16 @@ Solving quantum efficiency...
    597     7     2  -5.97598      -275.156      0.111731E-17
    598     7     2  -5.98599      -275.161      0.111709E-17
    599     7     2  -5.99600      -275.165      0.111665E-17
- Elapsed time =    19.0136909     s
+ Elapsed time =    19.9583359     s
   
+Solving IV of the tunnel junctions...
+Solving IV of the total solar cell...
+Solving optics of the solar cell...
+Already calculated reflection, transmission and absorption profile - not recalculating. Set recalculate_absorption to True in the options if you want absorption to be calculated again.
+Solving QE of the solar cell...
+Solving quantum efficiency...
 Solving equilibrium...
 Processing structure...
-...done!
-
-...done!
  CREATE MESH...
  Masternodes at (nm):
        0.0
@@ -1341,25 +1279,29 @@ Processing structure...
     2999.9
     3000.0
     3200.0
+...done!
   
  Initial number of nodes (M+1):          299
  Refining mesh... 
  ... Finished!
  Mesh with          105  nodes.
  ----------------------------------
+
+...done!
   
  Starting EQUILIBRIUM... 
  Remeshing...  M+1 =          135  nodes.
  EQUILIBRIUM Output Code: Reached Absolute Tolerance.                       
      Res:    5.55010459E-29
- Elapsed time =    5.03429994E-02 s
+ Elapsed time =    5.26049994E-02 s
   
-</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  
- Starting LIGHTSC... 
+
 ...done!
+
+...done!
+  
+ Starting LIGHTSC... 
+
       step  Jtot (A/m^2)          Res          Res-h    Res Poisson     Res-e        Info
          1   -0.2703E-18    0.3289E-19    0.9817E-22    0.6197E-28    0.3289E-19         2
          2   -0.2703E-17    0.9766E-19    0.1149E-21    0.3541E-26    0.9766E-19         2
@@ -1371,8 +1313,6 @@ Processing structure...
          8   -0.2703E-11    0.1607E-17    0.1582E-17    0.2959E-21    0.2819E-18         2
          9   -0.2703E-10    0.1795E-17    0.1570E-17    0.3950E-21    0.8712E-18         2
         10   -0.2703E-09    0.3941E-19    0.1360E-19    0.1123E-25    0.3699E-19         2
-
-...done!
         11   -0.2703E-08    0.2068E-18    0.1456E-18    0.1315E-24    0.1469E-18         2
         12   -0.2703E-07    0.2071E-17    0.1466E-17    0.1336E-23    0.1463E-17         2
         13   -0.2703E-06    0.2073E-16    0.1467E-16    0.1338E-22    0.1464E-16         2
@@ -1384,13 +1324,12 @@ Processing structure...
         19   -0.2703        0.1955E-17    0.1383E-17    0.2986E-28    0.1381E-17         2
         20    -2.703        0.1955E-16    0.1383E-16    0.4849E-28    0.1382E-16         2
         21    -27.03        0.9171E-19    0.2627E-19    0.3431E-28    0.8787E-19         2
-
         22    -270.3        0.3768E-18    0.2622E-18    0.2825E-28    0.2707E-18         2
  LIGHTSC Output Code: Reached Absolute Tolerance.                       
      Res:    3.76834174E-19
      J:   -270.300262      A/m2
      V:    1.38166822E-09  V
- Elapsed time =   0.924980998     s
+ Elapsed time =   0.966706991     s
   
   
  Starting RunIQE... 
@@ -1594,40 +1533,46 @@ Processing structure...
    196     1     2   940.201     -0.159643E-11  0.444459E-19
    197     1     2   943.467     -0.159643E-11  0.444459E-19
    198     1     2   946.734     -0.159643E-11  0.444459E-19
- Elapsed time =    2.48232508     s
+ Elapsed time =    2.61110592     s
   </code></pre>
 </div>
 </div>
 <p><strong>PLOT 2</strong>: IV curves for the DA and PDD models</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>solar_cell_da.iv[<span class="st">"IV"</span>], label<span class="op">=</span><span class="st">"Depletion approximation"</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>solar_cell_pdd.iv[<span class="st">"IV"</span>], <span class="st">'--'</span>, label<span class="op">=</span><span class="st">"Poisson Drift Diffusion"</span>)</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="fl">1.2</span>)</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">330</span>)</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"V (V)"</span>)</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"J (A/m$^2$)"</span>)</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'(2) IV curves from depletion approximation and drift-diffusion models'</span>)</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="63">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>solar_cell_da.iv[<span class="st">"IV"</span>], label<span class="op">=</span><span class="st">"Depletion approximation"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>solar_cell_pdd.iv[<span class="st">"IV"</span>], <span class="st">'--'</span>, label<span class="op">=</span><span class="st">"Poisson Drift Diffusion"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="fl">1.2</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">330</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"V (V)"</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"J (A/m$^2$)"</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'(2) IV curves from depletion approximation and drift-diffusion models'</span>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="1c-simple_cell_files/figure-html/cell-16-output-1.png" width="603" height="442"></p>
+<p><img src="1c-simple_cell_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="1c-simple_cell_files/figure-html/cell-16-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 <p><strong>PLOT 3</strong>: EQE and absorption calculated for the PDD and DA models.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_da[<span class="dv">2</span>].eqe(wavelengths), <span class="st">'k-'</span>, label<span class="op">=</span><span class="st">"EQE (DA)"</span>)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_pdd[<span class="dv">2</span>].eqe(wavelengths), <span class="st">'k--'</span>, label<span class="op">=</span><span class="st">"EQE (PDD)"</span>)</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_da[<span class="dv">2</span>].layer_absorption, <span class="st">'r-'</span>, label<span class="op">=</span><span class="st">"A (DA)"</span>)</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_pdd[<span class="dv">2</span>].layer_absorption, <span class="st">'b--'</span>, label<span class="op">=</span><span class="st">"A (PDD)"</span>)</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"EQE/A (%)"</span>)</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'(3) EQE and absorption from depletion approximation and drift-diffusion models'</span>)</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="64">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_da[<span class="dv">2</span>].eqe(wavelengths), <span class="st">'k-'</span>, label<span class="op">=</span><span class="st">"EQE (DA)"</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_pdd[<span class="dv">2</span>].eqe(wavelengths), <span class="st">'k--'</span>, label<span class="op">=</span><span class="st">"EQE (PDD)"</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_da[<span class="dv">2</span>].layer_absorption, <span class="st">'r-'</span>, label<span class="op">=</span><span class="st">"A (DA)"</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_pdd[<span class="dv">2</span>].layer_absorption, <span class="st">'b--'</span>, label<span class="op">=</span><span class="st">"A (PDD)"</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"EQE/A (%)"</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'(3) EQE and absorption from depletion approximation and drift-diffusion models'</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="1c-simple_cell_files/figure-html/cell-17-output-1.png" width="611" height="442"></p>
+<p><img src="1c-simple_cell_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="1c-simple_cell_files/figure-html/cell-17-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 

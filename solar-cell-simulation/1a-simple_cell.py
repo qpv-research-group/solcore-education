@@ -33,8 +33,8 @@ GaAs = material("GaAs")
 # information, such as the doping level. The 'si' function comes in handy here to convert all quantities to based units
 # e.g. m, m^(-3)...
 
-Si_n = Si(Nd=si("1e21cm-3"), hole_diffusion_length=si("10um"), relative_permittivity=11.7)
-Si_p = Si(Na=si("1e16cm-3"), electron_diffusion_length=si("400um"), relative_permittivity=11.7)
+Si_n = Si(Nd=si("1e21cm-3"), hole_diffusion_length=si("10um"))
+Si_p = Si(Na=si("1e16cm-3"), electron_diffusion_length=si("400um"))
 
 # Now we define the emitter and base layers we will have in the solar cell; we specify their thickness, the material they
 # are made of and the role they play within the cell (emitter or base)

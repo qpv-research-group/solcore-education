@@ -2,6 +2,28 @@
 title: "solcore-education"
 ---
 
-This is a Quarto website.
+This is the website for the solcore-education GitHub, where we host readable versions of Solcore and RayFlare examples,
+which are linked on the left. Note that this is not an introductory Python course, or a course about the fundamentals of
+solar cells.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+The examples on this website are hosted in Jupyter Notebook (.ipynb) format for readability. To run the examples yourself,
+you can find standard .py versions on the GitHub [here](https://github.com/qpv-research-group/solcore-education/tree/main/solar-cell-simulation).
+We recommend using these rather than the Notebook versions.
+
+**Package requirements**
+
+To use these examples, you will need to install [Solcore](http://docs.solcore.solar/en/master/Installation/installation.html)
+and [RayFlare](https://rayflare.readthedocs.io/en/latest/Installation/installation.html) (the links take you to installation
+instructions for each package). In the simplest case, you can install them with:
+
+```
+pip install solcore rayflare
+```
+
+But this will not install all functionality, as detailed in the documentation for both packages.
+
+The only other dependency, which is used for plotting, is `seaborn`, which you can install simply with:
+
+```
+pip install seaborn
+```

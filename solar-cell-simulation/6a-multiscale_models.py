@@ -170,9 +170,9 @@ GaAs_SC = material("GaAs")
 T = 300
 
 p_material_Si = Si_SC(T=T, Na=si(1e21, "cm-3"), electron_diffusion_length=si("10um"),
-                hole_mobility=50e-4, relative_permittivity=11.68)
+                hole_mobility=50e-4)
 n_material_Si = Si_SC(T=T, Nd=si(1e16, "cm-3"), hole_diffusion_length=si("290um"),
-                electron_mobility=400e-4, relative_permittivity=11.68)
+                electron_mobility=400e-4)
 
 
 options_sc = defaults_solcore

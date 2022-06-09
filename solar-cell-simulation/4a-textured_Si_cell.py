@@ -138,9 +138,9 @@ n_material_Si_width = si("500nm")
 p_material_Si_width = rtstr.widths[0] - n_material_Si_width
 
 n_material_Si = Si_base(Nd=si(1e21, "cm-3"), hole_diffusion_length=si("10um"),
-                electron_mobility=50e-4, relative_permittivity=11.68)
+                electron_mobility=50e-4)
 p_material_Si = Si_base(Na=si(1e16, "cm-3"), electron_diffusion_length=si("290um"),
-                hole_mobility=400e-4, relative_permittivity=11.68)
+                hole_mobility=400e-4)
 
 # Options for Solcore:
 options_sc = defaults_solcore
