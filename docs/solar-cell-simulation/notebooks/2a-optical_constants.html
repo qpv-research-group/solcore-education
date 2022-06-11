@@ -229,7 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link">Example 7b: More advanced optimization</a>
+  <a href="../../solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link">Example 7b: More advanced optimization#</a>
   </div>
 </li>
     </ul>
@@ -261,7 +261,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="example-2a-optical-constant-sources" class="level1">
 <h1>Example 2a: Optical constant sources</h1>
 <p>In the first set of scripts focusing on the Si cell, we used different optical models to calculate total absorption and absorption profiles. These absorption profiles are used by the electrical models (if using the DA or PDD model). However, we didn’t discuss what actually goes into these optical models, which are the optical constants (either the complex refractive index, <span class="math inline">\(n + i \kappa\)</span> (<span class="math inline">\(\kappa\)</span> is the extinction coefficient), or equivalently the dielectric function <span class="math inline">\(\epsilon_1 + i \epsilon_2\)</span>). In these two examples we will discuss what these values are, how to get them, and how to model them.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="80">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator.nk_db <span class="im">import</span> download_db, search_db, create_nk_txt</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator <span class="im">import</span> calculate_rat, OptiStack</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.material_system <span class="im">import</span> create_new_material</span>
@@ -279,19 +279,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="adding-custom-materials">Adding custom materials</h2>
 <p>If we want to use a material which is not in Solcore’s database, or perhaps we want to use measured data rather than data from a literature source, we can add a material to the database. We need to have n and k data, and (optionally) a parameter file in the correct format - see examples of parameter files in e.g.&nbsp;material_data/Adachi/binaries.txt inside Solcore’s source files. These parameter files contain things like the bandgap, lattice constant, effective carrier masses, etc.</p>
 <p>Here, we create a new material, silicon-germanium-tin, from input files. Here, the parameters in SiGeSn_params.txt have been copied directly from Ge. The last argument, with the parameters file, is optional; if you exclude it the material will be added with just the n and k values and no further information specified (useful if you just want to do optical calculations).</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="81">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>create_new_material(<span class="st">'SiGeSn'</span>, <span class="st">'data/SiGeSn_n.txt'</span>, <span class="st">'data/SiGeSn_k.txt'</span>, <span class="st">'data/SiGeSn_params.txt'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>When adding custom materials - or getting the refractive index database - the information will be stored by default in your home directory. You can change thethe SOLCORE_USER_DATA environmental variable in the config file to your prefered location or, by default, it will be in your home directory, in a (hidden) directory called .solcore.</p>
 <p>We can now create an instance of it like any Solcore material:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="82">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>wl <span class="op">=</span> si(np.arange(<span class="dv">300</span>, <span class="dv">1700</span>, <span class="dv">5</span>), <span class="st">'nm'</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>SiGeSn <span class="op">=</span> material(<span class="st">'SiGeSn'</span>)()</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>Ge <span class="op">=</span> material(<span class="st">'Ge'</span>)()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>PLOT 1</strong>: Comparing the optical constants of SiGeSn and Ge.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="83">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wl<span class="op">*</span><span class="fl">1e9</span>, SiGeSn.n(wl), <span class="st">'r-'</span>, label<span class="op">=</span><span class="st">'SiGeSn n'</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wl<span class="op">*</span><span class="fl">1e9</span>, SiGeSn.k(wl), <span class="st">'k-'</span>, label<span class="op">=</span><span class="vs">r'SiGeSn $\kappa$'</span>)</span>
@@ -312,11 +312,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="using-the-refractiveindex.info-database" class="level2">
 <h2 class="anchored" data-anchor-id="using-the-refractiveindex.info-database">Using the refractiveindex.info database</h2>
 <p>Solcore can also directly interface with the database from <a href="https://www.refractiveindex.info">www.refractiveindex.info</a>, which contains around 3000 sets of <span class="math inline">\(n\)</span>/<span class="math inline">\(\kappa\)</span> data for a large number of different materials. Before the first use, it is necessary to download the database. This only needs to be done once, so you can comment this line out after it’s done:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="84">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>download_db()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we can search the database to select an appropriate entry. Search by element/chemical formula, or by the name of the author who published the data. In this case, we look for silver.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="85">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>search_db(<span class="st">'Ag'</span>, exact<span class="op">=</span><span class="va">True</span>)<span class="op">;</span> <span class="co"># semicolon suppresses additional output in Jupyter Notebook. Do not need to use.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Database file found at /Users/phoebe/.solcore/nk/nk.db
@@ -352,7 +352,7 @@ pageid  shelf   book    page    filepath    hasrefractive   hasextinction   rang
 </ul>
 <p>(The pageid values listed here are for the 2021-07-18 version of the refractiveindex.info database; this can change with different versions of the database)</p>
 <p>Now, we create instances of materials with the optical constants from the database. The name (when using Solcore’s built-in materials, this would just be the name of the material or alloy, like ‘GaAs’) is the pageid, AS A STRING, while the flag nk_db must be set to True to tell Solcore to look in the previously downloaded database from refractiveindex.info</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="87">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Ag_Joh <span class="op">=</span> material(name<span class="op">=</span><span class="st">'0'</span>, nk_db<span class="op">=</span><span class="va">True</span>)()</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>Ag_Jia <span class="op">=</span> material(name<span class="op">=</span><span class="st">'2'</span>, nk_db<span class="op">=</span><span class="va">True</span>)()</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>Ag_McP <span class="op">=</span> material(name<span class="op">=</span><span class="st">'4'</span>, nk_db<span class="op">=</span><span class="va">True</span>)()</span>
@@ -362,7 +362,7 @@ pageid  shelf   book    page    filepath    hasrefractive   hasextinction   rang
 </div>
 <p>Now we plot the <span class="math inline">\(n\)</span> and <span class="math inline">\(\kappa\)</span> data. Note that not all the data covers the full wavelength range, so the <span class="math inline">\(n\)</span>/<span class="math inline">\(\kappa\)</span> value gets extrapolated from the last point in the dataset to cover any missing values.</p>
 <p><strong>PLOT 2</strong>: <span class="math inline">\(n\)</span> and <span class="math inline">\(\kappa\)</span> values for Ag from different literature sources</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="94">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>names <span class="op">=</span> [<span class="st">'Johnson'</span>, <span class="st">'Jiang'</span>, <span class="st">'McPeak'</span>, <span class="st">'Hagemann'</span>, <span class="st">'Rakic'</span>, <span class="st">'Solcore built-in'</span>]</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>wl <span class="op">=</span> si(np.arange(<span class="dv">250</span>, <span class="dv">900</span>, <span class="dv">5</span>), <span class="st">'nm'</span>)</span>
@@ -385,14 +385,11 @@ pageid  shelf   book    page    filepath    hasrefractive   hasextinction   rang
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
 <span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"$\kappa$"</span>)</span>
 <span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="2a-optical_constants_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
-</div>
 </div>
 <p>Compare performance as a back mirror on a GaAs ‘cell’; we make a solar cell-like structure with a very thin GaAs absorber (50 nm) and a silver back mirror.</p>
 <p><strong>PLOT 3</strong>: compare absorption in GaAs and Ag for a solar cell-like structure, using Ag data from different sources</p>
 <p>Solid line: absorption in GaAs Dashed line: absorption in Ag</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="89">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>GaAs <span class="op">=</span> material(<span class="st">'GaAs'</span>)()</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> sns.color_palette(<span class="st">'husl'</span>, n_colors<span class="op">=</span><span class="bu">len</span>(names))</span>
@@ -421,7 +418,7 @@ pageid  shelf   book    page    filepath    hasrefractive   hasextinction   rang
 <p>Finally, we can combine the two methods above and add a material from the refractiveindex.info database to Solcore’s database.</p>
 <p>The search_db function will print the search results, but it also creates a list of lists with details of all the search results. <code>results[0]</code> contains the first entry; <code>results[0][0]</code> is the ‘pageid’ of the first search result.</p>
 <p>The function create_nk_txt creates files containing the optical constant data in the format required by Solcore. These are saved in the current working directory.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="90">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> search_db(<span class="st">'Diamond'</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>create_nk_txt(pageid<span class="op">=</span>results[<span class="dv">0</span>][<span class="dv">0</span>], <span class="bu">file</span><span class="op">=</span><span class="st">'C_Diamond'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -437,20 +434,20 @@ Wrote C_Diamond_k.txt</code></pre>
 </div>
 </div>
 <p>We now use these files to create a new material in the Solcore database:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="91">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>create_new_material(mat_name<span class="op">=</span><span class="st">'Diamond'</span>, n_source<span class="op">=</span><span class="st">'C_Diamond_n.txt'</span>, k_source<span class="op">=</span><span class="st">'C_Diamond_k.txt'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Material created with optical constants n and k only.</code></pre>
 </div>
 </div>
 <p>We can now delete the files with the Diamond data, since they have been copied into the user-defined materials directory:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="92">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>remove(<span class="st">"C_diamond_n.txt"</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>remove(<span class="st">"C_diamond_k.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we can use this material as we would any material from Solcore’s database:</p>
 <p><strong>PLOT 4</strong>: Optical constants of diamond</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="93">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Diamond <span class="op">=</span> material(<span class="st">'Diamond'</span>)()</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>

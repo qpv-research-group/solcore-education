@@ -229,7 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link">Example 7b: More advanced optimization</a>
+  <a href="../../solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link">Example 7b: More advanced optimization#</a>
   </div>
 </li>
     </ul>
@@ -255,7 +255,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="example-2b-optical-constant-models" class="level1">
 <h1>Example 2b: Optical constant models</h1>
 <p>We may want to model the optical constants of a material using analytic expressions, rather than just take data from a table; this can be useful when e.g.&nbsp;fitting ellipsometry data for a material with unknown optical constants, or if you do not have refractive index data for a material but have some information about where critical points in the band structure occur. In this example we will consider a simple model for a dielectric material, and a more complex model for GaAs, a semiconductor.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="15">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -269,7 +269,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>wl <span class="op">=</span> np.linspace(<span class="dv">300</span>, <span class="dv">950</span>, <span class="dv">200</span>)<span class="op">*</span><span class="fl">1e-9</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We search the database for BK7 (borosilicate crown glass) and select the second entry, “Ohara” (index 1). We then select the first item in that list, which is the pageid of the entry - this is what we need to tell Solcore what item to access in the database.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="16">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pageid <span class="op">=</span> search_db(<span class="st">"BK7"</span>)[<span class="dv">1</span>][<span class="dv">0</span>]<span class="op">;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>BK7 <span class="op">=</span> material(<span class="bu">str</span>(pageid), nk_db<span class="op">=</span><span class="va">True</span>)()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -298,12 +298,12 @@ pageid  shelf   book    page    filepath    hasrefractive   hasextinction   rang
 </div>
 <p>Next, we define a Cauchy oscillator model. We put this into the DielectricConstantModel class; in theory, we could add as many oscillators as we want here.</p>
 <p>The parameters for the Cauchy model for BK7 are from Wikipedia: https://en.wikipedia.org/wiki/Cauchy%27s_equation</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="17">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cauchy <span class="op">=</span> Cauchy(An<span class="op">=</span><span class="fl">1.5046</span>, Bn<span class="op">=</span><span class="fl">0.00420</span>, Cn<span class="op">=</span><span class="dv">0</span>, Ak<span class="op">=</span><span class="dv">0</span>, Bk<span class="op">=</span><span class="dv">0</span>, Ck<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> DielectricConstantModel(e_inf<span class="op">=</span><span class="dv">0</span>, oscillators<span class="op">=</span>[cauchy])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Calculate the dielectric function which result from the Cauchy model, then get the <span class="math inline">\(n\)</span> and <span class="math inline">\(\kappa\)</span> data from the database BK7 material for the complex refractive index:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="18">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>eps <span class="op">=</span> model.dielectric_constants(wl<span class="op">*</span><span class="fl">1e9</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>nk <span class="op">=</span> BK7.n(wl) <span class="op">+</span> <span class="ot">1j</span><span class="op">*</span>BK7.k(wl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -314,11 +314,11 @@ Material glass/ohara/S-BSL7.yml loaded.</code></pre>
 </div>
 </div>
 <p>Calculate the dielectric function by squaring the refractive index:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="19">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>eps_db <span class="op">=</span> nk<span class="op">**</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>PLOT 1</strong>: Plot the database values of e_1 (real part of the dielectric function) against the Cauchy model values:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="20">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wl<span class="op">*</span><span class="fl">1e9</span>, np.real(eps), label<span class="op">=</span><span class="st">'Cauchy model'</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wl<span class="op">*</span><span class="fl">1e9</span>, np.real(eps_db), <span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Database values'</span>)</span>
@@ -333,21 +333,21 @@ Material glass/ohara/S-BSL7.yml loaded.</code></pre>
 </div>
 <p>Here, we have just looked at the real part of the dielectric function, but you can include absorption (non-zero e_2) in the dielectric constant models too.</p>
 <p>Now let’s look at a more complicated CPPB (Critical Point Parabolic Band) model for GaAs. First, read in experimental data for GaAs dielectric function (from Palik)…</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="21">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Palik_Eps1 <span class="op">=</span> np.loadtxt(<span class="st">"data/Palik_GaAs_Eps1.csv"</span>, delimiter<span class="op">=</span><span class="st">','</span>, unpack<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>Palik_Eps2 <span class="op">=</span> np.loadtxt(<span class="st">"data/Palik_GaAs_Eps2.csv"</span>, delimiter<span class="op">=</span><span class="st">','</span>, unpack<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Generate a list of energies over which to calculate the model dielectric function and create the CPPB_model Class object:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="22">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>E <span class="op">=</span> np.linspace(<span class="fl">0.2</span>, <span class="dv">5</span>, <span class="dv">1000</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>CPPB_Model <span class="op">=</span> Custom_CPPB()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The Material_Params method loads in the desired material parameters as a dictionary (for some common materials):</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="23">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>MatParams <span class="op">=</span> CPPB_Model.Material_Params(<span class="st">"GaAs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Parameters can be customised by assigning to the correct dictionary key:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="24">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>MatParams[<span class="st">"B1"</span>] <span class="op">=</span> <span class="fl">5.8</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>MatParams[<span class="st">"B1s"</span>] <span class="op">=</span> <span class="fl">1.0</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>MatParams[<span class="st">"Gamma_Eg_ID"</span>] <span class="op">=</span> <span class="fl">0.3</span></span>
@@ -361,7 +361,7 @@ Material glass/ohara/S-BSL7.yml loaded.</code></pre>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>MatParams[<span class="st">"Gamma_E2"</span>] <span class="op">=</span> <span class="fl">0.19</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Must define a structure object containing the required oscillator functions. The oscillator type and material parameters are both passed to individual ‘Oscillators’ in the structure:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="25">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Adachi_GaAs <span class="op">=</span> Structure([</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    Oscillator(oscillator_type<span class="op">=</span><span class="st">"E0andE0_d0"</span>, material_parameters<span class="op">=</span>MatParams),</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    Oscillator(oscillator_type<span class="op">=</span><span class="st">"E1andE1_d1"</span>, material_parameters<span class="op">=</span>MatParams),</span>
@@ -372,7 +372,7 @@ Material glass/ohara/S-BSL7.yml loaded.</code></pre>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>Output <span class="op">=</span> CPPB_Model.eps_calc(Adachi_GaAs, E)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>PLOT 2</strong>: real and imaginary part of the dielectric constant, showing the individual contributions of the critical points.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="26">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">1</span>, ncols<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="fl">4.5</span>))</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Subplot I :: Real part of the dielectric function.</span></span>

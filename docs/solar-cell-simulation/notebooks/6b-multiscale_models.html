@@ -229,7 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link">Example 7b: More advanced optimization</a>
+  <a href="../../solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link">Example 7b: More advanced optimization#</a>
   </div>
 </li>
     </ul>
@@ -261,7 +261,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="example-6b-angular-redistribution-matrix-method" class="level1">
 <h1>Example 6b: Angular redistribution matrix method</h1>
 <p>In <a href="../../solar-cell-simulation/notebooks/6a-multiscale_models.html">Example 6a</a>, we looked at a silicon heterojunction cell using integrated ray-tracing and TMM to calculate the optical behaviour of each surface, and using the angular redistribution matrix method (ARMM) to combine the surfaces and calculate overall reflection, transmission, absorption per layer and absorption profiles. However, ARMM is not limited to treating surfaces with ray-tracing; it is also possible to use the TMM by itself (for planar layers), RCWA (for gratings/periodic structutes) or ideal analytic cases (perfect mirrors and Lambertian reflectors are currently implemented) to generate the angular redistribution matrices. In this example we will replicate simulation results shown in the paper on <a href="https://doi.org/10.1364/OE.23.0A1720">OPTOS</a>, looking at the effect of planar surfaces, regular pyramids, and a diffraction grating on absorption in a silicon wafer.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="275">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="291">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -283,7 +283,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="setting-up" class="level2">
 <h2 class="anchored" data-anchor-id="setting-up">Setting up</h2>
 <p>We have encountered most of these options in the previous examples. Previously, we have mostly simulated optical behaviour for light at normal incidence but in this case, to match the results from the OPTOS paper, we will look at an incidence angle of 8<span class="math inline">\(^\circ\)</span>. Other relevant options are <code>c_azimuth</code>, which controls how fine the spacing of the angular bins in the azimuthal directions is, and <code>pol</code>, the polarization of the incident light.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="276">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="292">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>angle_degrees_in <span class="op">=</span> <span class="dv">8</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>wavelengths <span class="op">=</span> np.linspace(<span class="dv">900</span>, <span class="dv">1180</span>, <span class="dv">30</span>)<span class="op">*</span><span class="fl">1e-9</span></span>
@@ -315,7 +315,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p>This means we have four different surfaces to consider across all structures: a. Planar front b. Pyramidal front c.&nbsp;Planar rear d.&nbsp;Grating rear</p>
 <p>For structure 1 (a + d), we define the grating (surface d) in the same we would if using <code>rcwa_structure</code> (<a href="../../solar-cell-simulation/notebooks/5a-ultrathin_GaAs_cell.html">Example 5a</a>). The grating period in this case is 1000 nm with a feature height of 120 nm.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="277">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="293">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">1000</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>d_vectors <span class="op">=</span> ((x, <span class="dv">0</span>),(<span class="dv">0</span>,x))</span>
@@ -327,7 +327,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                                                     <span class="st">'halfwidths'</span>: (hw, hw), <span class="st">'angle'</span>: <span class="dv">45</span>}])]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Create the texture for the pyramidal front surface (b):</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="278">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="294">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>surf <span class="op">=</span> regular_pyramids(elevation_angle<span class="op">=</span><span class="dv">55</span>, upright<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we define the four <code>Interface</code>s we need for the three <code>Structure</code>s; using the numbering above, that is:</p>
@@ -337,7 +337,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Structure 3 = b + d</li>
 </ul>
 <p>For each Interface, we have to specify the method we want to use, a name, the surface layers (or lack therof). For the RT (ray-tracing) surfaces, we need to specify the <code>texture</code> and for the RCWA surfaces we need to specify the unit cell lattice vectors <code>d_vectors</code> and the number of <code>rcwa_orders</code> to use. We also define the bulk, 200 <span class="math inline">\(\mu\)</span>m of Si.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="279">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="295">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>front_surf_pyramids <span class="op">=</span> Interface(<span class="st">'RT_Fresnel'</span>, texture<span class="op">=</span>surf, layers<span class="op">=</span>[],</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                                name <span class="op">=</span> <span class="st">'inv_pyramids_front_'</span> <span class="op">+</span> <span class="bu">str</span>(options[<span class="st">'n_rays'</span>]))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>front_surf_planar <span class="op">=</span> Interface(<span class="st">'TMM'</span>, layers<span class="op">=</span>[], name<span class="op">=</span><span class="st">'planar_front'</span>)</span>
@@ -348,14 +348,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>bulk_Si <span class="op">=</span> BulkLayer(<span class="fl">200e-6</span>, Si, name <span class="op">=</span> <span class="st">'Si_bulk'</span>) <span class="co"># bulk thickness in m</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we define the three structures listed above. For reference, we also define a fully planar structure (a + c).</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="280">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="296">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>SC_fig6 <span class="op">=</span> Structure([front_surf_planar, bulk_Si, back_surf_grating], incidence<span class="op">=</span>Air, transmission<span class="op">=</span>Air)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>SC_fig7 <span class="op">=</span> Structure([front_surf_pyramids, bulk_Si, back_surf_planar], incidence<span class="op">=</span>Air, transmission<span class="op">=</span>Air)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>SC_fig8 <span class="op">=</span> Structure([front_surf_pyramids, bulk_Si, back_surf_grating], incidence<span class="op">=</span>Air, transmission<span class="op">=</span>Air)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>planar <span class="op">=</span> Structure([front_surf_planar, bulk_Si, back_surf_planar], incidence<span class="op">=</span>Air, transmission<span class="op">=</span>Air)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, as in <a href="../../solar-cell-simulation/notebooks/6a-multiscale_models.html">Example 6a</a>, we process the structures (to generate the matrices) and then use <code>calculate_rat</code> to obtain the final results. Note that it is not necessary to call <code>process_structure</code> for the planar structure, because the redistribution matrices for both of its interfaces will have already been calculated when considering structures 1 and 2.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="281">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="297">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Process structures (step 1)</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>process_structure(SC_fig6, options, save_location<span class="op">=</span><span class="st">"current"</span>)</span>
@@ -377,7 +377,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>RAT_planar <span class="op">=</span> results_planar[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Of course, it is not necessary to use the ARMM to calculate the optics of a simple planar slab of Si; we could have done this simply with an (incoherent) TMM calculation. We will do this to compare the results:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="282">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="298">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>struc <span class="op">=</span> tmm_structure([Layer(si(<span class="st">'200um'</span>), Si)], Air, Air)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>options.coherent <span class="op">=</span> <span class="va">False</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>options.coherency_list <span class="op">=</span> [<span class="st">'i'</span>]</span>
@@ -387,7 +387,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
 <p><strong>PLOT 1</strong>: Absorption in Si for the four different structures.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="283">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="299">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>palhf <span class="op">=</span> sns.color_palette(<span class="st">"hls"</span>, <span class="dv">4</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
@@ -411,7 +411,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="visualizing-the-redistribution-matrices" class="level2">
 <h2 class="anchored" data-anchor-id="visualizing-the-redistribution-matrices">Visualizing the redistribution matrices</h2>
 <p>RayFlare has built-in functions to make it easier to load and plot the redistribution matrices you have generated. First, based on the options we set, we generate the <code>angle_vector</code> which lists the <span class="math inline">\(\theta\)</span> (polar angle) and <span class="math inline">\(\phi\)</span> (azimuthal angle) values in each bin of the angular redistribution matrices.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="284">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="300">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>theta_intv, phi_intv, angle_vector <span class="op">=</span> make_angle_vector(options[<span class="st">'n_theta_bins'</span>], options[<span class="st">'phi_symmetry'</span>],</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                                       options[<span class="st">'c_azimuth'</span>])</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -420,7 +420,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>seamap <span class="op">=</span> mpl.colors.ListedColormap(palhf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we find the <code>path</code> where the matrices are stored. We calculated the redistribution matrices at different wavelengths, but we are just going to plot them at a single wavelength, so we find which index in the matrix that wavelength corresponds to.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="285">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="301">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> get_savepath(<span class="st">'current'</span>, options.project_name)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>wl_to_plot <span class="op">=</span> <span class="fl">1100e-9</span></span>
@@ -428,7 +428,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>wl_index <span class="op">=</span> np.argmin(np.<span class="bu">abs</span>(wavelengths<span class="op">-</span>wl_to_plot))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The redistribution matrices are stored in a sparse matrix format (this is much more efficient, since usually many matrix entries will be zero. A sparse matrix format lists only the non-zero entries). Using the <code>path</code> we found above and the name of the surface, we load the sparse matrix, select only the wavelength we are interested in, and convert it to a normal NumPy array (a “dense” matrix):</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="286">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="302">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sprs <span class="op">=</span> load_npz(os.path.join(path, SC_fig8[<span class="dv">2</span>].name <span class="op">+</span> <span class="st">'frontRT.npz'</span>))</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the redistribution matrices for the bottom surface in SC_fig8 (this is the grating)</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -436,7 +436,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert from sparse format to normal numpy array</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The indexing of the sparse array is (wavelength, angular bin out, angular bin in). To make the information easier to interpret, RayFlare has the <code>theta_summary</code> function which will sum over all the azimuthal bins at a certain <span class="math inline">\(\theta\)</span>, and returns the results in <a href="https://docs.xarray.dev">xarray format</a>. We then select only the first half of the matrix; the data for reflection and transmission are stored in the same array (0 to <span class="math inline">\(2 \pi\)</span> radians), but we pick out only the reflection part.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="287">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="303">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>summat <span class="op">=</span> theta_summary(full, angle_vector, options[<span class="st">'n_theta_bins'</span>], front_or_rear<span class="op">=</span><span class="st">'front'</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Front or rear refers to front or rear incidence on the surface, rather than the front or rear surface of the</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># whole structure</span></span>
@@ -446,14 +446,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># looking at incident light coming from this half-plane, this corresponds to reflection</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can use xarray’s functionality to transform the coordinates from <span class="math inline">\(\theta\)</span> to <span class="math inline">\(\sin\theta\)</span>, and then rename the coordinates (this will automatically label the plots below).</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="288">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="304">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>summat_g <span class="op">=</span> summat_g.assign_coords({<span class="vs">r'$\theta_</span><span class="sc">{in}</span><span class="vs">$'</span>: np.sin(summat_g.coords[<span class="vs">r'$\theta_</span><span class="sc">{in}</span><span class="vs">$'</span>]).data,</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                                    <span class="vs">r'$\theta_</span><span class="sc">{out}</span><span class="vs">$'</span>: np.sin(summat_g.coords[<span class="vs">r'$\theta_</span><span class="sc">{out}</span><span class="vs">$'</span>]).data})</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>summat_g <span class="op">=</span> summat_g.rename({<span class="vs">r'$\theta_</span><span class="sc">{in}</span><span class="vs">$'</span>: <span class="vs">r'$\sin(\theta_</span><span class="sc">{in}</span><span class="vs">)$'</span>, <span class="vs">r'$\theta_</span><span class="sc">{out}</span><span class="vs">$'</span>: <span class="vs">r'$\sin(\theta_</span><span class="sc">{out}</span><span class="vs">)$'</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now repeat this for another surface (the pyramidal surface):</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="289">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="305">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>sprs <span class="op">=</span> load_npz(os.path.join(path, SC_fig8[<span class="dv">0</span>].name <span class="op">+</span> <span class="st">'rearRT.npz'</span>))</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the redistribution matrices for the top surface in SC_fig8 (this is the pyramids)</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -474,7 +474,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>Plot the redistribution matrices:</p>
 <p><strong>PLOT 2</strong>: Redistribution matrices for reflection into Silicon from the diffraction grating (left) and pyramid surface (right).</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="290">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="306">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>))</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> plt.subplot(<span class="dv">121</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> summat_g.plot.imshow(ax<span class="op">=</span>ax, cmap<span class="op">=</span>seamap, vmax<span class="op">=</span><span class="fl">0.3</span>)</span>

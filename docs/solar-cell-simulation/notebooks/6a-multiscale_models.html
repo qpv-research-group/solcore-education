@@ -229,7 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link">Example 7b: More advanced optimization</a>
+  <a href="../../solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link">Example 7b: More advanced optimization#</a>
   </div>
 </li>
     </ul>
@@ -262,7 +262,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>Example 6a: Silicon HIT cell</h1>
 <p>In <a href="../../solar-cell-simulation/notebooks/4a-textured_Si_cell.html">Example 4a</a>, we looked at a solar cell made of a single layer of Si with pyramidal texturing. In reality, a solar cell will have a more complicated structure with thin layers deposited on the front side to act as e.g.&nbsp;selective transport layers for carriers. This adds a layer of complication to the ray-tracing process, because we can no longer rely on the Fresnel equations to calculate the angle and wavelength-dependent reflection and transmission probabilities; we might get absorption in the surface layers, and we need to take into account interference in the surface layers. To do this, we can combine ray-tracing and the transfer-matrix method; we can calculate the reflection, absorption and transmission probabilities using TMM, and use those probabilities in our ray-tracing calculations. In RayFlare, this functionality is implemented as part of the angular redistribution matrix functionality.</p>
 <p>This example is (loosely) based on the simulations done for <a href="https://doi.org/10.1016/j.solmat.2019.110051">this paper</a> which looks at the absorptivity/emissivity of silicon heterojunction (HJT or HIT) cells, although here we will only look at the usual wavelengths for the photovoltaic operation of silicon solar cells rather than the infrared.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="63">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore <span class="im">import</span> material, si</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.light_source <span class="im">import</span> LightSource</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.constants <span class="im">import</span> q</span>
@@ -285,7 +285,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="setting-up" class="level2">
 <h2 class="anchored" data-anchor-id="setting-up">Setting up</h2>
 <p>We add some new materials to Solcore’s database from data files - you only need to add these once, after that you can comment these lines out.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="64">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.material_system <span class="im">import</span> create_new_material</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>create_new_material(<span class="st">'aSi_i'</span>, <span class="st">'data/model_i_a_silicon_n.txt'</span>, <span class="st">'data/model_i_a_silicon_k.txt'</span>)</span>
@@ -302,7 +302,7 @@ Material created with optical constants n and k only.</code></pre>
 <li><code>I_thresh</code>: Threshold intensity at which to stop matrix multiplication (i.e.&nbsp;when almost all the light has been reflected, transmitted or absorbed)</li>
 <li><code>bulk_profile</code>: True or False; whether to calculate the absorption profile in the bulk material (Si in this case).</li>
 </ul>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="65">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>wavelengths <span class="op">=</span> np.linspace(<span class="dv">300</span>, <span class="dv">1200</span>, <span class="dv">80</span>)<span class="op">*</span><span class="fl">1e-9</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>options <span class="op">=</span> default_options()</span>
@@ -316,7 +316,7 @@ Material created with optical constants n and k only.</code></pre>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>options.bulk_profile <span class="op">=</span> <span class="va">True</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We now define the materials and layer structures for the front and rear surfaces. In this case, the front and rear layers are the materials which will be deposited on top of the pyramids (amorphous silicon and ITO); the crystalline silicon itself will be the bulk material which connects the two interfaces.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="66">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Si <span class="op">=</span> material(<span class="st">'Si'</span>)()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>Air <span class="op">=</span> material(<span class="st">'Air'</span>)()</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>ITO <span class="op">=</span> material(<span class="st">'ITO_measured'</span>)()</span>
@@ -328,7 +328,7 @@ Material created with optical constants n and k only.</code></pre>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>back_materials <span class="op">=</span> [Layer(<span class="fl">13e-9</span>, aSi), Layer(<span class="fl">240e-9</span>, ITO)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we define the front and rear surfaces using the <code>Interface</code> class. Whether pyramids are upright or inverted is relative to front incidence, so if the same etch is applied to both sides of a slab of silicon, one surface will have ‘upright’ pyramids and the other side will have ‘not upright’ (inverted) pyramids in the model. The arguments required for <code>Interface</code> depend on the optical method which is being used; in this case, we must provide the surface texture, layer stack, and whether the layers are to be treated coherently (i.e.&nbsp;affected by thin-film interference). We also have to give the surfaces a name; as with the project name, this is to store the matrices which will be calculated.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="67">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>surf <span class="op">=</span> regular_pyramids(elevation_angle<span class="op">=</span><span class="dv">55</span>, upright<span class="op">=</span><span class="va">True</span>) <span class="co"># elevation angle is relative to horizontal plane</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>surf_back <span class="op">=</span> regular_pyramids(elevation_angle<span class="op">=</span><span class="dv">55</span>, upright<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -338,7 +338,7 @@ Material created with optical constants n and k only.</code></pre>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>bulk_Si <span class="op">=</span> BulkLayer(<span class="fl">170e-6</span>, Si, name<span class="op">=</span><span class="st">'Si_bulk'</span>) <span class="co"># bulk thickness in m</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Finally, we build the whole structure inside RayFlare’s <code>Structure</code> class, also specifying the incidence medium (above the cell) and the transmission medium (below the cell).</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="68">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>SC <span class="op">=</span> Structure([front_surf, bulk_Si, back_surf], incidence<span class="op">=</span>Air, transmission<span class="op">=</span>Ag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -349,7 +349,7 @@ Material created with optical constants n and k only.</code></pre>
 <li>Call <code>process_structure</code> to check each surface in the structure, and generate angular redistribution matrices (if it does not find existing ones)</li>
 <li>Call <code>calculate_rat</code> to run the matrix multiplication and generate reflection, transmission and absorption results</li>
 </ol>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="69">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>process_structure(SC, options, save_location<span class="op">=</span><span class="st">"current"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># save_location = current means that the folder with the redistribution matrix will be created in the current working directory. By default, it is saved in a folder called</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># RayFlare_results in your home directory (~).</span></span>
@@ -360,21 +360,21 @@ Making lookuptable for element 2 in structure
 Ray tracing with TMM lookup table for element 0 in structure
 Calculating matrix only for incidence theta/phi
 Ray tracing with TMM lookup table for element 2 in structure
-After iteration 1 : maximum power fraction remaining = 0.5521730843781177
-After iteration 2 : maximum power fraction remaining = 0.3357866963415074
-After iteration 3 : maximum power fraction remaining = 0.20748546402830265
-After iteration 4 : maximum power fraction remaining = 0.12854118568749578
-After iteration 5 : maximum power fraction remaining = 0.07946839713055534
-After iteration 6 : maximum power fraction remaining = 0.04911302165169775
-After iteration 7 : maximum power fraction remaining = 0.030353658788997314
-After iteration 8 : maximum power fraction remaining = 0.018760207951967315
-After iteration 9 : maximum power fraction remaining = 0.011595263021334356
-After iteration 10 : maximum power fraction remaining = 0.00716680990642858
-After iteration 11 : maximum power fraction remaining = 0.004429660410348459</code></pre>
+After iteration 1 : maximum power fraction remaining = 0.5629448135186488
+After iteration 2 : maximum power fraction remaining = 0.3425270607560974
+After iteration 3 : maximum power fraction remaining = 0.20990358983841642
+After iteration 4 : maximum power fraction remaining = 0.12862942930538473
+After iteration 5 : maximum power fraction remaining = 0.0788271578176077
+After iteration 6 : maximum power fraction remaining = 0.04832164906096151
+After iteration 7 : maximum power fraction remaining = 0.029625034965812196
+After iteration 8 : maximum power fraction remaining = 0.018162348111822744
+After iteration 9 : maximum power fraction remaining = 0.011134523091393584
+After iteration 10 : maximum power fraction remaining = 0.006826006659534447
+After iteration 11 : maximum power fraction remaining = 0.004184675817775243</code></pre>
 </div>
 </div>
 <p>The structure of the results returned by calculate_RAT is quite complicated; it is explained on <a href="https://rayflare.readthedocs.io/en/latest/Matrix/matrix_method.html">this page</a>.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="70">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>RAT <span class="op">=</span> results[<span class="dv">0</span>]</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>results_per_pass <span class="op">=</span> results[<span class="dv">1</span>]</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -388,7 +388,7 @@ After iteration 11 : maximum power fraction remaining = 0.004429660410348459</co
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>results_per_layer_back <span class="op">=</span> np.<span class="bu">sum</span>(results_per_pass[<span class="st">'a'</span>][<span class="dv">1</span>], axis<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To get the maximum current we could achieve based on these optical results, we calculate the photogenerated current using the AM1.5G spectrum.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="71">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>spectr_flux <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'standard'</span>, version<span class="op">=</span><span class="st">'AM1.5g'</span>, x<span class="op">=</span>wavelengths,</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                           output_units<span class="op">=</span><span class="st">'photon_flux_per_m'</span>, concentration<span class="op">=</span><span class="dv">1</span>).spectrum(wavelengths)[<span class="dv">1</span>]</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -396,7 +396,7 @@ After iteration 11 : maximum power fraction remaining = 0.004429660410348459</co
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Photogenerated current in Si = </span><span class="sc">%.1f</span><span class="st"> mA/cm2"</span> <span class="op">%</span> Jph_Si)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Photogenerated current in Si = 37.7 mA/cm2</code></pre>
+<pre><code>Photogenerated current in Si = 37.5 mA/cm2</code></pre>
 </div>
 </div>
 </section>
@@ -404,7 +404,7 @@ After iteration 11 : maximum power fraction remaining = 0.004429660410348459</co
 <h2 class="anchored" data-anchor-id="plotting">Plotting</h2>
 <p>Now, we plot where all incident light goes: reflection, absorption in each layer, and transmission into the substrate in the simulation. Note that we set the substrate as Ag for the simulation; although in the actual device the Ag is not infinitely thick, in practice it is thick enough that all light which enters the Ag will be absorbed there so we can treat is as the final material.</p>
 <p><strong>PLOT 1</strong>: Reflection and absorption in the Si HIT cell</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="72">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stack results for plotting</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>allres <span class="op">=</span> np.hstack((RAT[<span class="st">'T'</span>].T, results_per_layer_back,</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                    RAT[<span class="st">'A_bulk'</span>].T, results_per_layer_front)).T</span>
@@ -441,7 +441,7 @@ After iteration 11 : maximum power fraction remaining = 0.004429660410348459</co
 <p>We see that over this wavelength range, most of the absorption happens in the bulk Si, as expected. However, at short wavelengths we see significant absorption in the front surface layers, and at long wavelengths we see absorption in the back layers and Ag. We have plotted both the total reflection <span class="math inline">\(R_{total}\)</span> and <span class="math inline">\(R_0\)</span>, which is the light which is lost due to initial reflection at the front surface. Up to around 1000 nm, these lines coincide (total reflection is entirely due to initial front surface reflection). At longer wavelengths, we see that <span class="math inline">\(R_0\)</span> is lower than <span class="math inline">\(R_{total}\)</span>, as now a significant fraction of the total reflection is from light which enters the cell, makes at least one full forward and backward pass, and then leaves the cell through the front surface. This becomes significant close to the bandgap as the Si becomes transparent.</p>
 <p>In the plot above we see stochastic noise due to the ray-tracing simulation; we could increase the number of rays to reduce this, which also increases the computation time. Below, we re-plot the same data with some smoothing.</p>
 <p><strong>PLOT 2</strong>: Reflection and absorption in the Si HIT cell, with smoothed data</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="73">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ysmoothed <span class="op">=</span> gaussian_filter1d(np.vstack((allres, RAT[<span class="st">"R"</span>])), sigma<span class="op">=</span><span class="dv">2</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># plot total R, A, T - smoothed</span></span>
@@ -466,7 +466,7 @@ After iteration 11 : maximum power fraction remaining = 0.004429660410348459</co
 <section id="device-simulations" class="level2">
 <h2 class="anchored" data-anchor-id="device-simulations">Device simulations</h2>
 <p>As we did in <a href="../../solar-cell-simulation/notebooks/4a-textured_Si_cell.html">Example 4a</a>, we can now feed the results from RayFlare’s optical calculation into Solcore to run electrical simulations. We generate the absorption profile function, then specify materials and layers for the solar cell structure.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="74">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>profile_Si <span class="op">=</span> results[<span class="dv">3</span>][<span class="dv">0</span>]</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>external_R <span class="op">=</span> RAT[<span class="st">'R'</span>][<span class="dv">0</span>, :]</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -480,7 +480,7 @@ After iteration 11 : maximum power fraction remaining = 0.004429660410348459</co
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>n_material_Si <span class="op">=</span> Si_SC(T<span class="op">=</span>T, Nd<span class="op">=</span>si(<span class="fl">1e16</span>, <span class="st">"cm-3"</span>), hole_diffusion_length<span class="op">=</span>si(<span class="st">"290um"</span>), electron_mobility<span class="op">=</span><span class="fl">400e-4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>As we noted in <a href="../../solar-cell-simulation/notebooks/4a-textured_Si_cell.html">Example 4a</a>, we need to specify the user options for Solcore separately (though they should of course be consistent with the options we gave RayFlare above, where relevant!). We set options, create the solar cell structure, and run QE and IV calculations:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="75">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>options_sc <span class="op">=</span> defaults_solcore</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>options_sc.optics_method <span class="op">=</span> <span class="st">"external"</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>options_sc.position <span class="op">=</span> positions</span>
@@ -507,7 +507,7 @@ After iteration 11 : maximum power fraction remaining = 0.004429660410348459</co
 </div>
 <p>Now we can plot the results. To check things are consistent, we will plot the total absorption in Si calculated above with RayFlare, and <code>solar_cell.absorbed</code>, which is the result Solcore gives for total absorption. We also plot the EQE, which should be the same as or lower than the absorption.</p>
 <p><strong>PLOT 3</strong>: Absorption in the Si and EQE.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="76">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>plt.plot(options[<span class="st">'wavelengths'</span>]<span class="op">*</span><span class="fl">1e9</span>, RAT[<span class="st">"A_bulk"</span>][<span class="dv">0</span>], <span class="st">'r-'</span>)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, solar_cell.absorbed, <span class="st">'k--'</span>, label<span class="op">=</span><span class="st">'Absorbed (integrated)'</span>)</span>
@@ -522,7 +522,7 @@ After iteration 11 : maximum power fraction remaining = 0.004429660410348459</co
 </div>
 </div>
 <p><strong>PLOT 4</strong>: Current-voltage behaviour of the Si cell under illumination</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="77">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>plt.plot(V, solar_cell.iv[<span class="st">'IV'</span>][<span class="dv">1</span>], <span class="st">'-k'</span>)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="op">-</span><span class="dv">20</span>, <span class="dv">380</span>)</span>
