@@ -228,7 +228,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link">Example 7b: More advanced optimization#</a>
+  <a href="../../solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link">Example 7b: More advanced optimization</a>
   </div>
 </li>
     </ul>
@@ -265,7 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Depletion approximation (DA)</li>
 <li>Poisson drift-diffusion solver (PDD)</li>
 </ol>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="1">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="81">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -280,7 +280,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="setting-up" class="level2">
 <h2 class="anchored" data-anchor-id="setting-up">Setting up</h2>
 <p>Define some materials:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="2">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="82">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>GaAs <span class="op">=</span> material(<span class="st">"GaAs"</span>)()</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Al2O3 <span class="op">=</span> material(<span class="st">"Al2O3"</span>)()</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Ag <span class="op">=</span> material(<span class="st">"Ag"</span>)()</span>
@@ -288,34 +288,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>wavelengths <span class="op">=</span> si(np.linspace(<span class="dv">300</span>, <span class="dv">950</span>, <span class="dv">200</span>), <span class="st">"nm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We are going to do an optical calculation first to get absorption for a GaAs layer; we will use this as an estimate for the EQE as input for the two-diode model.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="3">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="83">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>OS <span class="op">=</span> OptiStack([Layer(si(<span class="st">"3um"</span>), GaAs)], substrate<span class="op">=</span>Ag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Calculate reflection/absorption/transmission (note that we have to give the wavelength to this function in nm rather than m!)</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="4">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="84">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>RAT <span class="op">=</span> calculate_rat(OS, wavelength<span class="op">=</span>wavelengths<span class="op">*</span><span class="fl">1e9</span>, no_back_reflection<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Create a function which interpolates the absorption - note that we pass a function which returns the absorption when given a wavelength to the Junction, rather than a table of values!</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="5">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="85">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>eqe_func <span class="op">=</span> interp1d(wavelengths, RAT[<span class="st">"A"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="d-and-db-junctions" class="level2">
 <h2 class="anchored" data-anchor-id="d-and-db-junctions">2D and DB junctions</h2>
 <p>Define the 2D junction with reasonable parameters for GaAs. The units of j01 and j01 are A/m^2. The units for the resistances are (Ohm m)^2. We use the standard ideality factors (1 and 2 respectively) for the two diodes:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="6">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="86">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>twod_junction <span class="op">=</span> Junction(kind<span class="op">=</span><span class="st">'2D'</span>, n1<span class="op">=</span><span class="dv">1</span>, n2<span class="op">=</span><span class="dv">2</span>, j01<span class="op">=</span><span class="fl">3e-17</span>, j02<span class="op">=</span><span class="fl">1e-7</span>,</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                         Rseries<span class="op">=</span><span class="fl">4e-3</span>, Rshunt<span class="op">=</span><span class="fl">1e4</span>, eqe<span class="op">=</span>eqe_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                         R_series<span class="op">=</span><span class="fl">6e-4</span>, R_shunt<span class="op">=</span><span class="fl">5e4</span>, eqe<span class="op">=</span>eqe_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Define two instances of a detailed-balance type junction. In both cases, there will be a sharp absorption onset at the bandgap (1.42 eV for GaAs). By specifying A, we set the fraction of light above the bandgap that is absorbed (A = 1 means 100% absorption above the gap).</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="7">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="87">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>db_junction_A1 <span class="op">=</span> Junction(kind<span class="op">=</span><span class="st">'DB'</span>, Eg<span class="op">=</span><span class="fl">1.42</span>, A<span class="op">=</span><span class="dv">1</span>, R_shunt<span class="op">=</span><span class="fl">1e4</span>, n<span class="op">=</span><span class="fl">3.5</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>db_junction <span class="op">=</span> Junction(kind<span class="op">=</span><span class="st">'DB'</span>, Eg<span class="op">=</span><span class="fl">1.42</span>, A<span class="op">=</span><span class="fl">0.8</span>, R_shunt<span class="op">=</span><span class="fl">1e4</span>, n<span class="op">=</span><span class="fl">3.5</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="fl">1.5</span>, <span class="dv">200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Set some options and define solar cells based on these junctions:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="8">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="88">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>opts <span class="op">=</span> {<span class="st">'voltages'</span>: V, <span class="st">'light_iv'</span>: <span class="va">True</span>, <span class="st">'wavelength'</span>: wavelengths, <span class="st">'mpp'</span>: <span class="va">True</span>}</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>solar_cell_db_A1 <span class="op">=</span> SolarCell([db_junction_A1])</span>
@@ -323,7 +323,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>solar_cell_2d <span class="op">=</span> SolarCell([twod_junction])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Calculate and plot the IV curves:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="9">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="89">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_db_A1, <span class="st">'iv'</span>, user_options<span class="op">=</span>opts)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_db, <span class="st">'iv'</span>, user_options<span class="op">=</span>opts)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_2d, <span class="st">'iv'</span>, user_options<span class="op">=</span>opts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -344,7 +344,7 @@ Solving IV of the total solar cell...</code></pre>
 </div>
 </div>
 <p><strong>PLOT 1</strong>: IV curves for the DB and 2D models.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="10">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="90">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>solar_cell_db_A1.iv[<span class="st">"IV"</span>], label<span class="op">=</span><span class="st">'Detailed balance (Eg = 1.44 eV, A = 1)'</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>solar_cell_db.iv[<span class="st">"IV"</span>], label<span class="op">=</span><span class="st">'Detailed balance (Eg = 1.44 eV, A = 0.8)'</span>)</span>
@@ -366,7 +366,7 @@ Solving IV of the total solar cell...</code></pre>
 <h2 class="anchored" data-anchor-id="da-and-pdd-junctions">DA and PDD junctions</h2>
 <p>Now let’s consider the two slightly more complex models, which will actually take into account the absorption profile of light in the cell and the distribution of charge carriers; the depletion approximation and the Poisson drift-diffusion solver.</p>
 <p><em>Note:</em> for the PDD example to work, the PDD solver must be installed correctly; see the <a href="http://docs.solcore.solar/en/master/Installation/installation.html">Solcore documentation</a> for more information.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="11">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="91">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">293</span> <span class="co"># ambient temperature</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>window <span class="op">=</span> material(<span class="st">'AlGaAs'</span>)(T<span class="op">=</span>T, Na<span class="op">=</span>si(<span class="st">"5e18cm-3"</span>), Al<span class="op">=</span><span class="fl">0.8</span>)</span>
@@ -379,7 +379,7 @@ Solving IV of the total solar cell...</code></pre>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                   Layer(width<span class="op">=</span>si(<span class="st">'200nm'</span>), material<span class="op">=</span>bsf, role<span class="op">=</span><span class="st">"BSF"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>sn</code> and <code>sp</code> are the surface recombination velocities (in m/sec). <code>sn</code> is the SRV for the n-doped junction, <code>sp</code> for the p-doped junction.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="12">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="92">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Depletion approximation:</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>solar_cell_da <span class="op">=</span> SolarCell(</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    [Layer(width<span class="op">=</span>si(<span class="st">"90nm"</span>), material<span class="op">=</span>Al2O3), Layer(width<span class="op">=</span>si(<span class="st">'20nm'</span>),</span>
@@ -388,7 +388,7 @@ Solving IV of the total solar cell...</code></pre>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    R_series<span class="op">=</span><span class="dv">0</span>, substrate<span class="op">=</span>Ag</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="13">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="93">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drift-diffusion solver:</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>solar_cell_pdd <span class="op">=</span> SolarCell(</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    [Layer(width<span class="op">=</span>si(<span class="st">"90nm"</span>), material<span class="op">=</span>Al2O3), Layer(width<span class="op">=</span>si(<span class="st">'20nm'</span>),</span>
@@ -398,7 +398,7 @@ Solving IV of the total solar cell...</code></pre>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In both cases, we set the series resistance to 0. Other loss factors, such as shading, are also assumed to be zero by default.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="14">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="94">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>opts[<span class="st">"optics_method"</span>] <span class="op">=</span> <span class="st">"TMM"</span> <span class="co"># Use the transfer-matrix method to calculate the cell's optics</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>opts[<span class="st">"position"</span>] <span class="op">=</span> <span class="fl">1e-10</span> <span class="co"># This is the spacing used when calculating the depth-dependent absorption (0.1 nm)</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>opts[<span class="st">"no_back_reflection"</span>] <span class="op">=</span> <span class="va">False</span></span>
@@ -410,7 +410,7 @@ Solving IV of the total solar cell...</code></pre>
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell_pdd, <span class="st">"qe"</span>, user_options<span class="op">=</span>opts)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>PLOT 2</strong>: IV curves for the DA and PDD models</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="15">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="95">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>solar_cell_da.iv[<span class="st">"IV"</span>], label<span class="op">=</span><span class="st">"Depletion approximation"</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>solar_cell_pdd.iv[<span class="st">"IV"</span>], <span class="st">'--'</span>, label<span class="op">=</span><span class="st">"Poisson Drift Diffusion"</span>)</span>
@@ -424,9 +424,12 @@ Solving IV of the total solar cell...</code></pre>
 <div class="cell-output cell-output-display">
 <p><img src="1c-simple_cell_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
 </div>
+<div class="cell-output cell-output-display">
+<p><img src="1c-simple_cell_files/figure-html/cell-16-output-2.png" class="img-fluid"></p>
+</div>
 </div>
 <p><strong>PLOT 3</strong>: EQE and absorption calculated for the PDD and DA models.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="16">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="96">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_da[<span class="dv">2</span>].eqe(wavelengths), <span class="st">'k-'</span>, label<span class="op">=</span><span class="st">"EQE (DA)"</span>)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>solar_cell_pdd[<span class="dv">2</span>].eqe(wavelengths), <span class="st">'k--'</span>, label<span class="op">=</span><span class="st">"EQE (PDD)"</span>)</span>
@@ -439,6 +442,9 @@ Solving IV of the total solar cell...</code></pre>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="1c-simple_cell_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="1c-simple_cell_files/figure-html/cell-17-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 

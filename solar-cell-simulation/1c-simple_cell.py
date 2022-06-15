@@ -71,7 +71,7 @@ eqe_func = interp1d(wavelengths, RAT["A"])
 
 
 twod_junction = Junction(kind='2D', n1=1, n2=2, j01=3e-17, j02=1e-7,
-                         Rseries=4e-3, Rshunt=1e4, eqe=eqe_func)
+                         R_series=4e-3, R_shunt=1e4, eqe=eqe_func)
 
 
 # Define two instances of a detailed-balance type junction. In both cases, there will be a sharp absorption onset at the bandgap (1.42 eV for GaAs). By specifying A, we set the fraction of light above the bandgap that is absorbed (A = 1 means 100% absorption above the gap).
