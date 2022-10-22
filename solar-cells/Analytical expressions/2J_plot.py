@@ -25,7 +25,6 @@ solarflux = LightSource(source_type='standard', version='AM1.5g', x=wl, output_u
 solarfluxInterpolate = InterpolatedUnivariateSpline(solarflux.spectrum()[0], solarflux.spectrum()[1], k=1)
 
 # Analytical expressions to find IMax using LambertW function
-
 # Find Jsc [limits are expressed in eV]
 def getJsc(lowlim,upplim) :
     return q*solarfluxInterpolate.integral(1240/upplim, 1240/lowlim)
