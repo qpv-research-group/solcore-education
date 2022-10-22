@@ -24,31 +24,32 @@ solarflux = LightSource(source_type='standard', version='AM1.5g', x=wl, output_u
 # Establish an interpolation function to allow integration over arbitary limits
 solarfluxInterpolate = InterpolatedUnivariateSpline(solarflux.spectrum()[0], solarflux.spectrum()[1], k=1)
 
-# Routine to find Jsc [limits are expressed in eV]
+# Analytical expressions to find IMax using LambertW function
+
+# Find Jsc [limits are expressed in eV]
 def getJsc(lowlim,upplim) :
     return q*solarfluxInterpolate.integral(1240/upplim, 1240/lowlim)
-# Routine to find J01
+# Find J01 assuming abrupt junction & Boltzmann approximation
 def getJ01(eg,t) :
    return ((2*math.pi* q )/(h**3 * c**2))* k*t * (eg**2 + 2*eg*(k*t) + 2*(k*t)**2)*math.exp(-(eg)/(k*t))
-# Routine to find Vmax
+# Find Vmax
 def getVmax(eg,emax,t) :
     return (k*t*(lambertw(math.exp(1)*(getJsc(eg,emax)/getJ01(eg,t)))-1)).real
-# Routine to find Imax
+# Find Imax
 def getImax(eg,emax,t) :
     return getJsc(eg,emax) - getJ01(eg,t)*math.exp((getVmax(eg,emax,t))/(k*t))
 
-# Plot a 2 junction tandem map
-# Reproduces Fig 5a in Pusch et al.,
-
-#Function to return pmax for n J cell
-#Argument is a list of bandgaps in decending order.
+# Function to return pmax for a series connected solar cell with n junctions.
+# Argument is a list of bandgaps in descending order.
 def getPmax(egs) :
-    # Since we need previous eg info have to iterate the Jsc array
-    jscs=egs.copy()  # Quick way of defining jscs with same dimensions as egs
+    # Define arrays with the same dimensions as egs
+    jscs=egs.copy()
     Vmaxs=egs.copy()
     Imaxs=egs.copy()
     j01s=egs.copy()
     upperlimit=10
+
+    #Iterate through band-gaps to find the lowest Imax
     for i in range(0,len(egs),1) :
         eg=egs[i]
         j01s[i]=getJ01(eg,298)
@@ -59,13 +60,17 @@ def getPmax(egs) :
 #    Find the minimum Imaxs
         minImax=np.amin(Imaxs)
 
-#   Find tandem voltage
+#   Find tandem sub-cell voltage at the minImax current:
     vTandem=0
     for i in range(0,len(egs),1) :
         vsubcell=k*298*math.log((jscs[i]-minImax)/j01s[i])
         vTandem=vTandem+vsubcell
 
-    return vTandem*minImax
+    return vTandem*minImax  # Return the tandem power
+
+
+# Plot a 2 junction tandem map
+# Reproduces Fig 5a in Pusch et al.,
 
 @np.vectorize
 def getEff(xx,yy) :
