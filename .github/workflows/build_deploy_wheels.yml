@@ -7,4 +7,4 @@ jobs:
     name: convert-notebooks-to-py
     runs-on: ubuntu-latest
     steps:
-        run: jupyter nbconvert --output-dir='./solar-cell-simulation' ./solar-cell-simulation/notebooks/*.ipynb --to script
+        - run: jupyter nbconvert --output-dir='./solar-cell-simulation' ./solar-cell-simulation/notebooks/*.ipynb --to script
