@@ -3,11 +3,9 @@ name: Convert notebooks to .py files
 on: push
 
 jobs:
-  build:
-    name: convert-notebooks-to-py
+  Convert-to-py:
     runs-on: ubuntu-latest
     steps:
-        run: |
-          pip install jupyter
-          jupyter nbconvert --output-dir='./solar-cell-simulation' ./solar-cell-simulation/notebooks/*.ipynb --to script
+        - run: pip install jupyter
+        - run: jupyter nbconvert --output-dir='./solar-cell-simulation' ./solar-cell-simulation/notebooks/*.ipynb --to script
           
