@@ -7,6 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         - run: pip3 install --upgrade Pygments
-        - run: pip3 install jupyter
+        - run: pip3 install jupyter markupsafe==2.0.1
         - run: jupyter nbconvert --output-dir='./solar-cell-simulation' ./solar-cell-simulation/notebooks/*.ipynb --to script
           
