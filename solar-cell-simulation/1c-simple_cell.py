@@ -10,7 +10,7 @@
 # 3. Depletion approximation (DA)
 # 4. Poisson drift-diffusion solver (PDD)
 
-# In[1]:
+# In[81]:
 
 
 import numpy as np
@@ -29,7 +29,7 @@ from solcore.interpolate import interp1d
 # 
 # Define some materials:
 
-# In[2]:
+# In[82]:
 
 
 GaAs = material("GaAs")()
@@ -41,7 +41,7 @@ wavelengths = si(np.linspace(300, 950, 200), "nm")
 
 # We are going to do an optical calculation first to get absorption for a GaAs layer; we will use this as an estimate for the EQE as input for the two-diode model.
 
-# In[3]:
+# In[83]:
 
 
 OS = OptiStack([Layer(si("3um"), GaAs)], substrate=Ag)
@@ -49,7 +49,7 @@ OS = OptiStack([Layer(si("3um"), GaAs)], substrate=Ag)
 
 # Calculate reflection/absorption/transmission (note that we have to give the wavelength to this function in nm rather than m!)
 
-# In[4]:
+# In[84]:
 
 
 RAT = calculate_rat(OS, wavelength=wavelengths*1e9, no_back_reflection=False)
@@ -57,7 +57,7 @@ RAT = calculate_rat(OS, wavelength=wavelengths*1e9, no_back_reflection=False)
 
 # Create a function which interpolates the absorption - note that we pass a function which returns the absorption when given a wavelength to the Junction, rather than a table of values!
 
-# In[5]:
+# In[85]:
 
 
 eqe_func = interp1d(wavelengths, RAT["A"])
@@ -67,27 +67,27 @@ eqe_func = interp1d(wavelengths, RAT["A"])
 # 
 # Define the 2D junction with reasonable parameters for GaAs. The units of j01 and j01 are A/m^2. The units for the resistances are (Ohm m)^2. We use the standard ideality factors (1 and 2 respectively) for the two diodes:
 
-# In[6]:
+# In[86]:
 
 
 twod_junction = Junction(kind='2D', n1=1, n2=2, j01=3e-17, j02=1e-7,
-                         R_series=4e-3, R_shunt=1e4, eqe=eqe_func)
+                         R_series=6e-4, R_shunt=5e4, eqe=eqe_func)
 
 
 # Define two instances of a detailed-balance type junction. In both cases, there will be a sharp absorption onset at the bandgap (1.42 eV for GaAs). By specifying A, we set the fraction of light above the bandgap that is absorbed (A = 1 means 100% absorption above the gap).
 
-# In[7]:
+# In[87]:
 
 
-db_junction_A1 = Junction(kind='DB', Eg=1.42, A=1, R_shunt=1e4, n=1)
-db_junction = Junction(kind='DB', Eg=1.42, A=0.8, R_shunt=1e4, n=1)
+db_junction_A1 = Junction(kind='DB', Eg=1.42, A=1, R_shunt=1e4, n=3.5)
+db_junction = Junction(kind='DB', Eg=1.42, A=0.8, R_shunt=1e4, n=3.5)
 
 V = np.linspace(0, 1.5, 200)
 
 
 # Set some options and define solar cells based on these junctions:
 
-# In[8]:
+# In[88]:
 
 
 opts = {'voltages': V, 'light_iv': True, 'wavelength': wavelengths, 'mpp': True}
@@ -99,7 +99,7 @@ solar_cell_2d = SolarCell([twod_junction])
 
 # Calculate and plot the IV curves:
 
-# In[9]:
+# In[89]:
 
 
 solar_cell_solver(solar_cell_db_A1, 'iv', user_options=opts)
@@ -109,7 +109,7 @@ solar_cell_solver(solar_cell_2d, 'iv', user_options=opts)
 
 # **PLOT 1**: IV curves for the DB and 2D models.
 
-# In[10]:
+# In[90]:
 
 
 plt.figure()
@@ -139,7 +139,7 @@ plt.show()
 # *Note:* for the PDD example to work, the PDD solver must be installed correctly; see the [Solcore documentation](http://docs.solcore.solar/en/master/Installation/installation.html) for more
 # information.
 
-# In[11]:
+# In[91]:
 
 
 T = 293 # ambient temperature
@@ -157,7 +157,7 @@ SC_layers = [Layer(width=si('150nm'), material=p_GaAs, role="Emitter"),
 # `sn` and `sp` are the surface recombination velocities (in m/sec). `sn` is the SRV for the n-doped junction, `sp` for the
 # p-doped junction.
 
-# In[12]:
+# In[92]:
 
 
 # Depletion approximation:
@@ -169,7 +169,7 @@ solar_cell_da = SolarCell(
 )
 
 
-# In[13]:
+# In[93]:
 
 
 # Drift-diffusion solver:
@@ -183,7 +183,7 @@ solar_cell_pdd = SolarCell(
 
 # In both cases, we set the series resistance to 0. Other loss factors, such as shading, are also assumed to be zero by default.
 
-# In[14]:
+# In[94]:
 
 
 #| output: false
@@ -201,7 +201,7 @@ solar_cell_solver(solar_cell_pdd, "qe", user_options=opts);
 
 # **PLOT 2**: IV curves for the DA and PDD models
 
-# In[15]:
+# In[95]:
 
 
 plt.figure()
@@ -218,7 +218,7 @@ plt.show()
 
 # **PLOT 3**: EQE and absorption calculated for the PDD and DA models.
 
-# In[16]:
+# In[96]:
 
 
 plt.figure()
