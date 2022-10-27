@@ -79,8 +79,8 @@ twod_junction = Junction(kind='2D', n1=1, n2=2, j01=3e-17, j02=1e-7,
 # In[87]:
 
 
-db_junction_A1 = Junction(kind='DB', Eg=1.42, A=1, R_shunt=1e4, n=3.5)
-db_junction = Junction(kind='DB', Eg=1.42, A=0.8, R_shunt=1e4, n=3.5)
+db_junction_A1 = Junction(kind='DB', Eg=1.42, A=1, R_shunt=1e4, n=1)
+db_junction = Junction(kind='DB', Eg=1.42, A=0.8, R_shunt=1e4, n=1)
 
 V = np.linspace(0, 1.5, 200)
 
