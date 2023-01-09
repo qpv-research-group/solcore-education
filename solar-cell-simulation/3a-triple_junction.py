@@ -11,6 +11,7 @@
 
 
 import numpy as np
+import os
 import matplotlib.pyplot as plt
 
 from solcore import siUnits, material, si
@@ -38,10 +39,10 @@ light_source = LightSource(source_type='standard', x=wl, version='AM1.5g')
 # In[3]:
 
 
-MgF2_pageid = search_db("MgF2/Rodriguez-de Marcos")[0][0]
-ZnS_pageid = search_db("ZnS/Querry")[0][0]
+MgF2_pageid = search_db(os.path.join("MgF2", "Rodriguez-de Marcos"))[0][0];
+ZnS_pageid = search_db(os.path.join("ZnS", "Querry"))[0][0];
 MgF2 = material(str(MgF2_pageid), nk_db=True)();
-ZnS = material(str(ZnS_pageid), nk_db=True)()
+ZnS = material(str(ZnS_pageid), nk_db=True)();
 
 
 # To minimize front surface reflection, we use a four-layer anti-reflection coating (ARC):

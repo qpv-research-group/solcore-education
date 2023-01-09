@@ -18,6 +18,7 @@
 
 
 import numpy as np
+import os
 
 from solcore import material, si
 
@@ -43,7 +44,8 @@ from solcore.absorption_calculator import search_db
 
 from solcore.material_system import create_new_material
 
-create_new_material('SiGeSn', 'data/SiGeSn_n.txt', 'data/SiGeSn_k.txt', 'data/SiGeSn_params.txt')
+create_new_material("SiGeSn", os.path.join("data", "SiGeSn_n.txt"),
+                    os.path.join("data", "SiGeSn_k.txt"), os.path.join("data", "SiGeSn_params.txt"))
 # Note: comment out these lines after the material has been added to avoid being asked
 # each time if you want to overwrite it.
 
@@ -86,7 +88,7 @@ class calc_min_Jsc():
         InGaP = material('GaInP')(In=0.5)
         Ge = material('Ge')()
 
-        Ta2O5_index = search_db("Ta2O5/Rodriguez")[0][0]
+        Ta2O5_index = search_db(os.path.join("Ta2O5", "Rodriguez"))[0][0]
 
         # We make these attributes of 'self' so they can be accessed by the class object
         # We are also creating lists of wavelengths and corresponding n and k data from
@@ -290,7 +292,7 @@ class optimize_device():
         e_charge = si('1eV')
 
         # materials
-        Ta2O5_index = search_db("Ta2O5/Rodriguez")[0][0]
+        Ta2O5_index = search_db(os.path.join("Ta2O5", "Rodriguez"))[0][0]
         SiGeSn = material('SiGeSn')
 
         GaAs = material('GaAs')

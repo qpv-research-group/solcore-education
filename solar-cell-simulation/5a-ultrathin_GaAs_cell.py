@@ -20,6 +20,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
 
 from solcore import si, material
 from solcore.structure import Layer
@@ -55,7 +56,7 @@ Air = material('Air')()
 # In[3]:
 
 
-Ag_pageid = search_db("Ag/Jiang")[0][0]
+Ag_pageid = search_db(os.path.join("Ag", "Jiang"))[0][0]
 Ag = material(str(Ag_pageid), nk_db=True)()
 
 
@@ -95,7 +96,6 @@ print("Calculating on-substrate device...")
 
 struct = SolarCell([Layer(si('20nm'), InAlP), Layer(si('85nm'), GaAs),
                    Layer(si('20nm'), InGaP)])
-
 
 # make TMM structure for planar device
 TMM_setup = tmm_structure(struct, incidence=Air, transmission=GaAs)

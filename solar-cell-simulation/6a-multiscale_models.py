@@ -31,6 +31,7 @@ from rayflare.options import default_options
 from rayflare.utilities import make_absorption_function
 
 import numpy as np
+import os
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy.ndimage.filters import gaussian_filter1d
@@ -42,13 +43,15 @@ from cycler import cycler
 # 
 # We add some new materials to Solcore's database from data files - you only need to add these once, after that you can comment these lines out.
 
-# In[17]:
+# In[1]:
 
 
 from solcore.material_system import create_new_material
 
-create_new_material('aSi_i', 'data/model_i_a_silicon_n.txt', 'data/model_i_a_silicon_k.txt')
-create_new_material('ITO_measured', 'data/front_ITO_n.txt', 'data/front_ITO_k.txt')
+create_new_material('aSi_i', os.path.join("data", "model_i_a_silicon_n.txt"),
+                    os.path.join("data", "model_i_a_silicon_k.txt"))
+create_new_material('ITO_measured', os.path.join("data", "front_ITO_n.txt"),
+                    os.path.join("data", "front_ITO_k.txt"))
 
 
 # Setting user options. Several of these (wavelength, number of rays, `nx`, `ny`) have been encountered in previous examples. However, because we are using the angular redistribution matrix method for the first time, there are some new ones. Please see RayFlare's [documentation](https://rayflare.readthedocs.io/en/latest/Options/user_options.html) for more detailed information.

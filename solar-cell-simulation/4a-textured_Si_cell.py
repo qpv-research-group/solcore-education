@@ -37,7 +37,7 @@ from solcore.solar_cell_solver import default_options as defaults_solcore
 
 
 Air = material('Air')()
-Si_Green = search_db("Si/Green-2008")[0][0]
+Si_Green = search_db(os.path.join("Si", "Green-2008"))[0][0]
 Si_RT = material(str(Si_Green), nk_db=True)()
 
 
@@ -85,7 +85,7 @@ options.parallel = True  # this is the default - if you do not want the code to 
 # In[16]:
 
 
-PVlighthouse = np.loadtxt('data/RAT_data_300um_2um_55.csv', delimiter=',', skiprows=1)
+PVlighthouse = np.loadtxt(os.path.join("data", "RAT_data_300um_2um_55.csv"), delimiter=',', skiprows=1)
 
 
 # Define surface for the ray-tracing: a planar surface, and a surface with regular pyramids.
@@ -128,13 +128,13 @@ if calc:
     profile_rt = result['profile']
 
     # save the results:
-    np.savetxt('results/rayflare_fullrt_300um_2umpyramids_300_1200nm.txt', result_RAT)
-    np.savetxt('results/rayflare_fullrt_300um_2umpyramids_300_1200nm_profile.txt', result['profile'])
+    np.savetxt(os.path.join("results", "rayflare_fullrt_300um_2umpyramids_300_1200nm.txt"), result_RAT)
+    np.savetxt(os.path.join("results", "rayflare_fullrt_300um_2umpyramids_300_1200nm_profile.txt"), result['profile'])
 
 else:
     # If calc = False, load results from previous run.
-    result_RAT = np.loadtxt('results/rayflare_fullrt_300um_2umpyramids_300_1200nm.txt')
-    profile_rt = np.loadtxt('results/rayflare_fullrt_300um_2umpyramids_300_1200nm_profile.txt')
+    result_RAT = np.loadtxt(os.path.join("results", "rayflare_fullrt_300um_2umpyramids_300_1200nm.txt"))
+    profile_rt = np.loadtxt(os.path.join("results", "rayflare_fullrt_300um_2umpyramids_300_1200nm_profile.txt"))
 
 
 # **PLOT 1**: results of ray-tracing from RayFlare and PVLighthouse, showing the reflection, absorption and transmission.

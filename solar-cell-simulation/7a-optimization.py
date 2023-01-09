@@ -9,6 +9,7 @@
 
 
 import numpy as np
+import os
 import matplotlib.pyplot as plt
 
 from solcore import material, si
@@ -134,8 +135,8 @@ plt.show()
 
 #| output: false
 
-pageid_MgF2 = search_db("MgF2/Rodriguez-de Marcos")[0][0]
-pageid_Ta2O5 = search_db("Ta2O5/Rodriguez-de Marcos")[0][0]
+pageid_MgF2 = search_db(os.path.join("MgF2", "Rodriguez-de Marcos"))[0][0]
+pageid_Ta2O5 = search_db(os.path.join("Ta2O5", "Rodriguez-de Marcos"))[0][0]
 
 GaAs = material("GaAs")()
 MgF2 = material(str(pageid_MgF2), nk_db=True)()
