@@ -265,16 +265,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In the previous examples, we have considered only single-junction cells. However, a major part of Solcore’s capability lies in modelling multi-junction solar cells. In this example, we will look at a triple junction InGaP/GaAs/Ge cell at 1 Sun and under concentration.</p>
 <div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore <span class="im">import</span> siUnits, material, si</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell <span class="im">import</span> SolarCell</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.structure <span class="im">import</span> Junction, Layer</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell_solver <span class="im">import</span> solar_cell_solver</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.light_source <span class="im">import</span> LightSource</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator <span class="im">import</span> search_db</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>wl <span class="op">=</span> np.linspace(<span class="dv">300</span>, <span class="dv">1850</span>, <span class="dv">700</span>) <span class="op">*</span> <span class="fl">1e-9</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore <span class="im">import</span> siUnits, material, si</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell <span class="im">import</span> SolarCell</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.structure <span class="im">import</span> Junction, Layer</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell_solver <span class="im">import</span> solar_cell_solver</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.light_source <span class="im">import</span> LightSource</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator <span class="im">import</span> search_db</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>wl <span class="op">=</span> np.linspace(<span class="dv">300</span>, <span class="dv">1850</span>, <span class="dv">700</span>) <span class="op">*</span> <span class="fl">1e-9</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We define our light source, the AM1.5G spectrum, which will be used for I-V calculations (not under concentration):</p>
 <div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="2">
@@ -283,10 +284,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Now we need to build the solar cell layer by layer.</p>
 <p><em>Note</em>: you need to have downloaded the refractiveindex.info database for these to work. See <a href="../../solar-cell-simulation/notebooks/2a-optical_constants.html">Example 2a</a>.</p>
 <div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>MgF2_pageid <span class="op">=</span> search_db(<span class="st">"MgF2/Rodriguez-de Marcos"</span>)[<span class="dv">0</span>][<span class="dv">0</span>]</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ZnS_pageid <span class="op">=</span> search_db(<span class="st">"ZnS/Querry"</span>)[<span class="dv">0</span>][<span class="dv">0</span>]</span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>MgF2_pageid <span class="op">=</span> search_db(os.path.join(<span class="st">"MgF2"</span>, <span class="st">"Rodriguez-de Marcos"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ZnS_pageid <span class="op">=</span> search_db(os.path.join(<span class="st">"ZnS"</span>, <span class="st">"Querry"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>MgF2 <span class="op">=</span> material(<span class="bu">str</span>(MgF2_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()<span class="op">;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ZnS <span class="op">=</span> material(<span class="bu">str</span>(ZnS_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ZnS <span class="op">=</span> material(<span class="bu">str</span>(ZnS_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Database file found at /Users/phoebe/.solcore/nk/nk.db
 1 results found.

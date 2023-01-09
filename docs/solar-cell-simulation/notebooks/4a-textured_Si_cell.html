@@ -283,7 +283,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>First, setting up Solcore materials. We use a specific set of Si optical constants from <a href="https://doi.org/10.1016/j.solmat.2008.06.009">this paper</a>. These are included in the refractiveindex.info database, so we take them from there. This is the same data we used for the <a href="https://www2.pvlighthouse.com.au/calculators/wafer%20ray%20tracer/wafer%20ray%20tracer.html">PVLighthouse</a> calculation which we are going to compare to.</p>
 <div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Air <span class="op">=</span> material(<span class="st">'Air'</span>)()</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Si_Green <span class="op">=</span> search_db(<span class="st">"Si/Green-2008"</span>)[<span class="dv">0</span>][<span class="dv">0</span>]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Si_Green <span class="op">=</span> search_db(os.path.join(<span class="st">"Si"</span>, <span class="st">"Green-2008"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Si_RT <span class="op">=</span> material(<span class="bu">str</span>(Si_Green), nk_db<span class="op">=</span><span class="va">True</span>)()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Database file found at /Users/phoebe/.solcore/nk/nk.db
@@ -317,7 +317,7 @@ pageid  shelf   book    page    filepath    hasrefractive   hasextinction   rang
 </div>
 <p>Load the result of the PVLighthouse calculation for comparison:</p>
 <div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>PVlighthouse <span class="op">=</span> np.loadtxt(<span class="st">'data/RAT_data_300um_2um_55.csv'</span>, delimiter<span class="op">=</span><span class="st">','</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>PVlighthouse <span class="op">=</span> np.loadtxt(os.path.join(<span class="st">"data"</span>, <span class="st">"RAT_data_300um_2um_55.csv"</span>), delimiter<span class="op">=</span><span class="st">','</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Define surface for the ray-tracing: a planar surface, and a surface with regular pyramids.</p>
 <div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="17">
@@ -347,13 +347,13 @@ pageid  shelf   book    page    filepath    hasrefractive   hasextinction   rang
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    profile_rt <span class="op">=</span> result[<span class="st">'profile'</span>]</span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># save the results:</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    np.savetxt(<span class="st">'results/rayflare_fullrt_300um_2umpyramids_300_1200nm.txt'</span>, result_RAT)</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    np.savetxt(<span class="st">'results/rayflare_fullrt_300um_2umpyramids_300_1200nm_profile.txt'</span>, result[<span class="st">'profile'</span>])</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    np.savetxt(os.path.join(<span class="st">"results"</span>, <span class="st">"rayflare_fullrt_300um_2umpyramids_300_1200nm.txt"</span>), result_RAT)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    np.savetxt(os.path.join(<span class="st">"results"</span>, <span class="st">"rayflare_fullrt_300um_2umpyramids_300_1200nm_profile.txt"</span>), result[<span class="st">'profile'</span>])</span>
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
 <span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If calc = False, load results from previous run.</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    result_RAT <span class="op">=</span> np.loadtxt(<span class="st">'results/rayflare_fullrt_300um_2umpyramids_300_1200nm.txt'</span>)</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    profile_rt <span class="op">=</span> np.loadtxt(<span class="st">'results/rayflare_fullrt_300um_2umpyramids_300_1200nm_profile.txt'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    result_RAT <span class="op">=</span> np.loadtxt(os.path.join(<span class="st">"results"</span>, <span class="st">"rayflare_fullrt_300um_2umpyramids_300_1200nm.txt"</span>))</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    profile_rt <span class="op">=</span> np.loadtxt(os.path.join(<span class="st">"results"</span>, <span class="st">"rayflare_fullrt_300um_2umpyramids_300_1200nm_profile.txt"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>PLOT 1</strong>: results of ray-tracing from RayFlare and PVLighthouse, showing the reflection, absorption and transmission.</p>
 <div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="20">

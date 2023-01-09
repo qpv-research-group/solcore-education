@@ -262,16 +262,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In a few of the previous examples, we have used anti-reflection coatings. In <a href="../../solar-cell-simulation/notebooks/5a-ultrathin_GaAs_cell.html">Example 5a</a>, we introduced a nanophotonic grating for light trapping. But how do you find out the right thickness for the anti-reflection coating layer(s), or the right dimensions for a light-trapping grating? This is where optimization comes in. Here, we will look at a very simple ‘brute-force’ optimization for a single or double-layer ARC, and a more complicated framework for running optimizations using Solcore/RayFlare and a differential evolution algorithm in <a href="../../solar-cell-simulation/notebooks/7b-optimization.html">Example 7b</a>.</p>
 <div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="83">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore <span class="im">import</span> material, si</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell <span class="im">import</span> Layer</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.light_source <span class="im">import</span> LightSource</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator <span class="im">import</span> search_db</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rayflare.transfer_matrix_method <span class="im">import</span> tmm_structure</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rayflare.options <span class="im">import</span> default_options</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore <span class="im">import</span> material, si</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell <span class="im">import</span> Layer</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.light_source <span class="im">import</span> LightSource</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator <span class="im">import</span> search_db</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rayflare.transfer_matrix_method <span class="im">import</span> tmm_structure</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rayflare.options <span class="im">import</span> default_options</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="setting-up" class="level2">
 <h2 class="anchored" data-anchor-id="setting-up">Setting up</h2>
@@ -375,8 +376,8 @@ Minimum weighted reflection occurs at d = 75.4 nm</code></pre>
 <h2 class="anchored" data-anchor-id="double-layer-arc">Double-layer ARC</h2>
 <p>We will now consider a similar situation, but for a double-layer MgF<span class="math inline">\(_2\)</span>/Ta<span class="math inline">\(_2\)</span>O<span class="math inline">\(_5\)</span> ARC on GaAs. We search for materials in the refractiveindex.info database (see <a href="../../solar-cell-simulation/notebooks/2a-optical_constants.html">Example 2a</a>), and use only the part of the solar spectrum relevant for absorption in GaAs (in this case, there is no benefit to reducing absorption above the GaAs bandgap around 900 nm). We will only consider the weighted mean <span class="math inline">\(R\)</span> in this case.</p>
 <div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="89">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pageid_MgF2 <span class="op">=</span> search_db(<span class="st">"MgF2/Rodriguez-de Marcos"</span>)[<span class="dv">0</span>][<span class="dv">0</span>]</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>pageid_Ta2O5 <span class="op">=</span> search_db(<span class="st">"Ta2O5/Rodriguez-de Marcos"</span>)[<span class="dv">0</span>][<span class="dv">0</span>]</span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pageid_MgF2 <span class="op">=</span> search_db(os.path.join(<span class="st">"MgF2"</span>, <span class="st">"Rodriguez-de Marcos"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>pageid_Ta2O5 <span class="op">=</span> search_db(os.path.join(<span class="st">"Ta2O5"</span>, <span class="st">"Rodriguez-de Marcos"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>GaAs <span class="op">=</span> material(<span class="st">"GaAs"</span>)()</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>MgF2 <span class="op">=</span> material(<span class="bu">str</span>(pageid_MgF2), nk_db<span class="op">=</span><span class="va">True</span>)()</span>
