@@ -3,36 +3,35 @@ project:
   output-dir: docs
 
 website:
-  title: "solcore-education"
+  title: "Solcore Education"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
+      - text: "Home"
+        file: index.qmd
+      - text: "Tutorials"
+        file: solar-cell-simulation/tutorials.qmd
+      - text: "Solcore Workshop 2023"
+        file: solcore-workshop/workshop2023.qmd
 
   sidebar:
-    style: "floating"
-    search: true
-    contents:
-      - section: "Examples"
-        contents:
-          - solar-cell-simulation/notebooks/1a-simple_cell.ipynb
-          - solar-cell-simulation/notebooks/1b-simple_cell.ipynb
-          - solar-cell-simulation/notebooks/1c-simple_cell.ipynb
-          - solar-cell-simulation/notebooks/2a-optical_constants.ipynb
-          - solar-cell-simulation/notebooks/2b-optical_constants.ipynb
-          - solar-cell-simulation/notebooks/3a-triple_junction.ipynb
-          - solar-cell-simulation/notebooks/4a-textured_Si_cell.ipynb
-          - solar-cell-simulation/notebooks/5a-ultrathin_GaAs_cell.ipynb
-          - solar-cell-simulation/notebooks/6a-multiscale_models.ipynb
-          - solar-cell-simulation/notebooks/6b-multiscale_models.ipynb
-          - solar-cell-simulation/notebooks/7a-optimization.ipynb
-          - solar-cell-simulation/notebooks/7b-optimization.ipynb
+    - title: "Home"
+      style: "floating"
+      background: light
+      contents:
+        - index.qmd
+
+    - title: "Tutorials"
+      contents:
+        - solar-cell-simulation/tutorials.qmd
+        - auto: solar-cell-simulation/notebooks/*.ipynb
+
+    - title: "Solcore Workshop 2023"
+      contents:
+        - solcore-workshop/workshop2023.qmd
+        - auto: solcore-workshop/notebooks/*.ipynb
 
 format:
   html:
     theme: flatly
     css: styles.css
     toc: true
-
-
-

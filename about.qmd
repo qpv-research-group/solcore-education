@@ -1,5 +1,0 @@
----
-title: "About"
----
-
-Welcome to the solcore-education website.

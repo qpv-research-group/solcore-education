@@ -1,9 +1,9 @@
 ---
-title: Welcome
+title: Tutorials
 ---
 
 This is the website for the solcore-education GitHub, where we host readable versions of
- Solcore and RayFlare examples (see the Tutorials tab above). Note that this is not an
+ Solcore and RayFlare examples (see the sidebar on the left). Note that this is not an
  introductory Python course, or a course about the fundamentals of
 solar cells.
 

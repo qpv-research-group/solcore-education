@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Solcore Education - Example 7a: Simple optimization</title>
+<title>Solcore Education - Example 6: Optimizing an ARC</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -122,11 +122,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../../solar-cell-simulation/tutorials.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="../../solar-cell-simulation/tutorials.html" rel="" target="">
  <span class="menu-text">Tutorials</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../solcore-workshop/workshop2023.html" rel="" target="">
+    <a class="nav-link active" href="../../solcore-workshop/workshop2023.html" rel="" target="" aria-current="page">
  <span class="menu-text">Solcore Workshop 2023</span></a>
   </li>  
 </ul>
@@ -140,7 +140,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../solar-cell-simulation/notebooks/7a-optimization.html">Example 7a: Simple optimization</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../solcore-workshop/notebooks/6-arc_optimization.html">Example 6: Optimizing an ARC</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
@@ -154,80 +154,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/tutorials.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tutorials</span></a>
+  <a href="../../solcore-workshop/workshop2023.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Solcore Workshop 2023</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/1a-simple_cell.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 1a: Simple Si solar cell</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/1b-simple_cell.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 1b: Basic cell optics</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/1c-simple_cell.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 1c: Electrical models</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/2a-optical_constants.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 2a: Optical constant sources</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/2b-optical_constants.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 2b: Optical constant models</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/3a-triple_junction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 3a: Triple junction cell</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/4a-textured_Si_cell.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 4a: Textured Si cell</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/5a-ultrathin_GaAs_cell.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 5a: Ultra-thin GaAs cell with diffraction grating</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/6a-multiscale_models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 6a: Silicon HIT cell</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/6b-multiscale_models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 6b: Angular redistribution matrix method</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/7a-optimization.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Example 7a: Simple optimization</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 7b: More advanced optimization</span></a>
+  <a href="../../solcore-workshop/notebooks/6-arc_optimization.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Example 6: Optimizing an ARC</span></a>
   </div>
 </li>
     </ul>
@@ -251,7 +185,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Example 7a: Simple optimization</h1>
+<h1 class="title">Example 6: Optimizing an ARC</h1>
 </div>
 
 
@@ -266,8 +200,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>In a few of the previous examples, we have used anti-reflection coatings. In <a href="../../solar-cell-simulation/notebooks/5a-ultrathin_GaAs_cell.html">Example 5a</a>, we introduced a nanophotonic grating for light trapping. But how do you find out the right thickness for the anti-reflection coating layer(s), or the right dimensions for a light-trapping grating? This is where optimization comes in. Here, we will look at a very simple ‘brute-force’ optimization for a single or double-layer ARC, and a more complicated framework for running optimizations using Solcore/RayFlare and a differential evolution algorithm in <a href="../../solar-cell-simulation/notebooks/7b-optimization.html">Example 7b</a>.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="83">
+<p>In a few of the previous examples, we have used anti-reflection coatings, and they are a standard feature of all high-efficiency solar cells. But how do you find out the right thickness for the anti-reflection coating layer(s), or the right dimensions for a light-trapping grating? This is where optimization comes in. Here, we will look at a very simple ‘brute-force’ optimization for a single or double-layer ARC.</p>
+<div class="cell" data-execution_count="83">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -283,7 +217,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="setting-up" class="level2">
 <h2 class="anchored" data-anchor-id="setting-up">Setting up</h2>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="84">
+<div class="cell" data-execution_count="84">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>opts <span class="op">=</span> default_options()</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>wavelengths <span class="op">=</span> np.linspace(<span class="dv">300</span>, <span class="dv">1200</span>, <span class="dv">800</span>)<span class="op">*</span><span class="fl">1e-9</span></span>
@@ -304,9 +238,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="single-layer-arc" class="level2">
 <h2 class="anchored" data-anchor-id="single-layer-arc">Single-layer ARC</h2>
-<p>Here, we will calculate the behaviour of a single-layer SiN anti-reflection coating on Si while changing the ARC thickness between 0 and 200 nm. We will consider two values to optimize: the mean reflectance <code>mean_R</code>, and the reflectance weighted by the photon flux in an AM1.5G spectrum (<code>weighted_R</code>). The reason for considering the second value is that it is more useful to suppress reflection at wavelengths where there are more photons which could be absorbed.</p>
+<p>Here, we will calculate the behaviour of a single-layer SiN anti-reflection coating on Si while changing the ARC thickness between 0 and 200 nm. We will consider two values to optimize: the mean reflectance <code>mean_R</code>, and the reflectance weighted by the photon flux in an AM1.5G spectrum (<code>weighted_R</code>). The reason for considering the second value is that it is more useful to suppress reflection at wavelengths where there are more photons which could be absorbed by the cell.</p>
 <p>We will loop through the different ARC thicknesses in <code>d_range</code>, build the structure for each case, and then calculate the reflectance. We then save the mean reflected and weighted mean reflectance in the corresponding arrays. We also plot the reflectance for each 15th loop (this is just so the plot does not get too crowded).</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="85">
+<div class="cell" data-execution_count="85">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>d_range <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">200</span>, <span class="dv">200</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>mean_R <span class="op">=</span> np.empty_like(d_range)</span>
@@ -332,11 +266,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="7a-optimization_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
+<p><img src="6-arc_optimization_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>We now find at which index <code>mean_R</code> and <code>weighted_R</code> are minimised using <code>np.argmin</code>, and use this to print the ARC thickness at which this occurs (rounded to 1 decimal place).</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="86">
+<div class="cell" data-execution_count="86">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Minimum mean reflection occurs at d = '</span> <span class="op">+</span> <span class="bu">str</span>(np.<span class="bu">round</span>(d_range[np.argmin(mean_R)], <span class="dv">1</span>)) <span class="op">+</span> <span class="st">' nm'</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Minimum weighted reflection occurs at d = '</span> <span class="op">+</span> <span class="bu">str</span>(np.<span class="bu">round</span>(d_range[np.argmin(weighted_R)], <span class="dv">1</span>)) <span class="op">+</span> <span class="st">' nm'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -344,8 +278,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 Minimum weighted reflection occurs at d = 75.4 nm</code></pre>
 </div>
 </div>
-<p>We see that the values of <span class="math inline">\(d\)</span> for the two different ways of optimizing are very similar, but not exactly the same, as we would expect. The minimum in both cases occurs around 70 nm. We can also plot the evolution of the mean and weighted <span class="math inline">\(R\)</span> with ARC thickness <span class="math inline">\(d\)</span>:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="87">
+<p>We see that the values of <span class="math inline">\(d\)</span> for the two different ways of optimizing are very similar, but not exactly the same, as we would expect. The minimum in both cases occurs around 70 nm. We can also plot the variation of the mean and weighted <span class="math inline">\(R\)</span> with ARC thickness <span class="math inline">\(d\)</span>:</p>
+<div class="cell" data-execution_count="87">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.plot(d_range, mean_R, label<span class="op">=</span><span class="st">'Mean reflection'</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.plot(d_range[np.argmin(mean_R)], np.<span class="bu">min</span>(mean_R), <span class="st">'ok'</span>)</span>
@@ -355,11 +289,11 @@ Minimum weighted reflection occurs at d = 75.4 nm</code></pre>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'(Weighted) mean reflection 300-1200 nm'</span>)</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="7a-optimization_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
+<p><img src="6-arc_optimization_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<p>And the actual reflectance with wavelength for the two different optimizations:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="88">
+<p>And the actual reflectance as a function of wavelength for the two different optimizations:</p>
+<div class="cell" data-execution_count="88">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>struct <span class="op">=</span> tmm_structure([Layer(si(d_range[np.argmin(mean_R)], <span class="st">'nm'</span>), SiN), Layer(si(<span class="st">'300um'</span>), Si)], incidence<span class="op">=</span>Air, transmission<span class="op">=</span>Ag)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>RAT_1 <span class="op">=</span> struct.calculate(opts)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -374,15 +308,15 @@ Minimum weighted reflection occurs at d = 75.4 nm</code></pre>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"R"</span>)</span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="7a-optimization_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+<p><img src="6-arc_optimization_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>We see that the two reflectance curves are very similar.</p>
 </section>
 <section id="double-layer-arc" class="level2">
 <h2 class="anchored" data-anchor-id="double-layer-arc">Double-layer ARC</h2>
-<p>We will now consider a similar situation, but for a double-layer MgF<span class="math inline">\(_2\)</span>/Ta<span class="math inline">\(_2\)</span>O<span class="math inline">\(_5\)</span> ARC on GaAs. We search for materials in the refractiveindex.info database (see <a href="../../solar-cell-simulation/notebooks/2a-optical_constants.html">Example 2a</a>), and use only the part of the solar spectrum relevant for absorption in GaAs (in this case, there is no benefit to reducing absorption above the GaAs bandgap around 900 nm). We will only consider the weighted mean <span class="math inline">\(R\)</span> in this case.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="89">
+<p>We will now consider a similar situation, but for a double-layer MgF<span class="math inline">\(_2\)</span>/Ta<span class="math inline">\(_2\)</span>O<span class="math inline">\(_5\)</span> ARC on GaAs. We search for materials in the refractiveindex.info database, and use only the part of the solar spectrum relevant for absorption in GaAs (in this case, there is no benefit to reducing absorption above the GaAs bandgap around 900 nm). We will only consider the weighted mean <span class="math inline">\(R\)</span> in this case.</p>
+<div class="cell" data-execution_count="89">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pageid_MgF2 <span class="op">=</span> search_db(os.path.join(<span class="st">"MgF2"</span>, <span class="st">"Rodriguez-de Marcos"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>pageid_Ta2O5 <span class="op">=</span> search_db(os.path.join(<span class="st">"Ta2O5"</span>, <span class="st">"Rodriguez-de Marcos"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -402,7 +336,7 @@ Minimum weighted reflection occurs at d = 75.4 nm</code></pre>
 <span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>opts.wavelengths <span class="op">=</span> wavelengths_GaAs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We now have two thicknesses to loop through; otherwise, the procedure is similar to the single-layer ARC example.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="90">
+<div class="cell" data-execution_count="90">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i1, d_MgF2 <span class="kw">in</span> <span class="bu">enumerate</span>(MgF2_thickness):</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j1, d_Ta2O5 <span class="kw">in</span> <span class="bu">enumerate</span>(Ta2O5_thickness):</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        struct <span class="op">=</span> tmm_structure([Layer(si(d_MgF2, <span class="st">'nm'</span>), MgF2), Layer(si(d_Ta2O5, <span class="st">'nm'</span>), Ta2O5),</span>
@@ -416,7 +350,7 @@ Minimum weighted reflection occurs at d = 75.4 nm</code></pre>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>ri, ci <span class="op">=</span> np.unravel_index(weighted_R_matrix.argmin(), weighted_R_matrix.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We plot the total absorption (<span class="math inline">\(1-R\)</span>) in the structure with the optimized ARC, and print the thicknesses of MgF<span class="math inline">\(_2\)</span> and Ta<span class="math inline">\(_2\)</span>O<span class="math inline">\(_5\)</span> at which this occurs:</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="91">
+<div class="cell" data-execution_count="91">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(<span class="dv">1</span><span class="op">-</span>weighted_R_matrix, extent<span class="op">=</span>[<span class="bu">min</span>(Ta2O5_thickness), <span class="bu">max</span>(Ta2O5_thickness),</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="bu">min</span>(MgF2_thickness), <span class="bu">max</span>(MgF2_thickness)],</span>
@@ -430,13 +364,13 @@ Minimum weighted reflection occurs at d = 75.4 nm</code></pre>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Minimum reflection occurs at MgF2 / Ta2O5 thicknesses of </span><span class="sc">%.1f</span><span class="st"> / </span><span class="sc">%.1f</span><span class="st"> nm "</span></span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>     <span class="op">%</span> (MgF2_thickness[ri], Ta2O5_thickness[ci]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="7a-optimization_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+<p><img src="6-arc_optimization_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Minimum reflection occurs at MgF2 / Ta2O5 thicknesses of 73.7 / 53.7 nm </code></pre>
 </div>
 </div>
-<p>For these two examples, where we are only trying to optimize one and two parameters respectively across a relatively small range, using a method (TMM) which executes quickly, brute force searching is possible. However, as we introduce more parameters, a wider parameter space, and slower simulation methods, it may no longer be computationally tractable.</p>
+<p>For these two examples, where we are only trying to optimize one and two parameters respectively across a relatively small range, using a method (TMM) which executes quickly, brute force searching is possible. However, as we introduce more parameters, a wider parameter space, and slower simulation methods, it may no longer be computationally tractable; in that case, using for example differential evolution or other types of numerical optimization may be more appropriate (see <a href="../../solar-cell-simulation/notebooks/7b-optimization.html">this example</a>).</p>
 
 
 </section>
