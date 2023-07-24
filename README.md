@@ -4,7 +4,7 @@ Solcore, RayFlare.
 
 View/run the examples on Binder:
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/qpv-research-group/solcore-education)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/qpv-research-group/solcore-education/main)
 
 [Click here](https://qpv-research-group.github.io/solcore-education/) to view the examples on GitHub Pages.
 
