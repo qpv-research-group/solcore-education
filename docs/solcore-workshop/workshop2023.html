@@ -61,7 +61,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed">
@@ -124,8 +124,68 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../solcore-workshop/notebooks/6-arc_optimization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example 6: Optimizing an ARC</span></a>
+  <a href="../solcore-workshop/notebooks/2-Efficiency_limits.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section 2: Integration for limiting current, limiting voltage model, efficiency limit</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../solcore-workshop/notebooks/4-Spectral2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section 4: Calculating Spectral Irradiance using SPCTRAL 2</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../solcore-workshop/notebooks/5a-simple_Si_cell.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section 5a: Planar Si solar cell using DA</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../solcore-workshop/notebooks/5b-simple_GaAs_cell.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section 5b: GaAs solar cell</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../solcore-workshop/notebooks/6a-TMM_introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section 6a: Basic cell optics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../solcore-workshop/notebooks/6b-arc_optimization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section 6b: Optimizing an ARC</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../solcore-workshop/notebooks/7-InGaP_Si_planar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section 7: Planar GaInP//Si tandem cell</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../solcore-workshop/notebooks/8-grating_pyramids_OPTOS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section 8: Textured Si</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../solcore-workshop/notebooks/9a-GaInP_GaAs_Si_grating.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section 9a: Planar III-V on planar Si, with rear grating</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../solcore-workshop/notebooks/9b-GaInP_GaAs_Si_pyramids.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section 9b: Planar III-V epoxy-bonded to textured Si</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../solcore-workshop/notebooks/10-perovskite_Si_rt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section 10: Perovskite-Si tandem cell with pyramidal surfaces</span></a>
   </div>
 </li>
     </ul>
@@ -156,31 +216,35 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p><a href="Workshop_all_slides.pdf">Click here</a> to view all the slides.</p>
 <p><strong>Outline:</strong></p>
 <p><em>Day 1:</em></p>
-<ul>
-<li>Introduction to Solcore &amp; computer modelling</li>
-<li>Basics: integration for limiting current, limiting voltage model</li>
-<li>Shockley-Queisser efficiency limit and detailed balance (DB) junction model</li>
-</ul>
+<ol type="1">
+<li>Introduction to Solcore &amp; computer modelling (lecture)</li>
+<li><a href="../solcore-workshop/notebooks/2-Efficiency_limits.html">Integration for limiting current, limiting voltage model</a></li>
+<li>Shockley-Queisser efficiency limit and detailed balance (DB) junction model (lecture)</li>
+</ol>
 <p><em>Day 2:</em></p>
-<ul>
-<li>Introduction to drift-diffusion junction model</li>
-<li>The depletion approximation</li>
-<li>Shockley diode equation</li>
-<li>Auger-limited voltage and fill factor in silicon</li>
-<li>Realistic silicon device model using the depletion approximation</li>
-<li>Optical modelling using the transfer-matrix model (TMM)</li>
-<li>Optimizing an anti-reflection coating (ARC)</li>
-<li>Planar III-V on Si tandem solar cell</li>
-</ul>
+<ol start="4" type="1">
+<li>Introduction to drift-diffusion junction model, depletion approximation (lecture) &amp; <a href="../solcore-workshop/notebooks/4-Spectral2.html">spectral irradiance</a></li>
+<li>The depletion approximation: <a href="../solcore-workshop/notebooks/5a-simple_Si_cell.html">Si cell</a> and <a href="../solcore-workshop/notebooks/5b-simple_GaAs_cell.html">GaAs cell</a></li>
+<li>Optical modelling using the transfer-matrix model (TMM):
+<ol type="a">
+<li><a href="../solcore-workshop/notebooks/6a-TMM_introduction.html">TMM introduction</a></li>
+<li><a href="../solcore-workshop/notebooks/6b-arc_optimization.html">Optimizing an anti-reflection coating</a></li>
+</ol></li>
+<li><a href="../solcore-workshop/notebooks/7-InGaP_Si_planar.html">Planar III-V on Si tandem solar cell</a></li>
+</ol>
 <p><em>Day 3:</em></p>
-<ul>
-<li>Optical absorption in textured Si: ray-tracing for pyramid textures, rigorous coupled-wave analysis (RCWA) for nano-scale gratings</li>
-<li>Planar III-V bonded to textured silicon using e.g.&nbsp;epoxy</li>
-<li>Planar III-V bonded to silicon with planar front + diffraction grating on rear</li>
-<li>Absorption in conformal perovskite on silicon tandem cells</li>
-</ul>
+<ol start="8" type="1">
+<li><a href="../solcore-workshop/notebooks/8-grating_pyramids_OPTOS.html">Optical absorption in textured Si</a>: ray-tracing for pyramid textures, rigorous coupled-wave analysis (RCWA) for nano-scale gratings</li>
+<li>III-V/Si cells with light-trapping structures:
+<ol type="a">
+<li><a href="../solcore-workshop/notebooks/9a-GaInP_GaAs_Si_grating.html">Planar III-V wafer-bonded to silicon with planar front</a> using e.g.&nbsp;epoxy</li>
+<li><a href="../solcore-workshop/notebooks/9b-GaInP_GaAs_Si_pyramids.html">Planar III-V bonded to textured silicon</a> with diffraction grating on rear</li>
+</ol></li>
+<li><a href="../solcore-workshop/notebooks/10-perovskite_Si_rt.html">Conformal perovskite on silicon tandem cells</a></li>
+</ol>
 
 
 

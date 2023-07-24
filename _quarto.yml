@@ -28,7 +28,18 @@ website:
     - title: "Solcore Workshop 2023"
       contents:
         - solcore-workshop/workshop2023.qmd
-        - auto: solcore-workshop/notebooks/*.ipynb
+#        - auto: solcore-workshop/notebooks/*.ipynb
+        - solcore-workshop/notebooks/2-Efficiency_limits.ipynb
+        - solcore-workshop/notebooks/4-Spectral2.ipynb
+        - solcore-workshop/notebooks/5a-simple_Si_cell.ipynb
+        - solcore-workshop/notebooks/5b-simple_GaAs_cell.ipynb
+        - solcore-workshop/notebooks/6a-TMM_introduction.ipynb
+        - solcore-workshop/notebooks/6b-arc_optimization.ipynb
+        - solcore-workshop/notebooks/7-InGaP_Si_planar.ipynb
+        - solcore-workshop/notebooks/8-grating_pyramids_OPTOS.ipynb
+        - solcore-workshop/notebooks/9a-GaInP_GaAs_Si_grating.ipynb
+        - solcore-workshop/notebooks/9b-GaInP_GaAs_Si_pyramids.ipynb
+        - solcore-workshop/notebooks/10-perovskite_Si_rt.ipynb
 
 format:
   html:

@@ -2,29 +2,36 @@
 title: "Solcore Workshop 2023"
 ---
 
+[Click here](Workshop_all_slides.pdf) to view all the slides.
+
 **Outline:**
 
 *Day 1:*
 
-- Introduction to Solcore & computer modelling
-- Basics: integration for limiting current, limiting voltage model
-- Shockley-Queisser efficiency limit and detailed balance (DB) junction model
+1. Introduction to Solcore & computer modelling (lecture)
+2. [Integration for limiting current, limiting voltage model](notebooks/2-Efficiency_limits.ipynb)
+3. Shockley-Queisser efficiency limit and detailed balance (DB) junction model (lecture)
 
 *Day 2:*
 
-- Introduction to drift-diffusion junction model
-- The depletion approximation
-- Shockley diode equation
-- Auger-limited voltage and fill factor in silicon
-- Realistic silicon device model using the depletion approximation
-- Optical modelling using the transfer-matrix model (TMM)
-- Optimizing an anti-reflection coating (ARC)
-- Planar III-V on Si tandem solar cell
+4. Introduction to drift-diffusion junction model,
+   depletion approximation (lecture) &
+  [spectral irradiance](notebooks/4-Spectral2.ipynb)
+5. The depletion approximation: [Si cell](notebooks/5a-simple_Si_cell.ipynb) and
+   [GaAs cell](notebooks/5b-simple_GaAs_cell.ipynb)
+6. Optical modelling using the transfer-matrix model (TMM):
+   a. [TMM introduction](notebooks/6a-TMM_introduction.ipynb)
+   b. [Optimizing an anti-reflection coating](notebooks/6b-arc_optimization.ipynb)
+7. [Planar III-V on Si tandem solar cell](notebooks/7-InGaP_Si_planar.ipynb)
 
 *Day 3:*
 
-- Optical absorption in textured Si: ray-tracing for pyramid textures,
+8. [Optical absorption in textured Si](notebooks/8-grating_pyramids_OPTOS.ipynb):
+  ray-tracing for pyramid textures,
   rigorous coupled-wave analysis (RCWA) for nano-scale gratings
-- Planar III-V bonded to textured silicon using e.g. epoxy
-- Planar III-V bonded to silicon with planar front + diffraction grating on rear
-- Absorption in conformal perovskite on silicon tandem cells
+9. III-V/Si cells with light-trapping structures:
+   a. [Planar III-V wafer-bonded to silicon with planar front](notebooks/9a-GaInP_GaAs_Si_grating.ipynb)
+      using e.g. epoxy
+   b. [Planar III-V bonded to textured silicon](notebooks/9b-GaInP_GaAs_Si_pyramids.ipynb) with
+      diffraction grating on rear
+10. [Conformal perovskite on silicon tandem cells](notebooks/10-perovskite_Si_rt.ipynb)
