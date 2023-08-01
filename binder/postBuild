@@ -1,0 +1,7 @@
+set -ex
+
+git clone https://github.com/phoebe-p/S4
+cd S4
+make S4_pyext
+cd ..
+rm -rf S4

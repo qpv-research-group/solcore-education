@@ -1,0 +1,8 @@
+make
+git
+gcc
+g++
+libopenblas-dev
+libfftw3-dev
+libsuitesparse-dev
+libboost-all-dev
