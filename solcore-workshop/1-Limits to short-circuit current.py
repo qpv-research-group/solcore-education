@@ -320,8 +320,8 @@ am15g = LightSource(source_type='standard', x=wl, version='AM1.5g')
 
 eg=1.42
 V = np.linspace(0, 1.3, 500)
-db_junction = Junction(kind='DB', T=300, Eg=eg, A=1, R_shunt=np.inf, n=1)
-my_solar_cell = SolarCell([db_junction], T=300, R_series=0)
+db_junction = Junction(kind='DB', T=300, Eg=eg, A=1, R_shunt=1e-1, n=1)
+my_solar_cell = SolarCell([db_junction], T=300, R_series=1e-4)
 
 solar_cell_solver(my_solar_cell, 'iv',
                       user_options={'T_ambient': 300, 'db_mode': 'top_hat', 'voltages': V, 'light_iv': True,
@@ -336,6 +336,7 @@ plt.xlim(0, 1.2)
 plt.text(0.1,300,f'Jsc {my_solar_cell.iv.Isc:.2f}')
 plt.text(0.1,280,f'Voc {my_solar_cell.iv.Voc:.2f}')
 plt.text(0.1,260,f'Pmax {my_solar_cell.iv.Pmpp:.2f}')
+plt.text(0.1,240,f'FF (%) {100*my_solar_cell.iv.FF:.2f}')
 plt.xlabel('Voltage (V)')
 plt.ylabel('Current (A/m$^2$)')
 plt.show()
