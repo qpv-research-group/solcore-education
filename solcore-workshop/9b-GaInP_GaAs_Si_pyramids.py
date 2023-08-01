@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Example 9b: Planar III-V epoxy-bonded to textured Si
+# # Section 9b: Planar III-V epoxy-bonded to textured Si
 # 
 # The structure in this example is based on that of
 # [the previous example (9a)](9a-GaInP_GaAs_Si_grating.ipynb), but

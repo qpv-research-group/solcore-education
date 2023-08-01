@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Example 5a: Planar Si solar cell using DA
+# # Section 5a: Planar Si solar cell using DA
 # 
 # In this first set of examples, we will look at simple planar Si solar cell.
 # 

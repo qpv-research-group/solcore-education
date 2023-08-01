@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Example 8: Textured Si
+# # Section 8: Textured Si
 # 
 # This example is based on Figures 6, 7 and 8 from [this paper](https://doi.org/10.1364/OE.23.0A1720).
 # This compares three different structures, all based on a 200 micron thick slab of silicon

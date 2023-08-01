@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Example 10: Perovskite-Si tandem cell with pyramidal surfaces
+# # Section 10: Perovskite-Si tandem cell with pyramidal surfaces
 # 
 # This example shows how you can simulate a perovskite-Si tandem cell with pyramidal
 # surface textures, where the perovskite and other surface layers are assumed to be

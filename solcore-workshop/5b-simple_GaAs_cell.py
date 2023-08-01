@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Example 5a: GaAs solar cell
+# # Section 5b: GaAs solar cell
 
 # ## Fitting the EQE of a GaAs solar cell
 # 
 # First we need to set up the calculation, so we import the libraries we need and some
-# semiconductor material properties.  Our solar cell has a single layer SiN anti-reflection coating, an $Al_{0.8}GaAs$ window layer and GaAs p/n absorber regions.
+# semiconductor material properties.  Our solar cell has a single layer SiN
+# anti-reflection coating, an Al$_{0.8}$GaAs window layer and GaAs p/n absorber regions.
 
 # 
 
