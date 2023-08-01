@@ -40,7 +40,7 @@ import seaborn as sns
 # Setup the AM1.5G solar spectrum
 wl = np.linspace(300, 4000, 4000) * 1e-9    # wl contains the x-coordinate in wavelength
 am15g = LightSource(source_type='standard', x=wl*1e9, version='AM1.5g',
-                    outputs="power_density_per_nm")
+                    output_units="power_density_per_nm")
 
 plt.figure()
 plt.title('Spectral Irradiance')
