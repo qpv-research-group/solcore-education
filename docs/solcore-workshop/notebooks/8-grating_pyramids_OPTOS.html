@@ -271,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="setting-up" class="level2">
 <h2 class="anchored" data-anchor-id="setting-up">Setting up</h2>
 <p>First, importing relevant packages:</p>
-<div class="cell" data-execution_count="19">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -295,7 +295,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sparse <span class="im">import</span> load_npz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To make sure we are using the same optical constants for Si, load the same Si n/k data used in the paper linked above:</p>
-<div class="cell" data-execution_count="20">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>create_new_material(<span class="st">"Si_OPTOS"</span>, <span class="st">"data/Si_OPTOS_n.txt"</span>, <span class="st">"data/Si_OPTOS_k.txt"</span>,</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                    overwrite<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -304,10 +304,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>You only need to do this one time, then the material will be stored in Solcore’s material database.</p>
 <p>Setting options (taking the default options for everything not specified explicitly):</p>
-<div class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>angle_degrees_in <span class="op">=</span> <span class="dv">8</span></span>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>angle_degrees_in <span class="op">=</span> <span class="dv">8</span> <span class="co"># same as in Fraunhofer paper</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>wavelengths <span class="op">=</span> np.linspace(<span class="dv">900</span>, <span class="dv">1200</span>, <span class="dv">30</span>) <span class="op">*</span> <span class="fl">1e-9</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>wavelengths <span class="op">=</span> np.linspace(<span class="dv">900</span>, <span class="dv">1200</span>, <span class="dv">20</span>) <span class="op">*</span> <span class="fl">1e-9</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>Si <span class="op">=</span> material(<span class="st">"Si_OPTOS"</span>)()</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>Air <span class="op">=</span> material(<span class="st">"Air"</span>)()</span>
@@ -315,18 +315,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>options <span class="op">=</span> default_options()</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>options.wavelengths <span class="op">=</span> wavelengths</span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>options.theta_in <span class="op">=</span> angle_degrees_in <span class="op">*</span> np.pi <span class="op">/</span> <span class="dv">180</span> <span class="co"># incidence angle (polar angle)</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>options.n_theta_bins <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>options.n_theta_bins <span class="op">=</span> <span class="dv">50</span></span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>options.c_azimuth <span class="op">=</span> <span class="fl">0.25</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>options.n_rays <span class="op">=</span> <span class="dv">25</span> <span class="op">*</span> <span class="dv">25</span> <span class="op">*</span> <span class="dv">1300</span> <span class="co"># number of rays per wavelength in ray-tracing</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>options.n_rays <span class="op">=</span> <span class="fl">5e5</span> <span class="co"># number of rays per wavelength in ray-tracing</span></span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>options.project_name <span class="op">=</span> <span class="st">"OPTOS_comparison"</span></span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>options.orders <span class="op">=</span> <span class="dv">60</span> <span class="co"># number of RCWA orders to use (more = better convergence, but slower)</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>options.pol <span class="op">=</span> <span class="st">"u"</span> <span class="co"># unpolarized light</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>options.pol <span class="op">=</span> <span class="st">"u"</span> <span class="co"># unpolarized light</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>options.only_incidence_angle <span class="op">=</span> <span class="va">False</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="defining-the-structures" class="level2">
 <h2 class="anchored" data-anchor-id="defining-the-structures">Defining the structures</h2>
 <p>Now, set up the grating basis vectors for the RCWA calculations and define the grating structure. These are squares, rotated by 45 degrees. The halfwidth is calculated based on the area fill factor of the etched pillars given in the paper.</p>
-<div class="cell" data-execution_count="22">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">1000</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>d_vectors <span class="op">=</span> ((x, <span class="dv">0</span>), (<span class="dv">0</span>, x))</span>
@@ -340,7 +341,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    )]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we define the pyramid texture for the front surface in case (2) and (3) and make the four possible different surfaces: planar front and rear, front with pyramids, rear with grating. We specify the method to use to calculate the redistribution matrices in each case and create the bulk layer.</p>
-<div class="cell" data-execution_count="23">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>surf <span class="op">=</span> regular_pyramids(elevation_angle<span class="op">=</span><span class="dv">55</span>, upright<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>front_surf_pyramids <span class="op">=</span> Interface(</span>
@@ -357,119 +358,128 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    layers<span class="op">=</span>back_materials,</span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"crossed_grating_back"</span>,</span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    d_vectors<span class="op">=</span>d_vectors,</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    rcwa_orders<span class="op">=</span><span class="dv">60</span>,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    rcwa_orders<span class="op">=</span><span class="dv">20</span>,</span>
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>back_surf_planar <span class="op">=</span> Interface(<span class="st">"TMM"</span>, layers<span class="op">=</span>[], name<span class="op">=</span><span class="st">"planar_back"</span>)</span>
 <span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>bulk_Si <span class="op">=</span> BulkLayer(<span class="fl">201.8e-6</span>, Si, name<span class="op">=</span><span class="st">"Si_bulk"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>fixed h 0.7140740033710572</code></pre>
+</div>
 </div>
 <p>Now we create the different structures and ‘process’ them (this will calculate the relevant matrices if necessary, or do nothing if it finds the matrices have previously been calculated and the files already exist). We don’t need to process the final structure because it will use matrices calculated for <code>SC_fig6</code> and <code>SC_fig7</code>.</p>
-<div class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>SC_fig6 <span class="op">=</span> Structure(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    [front_surf_planar, bulk_Si, back_surf_grating], incidence<span class="op">=</span>Air, transmission<span class="op">=</span>Air</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>SC_fig7 <span class="op">=</span> Structure(</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    [front_surf_pyramids, bulk_Si, back_surf_planar], incidence<span class="op">=</span>Air, transmission<span class="op">=</span>Air</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>SC_fig8 <span class="op">=</span> Structure(</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    [front_surf_pyramids, bulk_Si, back_surf_grating], incidence<span class="op">=</span>Air, transmission<span class="op">=</span>Air</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>process_structure(SC_fig6, options)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>process_structure(SC_fig7, options)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>SC_fig6 <span class="op">=</span> Structure(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    [front_surf_planar, bulk_Si, back_surf_grating], incidence<span class="op">=</span>Air, transmission<span class="op">=</span>Air</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>SC_fig7 <span class="op">=</span> Structure(</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    [front_surf_pyramids, bulk_Si, back_surf_planar], incidence<span class="op">=</span>Air, transmission<span class="op">=</span>Air</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>SC_fig8 <span class="op">=</span> Structure(</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    [front_surf_pyramids, bulk_Si, back_surf_grating], incidence<span class="op">=</span>Air, transmission<span class="op">=</span>Air</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>process_structure(SC_fig6, options, save_location<span class="op">=</span><span class="st">'current'</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>process_structure(SC_fig7, options, save_location<span class="op">=</span><span class="st">'current'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Making matrix for planar surface using TMM for element 0 in structure
-Existing angular redistribution matrices found
-Existing angular redistribution matrices found
 RCWA calculation for element 2 in structure
-Existing angular redistribution matrices found
 Ray tracing with Fresnel equations for element 0 in structure
-Existing angular redistribution matrices found
-Existing angular redistribution matrices found
-Making matrix for planar surface using TMM for element 2 in structure
-Existing angular redistribution matrices found</code></pre>
+Making matrix for planar surface using TMM for element 2 in structure</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>&lt;__array_function__ internals&gt;:200: RuntimeWarning: invalid value encountered in cast
+&lt;__array_function__ internals&gt;:200: RuntimeWarning: invalid value encountered in cast
+&lt;__array_function__ internals&gt;:200: RuntimeWarning: invalid value encountered in cast
+&lt;__array_function__ internals&gt;:200: RuntimeWarning: invalid value encountered in cast
+&lt;__array_function__ internals&gt;:200: RuntimeWarning: invalid value encountered in cast
+&lt;__array_function__ internals&gt;:200: RuntimeWarning: invalid value encountered in cast
+&lt;__array_function__ internals&gt;:200: RuntimeWarning: invalid value encountered in cast
+&lt;__array_function__ internals&gt;:200: RuntimeWarning: invalid value encountered in cast
+&lt;__array_function__ internals&gt;:200: RuntimeWarning: invalid value encountered in cast
+&lt;__array_function__ internals&gt;:200: RuntimeWarning: invalid value encountered in cast</code></pre>
 </div>
 </div>
 </section>
 <section id="calculating-rat" class="level2">
 <h2 class="anchored" data-anchor-id="calculating-rat">Calculating R/A/T</h2>
 <p>Then we ask RayFlare to calculate the reflection, transmission and absorption through matrix multiplication, and get the required result out (absorption in the bulk) for each cell. We also load the results from the reference paper to compare them to the ones calculated with RayFlare.</p>
-<div class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>results_fig6 <span class="op">=</span> calculate_RAT(SC_fig6, options)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>results_fig7 <span class="op">=</span> calculate_RAT(SC_fig7, options)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>results_fig8 <span class="op">=</span> calculate_RAT(SC_fig8, options)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>RAT_fig6 <span class="op">=</span> results_fig6[<span class="dv">0</span>]</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>RAT_fig7 <span class="op">=</span> results_fig7[<span class="dv">0</span>]</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>RAT_fig8 <span class="op">=</span> results_fig8[<span class="dv">0</span>]</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>sim_fig6 <span class="op">=</span> np.loadtxt(<span class="st">"data/optos_fig6_sim.csv"</span>, delimiter<span class="op">=</span><span class="st">","</span>)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>sim_fig7 <span class="op">=</span> np.loadtxt(<span class="st">"data/optos_fig7_sim.csv"</span>, delimiter<span class="op">=</span><span class="st">","</span>)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>sim_fig8 <span class="op">=</span> np.loadtxt(<span class="st">"data/optos_fig8_sim.csv"</span>, delimiter<span class="op">=</span><span class="st">","</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>results_fig6 <span class="op">=</span> calculate_RAT(SC_fig6, options, save_location<span class="op">=</span><span class="st">'current'</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>results_fig7 <span class="op">=</span> calculate_RAT(SC_fig7, options, save_location<span class="op">=</span><span class="st">'current'</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>results_fig8 <span class="op">=</span> calculate_RAT(SC_fig8, options, save_location<span class="op">=</span><span class="st">'current'</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>RAT_fig6 <span class="op">=</span> results_fig6[<span class="dv">0</span>]</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>RAT_fig7 <span class="op">=</span> results_fig7[<span class="dv">0</span>]</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>RAT_fig8 <span class="op">=</span> results_fig8[<span class="dv">0</span>]</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>sim_fig6 <span class="op">=</span> np.loadtxt(<span class="st">"data/optos_fig6_sim.csv"</span>, delimiter<span class="op">=</span><span class="st">","</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>sim_fig7 <span class="op">=</span> np.loadtxt(<span class="st">"data/optos_fig7_sim.csv"</span>, delimiter<span class="op">=</span><span class="st">","</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>sim_fig8 <span class="op">=</span> np.loadtxt(<span class="st">"data/optos_fig8_sim.csv"</span>, delimiter<span class="op">=</span><span class="st">","</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Finally, we use TMM to calculate the absorption in a structure with a planar front and planar rear, as a reference.</p>
-<div class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>struc <span class="op">=</span> tmm_structure([Layer(si(<span class="st">"200um"</span>), Si)], incidence<span class="op">=</span>Air, transmission<span class="op">=</span>Air)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>options.coherent <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>options.coherency_list <span class="op">=</span> [<span class="st">"i"</span>]</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>RAT <span class="op">=</span> tmm_structure.calculate(struc, options)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>struc <span class="op">=</span> tmm_structure([Layer(si(<span class="st">"200um"</span>), Si)], incidence<span class="op">=</span>Air, transmission<span class="op">=</span>Air)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>options.coherent <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>options.coherency_list <span class="op">=</span> [<span class="st">"i"</span>]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>RAT <span class="op">=</span> tmm_structure.calculate(struc, options)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="plotting" class="level2">
 <h2 class="anchored" data-anchor-id="plotting">Plotting</h2>
 <p>Plot everything together, including data from the reference paper for comparison:</p>
-<div class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>palhf <span class="op">=</span> sns.color_palette(<span class="st">"hls"</span>, <span class="dv">4</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>plt.plot(sim_fig6[:, <span class="dv">0</span>], sim_fig6[:, <span class="dv">1</span>],</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"--"</span>, color<span class="op">=</span>palhf[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"OPTOS - rear grating (1)"</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig6[<span class="st">"A_bulk"</span>][<span class="dv">0</span>],</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-o"</span>, color<span class="op">=</span>palhf[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"RayFlare - rear grating (1)"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>plt.plot(sim_fig7[:, <span class="dv">0</span>], sim_fig7[:, <span class="dv">1</span>],</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"--"</span>, color<span class="op">=</span>palhf[<span class="dv">1</span>], label<span class="op">=</span><span class="st">"OPTOS - front pyramids (2)"</span>,)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig7[<span class="st">"A_bulk"</span>][<span class="dv">0</span>],</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-o"</span>, color<span class="op">=</span>palhf[<span class="dv">1</span>], label<span class="op">=</span><span class="st">"RayFlare - front pyramids (2)"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>plt.plot(sim_fig8[:, <span class="dv">0</span>], sim_fig8[:, <span class="dv">1</span>],</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"--"</span>, color<span class="op">=</span>palhf[<span class="dv">2</span>], label<span class="op">=</span><span class="st">"OPTOS - grating + pyramids (3)"</span>)</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig8[<span class="st">"A_bulk"</span>][<span class="dv">0</span>],</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-o"</span>, color<span class="op">=</span>palhf[<span class="dv">2</span>],label<span class="op">=</span><span class="st">"RayFlare - grating + pyramids (3)"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>,)</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT[<span class="st">"A_per_layer"</span>][:, <span class="dv">0</span>], <span class="st">"-k"</span>, label<span class="op">=</span><span class="st">"Planar"</span>)</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">"lower left"</span>)</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Absorption in Si"</span>)</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>plt.xlim([<span class="dv">900</span>, <span class="dv">1200</span>])</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="dv">0</span>, <span class="dv">1</span>])</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>palhf <span class="op">=</span> sns.color_palette(<span class="st">"hls"</span>, <span class="dv">4</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>plt.plot(sim_fig6[:, <span class="dv">0</span>], sim_fig6[:, <span class="dv">1</span>],</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"--"</span>, color<span class="op">=</span>palhf[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"OPTOS - rear grating (1)"</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig6[<span class="st">"A_bulk"</span>][<span class="dv">0</span>],</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-o"</span>, color<span class="op">=</span>palhf[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"RayFlare - rear grating (1)"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>plt.plot(sim_fig7[:, <span class="dv">0</span>], sim_fig7[:, <span class="dv">1</span>],</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"--"</span>, color<span class="op">=</span>palhf[<span class="dv">1</span>], label<span class="op">=</span><span class="st">"OPTOS - front pyramids (2)"</span>,)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig7[<span class="st">"A_bulk"</span>][<span class="dv">0</span>],</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-o"</span>, color<span class="op">=</span>palhf[<span class="dv">1</span>], label<span class="op">=</span><span class="st">"RayFlare - front pyramids (2)"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>plt.plot(sim_fig8[:, <span class="dv">0</span>], sim_fig8[:, <span class="dv">1</span>],</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"--"</span>, color<span class="op">=</span>palhf[<span class="dv">2</span>], label<span class="op">=</span><span class="st">"OPTOS - grating + pyramids (3)"</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig8[<span class="st">"A_bulk"</span>][<span class="dv">0</span>],</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-o"</span>, color<span class="op">=</span>palhf[<span class="dv">2</span>],label<span class="op">=</span><span class="st">"RayFlare - grating + pyramids (3)"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>,)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT[<span class="st">"A_per_layer"</span>][:, <span class="dv">0</span>], <span class="st">"-k"</span>, label<span class="op">=</span><span class="st">"Planar"</span>)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">"lower left"</span>)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Absorption in Si"</span>)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>plt.xlim([<span class="dv">900</span>, <span class="dv">1200</span>])</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="dv">0</span>, <span class="dv">1</span>])</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="8-grating_pyramids_OPTOS_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>We can see good agreement between the reference values and our calculated values. The structure with rear grating also behaves identically to the planar TMM reference case at the short wavelengths where front surface reflection dominates the result, as expected. Clearly, the pyramids perform much better overall, giving a large boost in the absorption at long wavelengths and also reducing the reflection significantly at shorter wavelengths. Plotting reflection and transmission emphasises this:</p>
-<div class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>,RAT_fig6[<span class="st">"R"</span>][<span class="dv">0</span>],</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-o"</span>, color<span class="op">=</span>palhf[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"RayFlare - rear grating (1)"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig7[<span class="st">"R"</span>][<span class="dv">0</span>],</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-o"</span>, color<span class="op">=</span>palhf[<span class="dv">1</span>], label<span class="op">=</span><span class="st">"RayFlare - front pyramids (2)"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig8[<span class="st">"R"</span>][<span class="dv">0</span>],</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-o"</span>, color<span class="op">=</span>palhf[<span class="dv">2</span>], label<span class="op">=</span><span class="st">"RayFlare - grating + pyramids (3)"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig6[<span class="st">"T"</span>][<span class="dv">0</span>], <span class="st">"--o"</span>, color<span class="op">=</span>palhf[<span class="dv">0</span>])</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig7[<span class="st">"T"</span>][<span class="dv">0</span>], <span class="st">"--o"</span>, color<span class="op">=</span>palhf[<span class="dv">1</span>])</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig8[<span class="st">"T"</span>][<span class="dv">0</span>], <span class="st">"--o"</span>, color<span class="op">=</span>palhf[<span class="dv">2</span>])</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># these are just to create the legend:</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="st">"k-o"</span>, label<span class="op">=</span><span class="st">"R"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="st">"k--o"</span>, label<span class="op">=</span><span class="st">"T"</span>)</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Reflected/transmitted fraction"</span>)</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>plt.xlim([<span class="dv">900</span>, <span class="dv">1200</span>])</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="dv">0</span>, <span class="fl">0.6</span>])</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>,RAT_fig6[<span class="st">"R"</span>][<span class="dv">0</span>],</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-o"</span>, color<span class="op">=</span>palhf[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"RayFlare - rear grating (1)"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig7[<span class="st">"R"</span>][<span class="dv">0</span>],</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-o"</span>, color<span class="op">=</span>palhf[<span class="dv">1</span>], label<span class="op">=</span><span class="st">"RayFlare - front pyramids (2)"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig8[<span class="st">"R"</span>][<span class="dv">0</span>],</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-o"</span>, color<span class="op">=</span>palhf[<span class="dv">2</span>], label<span class="op">=</span><span class="st">"RayFlare - grating + pyramids (3)"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig6[<span class="st">"T"</span>][<span class="dv">0</span>], <span class="st">"--o"</span>, color<span class="op">=</span>palhf[<span class="dv">0</span>])</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig7[<span class="st">"T"</span>][<span class="dv">0</span>], <span class="st">"--o"</span>, color<span class="op">=</span>palhf[<span class="dv">1</span>])</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig8[<span class="st">"T"</span>][<span class="dv">0</span>], <span class="st">"--o"</span>, color<span class="op">=</span>palhf[<span class="dv">2</span>])</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co"># these are just to create the legend:</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="st">"k-o"</span>, label<span class="op">=</span><span class="st">"R"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="st">"k--o"</span>, label<span class="op">=</span><span class="st">"T"</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Reflected/transmitted fraction"</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>plt.xlim([<span class="dv">900</span>, <span class="dv">1200</span>])</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="dv">0</span>, <span class="fl">0.6</span>])</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="8-grating_pyramids_OPTOS_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
 </div>
@@ -478,34 +488,34 @@ Existing angular redistribution matrices found</code></pre>
 <section id="redistribution-matrices" class="level2">
 <h2 class="anchored" data-anchor-id="redistribution-matrices">Redistribution matrices</h2>
 <p>Plot the redistribution matrix for the rear grating (summed over azimuthal angles) at 1100 nm:</p>
-<div class="cell" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>theta_intv, phi_intv, angle_vector <span class="op">=</span> make_angle_vector(</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    options[<span class="st">"n_theta_bins"</span>], options[<span class="st">"phi_symmetry"</span>], options[<span class="st">"c_azimuth"</span>])</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> get_savepath(<span class="st">"default"</span>, options.project_name)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>sprs <span class="op">=</span> load_npz(os.path.join(path, SC_fig6[<span class="dv">2</span>].name <span class="op">+</span> <span class="st">"frontRT.npz"</span>))</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>wl_to_plot <span class="op">=</span> <span class="fl">1100e-9</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>wl_index <span class="op">=</span> np.argmin(np.<span class="bu">abs</span>(wavelengths <span class="op">-</span> wl_to_plot))</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>full <span class="op">=</span> sprs[wl_index].todense()</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>summat <span class="op">=</span> theta_summary(full, angle_vector, options[<span class="st">"n_theta_bins"</span>], <span class="st">"front"</span>)</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>summat_r <span class="op">=</span> summat[: options[<span class="st">"n_theta_bins"</span>], :]</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>summat_r <span class="op">=</span> summat_r.rename({ <span class="vs">r"$\theta_</span><span class="sc">{in}</span><span class="vs">$"</span>: <span class="vs">r"$\sin(\theta_</span><span class="sc">{in}</span><span class="vs">)$"</span>,</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>        <span class="vs">r"$\theta_</span><span class="sc">{out}</span><span class="vs">$"</span>: <span class="vs">r"$\sin(\theta_</span><span class="sc">{out}</span><span class="vs">)$"</span>})</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>summat_r <span class="op">=</span> summat_r.assign_coords({<span class="vs">r"$\sin(\theta_</span><span class="sc">{in}</span><span class="vs">)$"</span>: np.sin(summat_r.coords[<span class="vs">r"$\sin(\theta_</span><span class="sc">{in}</span><span class="vs">)$"</span>]).data,</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="vs">r"$\sin(\theta_</span><span class="sc">{out}</span><span class="vs">)$"</span>: np.sin(summat_r.coords[<span class="vs">r"$\sin(\theta_</span><span class="sc">{out}</span><span class="vs">)$"</span>]).data})</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>palhf <span class="op">=</span> sns.cubehelix_palette(<span class="dv">256</span>, start<span class="op">=</span><span class="fl">0.5</span>, rot<span class="op">=-</span><span class="fl">0.9</span>)</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>palhf.reverse()</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>seamap <span class="op">=</span> mpl.colors.ListedColormap(palhf)</span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> plt.subplot(<span class="dv">111</span>)</span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> summat_r.plot.imshow(ax<span class="op">=</span>ax, cmap<span class="op">=</span>seamap, vmax<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>theta_intv, phi_intv, angle_vector <span class="op">=</span> make_angle_vector(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    options[<span class="st">"n_theta_bins"</span>], options[<span class="st">"phi_symmetry"</span>], options[<span class="st">"c_azimuth"</span>])</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> get_savepath(<span class="st">"default"</span>, options.project_name)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>sprs <span class="op">=</span> load_npz(os.path.join(path, SC_fig6[<span class="dv">2</span>].name <span class="op">+</span> <span class="st">"frontRT.npz"</span>))</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>wl_to_plot <span class="op">=</span> <span class="fl">1100e-9</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>wl_index <span class="op">=</span> np.argmin(np.<span class="bu">abs</span>(wavelengths <span class="op">-</span> wl_to_plot))</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>full <span class="op">=</span> sprs[wl_index].todense()</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>summat <span class="op">=</span> theta_summary(full, angle_vector, options[<span class="st">"n_theta_bins"</span>], <span class="st">"front"</span>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>summat_r <span class="op">=</span> summat[: options[<span class="st">"n_theta_bins"</span>], :]</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>summat_r <span class="op">=</span> summat_r.rename({ <span class="vs">r"$\theta_</span><span class="sc">{in}</span><span class="vs">$"</span>: <span class="vs">r"$\sin(\theta_</span><span class="sc">{in}</span><span class="vs">)$"</span>,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>        <span class="vs">r"$\theta_</span><span class="sc">{out}</span><span class="vs">$"</span>: <span class="vs">r"$\sin(\theta_</span><span class="sc">{out}</span><span class="vs">)$"</span>})</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>summat_r <span class="op">=</span> summat_r.assign_coords({<span class="vs">r"$\sin(\theta_</span><span class="sc">{in}</span><span class="vs">)$"</span>: np.sin(summat_r.coords[<span class="vs">r"$\sin(\theta_</span><span class="sc">{in}</span><span class="vs">)$"</span>]).data,</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    <span class="vs">r"$\sin(\theta_</span><span class="sc">{out}</span><span class="vs">)$"</span>: np.sin(summat_r.coords[<span class="vs">r"$\sin(\theta_</span><span class="sc">{out}</span><span class="vs">)$"</span>]).data})</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>palhf <span class="op">=</span> sns.cubehelix_palette(<span class="dv">256</span>, start<span class="op">=</span><span class="fl">0.5</span>, rot<span class="op">=-</span><span class="fl">0.9</span>)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>palhf.reverse()</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>seamap <span class="op">=</span> mpl.colors.ListedColormap(palhf)</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> plt.subplot(<span class="dv">111</span>)</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> summat_r.plot.imshow(ax<span class="op">=</span>ax, cmap<span class="op">=</span>seamap, vmax<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="8-grating_pyramids_OPTOS_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
 </div>

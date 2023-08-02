@@ -40,7 +40,7 @@ import seaborn as sns
 # Setup the AM1.5G solar spectrum
 wl = np.linspace(300, 4000, 4000) * 1e-9    # wl contains the x-coordinate in wavelength
 am15g = LightSource(source_type='standard', x=wl*1e9, version='AM1.5g',
-                    outputs="power_density_per_nm")
+                    output_units="power_density_per_nm")
 
 plt.figure()
 plt.title('Spectral Irradiance')
@@ -176,7 +176,7 @@ plt.legend()
 
 plt.figure()
 plt.title('Trivich-Flinn Single Junction Efficiency Limit')
-plt.plot(eg, 100*eg*jsc/b,label='AM1.5G')  # Divide by 10 to convert from A.m^-2 to mA.cm^-2
+plt.plot(eg, 100*eg*jsc/b,label='AM1.5G')
 plt.xlim(0.5, 2.5)
 plt.xlabel('Band Gap energy (eV)')
 plt.ylabel('Efficiency (%)')

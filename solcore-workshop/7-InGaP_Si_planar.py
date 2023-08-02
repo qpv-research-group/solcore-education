@@ -48,7 +48,7 @@ import matplotlib.pyplot as plt
 
 
 #| output: false
-# download_db() # uncomment to download database
+download_db() # uncomment to download database
 
 MgF2_pageid = search_db(os.path.join("MgF2", "Rodriguez-de Marcos"))[0][0];
 ZnS_pageid = search_db(os.path.join("ZnS", "Querry"))[0][0];

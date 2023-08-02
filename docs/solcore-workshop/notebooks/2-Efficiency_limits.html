@@ -307,7 +307,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Setup the AM1.5G solar spectrum</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>wl <span class="op">=</span> np.linspace(<span class="dv">300</span>, <span class="dv">4000</span>, <span class="dv">4000</span>) <span class="op">*</span> <span class="fl">1e-9</span>    <span class="co"># wl contains the x-coordinate in wavelength</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>am15g <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'standard'</span>, x<span class="op">=</span>wl<span class="op">*</span><span class="fl">1e9</span>, version<span class="op">=</span><span class="st">'AM1.5g'</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                    outputs<span class="op">=</span><span class="st">"power_density_per_nm"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                    output_units<span class="op">=</span><span class="st">"power_density_per_nm"</span>)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Spectral Irradiance'</span>)</span>
@@ -439,7 +439,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-07-31T07:51:28.702500Z&quot;,&quot;start_time&quot;:&quot;2023-07-31T07:51:28.515220Z&quot;}" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Trivich-Flinn Single Junction Efficiency Limit'</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>plt.plot(eg, <span class="dv">100</span><span class="op">*</span>eg<span class="op">*</span>jsc<span class="op">/</span>b,label<span class="op">=</span><span class="st">'AM1.5G'</span>)  <span class="co"># Divide by 10 to convert from A.m^-2 to mA.cm^-2</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>plt.plot(eg, <span class="dv">100</span><span class="op">*</span>eg<span class="op">*</span>jsc<span class="op">/</span>b,label<span class="op">=</span><span class="st">'AM1.5G'</span>)</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="fl">0.5</span>, <span class="fl">2.5</span>)</span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Band Gap energy (eV)'</span>)</span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Efficiency (%)'</span>)</span>

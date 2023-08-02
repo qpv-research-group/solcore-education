@@ -266,7 +266,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In this example, we will build two structures similar to those described in <a href="https://doi.org/10.1038/s41560-018-0125-0">this paper</a>. These are both triple-junction, two-terminal GaInP/GaAs/Si cells; one cell is planar, while the other has a diffraction grating deposited on the rear of the bottom Si cell to boost its current.</p>
 <section id="setting-up" class="level2">
 <h2 class="anchored" data-anchor-id="setting-up">Setting up</h2>
-<div class="cell" data-execution_count="58">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore <span class="im">import</span> material, si</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator <span class="im">import</span> search_db, download_db</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -281,7 +281,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>As before, we load some materials from the refractiveindex.info database. The MgF<span class="math inline">\(_2\)</span> and Ta<span class="math inline">\(_2\)</span>O<span class="math inline">\(_5\)</span> are the same as the <a href="../../solcore-workshop/notebooks/6b-arc_optimization.html">ARC example</a>; the SU8 is a negative photoresist which was used in the reference paper The optical constants for silver are also loaded from a reliable literature source. Note that the exact compositions of some semiconductor alloy layers (InGaP, AlInP and AlGaAs) are not given in the paper and are thus reasonable guesses.</p>
-<div class="cell" data-execution_count="59">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download_db() # only needs to be run once</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>MgF2_pageid <span class="op">=</span> search_db(os.path.join(<span class="st">"MgF2"</span>, <span class="st">"Rodriguez-de Marcos"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
@@ -308,7 +308,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="defining-the-cell-layers" class="level2">
 <h2 class="anchored" data-anchor-id="defining-the-cell-layers">Defining the cell layers</h2>
 <p>Now we define the layers for the III-V top junctions, and the Si wafer, grouping them together in a logical way. In this example, we will only do optical simulations, so we will not set e.g.&nbsp;diffusion lengths or doping levels.</p>
-<div class="cell" data-execution_count="60">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ARC <span class="op">=</span> [</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">110e-9</span>, MgF2),</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">65e-9</span>, Ta2O5),</span>
@@ -347,7 +347,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="planar-cell" class="level2">
 <h2 class="anchored" data-anchor-id="planar-cell">Planar cell</h2>
 <p>Now we define the planar cell, and options for the solver:</p>
-<div class="cell" data-execution_count="61">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cell_planar <span class="op">=</span> tmm_structure(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    ARC <span class="op">+</span> GaInP_junction <span class="op">+</span> tunnel_1 <span class="op">+</span> GaAs_junction <span class="op">+</span> tunnel_2 <span class="op">+</span> Si_junction,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    incidence<span class="op">=</span>Air,</span>
@@ -366,11 +366,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>options.wavelengths <span class="op">=</span> wl</span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>options.coherency_list <span class="op">=</span> coherency_list</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>options.coherent <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>options.project_name <span class="op">=</span> <span class="st">"III_V_Si_cell"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>options.coherent <span class="op">=</span> <span class="va">False</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Run the TMM calculation for the planar cell, and then extract the relevant layer absorptions. These are used to calculate limiting currents (100% internal quantum efficiency), which are displayed on the plot with the absorption in each layer.</p>
-<div class="cell" data-execution_count="62">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tmm_result <span class="op">=</span> cell_planar.calculate(options<span class="op">=</span>options)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>GaInP_A <span class="op">=</span> tmm_result[<span class="st">'A_per_layer'</span>][:,<span class="dv">3</span>]</span>
@@ -422,7 +421,7 @@ Material main/Ta2O5/Rodriguez-de Marcos.yml loaded.</code></pre>
 <p>Now, for the cell with a grating on the rear, we have a multi-scale problem where we must combine the calculation of absorption in a very thick (compared to the wavelengths of light) layer of Si with the effect of a wavelength-scale (1000 nm pitch) diffraction grating. For this, we will use the Angular Redistribution Matrix Method (ARMM) which was also used in <a href="../../solcore-workshop/notebooks/8-grating_pyramids_OPTOS.html">Example 8</a>.</p>
 <p>The front surface of the cell (i.e.&nbsp;all the layers on top of Si) are planar, and can be treated using TMM. The rear surface of the cell, which has a crossed grating consisting of silver and SU8, must be treated with RCWA to account for diffraction. The thick Si layer will be the bulk coupling layer between these two interfaces.</p>
 <p>First, we set up the rear grating surface; we must define its lattice vectors, and place the Ag rectangle in the unit cell of the grating. More details on how unit cells of different shapes can be defined for the RCWA solver can be found <a href="https://rayflare.readthedocs.io/en/latest/Examples/rcwa_examples.html">here</a>.</p>
-<div class="cell" data-execution_count="63">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">1000</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>d_vectors <span class="op">=</span> ((x, <span class="dv">0</span>), (<span class="dv">0</span>, x))</span>
@@ -436,7 +435,7 @@ Material main/Ta2O5/Rodriguez-de Marcos.yml loaded.</code></pre>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    )]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, we define the Si bulk layer, and the III-V layers which go in the front interface. Finally, we put everything together into the ARMM <code>Structure</code>, also giving the incidence and transmission materials.</p>
-<div class="cell" data-execution_count="64">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>bulk_Si <span class="op">=</span> BulkLayer(<span class="fl">280e-6</span>, Si(), name<span class="op">=</span><span class="st">"Si_bulk"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>III_V_layers <span class="op">=</span> ARC <span class="op">+</span> GaInP_junction <span class="op">+</span> tunnel_1 <span class="op">+</span> GaAs_junction <span class="op">+</span> tunnel_2</span>
@@ -449,7 +448,7 @@ Material main/Ta2O5/Rodriguez-de Marcos.yml loaded.</code></pre>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    layers<span class="op">=</span>back_materials,</span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"crossed_grating_back"</span>,</span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    d_vectors<span class="op">=</span>d_vectors,</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    rcwa_orders<span class="op">=</span><span class="dv">30</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    rcwa_orders<span class="op">=</span><span class="dv">60</span>,</span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>cell_grating <span class="op">=</span> Structure(</span>
@@ -459,21 +458,24 @@ Material main/Ta2O5/Rodriguez-de Marcos.yml loaded.</code></pre>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Because RCWA calculations are very slow compared to TMM, it makes sense to only carry out the RCWA calculation at wavelengths where the grating has any effect. Depending on the wavelength, all the incident light may be absorbed in the III-V layers or in its first pass through the Si, so it never reaches the grating. We check this by seeing which wavelengths have even a small amount of transmission into the silver back mirror, and only doing the new calculation at these wavelengths. At shorter wavelengths, the results previously calculated using TMM can be used.</p>
-<div class="cell" data-execution_count="65">
+<div class="cell" data-pycharm="{&quot;is_executing&quot;:true}">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>wl_rcwa <span class="op">=</span> wl[tmm_result[<span class="st">'T'</span>] <span class="op">&gt;</span> <span class="fl">1e-4</span>] <span class="co"># check where transmission fraction is bigger</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># than 1E-4</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>options.wavelengths <span class="op">=</span> wl_rcwa</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>process_structure(cell_grating, options, overwrite<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>results_armm <span class="op">=</span> calculate_RAT(cell_grating, options)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>RAT <span class="op">=</span> results_armm[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>options.project_name <span class="op">=</span> <span class="st">"III_V_Si_cell"</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>options.n_theta_bins <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>options.c_azimuth <span class="op">=</span> <span class="fl">0.25</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>process_structure(cell_grating, options, save_location<span class="op">=</span><span class="st">'current'</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>results_armm <span class="op">=</span> calculate_RAT(cell_grating, options)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>RAT <span class="op">=</span> results_armm[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="comparison-of-planar-and-grating-cell" class="level2">
 <h2 class="anchored" data-anchor-id="comparison-of-planar-and-grating-cell">Comparison of planar and grating cell</h2>
 <p>We extract the relevant absorption per layer, and use it to calculate the new limiting current for the Si junction. The plot compares the absorption in the Si with and without the grating.</p>
-<div class="cell" data-execution_count="66">
+<div class="cell" data-pycharm="{&quot;is_executing&quot;:true}">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Si_A_total <span class="op">=</span> np.zeros(<span class="bu">len</span>(wl))</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Si_A_total[tmm_result[<span class="st">'T'</span>] <span class="op">&gt;</span> <span class="fl">1e-4</span>] <span class="op">=</span> RAT[<span class="st">'A_bulk'</span>][<span class="dv">0</span>]</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>Si_A_total[tmm_result[<span class="st">'T'</span>] <span class="op">&lt;=</span> <span class="fl">1e-4</span>] <span class="op">=</span> Si_A[tmm_result[<span class="st">'T'</span>] <span class="op">&lt;=</span> <span class="fl">1e-4</span>]</span>
@@ -494,15 +496,13 @@ Material main/Ta2O5/Rodriguez-de Marcos.yml loaded.</code></pre>
 <span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="9a-GaInP_GaAs_Si_grating_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
-</div>
 </div>
 </section>
 <section id="questions" class="level2">
 <h2 class="anchored" data-anchor-id="questions">Questions</h2>
 <ul>
 <li>Why does the grating only affect the absorption in Si at long wavelengths?</li>
+<li>What is the reason for using the angular redistribution matrix method, rather than defining an RCWA-only structure (<code>rcwa_structure</code>)?</li>
 </ul>
 
 
