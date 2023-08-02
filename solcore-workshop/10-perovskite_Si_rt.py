@@ -26,7 +26,7 @@ import os
 from solcore.structure import Layer
 from solcore.constants import q
 from solcore import material
-from solcore.absorption_calculator import search_db
+from solcore.absorption_calculator import search_db, download_db
 from solcore.light_source import LightSource
 
 from rayflare.textures import regular_pyramids
@@ -90,6 +90,12 @@ create_new_material("C60", "data/C60_Ren_n.txt",
 create_new_material("IZO", "data/IZO_Ballif_rO2_10pcnt_n.txt",
                     "data/IZO_Ballif_rO2_10pcnt_k.txt")
 # Comment out until here
+
+
+# In[ ]:
+
+
+download_db()
 
 
 # In[64]:

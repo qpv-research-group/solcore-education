@@ -10,7 +10,7 @@
 # 
 # ## Setting up
 
-# In[58]:
+# In[2]:
 
 
 from solcore import material, si
@@ -34,12 +34,12 @@ import matplotlib.pyplot as plt
 #   the exact compositions of some semiconductor alloy layers (InGaP, AlInP and AlGaAs)
 #    are not given in the paper and are thus reasonable guesses.
 
-# In[59]:
+# In[3]:
 
 
 #| output: false
 
-# download_db() # only needs to be run once
+download_db() # only needs to be run once
 
 MgF2_pageid = search_db(os.path.join("MgF2", "Rodriguez-de Marcos"))[0][0];
 Ta2O5_pageid = search_db(os.path.join("Ta2O5", "Rodriguez-de Marcos"))[0][0];
@@ -68,7 +68,7 @@ Al = material("Al")()
 # together in a logical way. In this example, we will only do optical simulations, so
 # we will not set e.g. diffusion lengths or doping levels.
 
-# In[60]:
+# In[4]:
 
 
 ARC = [
@@ -114,7 +114,7 @@ coh_layers = len(ARC) + len(GaInP_junction) + len(tunnel_1) + len(GaAs_junction)
 # 
 # Now we define the planar cell, and options for the solver:
 
-# In[61]:
+# In[5]:
 
 
 cell_planar = tmm_structure(
@@ -136,14 +136,13 @@ AM15G = LightSource(source_type="standard", version="AM1.5g", x=wl,
 options.wavelengths = wl
 options.coherency_list = coherency_list
 options.coherent = False
-options.project_name = "III_V_Si_cell"
 
 
 # Run the TMM calculation for the planar cell, and then extract the relevant layer
 # absorptions. These are used to calculate limiting currents (100% internal quantum
 # efficiency), which are displayed on the plot with the absorption in each layer.
 
-# In[62]:
+# In[6]:
 
 
 tmm_result = cell_planar.calculate(options=options)
@@ -193,7 +192,7 @@ plt.show()
 #  of different shapes can be defined for the RCWA solver can be found
 #  [here](https://rayflare.readthedocs.io/en/latest/Examples/rcwa_examples.html).
 
-# In[63]:
+# In[7]:
 
 
 x = 1000
@@ -213,7 +212,7 @@ back_materials = [Layer(width=si("250nm"),
 # interface. Finally, we put everything together into the ARMM `Structure`, also giving
 #  the incidence and transmission materials.
 
-# In[64]:
+# In[8]:
 
 
 bulk_Si = BulkLayer(280e-6, Si(), name="Si_bulk")
@@ -228,7 +227,7 @@ back_surf_grating = Interface(
     layers=back_materials,
     name="crossed_grating_back",
     d_vectors=d_vectors,
-    rcwa_orders=30,
+    rcwa_orders=60,
 )
 
 cell_grating = Structure(
@@ -246,7 +245,7 @@ cell_grating = Structure(
 #  back mirror, and only doing the new calculation at these wavelengths. At shorter
 #  wavelengths, the results previously calculated using TMM can be used.
 
-# In[65]:
+# In[9]:
 
 
 #| output: false
@@ -255,9 +254,12 @@ wl_rcwa = wl[tmm_result['T'] > 1e-4] # check where transmission fraction is bigg
 # than 1E-4
 
 options.wavelengths = wl_rcwa
+options.project_name = "III_V_Si_cell"
+options.n_theta_bins = 40
+options.c_azimuth = 0.25
 
-process_structure(cell_grating, options, overwrite=True)
-results_armm = calculate_RAT(cell_grating, options)
+process_structure(cell_grating, options, save_location='current')
+results_armm = calculate_RAT(cell_grating, options, save_location='current')
 RAT = results_armm[0]
 
 
@@ -267,7 +269,7 @@ RAT = results_armm[0]
 # limiting current for the Si junction. The plot compares the absorption in the Si with
 #  and without the grating.
 
-# In[66]:
+# In[10]:
 
 
 Si_A_total = np.zeros(len(wl))
@@ -295,3 +297,5 @@ plt.show()
 # ## Questions
 # 
 # - Why does the grating only affect the absorption in Si at long wavelengths?
+# - What is the reason for using the angular redistribution matrix method, rather
+#   than defining an RCWA-only structure (`rcwa_structure`)?

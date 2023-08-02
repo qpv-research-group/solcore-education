@@ -38,6 +38,10 @@ import matplotlib.pyplot as plt
 
 # download_db()
 
+
+# In[ ]:
+
+
 MgF2_pageid = search_db(os.path.join("MgF2", "Rodriguez-de Marcos"))[0][0];
 Ta2O5_pageid = search_db(os.path.join("Ta2O5", "Rodriguez-de Marcos"))[0][0];
 SU8_pageid = search_db("SU8")[0][0];

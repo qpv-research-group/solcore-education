@@ -44,11 +44,16 @@ import matplotlib.pyplot as plt
 # epoxy and glass used in the paper have the same refractive index (n = 1.56), so we
 # can use a single material with an appropriate refractive index to represent them.
 
+# In[ ]:
+
+
+download_db() # uncomment to download database
+
+
 # In[66]:
 
 
 #| output: false
-# download_db() # uncomment to download database
 
 MgF2_pageid = search_db(os.path.join("MgF2", "Rodriguez-de Marcos"))[0][0];
 ZnS_pageid = search_db(os.path.join("ZnS", "Querry"))[0][0];

@@ -19,7 +19,7 @@
 # 
 # First, importing relevant packages:
 
-# In[19]:
+# In[1]:
 
 
 import numpy as np
@@ -48,7 +48,7 @@ from sparse import load_npz
 # To make sure we are using the same optical constants for Si, load the same Si n/k data used in the paper
 # linked above:
 
-# In[20]:
+# In[2]:
 
 
 create_new_material("Si_OPTOS", "data/Si_OPTOS_n.txt", "data/Si_OPTOS_k.txt",
@@ -59,12 +59,12 @@ create_new_material("Si_OPTOS", "data/Si_OPTOS_n.txt", "data/Si_OPTOS_k.txt",
 # 
 # Setting options (taking the default options for everything not specified explicitly):
 
-# In[21]:
+# In[3]:
 
 
-angle_degrees_in = 8
+angle_degrees_in = 8 # same as in Fraunhofer paper
 
-wavelengths = np.linspace(900, 1200, 30) * 1e-9
+wavelengths = np.linspace(900, 1200, 20) * 1e-9
 
 Si = material("Si_OPTOS")()
 Air = material("Air")()
@@ -72,12 +72,13 @@ Air = material("Air")()
 options = default_options()
 options.wavelengths = wavelengths
 options.theta_in = angle_degrees_in * np.pi / 180 # incidence angle (polar angle)
-options.n_theta_bins = 100
+options.n_theta_bins = 50
 options.c_azimuth = 0.25
-options.n_rays = 25 * 25 * 1300 # number of rays per wavelength in ray-tracing
+options.n_rays = 5e5 # number of rays per wavelength in ray-tracing
 options.project_name = "OPTOS_comparison"
 options.orders = 60 # number of RCWA orders to use (more = better convergence, but slower)
 options.pol = "u" # unpolarized light
+options.only_incidence_angle = False
 
 
 # ## Defining the structures
@@ -86,7 +87,7 @@ options.pol = "u" # unpolarized light
 # These are squares, rotated by 45 degrees. The halfwidth is calculated based on the area fill factor
 # of the etched pillars given in the paper.
 
-# In[22]:
+# In[4]:
 
 
 x = 1000
@@ -107,7 +108,7 @@ back_materials = [
 # We specify the method to use to calculate the redistribution matrices in each case and create
 # the bulk layer.
 
-# In[23]:
+# In[5]:
 
 
 surf = regular_pyramids(elevation_angle=55, upright=False)
@@ -126,12 +127,12 @@ back_surf_grating = Interface(
     layers=back_materials,
     name="crossed_grating_back",
     d_vectors=d_vectors,
-    rcwa_orders=60,
+    rcwa_orders=20,
 )
 
 back_surf_planar = Interface("TMM", layers=[], name="planar_back")
 
-bulk_Si = BulkLayer(201.8e-6, Si, name="Si_bulk")
+bulk_Si = BulkLayer(200e-6, Si, name="Si_bulk")
 
 
 # Now we create the different structures and 'process' them (this will calculate the relevant
@@ -139,7 +140,7 @@ bulk_Si = BulkLayer(201.8e-6, Si, name="Si_bulk")
 # the files already exist). We don't need to process the final structure because it will use matrices
 # calculated for `SC_fig6` and `SC_fig7`.
 
-# In[24]:
+# In[6]:
 
 
 SC_fig6 = Structure(
@@ -152,8 +153,8 @@ SC_fig8 = Structure(
     [front_surf_pyramids, bulk_Si, back_surf_grating], incidence=Air, transmission=Air
 )
 
-process_structure(SC_fig6, options)
-process_structure(SC_fig7, options)
+process_structure(SC_fig6, options, save_location='current')
+process_structure(SC_fig7, options, save_location='current')
 
 
 # ## Calculating R/A/T
@@ -162,14 +163,14 @@ process_structure(SC_fig7, options)
 # multiplication, and get the required result out (absorption in the bulk) for each cell. We
 # also load the results from the reference paper to compare them to the ones calculated with RayFlare.
 
-# In[25]:
+# In[7]:
 
 
 #| output: false
 
-results_fig6 = calculate_RAT(SC_fig6, options)
-results_fig7 = calculate_RAT(SC_fig7, options)
-results_fig8 = calculate_RAT(SC_fig8, options)
+results_fig6 = calculate_RAT(SC_fig6, options, save_location='current')
+results_fig7 = calculate_RAT(SC_fig7, options, save_location='current')
+results_fig8 = calculate_RAT(SC_fig8, options, save_location='current')
 
 RAT_fig6 = results_fig6[0]
 RAT_fig7 = results_fig7[0]
@@ -185,7 +186,7 @@ sim_fig8 = np.loadtxt("data/optos_fig8_sim.csv", delimiter=",")
 # Finally, we use TMM to calculate the absorption in a structure with a planar front and planar rear,
 # as a reference.
 
-# In[26]:
+# In[8]:
 
 
 struc = tmm_structure([Layer(si("200um"), Si)], incidence=Air, transmission=Air)
@@ -198,7 +199,7 @@ RAT = tmm_structure.calculate(struc, options)
 # 
 # Plot everything together, including data from the reference paper for comparison:
 
-# In[27]:
+# In[9]:
 
 
 palhf = sns.color_palette("hls", 4)
@@ -231,7 +232,7 @@ plt.show()
 # much better overall, giving a large boost in the absorption at long wavelengths and also reducing the reflection
 # significantly at shorter wavelengths. Plotting reflection and transmission emphasises this:
 
-# In[28]:
+# In[10]:
 
 
 fig = plt.figure()
@@ -262,13 +263,13 @@ plt.show()
 # 
 # Plot the redistribution matrix for the rear grating (summed over azimuthal angles) at 1100 nm:
 
-# In[29]:
+# In[11]:
 
 
 theta_intv, phi_intv, angle_vector = make_angle_vector(
     options["n_theta_bins"], options["phi_symmetry"], options["c_azimuth"])
 
-path = get_savepath("default", options.project_name)
+path = get_savepath(save_location='current', project_name=options.project_name)
 sprs = load_npz(os.path.join(path, SC_fig6[2].name + "frontRT.npz"))
 
 wl_to_plot = 1100e-9
