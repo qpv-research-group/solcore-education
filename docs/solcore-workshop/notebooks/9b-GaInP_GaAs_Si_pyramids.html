@@ -282,62 +282,63 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># download_db()</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>MgF2_pageid <span class="op">=</span> search_db(os.path.join(<span class="st">"MgF2"</span>, <span class="st">"Rodriguez-de Marcos"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>Ta2O5_pageid <span class="op">=</span> search_db(os.path.join(<span class="st">"Ta2O5"</span>, <span class="st">"Rodriguez-de Marcos"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>SU8_pageid <span class="op">=</span> search_db(<span class="st">"SU8"</span>)[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>Ag_pageid <span class="op">=</span> search_db(os.path.join(<span class="st">"Ag"</span>, <span class="st">"Jiang"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>epoxy <span class="op">=</span> material(<span class="st">"BK7"</span>)()</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>MgF2 <span class="op">=</span> material(<span class="bu">str</span>(MgF2_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()<span class="op">;</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>Ta2O5 <span class="op">=</span> material(<span class="bu">str</span>(Ta2O5_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()<span class="op">;</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>SU8 <span class="op">=</span> material(<span class="bu">str</span>(SU8_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()<span class="op">;</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>Ag <span class="op">=</span> material(<span class="bu">str</span>(Ag_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()<span class="op">;</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>window <span class="op">=</span> material(<span class="st">"AlInP"</span>)(Al<span class="op">=</span><span class="fl">0.52</span>)</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>GaInP <span class="op">=</span> material(<span class="st">"GaInP"</span>)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>AlGaAs <span class="op">=</span> material(<span class="st">"AlGaAs"</span>)</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>Air <span class="op">=</span> material(<span class="st">"Air"</span>)()</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>GaAs <span class="op">=</span> material(<span class="st">"GaAs"</span>)</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>Si <span class="op">=</span> material(<span class="st">"Si"</span>)</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>Al2O3 <span class="op">=</span> material(<span class="st">"Al2O3P"</span>)()</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>Al <span class="op">=</span> material(<span class="st">"Al"</span>)()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># download_db()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>MgF2_pageid <span class="op">=</span> search_db(os.path.join(<span class="st">"MgF2"</span>, <span class="st">"Rodriguez-de Marcos"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Ta2O5_pageid <span class="op">=</span> search_db(os.path.join(<span class="st">"Ta2O5"</span>, <span class="st">"Rodriguez-de Marcos"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>SU8_pageid <span class="op">=</span> search_db(<span class="st">"SU8"</span>)[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>Ag_pageid <span class="op">=</span> search_db(os.path.join(<span class="st">"Ag"</span>, <span class="st">"Jiang"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>epoxy <span class="op">=</span> material(<span class="st">"BK7"</span>)()</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>MgF2 <span class="op">=</span> material(<span class="bu">str</span>(MgF2_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()<span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>Ta2O5 <span class="op">=</span> material(<span class="bu">str</span>(Ta2O5_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()<span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>SU8 <span class="op">=</span> material(<span class="bu">str</span>(SU8_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()<span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>Ag <span class="op">=</span> material(<span class="bu">str</span>(Ag_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()<span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>window <span class="op">=</span> material(<span class="st">"AlInP"</span>)(Al<span class="op">=</span><span class="fl">0.52</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>GaInP <span class="op">=</span> material(<span class="st">"GaInP"</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>AlGaAs <span class="op">=</span> material(<span class="st">"AlGaAs"</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>Air <span class="op">=</span> material(<span class="st">"Air"</span>)()</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>GaAs <span class="op">=</span> material(<span class="st">"GaAs"</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>Si <span class="op">=</span> material(<span class="st">"Si"</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>Al2O3 <span class="op">=</span> material(<span class="st">"Al2O3P"</span>)()</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>Al <span class="op">=</span> material(<span class="st">"Al"</span>)()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We define the layers we will need, as before. We specify the thickness of the silicon (280 <span class="math inline">\(\mu\)</span>m) and epoxy (1 mm) at the top:</p>
 <div class="cell" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>d_Si <span class="op">=</span> <span class="fl">280e-6</span> <span class="co"># thickness of Si wafer</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>d_epoxy <span class="op">=</span> <span class="fl">1e-3</span> <span class="co"># thickness of epoxy</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ARC <span class="op">=</span> [</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">110e-9</span>, MgF2),</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">65e-9</span>, Ta2O5),</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>GaInP_junction <span class="op">=</span> [</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">17e-9</span>, window),</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">400e-9</span>, GaInP(In<span class="op">=</span><span class="fl">0.50</span>)),</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">100e-9</span>, AlGaAs(Al<span class="op">=</span><span class="fl">0.8</span>))]</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 100 nm TJ</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>tunnel_1 <span class="op">=</span> [</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">80e-9</span>, AlGaAs(Al<span class="op">=</span><span class="fl">0.8</span>)),</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">20e-9</span>, GaInP(In<span class="op">=</span><span class="fl">0.5</span>)),</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>GaAs_junction <span class="op">=</span> [</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">17e-9</span>, GaInP(In<span class="op">=</span><span class="fl">0.5</span>), role<span class="op">=</span><span class="st">"window"</span>),</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">1050e-9</span>, GaAs()),</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">70e-9</span>, AlGaAs(Al<span class="op">=</span><span class="fl">0.8</span>), role<span class="op">=</span><span class="st">"bsf"</span>)]</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>spacer_ARC <span class="op">=</span> [</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">80e-9</span>, Ta2O5),</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>d_Si <span class="op">=</span> <span class="fl">280e-6</span> <span class="co"># thickness of Si wafer</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>d_epoxy <span class="op">=</span> <span class="fl">1e-3</span> <span class="co"># thickness of epoxy</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ARC <span class="op">=</span> [</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">110e-9</span>, MgF2),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">65e-9</span>, Ta2O5),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>GaInP_junction <span class="op">=</span> [</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">17e-9</span>, window),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">400e-9</span>, GaInP(In<span class="op">=</span><span class="fl">0.50</span>)),</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">100e-9</span>, AlGaAs(Al<span class="op">=</span><span class="fl">0.8</span>))]</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 100 nm TJ</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>tunnel_1 <span class="op">=</span> [</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">80e-9</span>, AlGaAs(Al<span class="op">=</span><span class="fl">0.8</span>)),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">20e-9</span>, GaInP(In<span class="op">=</span><span class="fl">0.5</span>)),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>GaAs_junction <span class="op">=</span> [</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">17e-9</span>, GaInP(In<span class="op">=</span><span class="fl">0.5</span>), role<span class="op">=</span><span class="st">"window"</span>),</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">1050e-9</span>, GaAs()),</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">70e-9</span>, AlGaAs(Al<span class="op">=</span><span class="fl">0.8</span>), role<span class="op">=</span><span class="st">"bsf"</span>)]</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>spacer_ARC <span class="op">=</span> [</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">80e-9</span>, Ta2O5),</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="defining-the-cell-layers" class="level2">
@@ -350,64 +351,64 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>These 3 interfaces are defined here, using the pre-defined textures for a planar surface or regular pyramids:</p>
 <div class="cell" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>front_layers <span class="op">=</span> ARC <span class="op">+</span> GaInP_junction <span class="op">+</span> tunnel_1 <span class="op">+</span> GaAs_junction <span class="op">+</span> spacer_ARC</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>front_surf <span class="op">=</span> planar_surface(</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    interface_layers <span class="op">=</span> front_layers</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>Si_front <span class="op">=</span> regular_pyramids(</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    elevation_angle<span class="op">=</span><span class="dv">50</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    upright<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>Si_back <span class="op">=</span> regular_pyramids(</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    elevation_angle<span class="op">=</span><span class="dv">50</span>,</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    upright<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>front_layers <span class="op">=</span> ARC <span class="op">+</span> GaInP_junction <span class="op">+</span> tunnel_1 <span class="op">+</span> GaAs_junction <span class="op">+</span> spacer_ARC</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>front_surf <span class="op">=</span> planar_surface(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    interface_layers <span class="op">=</span> front_layers</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>Si_front <span class="op">=</span> regular_pyramids(</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    elevation_angle<span class="op">=</span><span class="dv">50</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    upright<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>Si_back <span class="op">=</span> regular_pyramids(</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    elevation_angle<span class="op">=</span><span class="dv">50</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    upright<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we set relevant options for the solver. We set the number of rays to trace at each wavelength (more rays will make the result less noisy, but increase computation time) and whether to calculate the absorption profile in the bulk layers (no, in this case). The <code>randomize_surface</code> options determines whether the ray keeps track of its positions in the unit cell while travelling between surfaces; we set this to <code>False</code> to mimic random pyramids.</p>
 <div class="cell" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>options <span class="op">=</span> default_options()</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>wl <span class="op">=</span> np.arange(<span class="dv">300</span>, <span class="dv">1201</span>, <span class="dv">10</span>) <span class="op">*</span> <span class="fl">1e-9</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>AM15G <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">"standard"</span>, version<span class="op">=</span><span class="st">"AM1.5g"</span>, x<span class="op">=</span>wl,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                    output_units<span class="op">=</span><span class="st">"photon_flux_per_m"</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>options.wavelengths <span class="op">=</span> wl</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>options.project_name <span class="op">=</span> <span class="st">"III_V_Si_cell"</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># options for ray-tracing</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>options.randomize_surface <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>options.n_rays <span class="op">=</span> <span class="dv">1000</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>options.bulk_profile <span class="op">=</span> <span class="va">False</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>options <span class="op">=</span> default_options()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>wl <span class="op">=</span> np.arange(<span class="dv">300</span>, <span class="dv">1201</span>, <span class="dv">10</span>) <span class="op">*</span> <span class="fl">1e-9</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>AM15G <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">"standard"</span>, version<span class="op">=</span><span class="st">"AM1.5g"</span>, x<span class="op">=</span>wl,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                    output_units<span class="op">=</span><span class="st">"photon_flux_per_m"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>options.wavelengths <span class="op">=</span> wl</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>options.project_name <span class="op">=</span> <span class="st">"III_V_Si_cell"</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># options for ray-tracing</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>options.randomize_surface <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>options.n_rays <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>options.bulk_profile <span class="op">=</span> <span class="va">False</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="defining-the-structures" class="level2">
 <h2 class="anchored" data-anchor-id="defining-the-structures">Defining the structures</h2>
 <p>Finally, we define the ray-tracing structure we will use, using the interfaces, bulk materials, and options set above. Because we want to calculate the reflection/absorption/transmission probabilities at the front surface using TMM, we set the <code>use_TMM</code> argument to True. We also define a completely planar cell with the same layer thicknesses etc. to compare and evaluate the effect of the textures Si surfaces.</p>
 <div class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>solar_cell <span class="op">=</span> rt_structure(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    textures<span class="op">=</span>[front_surf, Si_front, Si_back],</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    materials<span class="op">=</span>[epoxy, Si()],</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    widths<span class="op">=</span>[d_epoxy, d_Si],</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    incidence<span class="op">=</span>Air,</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    transmission<span class="op">=</span>Ag,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    options<span class="op">=</span>options,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    use_TMM<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    save_location<span class="op">=</span><span class="st">"current"</span>, <span class="co"># lookup table save location</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    overwrite<span class="op">=</span><span class="va">True</span>, <span class="co"># whether to overwrite any previously existing results, if found</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># options for TMM</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>options.coherent <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>options.coherency_list <span class="op">=</span> <span class="bu">len</span>(front_layers)<span class="op">*</span>[<span class="st">'c'</span>] <span class="op">+</span> [<span class="st">'i'</span>]<span class="op">*</span><span class="dv">2</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>solar_cell_planar <span class="op">=</span> tmm_structure(</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    layer_stack <span class="op">=</span> front_layers <span class="op">+</span> [Layer(d_epoxy, epoxy), Layer(d_Si, Si())],</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    incidence<span class="op">=</span>Air,</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    transmission<span class="op">=</span>Ag,</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>solar_cell <span class="op">=</span> rt_structure(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    textures<span class="op">=</span>[front_surf, Si_front, Si_back],</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    materials<span class="op">=</span>[epoxy, Si()],</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    widths<span class="op">=</span>[d_epoxy, d_Si],</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    incidence<span class="op">=</span>Air,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    transmission<span class="op">=</span>Ag,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    options<span class="op">=</span>options,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    use_TMM<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    save_location<span class="op">=</span><span class="st">"current"</span>, <span class="co"># lookup table save location</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    overwrite<span class="op">=</span><span class="va">True</span>, <span class="co"># whether to overwrite any previously existing results, if found</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># options for TMM</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>options.coherent <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>options.coherency_list <span class="op">=</span> <span class="bu">len</span>(front_layers)<span class="op">*</span>[<span class="st">'c'</span>] <span class="op">+</span> [<span class="st">'i'</span>]<span class="op">*</span><span class="dv">2</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>solar_cell_planar <span class="op">=</span> tmm_structure(</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    layer_stack <span class="op">=</span> front_layers <span class="op">+</span> [Layer(d_epoxy, epoxy), Layer(d_Si, Si())],</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    incidence<span class="op">=</span>Air,</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    transmission<span class="op">=</span>Ag,</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Pre-computing TMM lookup table(s)
 Database file found at /Users/phoebe/.solcore/nk/nk.db
@@ -425,53 +426,53 @@ Material main/Ta2O5/Rodriguez-de Marcos.yml loaded.</code></pre>
 <h2 class="anchored" data-anchor-id="calculations">Calculations</h2>
 <p>Calculate the R/A/T for the planar reference cell:</p>
 <div class="cell" data-execution_count="33">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tmm_result <span class="op">=</span> solar_cell_planar.calculate(options<span class="op">=</span>options)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>GaInP_A_tmm <span class="op">=</span> tmm_result[<span class="st">'A_per_layer'</span>][:,<span class="dv">3</span>]</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>GaAs_A_tmm <span class="op">=</span> tmm_result[<span class="st">'A_per_layer'</span>][:,<span class="dv">8</span>]</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>Si_A_tmm <span class="op">=</span> tmm_result[<span class="st">'A_per_layer'</span>][:,<span class="bu">len</span>(front_layers)<span class="op">+</span><span class="dv">1</span>]</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>Jmax_GaInP_tmm <span class="op">=</span> q<span class="op">*</span>np.trapz(GaInP_A_tmm<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>], x<span class="op">=</span>wl)<span class="op">/</span><span class="dv">10</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>Jmax_GaAs_tmm <span class="op">=</span> q<span class="op">*</span>np.trapz(GaAs_A_tmm<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>], x<span class="op">=</span>wl)<span class="op">/</span><span class="dv">10</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>Jmax_Si_tmm <span class="op">=</span> q<span class="op">*</span>np.trapz(Si_A_tmm<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>], x<span class="op">=</span>wl)<span class="op">/</span><span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tmm_result <span class="op">=</span> solar_cell_planar.calculate(options<span class="op">=</span>options)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>GaInP_A_tmm <span class="op">=</span> tmm_result[<span class="st">'A_per_layer'</span>][:,<span class="dv">3</span>]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>GaAs_A_tmm <span class="op">=</span> tmm_result[<span class="st">'A_per_layer'</span>][:,<span class="dv">8</span>]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>Si_A_tmm <span class="op">=</span> tmm_result[<span class="st">'A_per_layer'</span>][:,<span class="bu">len</span>(front_layers)<span class="op">+</span><span class="dv">1</span>]</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>Jmax_GaInP_tmm <span class="op">=</span> q<span class="op">*</span>np.trapz(GaInP_A_tmm<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>], x<span class="op">=</span>wl)<span class="op">/</span><span class="dv">10</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>Jmax_GaAs_tmm <span class="op">=</span> q<span class="op">*</span>np.trapz(GaAs_A_tmm<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>], x<span class="op">=</span>wl)<span class="op">/</span><span class="dv">10</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>Jmax_Si_tmm <span class="op">=</span> q<span class="op">*</span>np.trapz(Si_A_tmm<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>], x<span class="op">=</span>wl)<span class="op">/</span><span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Calculate the R/A/T for the textured cell:</p>
 <div class="cell" data-execution_count="34">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>rt_result <span class="op">=</span> solar_cell.calculate(options<span class="op">=</span>options)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>GaInP_absorption_ARC <span class="op">=</span> rt_result[<span class="st">'A_per_interface'</span>][<span class="dv">0</span>][:,<span class="dv">3</span>]</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>GaAs_absorption_ARC <span class="op">=</span> rt_result[<span class="st">'A_per_interface'</span>][<span class="dv">0</span>][:,<span class="dv">8</span>]</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>Si_absorption_ARC <span class="op">=</span> rt_result[<span class="st">'A_per_layer'</span>][:,<span class="dv">1</span>]</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>Jmax_GaInP <span class="op">=</span> q<span class="op">*</span>np.trapz(GaInP_absorption_ARC<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>], x<span class="op">=</span>wl)<span class="op">/</span><span class="dv">10</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>Jmax_GaAs <span class="op">=</span> q<span class="op">*</span>np.trapz(GaAs_absorption_ARC<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>], x<span class="op">=</span>wl)<span class="op">/</span><span class="dv">10</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>Jmax_Si <span class="op">=</span> q<span class="op">*</span>np.trapz(Si_absorption_ARC<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>], x<span class="op">=</span>wl)<span class="op">/</span><span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>rt_result <span class="op">=</span> solar_cell.calculate(options<span class="op">=</span>options)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>GaInP_absorption_ARC <span class="op">=</span> rt_result[<span class="st">'A_per_interface'</span>][<span class="dv">0</span>][:,<span class="dv">3</span>]</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>GaAs_absorption_ARC <span class="op">=</span> rt_result[<span class="st">'A_per_interface'</span>][<span class="dv">0</span>][:,<span class="dv">8</span>]</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>Si_absorption_ARC <span class="op">=</span> rt_result[<span class="st">'A_per_layer'</span>][:,<span class="dv">1</span>]</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>Jmax_GaInP <span class="op">=</span> q<span class="op">*</span>np.trapz(GaInP_absorption_ARC<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>], x<span class="op">=</span>wl)<span class="op">/</span><span class="dv">10</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>Jmax_GaAs <span class="op">=</span> q<span class="op">*</span>np.trapz(GaAs_absorption_ARC<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>], x<span class="op">=</span>wl)<span class="op">/</span><span class="dv">10</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>Jmax_Si <span class="op">=</span> q<span class="op">*</span>np.trapz(Si_absorption_ARC<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>], x<span class="op">=</span>wl)<span class="op">/</span><span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="plotting-the-results" class="level2">
 <h2 class="anchored" data-anchor-id="plotting-the-results">Plotting the results</h2>
 <p>Finally, we plot the results; the solid lines show the results for the textured Si cell (calculated using ray-tracing), the dashed lines for the planar cell (calculated using TMM). The maximum possible currents are shown in the plot, with the value in brackets for Si being for the planar cell.</p>
 <div class="cell" data-execution_count="35">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">3</span>))</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, GaInP_absorption_ARC, <span class="st">"-k"</span>, label<span class="op">=</span><span class="st">"GaInP"</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, GaAs_absorption_ARC, <span class="st">"-b"</span>, label<span class="op">=</span><span class="st">"GaAs"</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, Si_absorption_ARC, <span class="st">"-r"</span>, label<span class="op">=</span><span class="st">"Si"</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, GaInP_A_tmm, <span class="st">"--k"</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, GaAs_A_tmm, <span class="st">"--b"</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, Si_A_tmm, <span class="st">"--r"</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, rt_result[<span class="st">'R'</span>], <span class="st">'-'</span>, color<span class="op">=</span><span class="st">'grey'</span>, label<span class="op">=</span><span class="st">"Reflected"</span>)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, tmm_result[<span class="st">'R'</span>], <span class="st">'--'</span>, color<span class="op">=</span><span class="st">'grey'</span>)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="dv">420</span>, <span class="fl">0.55</span>, <span class="vs">r"</span><span class="sc">{:.1f}</span><span class="vs"> mA/cm$^2$"</span>.<span class="bu">format</span>(Jmax_GaInP))</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="dv">670</span>, <span class="fl">0.55</span>, <span class="vs">r"</span><span class="sc">{:.1f}</span><span class="vs"> mA/cm$^2$"</span>.<span class="bu">format</span>(Jmax_GaAs))</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="dv">870</span>, <span class="fl">0.55</span>, <span class="vs">r"</span><span class="sc">{:.1f}</span><span class="vs"> mA/cm$^2$"</span>.<span class="bu">format</span>(Jmax_Si))</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="dv">870</span>, <span class="fl">0.45</span>, <span class="vs">r"(</span><span class="sc">{:.1f}</span><span class="vs"> mA/cm$^2)$"</span>.<span class="bu">format</span>(Jmax_Si_tmm))</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>, <span class="dv">1</span>), loc<span class="op">=</span><span class="dv">2</span>, borderaxespad<span class="op">=</span><span class="fl">0.</span>)</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">3</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, GaInP_absorption_ARC, <span class="st">"-k"</span>, label<span class="op">=</span><span class="st">"GaInP"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, GaAs_absorption_ARC, <span class="st">"-b"</span>, label<span class="op">=</span><span class="st">"GaAs"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, Si_absorption_ARC, <span class="st">"-r"</span>, label<span class="op">=</span><span class="st">"Si"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, GaInP_A_tmm, <span class="st">"--k"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, GaAs_A_tmm, <span class="st">"--b"</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, Si_A_tmm, <span class="st">"--r"</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, rt_result[<span class="st">'R'</span>], <span class="st">'-'</span>, color<span class="op">=</span><span class="st">'grey'</span>, label<span class="op">=</span><span class="st">"Reflected"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, tmm_result[<span class="st">'R'</span>], <span class="st">'--'</span>, color<span class="op">=</span><span class="st">'grey'</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="dv">420</span>, <span class="fl">0.55</span>, <span class="vs">r"</span><span class="sc">{:.1f}</span><span class="vs"> mA/cm$^2$"</span>.<span class="bu">format</span>(Jmax_GaInP))</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="dv">670</span>, <span class="fl">0.55</span>, <span class="vs">r"</span><span class="sc">{:.1f}</span><span class="vs"> mA/cm$^2$"</span>.<span class="bu">format</span>(Jmax_GaAs))</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="dv">870</span>, <span class="fl">0.55</span>, <span class="vs">r"</span><span class="sc">{:.1f}</span><span class="vs"> mA/cm$^2$"</span>.<span class="bu">format</span>(Jmax_Si))</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="dv">870</span>, <span class="fl">0.45</span>, <span class="vs">r"(</span><span class="sc">{:.1f}</span><span class="vs"> mA/cm$^2)$"</span>.<span class="bu">format</span>(Jmax_Si_tmm))</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>, <span class="dv">1</span>), loc<span class="op">=</span><span class="dv">2</span>, borderaxespad<span class="op">=</span><span class="fl">0.</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="9b-GaInP_GaAs_Si_pyramids_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
+<p><img src="9b-GaInP_GaAs_Si_pyramids_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>

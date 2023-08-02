@@ -357,11 +357,6 @@ plt.show()
 # The Shockley-Queisser efficiency calculation can now be performed over a range of band-gap energies.  To do this, we make a function that calculates the maximum power Pmax as a function of band-gap energy.
 
 # In[45]:
-
-
-get_ipython().run_cell_magic('capture', '', "# A command that prevents the screen from filling up with unnecessary working\n\n# Function that returns the maximum power for a Shockley-Queisser solar cell with band-gap Eg\ndef getPmax(eg):\n    V = np.linspace(0, eg-0.1, 500)\n    db_junction = Junction(kind='DB', T=300, Eg=eg, A=1, R_shunt=np.inf, n=1)\n    my_solar_cell = SolarCell([db_junction], T=300, R_series=0)\n\n    solar_cell_solver(my_solar_cell, 'iv',\n                      user_options={'T_ambient': 300, 'db_mode': 'top_hat', 'voltages': V, 'light_iv': True, 'wavelength': wl,\n                                    'mpp': True, 'light_source': am15g})\n    return(my_solar_cell.iv.Pmpp)\n\n# Define the range of band-gaps to perform the calculation over\neg=np.linspace(0.5,2.5,100)\n# Perform the claculation for all values of eg\np=np.vectorize(getPmax)(eg)\n")
-
-
 # Now let's plot the result:
 
 # In[46]:
@@ -387,10 +382,7 @@ plt.legend()
 # In[47]:
 
 
-get_ipython().run_cell_magic('capture', '', "\n# Set up a series of AM1.5D solar spectra at different concentrations\nwl = np.linspace(300, 4000, 4000) * 1e-9    #wl contains the x-ordinate in wavelength\nam15d1x = LightSource(source_type='standard', x=wl, version='AM1.5d', concentration=1)\nam15d30x = LightSource(source_type='standard', x=wl, version='AM1.5d', concentration=30)\nam15d1000x = LightSource(source_type='standard', x=wl, version='AM1.5d',\n                         concentration=1000)\n\n#Define a function to find Pmax for a particular band-gap energy and solar spectrum\ndef getPmax(eg,spectrum):\n    V = np.linspace(0, eg-0.1, 500)\n    db_junction = Junction(kind='DB', T=300, Eg=eg, A=1, R_shunt=np.inf, n=1)\n    my_solar_cell = SolarCell([db_junction], T=300, R_series=0)\n\n    solar_cell_solver(my_solar_cell, 'iv',\n                      user_options={'T_ambient': 300, 'db_mode': 'top_hat', 'voltages': V, 'light_iv': True, 'wavelength': wl,\n                                    'mpp': True, 'light_source': spectrum})\n    return my_solar_cell.iv.Pmpp\n\n# Evaluate the Pmax function for band-gaps spanning 0.8 to 1.6eV and concentrations 1x,30x,1000x\neg = np.linspace(0.8,1.6,100)\np1x = np.vectorize(getPmax)(eg, am15d1x)\np30x = np.vectorize(getPmax)(eg, am15d30x)\np1000x = np.vectorize(getPmax)(eg, am15d1000x)\n")
-
-
-# In[48]:
+# In[48]:x
 
 
 # Setup a figure for dual y-axes
