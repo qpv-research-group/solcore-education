@@ -12,6 +12,8 @@ website:
         file: solar-cell-simulation/tutorials.qmd
       - text: "Solcore Workshop 2023"
         file: solcore-workshop/workshop2023.qmd
+      - text: "Other"
+        file: other/other.qmd
 
   sidebar:
     - title: "Home"
@@ -40,6 +42,11 @@ website:
         - solcore-workshop/notebooks/9a-GaInP_GaAs_Si_grating.ipynb
         - solcore-workshop/notebooks/9b-GaInP_GaAs_Si_pyramids.ipynb
         - solcore-workshop/notebooks/10-perovskite_Si_rt.ipynb
+
+    - title: "Other"
+      contents:
+        - other/other.qmd
+        - auto: other/*.ipynb
 
 format:
   html:
