@@ -1,5 +1,5 @@
 ---
-title: "Solcore Workshop 2023"
+title: "Solcore Workshop 2023 (SKKU)"
 ---
 
 [Click here](Workshop_all_slides.pdf) to view all the slides.

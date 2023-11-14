@@ -1,0 +1,48 @@
+Note: some of the commands listed here differ slightly from those seen in the video. 
+Although they should do exactly the same thing, please use the ones listed here.
+
+1. Install Python 3.11 through the Microsoft Store
+2. Install Visual Studio Code (VSCode) through the Microsoft Store
+3. Launch VSCode
+4. Create a new folder anywhere you want
+5. From within VSCode, create a file called hello_world.py (or any other name you like,
+   as long as it ends in .py), and type in that empty file:
+	
+print("Hello world!")
+
+   Then run the file (play button). VSCode will prompt you to install the 
+   Python extension; agree to this.
+
+   NOTE: If you have never previously installed Python, VSCode should automatically
+   detect the Python 3.11 you just installed. However, if you do have an old version,
+   it may automatically detect that. To check the right one is being used, press
+   Ctrl + Shift + P and search for "Python: Select interpreter" in the search bar that
+   comes up. This lets you choose which version of Python VSCode uses.
+
+6. Running the file opens a Terminal window within VSCode. Into this window,
+   type/copy and paste:
+
+python3.11 -m pip install solcore rayflare seaborn
+
+7. Python, Solcore and Rayflare are installed! To check everything is working, 
+   you can add the following code to your hello_world.py file and run it again:
+
+from solcore import solar_cell_solver
+from rayflare.transfer_matrix_method import tmm_structure
+
+print("Success!")
+
+   If this prints the "Success!" to your terminal, things are installed. Do
+   not worry about any warnings which appear.
+
+8. We will also be using Jupyter notebooks during the workshop (these are files
+   which let you combine Python code blocks, normal text, images etc.). First, 
+   type into the terminal:
+
+python3.11 -m pip install jupyter
+
+9. To make sure VSCode installs the required extensions, make a new file called 
+   hello_world.ipynb, and copy the contents of hello_world.py into this file.
+   Click "Select Kernel" in the top right of the file to choose the Python 3.11
+   we installed before. VSCode should again prompt you to install several extensions.
+

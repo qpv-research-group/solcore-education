@@ -1,0 +1,45 @@
+---
+title: "Solcore Workshop 2023 (UNSW)"
+---
+
+## Installation instructions
+
+If you are familiar with Python/have a working installation (Python 3.7 or above),
+you only need to install the following packages:
+
+```
+pip install solcore rayflare seaborn jupyter
+```
+
+For those who need to set up Python and a programming environment from scratch, there a detailed instructions for:
+
+- Windows: [text instructions](windows_installation.txt) and [accompanying video instructions](https://youtu.be/3Zuvr27vXbg).
+- MacOS: [text instructions](macos_installation.txt) and [accompanying video instructions](https://youtu.be/YlPUdx-TmJY).
+
+If you have issues, please come to one of the pre-workshop installation help sessions (see below)! We can also
+try to help during the main workshop, but to ensure it runs as smoothly as possible, it's best if everyone already
+has a working installation of Python and the required packages.
+
+## Times & locations
+
+**Pre-workshop help sessions (OPTIONAL):**
+
+1. Monday 20 November, 3-4 pm
+2. Tuesday 21 November, 3-4 pm
+
+In TETB meeting room Gnd 22 (Ground Floor, across from the main entrance).
+If the installation described above works for you, no need to attend either of these!
+
+**Workshop:**
+
+Wednesday - Friday, 22 - 24 November
+
+1 - 5 pm (with breaks, of course :))
+
+F10 June Griffith M10 (K-F10-M10)
+
+UNSW Sydney, Australia
+
+A more detailed schedule will be published.
+
+(June Griffith building is next to the Law faculty, diagonally across from Tyree on the University Mall)

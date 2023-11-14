@@ -19,7 +19,7 @@ and [RayFlare](https://rayflare.readthedocs.io/en/latest/Installation/installati
 instructions for each package). In the simplest case, you can install them with:
 
 ```
-pip install solcore rayflare
+pip install solcore rayflare jupyter
 ```
 
 But this will not install all functionality, as detailed in the documentation for both packages.
