@@ -536,14 +536,14 @@
     "href": "solcore-workshop-2/workshop2023.html",
     "title": "Solcore Workshop 2023 (UNSW)",
     "section": "",
-    "text": "If you are familiar with Python/have a working installation (Python 3.7 or above), you only need to install the following packages:\npip install solcore rayflare seaborn jupyter\nFor those who need to set up Python and a programming environment from scratch:\n\nMacOS: text instructions and accompanying video instructions.\nWindows: text instructions and accompanying video instructions.\n\nIf you have issues, please come to one of the pre-workshop installation help sessions (see below)! We can also try to help during the main workshop, but to ensure it runs as smoothly as possible, it’s best if everyone already has a working installation of Python and the required packages."
+    "text": "If you are familiar with Python/have a working installation (Python 3.7 or above), you only need to install the following packages:\npip install solcore rayflare seaborn jupyter\nFor those who need to set up Python and a programming environment from scratch, there a detailed instructions for:\n\nWindows: text instructions and accompanying video instructions.\nMacOS: text instructions and accompanying video instructions.\n\nIf you have issues, please come to one of the pre-workshop installation help sessions (see below)! We can also try to help during the main workshop, but to ensure it runs as smoothly as possible, it’s best if everyone already has a working installation of Python and the required packages."
   },
   {
     "objectID": "solcore-workshop-2/workshop2023.html#installation-instructions",
     "href": "solcore-workshop-2/workshop2023.html#installation-instructions",
     "title": "Solcore Workshop 2023 (UNSW)",
     "section": "",
-    "text": "If you are familiar with Python/have a working installation (Python 3.7 or above), you only need to install the following packages:\npip install solcore rayflare seaborn jupyter\nFor those who need to set up Python and a programming environment from scratch:\n\nMacOS: text instructions and accompanying video instructions.\nWindows: text instructions and accompanying video instructions.\n\nIf you have issues, please come to one of the pre-workshop installation help sessions (see below)! We can also try to help during the main workshop, but to ensure it runs as smoothly as possible, it’s best if everyone already has a working installation of Python and the required packages."
+    "text": "If you are familiar with Python/have a working installation (Python 3.7 or above), you only need to install the following packages:\npip install solcore rayflare seaborn jupyter\nFor those who need to set up Python and a programming environment from scratch, there a detailed instructions for:\n\nWindows: text instructions and accompanying video instructions.\nMacOS: text instructions and accompanying video instructions.\n\nIf you have issues, please come to one of the pre-workshop installation help sessions (see below)! We can also try to help during the main workshop, but to ensure it runs as smoothly as possible, it’s best if everyone already has a working installation of Python and the required packages."
   },
   {
     "objectID": "solcore-workshop-2/workshop2023.html#times-locations",
