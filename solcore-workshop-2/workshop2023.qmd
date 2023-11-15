@@ -4,7 +4,7 @@ title: "Solcore Workshop 2023 (UNSW)"
 
 ## Installation instructions
 
-If you are familiar with Python/have a working installation (Python 3.7 or above),
+If you are familiar with Python/have a working installation (Python >= 3.7, <= 3.11),
 you only need to install the following packages:
 
 ```
