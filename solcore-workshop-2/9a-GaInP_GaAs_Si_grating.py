@@ -10,7 +10,7 @@
 # 
 # ## Setting up
 
-# In[2]:
+# In[1]:
 
 
 from solcore import material, si
@@ -34,12 +34,17 @@ import matplotlib.pyplot as plt
 #   the exact compositions of some semiconductor alloy layers (InGaP, AlInP and AlGaAs)
 #    are not given in the paper and are thus reasonable guesses.
 
+# In[2]:
+
+
+# download_db() # only needs to be run once
+# commented out because this should have already been done in a previous example. Uncomment if necessary.
+
+
 # In[3]:
 
 
 #| output: false
-
-download_db() # only needs to be run once
 
 MgF2_pageid = search_db(os.path.join("MgF2", "Rodriguez-de Marcos"))[0][0];
 Ta2O5_pageid = search_db(os.path.join("Ta2O5", "Rodriguez-de Marcos"))[0][0];
@@ -71,38 +76,19 @@ Al = material("Al")()
 # In[4]:
 
 
-ARC = [
-    Layer(110e-9, MgF2),
-    Layer(65e-9, Ta2O5),
-]
+ARC = [Layer(110e-9, MgF2), Layer(65e-9, Ta2O5)]
 
-GaInP_junction = [
-    Layer(17e-9, window),
-    Layer(400e-9, GaInP),
-    Layer(100e-9, AlGaAs)
-]
+GaInP_junction = [Layer(17e-9, window), Layer(400e-9, GaInP), Layer(100e-9, AlGaAs)]
 
-tunnel_1 = [
-    Layer(80e-9, AlGaAs),
-    Layer(20e-9, GaInP),
-]
+tunnel_1 = [Layer(80e-9, AlGaAs), Layer(20e-9, GaInP)]
 
-GaAs_junction = [
-    Layer(17e-9, GaInP),
-    Layer(1050e-9, GaAs),
-    Layer(70e-9, AlGaAs)]
+GaAs_junction = [Layer(17e-9, GaInP), Layer(1050e-9, GaAs), Layer(70e-9, AlGaAs)]
 
-tunnel_2 = [
-    Layer(50e-9, AlGaAs),
-    Layer(125e-9, GaAs),
-    ]
+tunnel_2 = [Layer(50e-9, AlGaAs), Layer(125e-9, GaAs)]
 
-Si_junction = [
-    Layer(280e-6, Si(Nd=si("2e18cm-3"), hole_diffusion_length=2e-6), role="emitter"),
-]
+Si_junction = [Layer(280e-6, Si(Nd=si("2e18cm-3"), hole_diffusion_length=2e-6), role="emitter")]
 
-coh_layers = len(ARC) + len(GaInP_junction) + len(tunnel_1) + len(GaAs_junction) + \
-               len(tunnel_2)
+coh_layers = len(ARC) + len(GaInP_junction) + len(tunnel_1) + len(GaAs_junction) + len(tunnel_2)
 
 
 # As for [Example 7](7-InGaP_Si_planar.ipynb), to get physically reasonable results we
@@ -119,8 +105,7 @@ coh_layers = len(ARC) + len(GaInP_junction) + len(tunnel_1) + len(GaAs_junction)
 
 cell_planar = tmm_structure(
     ARC + GaInP_junction + tunnel_1 + GaAs_junction + tunnel_2 + Si_junction,
-    incidence=Air,
-    transmission=Ag,
+    incidence=Air, transmission=Ag,
 )
 
 n_layers = cell_planar.layer_stack.num_layers
@@ -133,7 +118,7 @@ wl = np.arange(300, 1201, 10) * 1e-9
 AM15G = LightSource(source_type="standard", version="AM1.5g", x=wl,
                     output_units="photon_flux_per_m")
 
-options.wavelengths = wl
+options.wavelength = wl
 options.coherency_list = coherency_list
 options.coherent = False
 
@@ -141,6 +126,12 @@ options.coherent = False
 # Run the TMM calculation for the planar cell, and then extract the relevant layer
 # absorptions. These are used to calculate limiting currents (100% internal quantum
 # efficiency), which are displayed on the plot with the absorption in each layer.
+
+# In[ ]:
+
+
+
+
 
 # In[6]:
 
@@ -201,11 +192,10 @@ d_vectors = ((x, 0), (0, x))
 area_fill_factor = 0.4
 hw = np.sqrt(area_fill_factor) * 500
 
-back_materials = [Layer(width=si("250nm"),
-        material=SU8,
+back_materials = [
+        Layer(width=si("250nm"), material=SU8,
         geometry=[{"type": "rectangle", "mat": Ag, "center": (x / 2, x / 2),
-                   "halfwidths": (hw, hw), "angle": 0}],
-    )]
+                   "halfwidths": (hw, hw), "angle": 0}])]
 
 
 # Now, we define the Si bulk layer, and the III-V layers which go in the front
@@ -222,19 +212,11 @@ III_V_layers = ARC + GaInP_junction + tunnel_1 + GaAs_junction + tunnel_2
 front_surf_planar = Interface("TMM", layers=III_V_layers, name="III_V_front",
                               coherent=True)
 
-back_surf_grating = Interface(
-    "RCWA",
-    layers=back_materials,
-    name="crossed_grating_back",
-    d_vectors=d_vectors,
-    rcwa_orders=60,
-)
+back_surf_grating = Interface("RCWA", layers=back_materials, name="crossed_grating_back",
+    d_vectors=d_vectors, rcwa_orders=60)
 
-cell_grating = Structure(
-    [front_surf_planar, bulk_Si, back_surf_grating],
-    incidence=Air,
-    transmission=Ag,
-)
+cell_grating = Structure([front_surf_planar, bulk_Si, back_surf_grating],
+    incidence=Air, transmission=Ag)
 
 
 # Because RCWA calculations are very slow compared to TMM, it makes sense to only carry
@@ -253,10 +235,11 @@ cell_grating = Structure(
 wl_rcwa = wl[tmm_result['T'] > 1e-4] # check where transmission fraction is bigger
 # than 1E-4
 
-options.wavelengths = wl_rcwa
+options.wavelength = wl_rcwa
 options.project_name = "III_V_Si_cell"
-options.n_theta_bins = 40
+options.n_theta_bins = 30
 options.c_azimuth = 0.25
+options.RCWA_method = "inkstone"
 
 process_structure(cell_grating, options, save_location='current')
 results_armm = calculate_RAT(cell_grating, options, save_location='current')
@@ -269,7 +252,7 @@ RAT = results_armm[0]
 # limiting current for the Si junction. The plot compares the absorption in the Si with
 #  and without the grating.
 
-# In[10]:
+# In[ ]:
 
 
 Si_A_total = np.zeros(len(wl))

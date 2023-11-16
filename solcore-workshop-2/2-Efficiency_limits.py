@@ -364,7 +364,7 @@ get_ipython().run_cell_magic('capture', '', "# A command that prevents the scree
 
 # Now let's plot the result:
 
-# In[46]:
+# In[20]:
 
 
 plt.figure()  # Plot the results calculated above:
@@ -384,13 +384,13 @@ plt.legend()
 # In the Shockley-Queisser model, concentrated sunlight increased both the current and
 # the voltage of the solar cell which, in the absence of series resistance losses, leads to an increase in the efficiency of the solar cell.  Here we calculate the Shockley-Queisser efficiency at different solar concentrations under the direct solar spectrum AM1.5D:
 
-# In[47]:
+# In[21]:
 
 
 get_ipython().run_cell_magic('capture', '', "\n# Set up a series of AM1.5D solar spectra at different concentrations\nwl = np.linspace(300, 4000, 4000) * 1e-9    #wl contains the x-ordinate in wavelength\nam15d1x = LightSource(source_type='standard', x=wl, version='AM1.5d', concentration=1)\nam15d30x = LightSource(source_type='standard', x=wl, version='AM1.5d', concentration=30)\nam15d1000x = LightSource(source_type='standard', x=wl, version='AM1.5d',\n                         concentration=1000)\n\n#Define a function to find Pmax for a particular band-gap energy and solar spectrum\ndef getPmax(eg,spectrum):\n    V = np.linspace(0, eg-0.1, 500)\n    db_junction = Junction(kind='DB', T=300, Eg=eg, A=1, R_shunt=np.inf, n=1)\n    my_solar_cell = SolarCell([db_junction], T=300, R_series=0)\n\n    solar_cell_solver(my_solar_cell, 'iv',\n                      user_options={'T_ambient': 300, 'db_mode': 'top_hat', 'voltages': V, 'light_iv': True, 'wavelength': wl,\n                                    'mpp': True, 'light_source': spectrum})\n    return my_solar_cell.iv.Pmpp\n\n# Evaluate the Pmax function for band-gaps spanning 0.8 to 1.6eV and concentrations 1x,30x,1000x\neg = np.linspace(0.8,1.6,100)\np1x = np.vectorize(getPmax)(eg, am15d1x)\np30x = np.vectorize(getPmax)(eg, am15d30x)\np1000x = np.vectorize(getPmax)(eg, am15d1000x)\n")
 
 
-# In[48]:
+# In[22]:
 
 
 # Setup a figure for dual y-axes

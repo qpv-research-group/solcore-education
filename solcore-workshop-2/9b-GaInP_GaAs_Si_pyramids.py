@@ -18,7 +18,7 @@
 # 
 # We load relevant packages and define materials, the same as in the previous example.
 
-# In[28]:
+# In[22]:
 
 
 #| output: false
@@ -39,7 +39,7 @@ import matplotlib.pyplot as plt
 # download_db()
 
 
-# In[ ]:
+# In[23]:
 
 
 MgF2_pageid = search_db(os.path.join("MgF2", "Rodriguez-de Marcos"))[0][0];
@@ -72,36 +72,22 @@ Al = material("Al")()
 #  (280 $\mu$m)
 #  and epoxy (1 mm) at the top:
 
-# In[29]:
+# In[24]:
 
 
 d_Si = 280e-6 # thickness of Si wafer
 d_epoxy = 1e-3 # thickness of epoxy
 
-ARC = [
-    Layer(110e-9, MgF2),
-    Layer(65e-9, Ta2O5),
-]
+ARC = [Layer(110e-9, MgF2), Layer(65e-9, Ta2O5)]
 
-GaInP_junction = [
-    Layer(17e-9, window),
-    Layer(400e-9, GaInP(In=0.50)),
-    Layer(100e-9, AlGaAs(Al=0.8))]
+GaInP_junction = [Layer(17e-9, window), Layer(500e-9, GaInP(In=0.50))]
 
 # 100 nm TJ
-tunnel_1 = [
-    Layer(80e-9, AlGaAs(Al=0.8)),
-    Layer(20e-9, GaInP(In=0.5)),
-]
+tunnel_1 = [Layer(100e-9, AlGaAs(Al=0.8)), Layer(20e-9, GaInP(In=0.5))]
 
-GaAs_junction = [
-    Layer(17e-9, GaInP(In=0.5), role="window"),
-    Layer(1050e-9, GaAs()),
-    Layer(70e-9, AlGaAs(Al=0.8), role="bsf")]
+GaAs_junction = [Layer(17e-9, GaInP(In=0.5)), Layer(1050e-9, GaAs()), Layer(70e-9, AlGaAs(Al=0.8))]
 
-spacer_ARC = [
-    Layer(80e-9, Ta2O5),
-]
+spacer_ARC = [Layer(80e-9, Ta2O5)]
 
 
 # ## Defining the cell layers
@@ -118,24 +104,16 @@ spacer_ARC = [
 # These 3 interfaces are defined here, using the pre-defined textures for a planar
 # surface or regular pyramids:
 
-# In[30]:
+# In[25]:
 
 
 front_layers = ARC + GaInP_junction + tunnel_1 + GaAs_junction + spacer_ARC
 
-front_surf = planar_surface(
-    interface_layers = front_layers
-)
+front_surf = planar_surface(interface_layers = front_layers)
 
-Si_front = regular_pyramids(
-    elevation_angle=50,
-    upright=True,
-)
+Si_front = regular_pyramids(elevation_angle=50, upright=True)
 
-Si_back = regular_pyramids(
-    elevation_angle=50,
-    upright=False,
-)
+Si_back = regular_pyramids(elevation_angle=50, upright=False)
 
 
 # Now we set relevant options for the solver. We set the number of rays to trace at
@@ -145,16 +123,15 @@ Si_back = regular_pyramids(
 # positions in the unit cell while travelling between surfaces; we set this to `False` to
 #  mimic random pyramids.
 
-# In[31]:
+# In[26]:
 
 
 options = default_options()
 
 wl = np.arange(300, 1201, 10) * 1e-9
-AM15G = LightSource(source_type="standard", version="AM1.5g", x=wl,
-                    output_units="photon_flux_per_m")
+AM15G = LightSource(source_type="standard", version="AM1.5g", x=wl, output_units="photon_flux_per_m")
 
-options.wavelengths = wl
+options.wavelength = wl
 options.project_name = "III_V_Si_cell"
 
 # options for ray-tracing
@@ -172,10 +149,10 @@ options.bulk_profile = False
 # same layer thicknesses etc. to compare and evaluate the effect of the textures Si
 # surfaces.
 
-# In[32]:
+# In[27]:
 
 
-solar_cell = rt_structure(
+optical_structure = rt_structure(
     textures=[front_surf, Si_front, Si_back],
     materials=[epoxy, Si()],
     widths=[d_epoxy, d_Si],
@@ -191,7 +168,7 @@ solar_cell = rt_structure(
 options.coherent = False
 options.coherency_list = len(front_layers)*['c'] + ['i']*2
 
-solar_cell_planar = tmm_structure(
+planar_optical_structure = tmm_structure(
     layer_stack = front_layers + [Layer(d_epoxy, epoxy), Layer(d_Si, Si())],
     incidence=Air,
     transmission=Ag,
@@ -202,15 +179,15 @@ solar_cell_planar = tmm_structure(
 # 
 # Calculate the R/A/T for the planar reference cell:
 
-# In[33]:
+# In[28]:
 
 
 #| output: false
 
-tmm_result = solar_cell_planar.calculate(options=options)
+tmm_result = planar_optical_structure.calculate(options=options)
 
 GaInP_A_tmm = tmm_result['A_per_layer'][:,3]
-GaAs_A_tmm = tmm_result['A_per_layer'][:,8]
+GaAs_A_tmm = tmm_result['A_per_layer'][:,7]
 Si_A_tmm = tmm_result['A_per_layer'][:,len(front_layers)+1]
 
 Jmax_GaInP_tmm = q*np.trapz(GaInP_A_tmm*AM15G.spectrum()[1], x=wl)/10
@@ -220,15 +197,15 @@ Jmax_Si_tmm = q*np.trapz(Si_A_tmm*AM15G.spectrum()[1], x=wl)/10
 
 # Calculate the R/A/T for the textured cell:
 
-# In[34]:
+# In[29]:
 
 
 #| output: false
 
-rt_result = solar_cell.calculate(options=options)
+rt_result = optical_structure.calculate(options=options)
 
 GaInP_absorption_ARC = rt_result['A_per_interface'][0][:,3]
-GaAs_absorption_ARC = rt_result['A_per_interface'][0][:,8]
+GaAs_absorption_ARC = rt_result['A_per_interface'][0][:,7]
 Si_absorption_ARC = rt_result['A_per_layer'][:,1]
 
 Jmax_GaInP = q*np.trapz(GaInP_absorption_ARC*AM15G.spectrum()[1], x=wl)/10
@@ -243,7 +220,7 @@ Jmax_Si = q*np.trapz(Si_absorption_ARC*AM15G.spectrum()[1], x=wl)/10
 #  using TMM). The maximum possible currents are shown in the plot, with the value in
 #  brackets for Si being for the planar cell.
 
-# In[35]:
+# In[30]:
 
 
 plt.figure(figsize=(6,3))
@@ -280,3 +257,62 @@ plt.show()
 #   front texture have other advantages?
 # - Why does the Si have lower absorption/limiting current in this structure compared to
 #   the [previous example](9a-GaInP_GaAs_Si_grating.ipynb)?
+
+# Now we can also use RayFlare's optical results to run an electrical simulation in Solcore. To use the depletion approximation (DA) or drift-diffusion (PDD) solvers, we need the front surface reflectivity, and a depth-dependent absorption/generation profile. While so far we have been plotting total absorption per layer, RayFlare can calculate depth-dependent profiles too.
+
+# In[45]:
+
+
+from solcore.solar_cell import SolarCell, Junction
+from solcore.solar_cell_solver import solar_cell_solver
+from rayflare.utilities import make_absorption_function
+
+options.bulk_profile = True
+options.depth_spacing = 1e-9
+options.depth_spacing_bulk = 10e-9
+options.optics_method = 'external'
+
+profile_data = optical_structure.calculate_profile(options)
+
+depths, external_optics_func = make_absorption_function(profile_data, optical_structure, options)
+
+options.position = depths
+
+
+# Previously, we defined RayFlare `rt_structure` and `tmm_structure` objects to do the optical calculation. For the cell calculation, we need a Solcore `SolarCell` object, which needs different information (such as doping levels) to perform the electrical calculation.
+
+# In[42]:
+
+
+GaInP_junction = Junction([
+    Layer(17e-9, material("AlInP")(Al=0.52), Nd=si("1e18cm-3"), role="window"), # window
+    Layer(100e-9, GaInP(In=0.50, Nd=si("1e18cm-3"), hole_diffusion_length=si("100nm")), role="emitter"), # emitter
+    Layer(280e-9, GaInP(In=0.50, Na=si("1e17cm-3"), electron_diffusion_length=si("200nm")), role="base"), # base
+     Layer(20e-9, GaInP(In=0.50, Na=si("8e17cm-3")), role="bsf") # BSF
+   ], kind="DA") # TJ 
+
+GaAs_junction = Junction([
+    Layer(17e-9, GaInP(In=0.5, Nd=si("1e18cm-3")), role="window"), # window
+    Layer(200e-9, GaAs(Nd=si("1e18cm-3"), hole_diffusion_length=si("100nm")), role="emitter"), # emitter
+    Layer(859e-9, GaAs(Na=si("9e16cm-3"), electron_diffusion_length=si("200nm")), role="base"), # basee
+    Layer(70e-9, AlGaAs(Al=0.8, Na=si("4e18cm-3")), role="bsf") # BSF
+    ], kind="DA") 
+
+Si_junction = Junction([
+    Layer(1000e-9, Si(Nd=si("1e19cm-3"), hole_diffusion_length=si("100nm")), role="emitter"),
+    Layer(279e-6, Si(Na=si("1e16cm-3"), electron_diffusion_length=si("200nm")), role="base")],
+    kind="DA")
+
+solar_cell = SolarCell(
+    ARC + [GaInP_junction] + tunnel_1 + [GaAs_junction] + spacer_ARC + [Layer(d_epoxy, epoxy)] + [Si_junction],
+    external_reflected=profile_data["R"],
+    external_absorbed=external_optics_func)
+
+
+
+
+# In[44]:
+
+
+
+

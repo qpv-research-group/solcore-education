@@ -9,7 +9,7 @@
 # 
 # First, lets import some very commonly-used Python packages:
 
-# In[45]:
+# In[ ]:
 
 
 import numpy as np
@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 # 
 # Now, let's import some things from Solcore (which will be explained as we use them):
 
-# In[46]:
+# In[ ]:
 
 
 from solcore import material, si
@@ -44,7 +44,7 @@ from solcore.interpolate import interp1d
 # dielectrics, and metals common in
 # solar cells, is included in Solcore's database:
 
-# In[47]:
+# In[ ]:
 
 
 Si = material("Si")
@@ -56,7 +56,7 @@ Si = material("Si")
 # convert all quantities to base units
 # e.g. m, m$^{-3}$...
 
-# In[48]:
+# In[ ]:
 
 
 Si_n = Si(Nd=si("1e21cm-3"), hole_diffusion_length=si("10um"))
@@ -69,7 +69,7 @@ Si_p = Si(Na=si("1e16cm-3"), electron_diffusion_length=si("400um"))
 # are made of and the role they play within the cell (emitter or base). We create a
 # junction which is a total of 200 $\mu$m thick, with a 1 $\mu$m junction depth.
 
-# In[49]:
+# In[ ]:
 
 
 emitter_layer = Layer(width=si("1um"), material=Si_n, role='emitter')
@@ -79,7 +79,7 @@ base_layer = Layer(width=si("199um"), material=Si_p, role='base')
 # Now we create the p-n junction using the layers defined above. We set kind="DA" to tell
 # Solcore to use the Depletion Approximation in the calculation:
 
-# In[50]:
+# In[ ]:
 
 
 Si_junction = Junction([emitter_layer, base_layer], kind="DA")
@@ -89,7 +89,7 @@ Si_junction = Junction([emitter_layer, base_layer], kind="DA")
 # 
 # Wavelengths we want to use in the calculations; wavelengths between 300 and 1200 nm, at 200 evenly spaced intervals:
 
-# In[51]:
+# In[ ]:
 
 
 wavelengths = si(np.linspace(300, 1200, 200), "nm")
@@ -106,7 +106,7 @@ wavelengths = si(np.linspace(300, 1200, 200), "nm")
 # optics of the cell rather than re-using previous results. We can specify the options
 # in a Python format called a dictionary:
 
-# In[52]:
+# In[ ]:
 
 
 options = {
@@ -120,7 +120,7 @@ options = {
 # 
 # Define the solar cell; in this case it is very simple and we just have a single junction:
 
-# In[53]:
+# In[ ]:
 
 
 solar_cell = SolarCell([Si_junction])
@@ -130,7 +130,7 @@ solar_cell = SolarCell([Si_junction])
 # solar_cell_solver to calculate 'qe', 'optics' or 'iv'.
 # 
 
-# In[54]:
+# In[ ]:
 
 
 solar_cell_solver(solar_cell, 'qe', options)
@@ -141,7 +141,7 @@ solar_cell_solver(solar_cell, 'qe', options)
 # absorption law and we did not specify external reflectance, the reflectance = 0 over
 # the whole wavelength range.
 
-# In[55]:
+# In[ ]:
 
 
 plt.figure()
@@ -165,7 +165,7 @@ plt.show()
 # wavelengths of light we care about) then the
 # reflectance will approach the reflectivity of a simple air/Si interface. We can calculate what this is using the [Fresnel equation for reflectivity]( https://en.wikipedia.org/wiki/Fresnel_equations).
 
-# In[56]:
+# In[ ]:
 
 
 def calculate_R_Fresnel(incidence_n, transmission_n, wl):
@@ -181,7 +181,7 @@ def calculate_R_Fresnel(incidence_n, transmission_n, wl):
 # in Solcore. The incidence_n = 1 (air). Note that the function above is
 # specifically for normal incidence.
 
-# In[57]:
+# In[ ]:
 
 
 trns_n = Si_n.n(wavelengths) + 1j*Si_n.k(wavelengths)
@@ -192,7 +192,7 @@ reflectivity_fn = calculate_R_Fresnel(1, trns_n, wavelengths)
 # for the externally-calculated reflectivity, and calculate the optics (reflection,
 # absorption, transmission) again:
 
-# In[58]:
+# In[ ]:
 
 
 solar_cell_fresnel = SolarCell([Si_junction], reflectivity=reflectivity_fn)
@@ -206,7 +206,7 @@ solar_cell_solver(solar_cell_fresnel, 'optics', options)
 # "TMM" (Transfer Matrix Method), to correctly calculate reflection at the front
 # surface. We will learn more about the transfer matrix method later.
 
-# In[59]:
+# In[ ]:
 
 
 Si_junction = Junction([emitter_layer, base_layer], kind="DA")
@@ -216,20 +216,21 @@ solar_cell_TMM = SolarCell([Si_junction])
 
 # Set some more options for the cell calculation:
 
-# In[60]:
+# In[ ]:
 
 
 options["optics_method"] = "TMM"
-voltages = np.linspace(0, 1.1, 100)
+voltages = np.linspace(-1.1, 1.1, 100)
 options["light_iv"] = True
 options["mpp"] = True
 options["voltages"] = voltages
+options["internal_voltages"] = voltages
 
 
 # we calculate the QE and the IV (we set the light_iv option to True; if we don't do this, Solcore just calculates the
-# dark IV). We also ask Solcore to find the maximum power point (mpp) so we can get the efficiency.
+# dark IV). We also ask Solcore to find the maximum power point (mpp) so we can get the efficiency. Note that the sign convention used by Solcore means that an n-on-p cell with have a negative open-circuit voltage.
 
-# In[61]:
+# In[ ]:
 
 
 solar_cell_solver(solar_cell_TMM, 'iv', options)
@@ -240,7 +241,7 @@ solar_cell_solver(solar_cell_TMM, 'qe', options)
 # and with the TMM solver in Solcore, showing that for this simple situation (no anti-reflection coating, thick Si junction)
 # they are exactly equivalent.
 
-# In[62]:
+# In[ ]:
 
 
 plt.figure()
@@ -261,7 +262,7 @@ plt.show()
 # the inclusion of front surface reflection, which is ~ 30% or more over the wavelength
 #  range of interest for a bare Si surface.
 
-# In[63]:
+# In[ ]:
 
 
 plt.figure()
@@ -283,7 +284,7 @@ plt.show()
 # anti-reflection coating (ARC), a single layer of
 # silicon nitride (Si$_3$N$_4$):
 
-# In[64]:
+# In[ ]:
 
 
 SiN = material("Si3N4")()
@@ -299,7 +300,7 @@ solar_cell_solver(solar_cell_TMM_ARC, 'iv', options)
 # **PLOT 4**: Absorption, EQE, reflection and transmission for the cell with a simple one-layer ARC. We see the reflection
 # is significantly reduced from the previous plot leading to higher absorption/EQE.
 
-# In[65]:
+# In[ ]:
 
 
 plt.figure()
@@ -320,18 +321,18 @@ plt.show()
 # examples we will set the light source used for light IV simulations explicitly.
 # 
 
-# In[66]:
+# In[ ]:
 
 
 plt.figure()
-plt.plot(voltages, -solar_cell_TMM[0].iv(voltages)/10, label="No ARC")
-plt.plot(voltages, -solar_cell_TMM_ARC[1].iv(voltages)/10, label="75 nm SiN")
-plt.text(0.5, 1.02*solar_cell_TMM.iv["Isc"]/10, str(round(solar_cell_TMM.iv["Eta"]*100,
+plt.plot(-voltages, solar_cell_TMM[0].iv(voltages)/10, label="No ARC")
+plt.plot(-voltages, solar_cell_TMM_ARC[1].iv(voltages)/10, label="75 nm SiN")
+plt.text(0.5, 1.02*abs(solar_cell_TMM.iv["Isc"])/10, str(round(solar_cell_TMM.iv["Eta"]*100,
                                                       1)) + ' %')
-plt.text(0.5, 1.02*solar_cell_TMM_ARC.iv["Isc"]/10, str(round(solar_cell_TMM_ARC
+plt.text(0.5, 1.02*abs(solar_cell_TMM_ARC.iv["Isc"])/10, str(round(solar_cell_TMM_ARC
                                                           .iv["Eta"]*100, 1)) + ' %')
 plt.ylim(0, 38)
-plt.xlim(0, 0.8)
+plt.xlim(-0.8, 0.8)
 plt.legend()
 plt.xlabel("V (V)")
 plt.ylabel(r"J (mA/cm$^2$)")

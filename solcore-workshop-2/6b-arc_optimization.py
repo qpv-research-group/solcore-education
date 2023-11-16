@@ -10,7 +10,7 @@
 #  for a light-trapping grating, or some other structure in your cell)? This is where
 #  optimization comes in. Here, we will look at a very simple 'brute-force' optimization for a single or double-layer ARC.
 
-# In[11]:
+# In[ ]:
 
 
 import numpy as np
@@ -33,7 +33,7 @@ import seaborn as sns
 # the ARC as a coherent layer and the thick Si layer as incoherent (no thin-film
 # interference).
 
-# In[12]:
+# In[ ]:
 
 
 opts = default_options()
@@ -65,7 +65,7 @@ Air = material("Air")()
 # 
 # We will loop through the different ARC thicknesses in `d_range`, build the structure for each case, and then calculate the reflectance. We then save the mean reflected and weighted mean reflectance in the corresponding arrays. We also plot the reflectance for each 15th loop (this is just so the plot does not get too crowded).
 
-# In[13]:
+# In[ ]:
 
 
 d_range = np.linspace(0, 200, 200)
@@ -96,7 +96,7 @@ plt.show()
 
 # We now find at which index `mean_R` and `weighted_R` are minimised using `np.argmin`, and use this to print the ARC thickness at which this occurs (rounded to 1 decimal place).
 
-# In[14]:
+# In[ ]:
 
 
 print('Minimum mean reflection occurs at d = ' + str(np.round(d_range[np.argmin(mean_R)], 1)) + ' nm')
@@ -108,7 +108,7 @@ print('Minimum weighted reflection occurs at d = ' + str(np.round(d_range[np.arg
 # occurs around 70 nm. We can also plot the variation of the mean and weighted $R$ with
 # ARC thickness $d$:
 
-# In[15]:
+# In[ ]:
 
 
 plt.figure()
@@ -125,7 +125,7 @@ plt.show()
 # Now, to see what the reflectance looks like for the optimized structure, we make new
 # `tmm_structure`s with the optimal values and calculate and plot the reflectance:
 
-# In[16]:
+# In[ ]:
 
 
 struct = tmm_structure([Layer(si(d_range[np.argmin(mean_R)], 'nm'), SiN), Layer(si('300um'), Si)], incidence=Air, transmission=Ag)
@@ -156,7 +156,7 @@ plt.show()
 # Before the first use, it is necessary to download the database. This only needs to
 # be done once, so you can comment this line out after it’s done:
 
-# In[17]:
+# In[ ]:
 
 
 download_db(confirm=True) # only needs to be done once
@@ -169,7 +169,7 @@ download_db(confirm=True) # only needs to be done once
 # structure are relatively thin compared to the wavelengths of light, we do a
 # coherent calculation.
 
-# In[18]:
+# In[ ]:
 
 
 #| output: false
@@ -195,7 +195,7 @@ opts.wavelengths = wavelengths_GaAs
 
 # We now have two thicknesses to loop through; otherwise, the procedure is similar to the single-layer ARC example.
 
-# In[19]:
+# In[ ]:
 
 
 #| output: false
@@ -215,7 +215,7 @@ ri, ci = np.unravel_index(weighted_R_matrix.argmin(), weighted_R_matrix.shape)
 
 # We plot the total absorption ($1-R$) in the structure with the optimized ARC, and print the thicknesses of MgF$_2$ and Ta$_2$O$_5$ at which this occurs:
 
-# In[20]:
+# In[ ]:
 
 
 plt.figure()

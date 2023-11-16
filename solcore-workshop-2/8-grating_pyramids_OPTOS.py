@@ -19,7 +19,7 @@
 # 
 # First, importing relevant packages:
 
-# In[1]:
+# In[ ]:
 
 
 import numpy as np
@@ -38,47 +38,35 @@ from rayflare.angles import theta_summary, make_angle_vector
 from rayflare.textures import regular_pyramids
 from rayflare.options import default_options
 
-from solcore.material_system import create_new_material
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import seaborn as sns
 from sparse import load_npz
 
 
-# To make sure we are using the same optical constants for Si, load the same Si n/k data used in the paper
-# linked above:
-
-# In[2]:
-
-
-create_new_material("Si_OPTOS", "data/Si_OPTOS_n.txt", "data/Si_OPTOS_k.txt",
-                    overwrite=True)
-
-
-# You only need to do this one time, then the material will be stored in Solcore's material database.
-# 
 # Setting options (taking the default options for everything not specified explicitly):
 
-# In[3]:
+# In[ ]:
 
 
 angle_degrees_in = 8 # same as in Fraunhofer paper
 
 wavelengths = np.linspace(900, 1200, 20) * 1e-9
 
-Si = material("Si_OPTOS")()
+Si = material("Si")()
 Air = material("Air")()
 
 options = default_options()
-options.wavelengths = wavelengths
+options.wavelength = wavelengths
 options.theta_in = angle_degrees_in * np.pi / 180 # incidence angle (polar angle)
-options.n_theta_bins = 50
+options.n_theta_bins = 30
 options.c_azimuth = 0.25
-options.n_rays = 5e5 # number of rays per wavelength in ray-tracing
+options.n_rays = 1e5 # number of rays per wavelength in ray-tracing
 options.project_name = "OPTOS_comparison"
 options.orders = 60 # number of RCWA orders to use (more = better convergence, but slower)
 options.pol = "u" # unpolarized light
 options.only_incidence_angle = False
+options.RCWA_method = "Inkstone"
 
 
 # ## Defining the structures
@@ -87,7 +75,7 @@ options.only_incidence_angle = False
 # These are squares, rotated by 45 degrees. The halfwidth is calculated based on the area fill factor
 # of the etched pillars given in the paper.
 
-# In[4]:
+# In[ ]:
 
 
 x = 1000
@@ -108,7 +96,7 @@ back_materials = [
 # We specify the method to use to calculate the redistribution matrices in each case and create
 # the bulk layer.
 
-# In[5]:
+# In[ ]:
 
 
 surf = regular_pyramids(elevation_angle=55, upright=False)
@@ -140,7 +128,7 @@ bulk_Si = BulkLayer(200e-6, Si, name="Si_bulk")
 # the files already exist). We don't need to process the final structure because it will use matrices
 # calculated for `SC_fig6` and `SC_fig7`.
 
-# In[6]:
+# In[ ]:
 
 
 SC_fig6 = Structure(
@@ -163,7 +151,7 @@ process_structure(SC_fig7, options, save_location='current')
 # multiplication, and get the required result out (absorption in the bulk) for each cell. We
 # also load the results from the reference paper to compare them to the ones calculated with RayFlare.
 
-# In[7]:
+# In[ ]:
 
 
 #| output: false
@@ -181,12 +169,10 @@ sim_fig7 = np.loadtxt("data/optos_fig7_sim.csv", delimiter=",")
 sim_fig8 = np.loadtxt("data/optos_fig8_sim.csv", delimiter=",")
 
 
-# 
-
 # Finally, we use TMM to calculate the absorption in a structure with a planar front and planar rear,
 # as a reference.
 
-# In[8]:
+# In[ ]:
 
 
 struc = tmm_structure([Layer(si("200um"), Si)], incidence=Air, transmission=Air)
@@ -199,7 +185,7 @@ RAT = tmm_structure.calculate(struc, options)
 # 
 # Plot everything together, including data from the reference paper for comparison:
 
-# In[9]:
+# In[ ]:
 
 
 palhf = sns.color_palette("hls", 4)
@@ -232,7 +218,7 @@ plt.show()
 # much better overall, giving a large boost in the absorption at long wavelengths and also reducing the reflection
 # significantly at shorter wavelengths. Plotting reflection and transmission emphasises this:
 
-# In[10]:
+# In[ ]:
 
 
 fig = plt.figure()
@@ -263,7 +249,7 @@ plt.show()
 # 
 # Plot the redistribution matrix for the rear grating (summed over azimuthal angles) at 1100 nm:
 
-# In[11]:
+# In[ ]:
 
 
 theta_intv, phi_intv, angle_vector = make_angle_vector(
@@ -301,7 +287,7 @@ plt.show()
 #   better? Why?
 # - Why do the structures with a front-surface texture have high reflection at long
 #   wavelengths? The anti-reflection properties of pyramids (treated with ray optics)
-#   are mostly independent of the wavelength, so why does apparent reflection increase'
+#   are mostly independent of the wavelength, so why does apparent reflection increase
 #   near the bandgap of Si?
 # - Can you explain any of the features present in the angular redistribution matrix
 #   of the rear grating surface?

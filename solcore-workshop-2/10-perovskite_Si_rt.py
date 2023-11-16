@@ -17,7 +17,7 @@
 # 
 # First, import relevant packages and RayFlare functions:
 
-# In[61]:
+# In[ ]:
 
 
 import numpy as np
@@ -46,7 +46,7 @@ from cycler import cycler
 # all available cores will be used. If you want to use all but one core, change this to
 #  -2 etc. We also need to provide a `project_name` to save the lookup tables which will be calculated using TMM to use during ray-tracing.
 
-# In[62]:
+# In[ ]:
 
 
 wavelengths = np.linspace(300, 1200, 40) * 1e-9
@@ -55,7 +55,7 @@ AM15G = LightSource(source_type="standard", version="AM1.5g", x=wavelengths,
                     output_units="photon_flux_per_m")
 
 options = default_options()
-options.wavelengths = wavelengths
+options.wavelength = wavelengths
 options.nx = 20
 options.ny = options.nx
 options.n_rays = 4 * options.nx**2
@@ -69,7 +69,7 @@ options.n_jobs = -1 # use all cores; to use all but one, change to -2 etc.
 
 # We define our materials. Note that some of these are custom materials added to the database; we only need to do this once. We then define the front layer stack (i.e. all the materials which are on top of the Si, excluding Si itself, which will be the 'bulk' material) and the rear layer stack. Layer stacks are always defined starting with the layer closest to the top of the cell.
 
-# In[63]:
+# In[ ]:
 
 
 # Can comment out this block after running once to add materials to the database
@@ -95,10 +95,10 @@ create_new_material("IZO", "data/IZO_Ballif_rO2_10pcnt_n.txt",
 # In[ ]:
 
 
-download_db()
+# download_db()
 
 
-# In[64]:
+# In[ ]:
 
 
 MgF2_pageid = search_db(os.path.join("MgF2", "Rodriguez-de Marcos"))[0][0];
@@ -134,7 +134,7 @@ back_materials = [Layer(6.5e-9, aSi_i), Layer(6.5e-9, aSi_p), Layer(240e-9, ITO_
 # Now we define our front and back surfaces, including `interface_layers`. We will use
 # regular pyramids for both the front and back surface; these pyramids point out on both sides, but since the direction of the pyramids is defined relative to the front surface, we must set `upright=True` for the top surface and `upright=False` for the rear surface. We also gives the surfaces a name (used to save the lookup table data) and ask RayFlare to calculate the absorption profile in the 5th layer, which is the perovskite.
 
-# In[65]:
+# In[ ]:
 
 
 triangle_surf = regular_pyramids(
@@ -161,7 +161,7 @@ triangle_surf_back = regular_pyramids(
 # order to use the TMM lookuptables to calculate reflection/transmission/absorption
 # probabilities we must also set `use_TMM=True`.
 
-# In[66]:
+# In[ ]:
 
 
 rtstr_coh = rt_structure(
@@ -183,7 +183,7 @@ result_coh = rtstr_coh.calculate(options)
 # Now we define the same front surface and structure again, except now we will treat
 # all the layers incoherently (i.e. no thin-film interference) in the TMM.
 
-# In[67]:
+# In[ ]:
 
 
 triangle_surf = regular_pyramids(
@@ -213,7 +213,7 @@ result_inc = rtstr_inc.calculate(options)
 
 # Now we plot the results for reflection, transmission, and absorption per layer for both the coherent and incoherent cases.
 
-# In[68]:
+# In[ ]:
 
 
 pal = sns.color_palette("husl", n_colors=len(front_materials) + len(back_materials) + 2)
@@ -257,7 +257,7 @@ plt.show()
 
 # Calculate and print the limiting short-circuit current per junction:
 
-# In[69]:
+# In[ ]:
 
 
 Jmax_Pero_coh = q*np.trapz(result_coh["A_per_interface"][0][:,4]*AM15G.spectrum()[1],
@@ -281,7 +281,7 @@ print("Limiting short-circuit currents in coherent calculation (mA/cm2): {:.2f} 
 # perovskite (since we asked the solver to calculate the profile in the perovskite
 # layer above).
 
-# In[72]:
+# In[ ]:
 
 
 wl_Eg = wavelengths < 800e-9
@@ -311,7 +311,7 @@ plt.show()
 
 # We see that, as expected, the coherent case shows interference fringes while the incoherent case does not. We can also plot the absorption profile in the Si (> 800 nm):
 
-# In[75]:
+# In[ ]:
 
 
 pos_bulk = pos = np.arange(0, rtstr_coh.widths[0]*1e6, options.depth_spacing_bulk*1e6)
