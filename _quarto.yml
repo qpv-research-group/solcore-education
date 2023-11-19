@@ -14,8 +14,6 @@ website:
         file: solcore-workshop/workshop2023.qmd
       - text: "Solcore Workshop 2023 (UNSW)"
         file: solcore-workshop-2/workshop2023.qmd
-      - text: "Other"
-        file: other/other.qmd
 
   sidebar:
     - title: "Home"
@@ -29,7 +27,7 @@ website:
         - solar-cell-simulation/tutorials.qmd
         - auto: solar-cell-simulation/notebooks/*.ipynb
 
-    - title: "Solcore Workshop 2023"
+    - title: "Solcore Workshop 2023 (SKKU)"
       contents:
         - solcore-workshop/workshop2023.qmd
 #        - auto: solcore-workshop/notebooks/*.ipynb
@@ -45,13 +43,14 @@ website:
         - solcore-workshop/notebooks/9b-GaInP_GaAs_Si_pyramids.ipynb
         - solcore-workshop/notebooks/10-perovskite_Si_rt.ipynb
 
-    - title: "Other"
+    - title: "Solcore Workshop 2023 (UNSW)"
       contents:
-        - other/other.qmd
-        - auto: other/*.ipynb
+        - solcore-workshop-2/workshop2023.qmd
+        - solcore-workshop-2/schedule.qmd
 
 format:
   html:
     theme: flatly
     css: styles.css
     toc: true
+    page-layout: full

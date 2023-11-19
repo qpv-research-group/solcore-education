@@ -25,7 +25,7 @@
 
 # ## Comparison between SPCTRAL2 with default parameters and AM1.5G 
 
-# In[1]:
+# In[ ]:
 
 
 import numpy as np
@@ -52,7 +52,7 @@ plt.legend()
 # 
 # The default SPCTRAL2 parameters results in almost no atmospheric absorption. This suggests the precipitable water column thickness is much too low, the default is 0.00142 cm.  Let's increase that value to 1cm to roughly match AM1.5G:
 
-# In[2]:
+# In[ ]:
 
 
 spc2pc = LightSource(source_type='SPECTRAL2', precipwater=1.0, x=wl * 1e9)
@@ -74,7 +74,7 @@ plt.legend()
 # The short wavelength is attenuated which is likely due to a high level of aerosol
 # loading in the default spectrum.  To address this atmospheric turbidity can be reduced to around 0.05.
 
-# In[3]:
+# In[ ]:
 
 
 spc2high = LightSource(source_type='SPECTRAL2', precipwater=1.0, turbidity=0.2, x=wl * 1e9)
@@ -101,7 +101,7 @@ plt.legend()
 # 
 # Here we plot some of them with a turbidity of 0.2 to emphasise the different spectral behaviour:
 
-# In[4]:
+# In[ ]:
 
 
 spc2rural = LightSource(source_type='SPECTRAL2', precipwater=1.0, turbidity=0.2,
@@ -128,7 +128,7 @@ plt.legend()
 # One of the most common uses for a spectral irradiance model such as SPCTRAL2 is to
 # calculate how a particular solar cell technology behaves under varying spectral conditions during the day.  This is particularly important whan working with series connected tandem solar cells where the current matching condition will vary according to the incident spectrum. Here we plot the spectral irradiance at 12pm, 2pm, 3pm, 4pm, 5pm, 6pm and 7pm.  Note the strong relative loss in short-wavelength light relative to the infrared as the air-mass increases throughout the afternoon.
 
-# In[5]:
+# In[ ]:
 
 
 import datetime

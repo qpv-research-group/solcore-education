@@ -252,7 +252,7 @@ RAT = results_armm[0]
 # limiting current for the Si junction. The plot compares the absorption in the Si with
 #  and without the grating.
 
-# In[ ]:
+# In[10]:
 
 
 Si_A_total = np.zeros(len(wl))

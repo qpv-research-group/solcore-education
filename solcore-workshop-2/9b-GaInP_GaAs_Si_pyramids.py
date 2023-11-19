@@ -18,7 +18,7 @@
 # 
 # We load relevant packages and define materials, the same as in the previous example.
 
-# In[22]:
+# In[19]:
 
 
 #| output: false
@@ -39,7 +39,7 @@ import matplotlib.pyplot as plt
 # download_db()
 
 
-# In[23]:
+# In[20]:
 
 
 MgF2_pageid = search_db(os.path.join("MgF2", "Rodriguez-de Marcos"))[0][0];
@@ -72,20 +72,24 @@ Al = material("Al")()
 #  (280 $\mu$m)
 #  and epoxy (1 mm) at the top:
 
-# In[24]:
+# In[21]:
 
 
 d_Si = 280e-6 # thickness of Si wafer
-d_epoxy = 1e-3 # thickness of epoxy
+d_epoxy = 1e-6 # thickness of epoxy. In reality, the epoxy is much thicker, but the exact thickness doesn't matter 
+               # because the material is transparent and we will treat it incoherently.
+
+GaInP_total_thickness = 350e-9
+GaAs_total_thickness = 1200e-9
 
 ARC = [Layer(110e-9, MgF2), Layer(65e-9, Ta2O5)]
 
-GaInP_junction = [Layer(17e-9, window), Layer(500e-9, GaInP(In=0.50))]
+GaInP_junction = [Layer(20e-9, window), Layer(GaInP_total_thickness, GaInP(In=0.50))]
 
 # 100 nm TJ
 tunnel_1 = [Layer(100e-9, AlGaAs(Al=0.8)), Layer(20e-9, GaInP(In=0.5))]
 
-GaAs_junction = [Layer(17e-9, GaInP(In=0.5)), Layer(1050e-9, GaAs()), Layer(70e-9, AlGaAs(Al=0.8))]
+GaAs_junction = [Layer(20e-9, GaInP(In=0.5)), Layer(GaAs_total_thickness, GaAs()), Layer(70e-9, AlGaAs(Al=0.8))]
 
 spacer_ARC = [Layer(80e-9, Ta2O5)]
 
@@ -104,12 +108,12 @@ spacer_ARC = [Layer(80e-9, Ta2O5)]
 # These 3 interfaces are defined here, using the pre-defined textures for a planar
 # surface or regular pyramids:
 
-# In[25]:
+# In[22]:
 
 
 front_layers = ARC + GaInP_junction + tunnel_1 + GaAs_junction + spacer_ARC
 
-front_surf = planar_surface(interface_layers = front_layers)
+front_surf = planar_surface(interface_layers = front_layers, prof_layers=np.arange(1, len(front_layers)+1))
 
 Si_front = regular_pyramids(elevation_angle=50, upright=True)
 
@@ -123,7 +127,7 @@ Si_back = regular_pyramids(elevation_angle=50, upright=False)
 # positions in the unit cell while travelling between surfaces; we set this to `False` to
 #  mimic random pyramids.
 
-# In[26]:
+# In[23]:
 
 
 options = default_options()
@@ -149,7 +153,7 @@ options.bulk_profile = False
 # same layer thicknesses etc. to compare and evaluate the effect of the textures Si
 # surfaces.
 
-# In[27]:
+# In[24]:
 
 
 optical_structure = rt_structure(
@@ -179,7 +183,7 @@ planar_optical_structure = tmm_structure(
 # 
 # Calculate the R/A/T for the planar reference cell:
 
-# In[28]:
+# In[25]:
 
 
 #| output: false
@@ -197,7 +201,7 @@ Jmax_Si_tmm = q*np.trapz(Si_A_tmm*AM15G.spectrum()[1], x=wl)/10
 
 # Calculate the R/A/T for the textured cell:
 
-# In[29]:
+# In[26]:
 
 
 #| output: false
@@ -220,7 +224,7 @@ Jmax_Si = q*np.trapz(Si_absorption_ARC*AM15G.spectrum()[1], x=wl)/10
 #  using TMM). The maximum possible currents are shown in the plot, with the value in
 #  brackets for Si being for the planar cell.
 
-# In[30]:
+# In[27]:
 
 
 plt.figure(figsize=(6,3))
@@ -260,17 +264,27 @@ plt.show()
 
 # Now we can also use RayFlare's optical results to run an electrical simulation in Solcore. To use the depletion approximation (DA) or drift-diffusion (PDD) solvers, we need the front surface reflectivity, and a depth-dependent absorption/generation profile. While so far we have been plotting total absorption per layer, RayFlare can calculate depth-dependent profiles too.
 
-# In[45]:
+# In[28]:
 
 
 from solcore.solar_cell import SolarCell, Junction
 from solcore.solar_cell_solver import solar_cell_solver
 from rayflare.utilities import make_absorption_function
+from solcore.state import State
+
+options = State(options) # convert to Solcore options object so Solcore will recognise it
+V = np.linspace(-3, 0, 100)
 
 options.bulk_profile = True
 options.depth_spacing = 1e-9
 options.depth_spacing_bulk = 10e-9
 options.optics_method = 'external'
+options.voltages = V
+options.internal_voltages = np.linspace(-4, 1, 200)
+options.light_iv = True
+options.mpp = True
+options.light_source = AM15G
+options.recalculate_absorption = True
 
 profile_data = optical_structure.calculate_profile(options)
 
@@ -281,38 +295,90 @@ options.position = depths
 
 # Previously, we defined RayFlare `rt_structure` and `tmm_structure` objects to do the optical calculation. For the cell calculation, we need a Solcore `SolarCell` object, which needs different information (such as doping levels) to perform the electrical calculation.
 
-# In[42]:
+# In[29]:
 
+
+GaInP_emitter_thickness = 100e-9
+GaAs_emitter_thickness = 200e-9
+Si_emitter_thickness = 1e-6
+
+GaInP_base_thickness = GaInP_total_thickness - GaInP_emitter_thickness
+GaAs_base_thickness = GaAs_total_thickness - GaAs_emitter_thickness
+Si_base_thickness = d_Si - Si_emitter_thickness
 
 GaInP_junction = Junction([
-    Layer(17e-9, material("AlInP")(Al=0.52), Nd=si("1e18cm-3"), role="window"), # window
-    Layer(100e-9, GaInP(In=0.50, Nd=si("1e18cm-3"), hole_diffusion_length=si("100nm")), role="emitter"), # emitter
-    Layer(280e-9, GaInP(In=0.50, Na=si("1e17cm-3"), electron_diffusion_length=si("200nm")), role="base"), # base
-     Layer(20e-9, GaInP(In=0.50, Na=si("8e17cm-3")), role="bsf") # BSF
-   ], kind="DA") # TJ 
+    Layer(20e-9, material("AlInP")(Al=0.52), Nd=si("1e18cm-3"), role="window"), # window
+    Layer(GaInP_emitter_thickness, GaInP(In=0.50, Nd=si("1e18cm-3"), hole_diffusion_length=si("200nm")), role="emitter"), # emitter
+    Layer(GaInP_base_thickness, GaInP(In=0.50, Na=si("1e17cm-3"), electron_diffusion_length=si("300nm")), role="base"), # base
+   ], kind="DA") # TJ
 
 GaAs_junction = Junction([
-    Layer(17e-9, GaInP(In=0.5, Nd=si("1e18cm-3")), role="window"), # window
-    Layer(200e-9, GaAs(Nd=si("1e18cm-3"), hole_diffusion_length=si("100nm")), role="emitter"), # emitter
-    Layer(859e-9, GaAs(Na=si("9e16cm-3"), electron_diffusion_length=si("200nm")), role="base"), # basee
+    Layer(20e-9, GaInP(In=0.5, Nd=si("1e18cm-3")), role="window"), # window
+    Layer(GaAs_emitter_thickness, GaAs(Nd=si("1e18cm-3"), hole_diffusion_length=si("250nm")), role="emitter"), # emitter
+    Layer(GaAs_base_thickness, GaAs(Na=si("9e16cm-3"), electron_diffusion_length=si("1000nm")), role="base"), # basee
     Layer(70e-9, AlGaAs(Al=0.8, Na=si("4e18cm-3")), role="bsf") # BSF
-    ], kind="DA") 
+    ], kind="DA")
 
 Si_junction = Junction([
-    Layer(1000e-9, Si(Nd=si("1e19cm-3"), hole_diffusion_length=si("100nm")), role="emitter"),
-    Layer(279e-6, Si(Na=si("1e16cm-3"), electron_diffusion_length=si("200nm")), role="base")],
+    Layer(Si_emitter_thickness, Si(Nd=si("1e19cm-3"), hole_diffusion_length=si("1000nm")), role="emitter"),
+    Layer(Si_base_thickness, Si(Na=si("1e16cm-3"), electron_diffusion_length=si("250um")), role="base")],
     kind="DA")
 
 solar_cell = SolarCell(
     ARC + [GaInP_junction] + tunnel_1 + [GaAs_junction] + spacer_ARC + [Layer(d_epoxy, epoxy)] + [Si_junction],
-    external_reflected=profile_data["R"],
+    external_reflected=rt_result["R"],
     external_absorbed=external_optics_func)
 
 
+# In[36]:
 
 
-# In[44]:
+solar_cell_solver(solar_cell, 'iv', options)
+
+plt.figure(2)
+plt.plot(-V, -solar_cell.iv['IV'][1]/10, 'k', linewidth=3, label='3J cell')
+plt.plot(-V, solar_cell(0).iv(V)/10, 'b', label='InGaP sub-cell')
+plt.plot(-V, solar_cell(1).iv(V)/10, 'g', label='GaAs sub-cell')
+plt.plot(-V, solar_cell(2).iv(V)/10, 'r', label='Si sub-cell')
+plt.text(1.5, 5,f'Jsc= {abs(solar_cell.iv.Isc/10):.2f} mA.cm' + r'$^{-2}$')
+plt.text(1.5, 4,f'Voc= {abs(solar_cell.iv.Voc):.2f} V')
+plt.text(1.5, 3,f'FF= {solar_cell.iv.FF*100:.2f} %')
+plt.text(1.5, 2,f'Eta= {solar_cell.iv.Eta*100:.2f} %')
+
+plt.legend()
+plt.ylim(-10, 15)
+plt.xlim(0, 3)
+plt.ylabel('Current (mA/cm$^2$)')
+plt.xlabel('Voltage (V)')
+plt.show()
 
 
+# In[31]:
 
+
+V
+
+
+# In[32]:
+
+
+solar_cell_solver(solar_cell, 'qe', options)
+
+plt.figure(1)
+plt.plot(wl * 1e9, solar_cell(0).eqe(wl) * 100, 'b', label='GaInP QE')
+plt.plot(wl * 1e9, solar_cell(1).eqe(wl) * 100, 'g', label='GaAs QE')
+plt.plot(wl * 1e9, solar_cell(2).eqe(wl) * 100, 'r', label='Si QE')
+plt.fill_between(wl * 1e9, GaInP_absorption_ARC * 100, 0, alpha=0.3,
+         label='GaInP Abs.', color='b')
+plt.fill_between(wl * 1e9, GaAs_absorption_ARC * 100, 0, alpha=0.3,
+         label='GaAs Abs.', color='g')
+plt.fill_between(wl * 1e9, Si_absorption_ARC * 100, 0, alpha=0.3,
+         label='Ge Abs.', color='r')
+
+plt.plot(wl*1e9, 100*(1-solar_cell.reflected), '--k', label="100 - Reflectivity")
+plt.legend()
+plt.ylim(0, 100)
+plt.ylabel('EQE (%)')
+plt.xlabel('Wavelength (nm)')
+plt.show()
 
