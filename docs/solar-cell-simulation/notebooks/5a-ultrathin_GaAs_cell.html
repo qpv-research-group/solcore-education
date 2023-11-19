@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Solcore Education - Example 5a: Ultra-thin GaAs cell with diffraction grating</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Solcore Education</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../solar-cell-simulation/tutorials.html" rel="" target="" aria-current="page">
+ <span class="menu-text">Tutorials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../solcore-workshop/workshop2023.html" rel="" target="">
+ <span class="menu-text">Solcore Workshop 2023 (SKKU)</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../solcore-workshop-2/workshop2023.html" rel="" target="">
+ <span class="menu-text">Solcore Workshop 2023 (UNSW)</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../solar-cell-simulation/notebooks/5a-ultrathin_GaAs_cell.html">Example 5a: Ultra-thin GaAs cell with diffraction grating</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/tutorials.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorials</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/1a-simple_cell.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 1a: Simple Si solar cell</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/1b-simple_cell.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 1b: Basic cell optics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/1c-simple_cell.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 1c: Electrical models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/2a-optical_constants.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 2a: Optical constant sources</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/2b-optical_constants.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 2b: Optical constant models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/3a-triple_junction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 3a: Triple junction cell</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/4a-textured_Si_cell.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 4a: Textured Si cell</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/5a-ultrathin_GaAs_cell.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Example 5a: Ultra-thin GaAs cell with diffraction grating</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/6a-multiscale_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 6a: Silicon HIT cell</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/6b-multiscale_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 6b: Angular redistribution matrix method</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/7a-optimization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 7a: Simple optimization</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../solar-cell-simulation/notebooks/7b-optimization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example 7b: More advanced optimization</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#setting-up" id="toc-setting-up" class="nav-link active" data-scroll-target="#setting-up">Setting up</a></li>
+  <li><a href="#on-substrate-device" id="toc-on-substrate-device" class="nav-link" data-scroll-target="#on-substrate-device">On-substrate device</a></li>
+  <li><a href="#planar-silver-mirror-device" id="toc-planar-silver-mirror-device" class="nav-link" data-scroll-target="#planar-silver-mirror-device">Planar silver mirror device</a></li>
+  <li><a href="#nanophotonic-grating-device" id="toc-nanophotonic-grating-device" class="nav-link" data-scroll-target="#nanophotonic-grating-device">Nanophotonic grating device</a></li>
+  <li><a href="#nanophotonic-grating-device-with-arc" id="toc-nanophotonic-grating-device-with-arc" class="nav-link" data-scroll-target="#nanophotonic-grating-device-with-arc">Nanophotonic grating device with ARC</a></li>
+  <li><a href="#plotting-results" id="toc-plotting-results" class="nav-link" data-scroll-target="#plotting-results">Plotting results</a></li>
+  <li><a href="#calculating-photogenerated-current" id="toc-calculating-photogenerated-current" class="nav-link" data-scroll-target="#calculating-photogenerated-current">Calculating photogenerated current</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Example 5a: Ultra-thin GaAs cell with diffraction grating</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>In previous examples, we have considered a few different methods used to improve absorption in solar cells: anti-reflection coatings, to decrease front-surface reflection, metallic rear mirrors to reduce transmission and increase the path length of light in the cell, and textured surfaces (with pyramids) which are used on Si cells to reduce reflection and increase the path length of light in the cell. Another method which can be used for light-trapping is the inclusion of periodic structures such as diffraction gratings or photonic crystals; here, we will consider an ultra-thin (80 nm) GaAs cell with a diffraction grating.</p>
+<p>This example is based on the simulations done for <a href="https://doi.org/10.1002/pip.3463">this paper</a>.</p>
+<p><em>Note:</em> This example requires that you have a <a href="https://rayflare.readthedocs.io/en/latest/Installation/installation.html">working S4 installation</a>.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore <span class="im">import</span> si, material</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.structure <span class="im">import</span> Layer</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.light_source <span class="im">import</span> LightSource</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell <span class="im">import</span> SolarCell</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.constants <span class="im">import</span> q</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator <span class="im">import</span> search_db</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rayflare.rigorous_coupled_wave_analysis.rcwa <span class="im">import</span> rcwa_structure</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rayflare.transfer_matrix_method.tmm <span class="im">import</span> tmm_structure</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rayflare.options <span class="im">import</span> default_options</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="setting-up" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up">Setting up</h2>
+<p>First, defining all the materials. We are just going to do an optical simulation, so don’t have to worry about doping levels and other parameters which would affect the electrical performance of the cell.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>InAlP <span class="op">=</span> material(<span class="st">'AlInP'</span>)(Al<span class="op">=</span><span class="fl">0.5</span>)  <span class="co"># In0.5Al0.5P</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>GaAs <span class="op">=</span> material(<span class="st">'GaAs'</span>)()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>InGaP <span class="op">=</span> material(<span class="st">'GaInP'</span>)(In<span class="op">=</span><span class="fl">0.5</span>)  <span class="co"># Ga0.5In0.5P</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>SiN <span class="op">=</span> material(<span class="st">'Si3N4'</span>)()     <span class="co"># for the ARC</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>Al2O3 <span class="op">=</span> material(<span class="st">'Al2O3P'</span>)()  <span class="co"># for the ARC</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>Air <span class="op">=</span> material(<span class="st">'Air'</span>)()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The optical constants used for the silver are <a href="https://doi.org/10.1016/j.solmat.2018.11.008">very important</a>, so we search for a known reliable dataset (from <a href="https://doi.org/10.1038/srep30605">this paper</a>).</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Ag_pageid <span class="op">=</span> search_db(os.path.join(<span class="st">"Ag"</span>, <span class="st">"Jiang"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Ag <span class="op">=</span> material(<span class="bu">str</span>(Ag_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Database file found at /Users/phoebe/.solcore/nk/nk.db
+1 results found.
+pageid  shelf   book    page    filepath    hasrefractive   hasextinction   rangeMin    rangeMax    points
+2   main    Ag  Jiang   main/Ag/Jiang.yml   1   1   0.3 2.0 1701</code></pre>
+</div>
+</div>
+<p>AM0 spectrum (photon flux) for calculating currents. For space applications (i.e.&nbsp;above the atmosphere) we are often interested in AM0. We use Solcore’s LightSource class, then extract the AM0 photon flux at the wavelengths we are going to use in the simulations.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>wavelengths <span class="op">=</span> np.linspace(<span class="dv">303</span>, <span class="dv">1000</span>, <span class="dv">200</span>) <span class="op">*</span> <span class="fl">1e-9</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>AM0_ls <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'standard'</span>, version<span class="op">=</span><span class="st">'AM0'</span>, x<span class="op">=</span>wavelengths, output_units<span class="op">=</span><span class="st">"photon_flux_per_m"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>AM0 <span class="op">=</span> AM0_ls.spectrum(x<span class="op">=</span>wavelengths)[<span class="dv">1</span>] <span class="co"># Photon flux; used to calculate photogenerated current later on</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Setting options. We choose <code>s</code> polarization because, for normal incidence, there will not be a difference in the results for <a href="https://www.edmundoptics.com.au/knowledge-center/application-notes/optics/introduction-to-polarization/"><span class="math inline">\(s\)</span> and <span class="math inline">\(p\)</span> polarization</a> (and thus for unpolarized light, <code>u</code>, which would be calculated as the average of the results for <span class="math inline">\(s\)</span> and <span class="math inline">\(p\)</span> polarization. We could set the polarization to <code>u</code> for equivalent results (at normal incidence only), but this would take longer because then RayFlare has to run two calculations and then average them.</p>
+<p>The other key option is the number of Fourier orders retained: rigorous coupled-wave analysis (RCWA) is a Fourier-space method, and we have to specify how many Fourier orders should be retained in the calculation. As we increase the number of orders, the calculation should become more accurate and eventually converge, but the computation time increases (it scales with the cube of the number of orders).</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>options <span class="op">=</span> default_options()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>options.pol <span class="op">=</span> <span class="st">'s'</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>options.wavelengths <span class="op">=</span> wavelengths</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>options.orders <span class="op">=</span> <span class="dv">100</span> <span class="co"># Reduce the number of orders to speed up the calculation.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="on-substrate-device" class="level2">
+<h2 class="anchored" data-anchor-id="on-substrate-device">On-substrate device</h2>
+<p>This device is still on the GaAs substrate (it is also inverted compared to the other devices, since it represents the device before patterning and lift-off). We create the simulation object using <code>tmm_structure</code> class, and then use the <code>.calculate</code> function defined for the class to calculate the reflection, absorption per layer, and transmission.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Calculating on-substrate device..."</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>struct <span class="op">=</span> SolarCell([Layer(si(<span class="st">'20nm'</span>), InAlP), Layer(si(<span class="st">'85nm'</span>), GaAs),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                   Layer(si(<span class="st">'20nm'</span>), InGaP)])</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># make TMM structure for planar device</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>TMM_setup <span class="op">=</span> tmm_structure(struct, incidence<span class="op">=</span>Air, transmission<span class="op">=</span>GaAs)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>RAT_TMM_onsubs <span class="op">=</span> TMM_setup.calculate(options)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>Abs_onsubs <span class="op">=</span> RAT_TMM_onsubs[<span class="st">'A_per_layer'</span>][:,<span class="dv">1</span>]  <span class="co"># absorption in GaAs</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># indexing of A_per_layer is [wavelengths, layers]</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>R_onsubs <span class="op">=</span> RAT_TMM_onsubs[<span class="st">'R'</span>]</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>T_onsubs <span class="op">=</span> RAT_TMM_onsubs[<span class="st">'T'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Calculating on-substrate device...</code></pre>
+</div>
+</div>
+</section>
+<section id="planar-silver-mirror-device" class="level2">
+<h2 class="anchored" data-anchor-id="planar-silver-mirror-device">Planar silver mirror device</h2>
+<p>This device is now flipped (in fabrication terms, the back mirror was applied and then the device lifted off). It has a silver back mirror, which should increase reflection and the rear surface so that less light is lost to the substrate.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Calculating planar Ag mirror device..."</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>solar_cell_TMM <span class="op">=</span> SolarCell([Layer(material<span class="op">=</span>InGaP, width<span class="op">=</span>si(<span class="st">'20nm'</span>)),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                        Layer(material<span class="op">=</span>GaAs, width<span class="op">=</span>si(<span class="st">'85nm'</span>)),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                        Layer(material<span class="op">=</span>InAlP, width<span class="op">=</span>si(<span class="st">'20nm'</span>))],</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                           substrate<span class="op">=</span>Ag)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>TMM_setup <span class="op">=</span> tmm_structure(solar_cell_TMM, incidence<span class="op">=</span>Air, transmission<span class="op">=</span>Ag)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>RAT_TMM <span class="op">=</span> TMM_setup.calculate(options)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>Abs_TMM <span class="op">=</span> RAT_TMM[<span class="st">'A_per_layer'</span>][:, <span class="dv">1</span>]</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>Abs_TMM_InAlPonly <span class="op">=</span> RAT_TMM[<span class="st">'A_per_layer'</span>][:, <span class="dv">2</span>]</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>Abs_TMM_InGaPonly <span class="op">=</span> RAT_TMM[<span class="st">'A_per_layer'</span>][:, <span class="dv">0</span>]</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>R_TMM <span class="op">=</span> RAT_TMM[<span class="st">'R'</span>]</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>T_TMM <span class="op">=</span> RAT_TMM[<span class="st">'T'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Calculating planar Ag mirror device...
+Database file found at /Users/phoebe/.solcore/nk/nk.db
+Material main/Ag/Jiang.yml loaded.
+Database file found at /Users/phoebe/.solcore/nk/nk.db
+Material main/Ag/Jiang.yml loaded.</code></pre>
+</div>
+</div>
+</section>
+<section id="nanophotonic-grating-device" class="level2">
+<h2 class="anchored" data-anchor-id="nanophotonic-grating-device">Nanophotonic grating device</h2>
+<p>Finally, this device has a grating made of silver and SiN, followed by a planar silver back mirror; this leads to diffraction, increasing the path length of light in the cell, while keeping reflection high. Here we use the <code>rcwa_structure</code> class, which is used in the same way as <code>tmm_structure</code> above and <code>rt_structure</code> in <a href="../../solar-cell-simulation/notebooks/4a-textured_Si_cell.html">Example 4a</a>. Because we are now dealing with a structure which is periodic in the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> directions (unlike the TMM structures, which are uniform in the plane), we have to specify the size of the unit cell (this does not have to be square; here we have a triangular unit cell to give a grating with a hexagonal layout of circles). Otherwise, the grating layer is specified as normal but with a <code>geometry</code> argument which lists the shapes in the grating and the material they are made of.</p>
+<p>There are many additional options which can be specified for S4 (which is used to actually run the RCWA calculations); more detail can be found in its documentation <a href="https://web.stanford.edu/group/fan/S4/python_api.html">here</a>.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Calculating nanophotonic grating device..."</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">600</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># lattice vectors for the grating. Units are in nm!</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>size <span class="op">=</span> ((x, <span class="dv">0</span>), (x <span class="op">/</span> <span class="dv">2</span>, np.sin(np.pi <span class="op">/</span> <span class="dv">3</span>) <span class="op">*</span> x))</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>ropt <span class="op">=</span> <span class="bu">dict</span>(LatticeTruncation<span class="op">=</span><span class="st">'Circular'</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>            DiscretizedEpsilon<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>            DiscretizationResolution<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>            PolarizationDecomposition<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>            PolarizationBasis<span class="op">=</span><span class="st">'Default'</span>,</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>            <span class="co">#LanczosSmoothing=dict(Power=2, Width=1),</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>            LanczosSmoothing<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>            SubpixelSmoothing<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>            ConserveMemory<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>            WeismannFormulation<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>            Verbosity<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>options.S4_options <span class="op">=</span> ropt</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="co"># grating layers</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>grating <span class="op">=</span> [Layer(width<span class="op">=</span>si(<span class="dv">100</span>, <span class="st">'nm'</span>), material<span class="op">=</span>SiN, geometry<span class="op">=</span>[{<span class="st">'type'</span>: <span class="st">'circle'</span>, <span class="st">'mat'</span>: Ag, <span class="st">'center'</span>: (<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>                                                 <span class="st">'radius'</span>: x<span class="op">/</span><span class="dv">3</span>, <span class="st">'angle'</span>: <span class="dv">0</span>}])] <span class="co"># actual grating part of grating</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="co"># DTL device without anti-reflection coating</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>solar_cell <span class="op">=</span> SolarCell([Layer(material<span class="op">=</span>InGaP, width<span class="op">=</span>si(<span class="st">'20nm'</span>)),</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>                        Layer(material<span class="op">=</span>GaAs, width<span class="op">=</span>si(<span class="st">'85nm'</span>)),</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>                        Layer(material<span class="op">=</span>InAlP, width<span class="op">=</span>si(<span class="st">'20nm'</span>))] <span class="op">+</span> grating,</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>                       substrate<span class="op">=</span>Ag)</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a><span class="co"># make RCWA structure</span></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>S4_setup <span class="op">=</span> rcwa_structure(solar_cell, size, options, Air, Ag)</span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate</span></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>RAT <span class="op">=</span> S4_setup.calculate(options)</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>Abs_DTL <span class="op">=</span> RAT[<span class="st">'A_per_layer'</span>][:,<span class="dv">1</span>] <span class="co"># absorption in GaAs</span></span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>R_DTL <span class="op">=</span> RAT[<span class="st">'R'</span>]</span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>T_DTL <span class="op">=</span> RAT[<span class="st">'T'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Calculating nanophotonic grating device...</code></pre>
+</div>
+</div>
+</section>
+<section id="nanophotonic-grating-device-with-arc" class="level2">
+<h2 class="anchored" data-anchor-id="nanophotonic-grating-device-with-arc">Nanophotonic grating device with ARC</h2>
+<p>This device is exactly like the previous one, but with the additional of a simple single-layer anti-reflection coating.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Calculating nanophotonic grating device with ARC..."</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># DTL device with anti-reflection coating</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>solar_cell <span class="op">=</span> SolarCell([Layer(material<span class="op">=</span>Al2O3, width<span class="op">=</span>si(<span class="st">'70nm'</span>)),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                        Layer(material<span class="op">=</span>InGaP, width<span class="op">=</span>si(<span class="st">'20nm'</span>)),</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                        Layer(material<span class="op">=</span>GaAs, width<span class="op">=</span>si(<span class="st">'85nm'</span>)),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                        Layer(material<span class="op">=</span>InAlP, width<span class="op">=</span>si(<span class="st">'20nm'</span>))] <span class="op">+</span> grating,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                       substrate<span class="op">=</span>Ag)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># make RCWA structure</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>S4_setup <span class="op">=</span> rcwa_structure(solar_cell, size, options, Air, Ag)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>RAT_ARC <span class="op">=</span> S4_setup.calculate(options)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>Abs_DTL_ARC <span class="op">=</span> RAT_ARC[<span class="st">'A_per_layer'</span>][:,<span class="dv">2</span>]     <span class="co"># absorption in GaAs + InGaP</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>R_DTL_ARC <span class="op">=</span> RAT_ARC[<span class="st">'R'</span>]</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>T_DTL_ARC <span class="op">=</span> RAT_ARC[<span class="st">'T'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Calculating nanophotonic grating device with ARC...</code></pre>
+</div>
+</div>
+</section>
+<section id="plotting-results" class="level2">
+<h2 class="anchored" data-anchor-id="plotting-results">Plotting results</h2>
+<p><strong>PLOT 1</strong>: Comparing the absorption in GaAs for the four different device architectures</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>pal <span class="op">=</span> sns.color_palette(<span class="st">"husl"</span>, <span class="dv">4</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="fl">6.4</span>, <span class="fl">4.8</span>))</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>Abs_onsubs, color<span class="op">=</span>pal[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"On substrate"</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>Abs_TMM, color<span class="op">=</span>pal[<span class="dv">1</span>], label<span class="op">=</span><span class="st">"Planar mirror"</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>Abs_DTL, color<span class="op">=</span>pal[<span class="dv">2</span>], label<span class="op">=</span><span class="st">"Nanophotonic grating (no ARC)"</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, <span class="dv">100</span><span class="op">*</span>Abs_DTL_ARC, color<span class="op">=</span>pal[<span class="dv">3</span>], label<span class="op">=</span><span class="st">"Nanophotonic grating (with ARC)"</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">300</span>, <span class="dv">950</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">100</span>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wavelength (nm)'</span>)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'EQE (%)'</span>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">'upper left'</span>)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="5a-ultrathin_GaAs_cell_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>We see that the addition of a planar silver mirror significantly boosts the absorption around 700 nm, essentially by creating a Fabry-Perot (thin film) cavity in the semiconductor layers through high reflection at the rear of the cell. The grating introduces multiple resonances relating to different diffraction orders and waveguide modes in the structure, which boosts the absorption especially close to the absorption edge in comparison to the planar devices.</p>
+<p><strong>PLOT 2</strong>: Absorption per layer in the planar Ag device.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="fl">6.4</span>, <span class="fl">4.8</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>plt.stackplot(wavelengths<span class="op">*</span><span class="fl">1e9</span>,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>              [<span class="dv">100</span><span class="op">*</span>Abs_TMM, <span class="dv">100</span><span class="op">*</span>Abs_TMM_InGaPonly, <span class="dv">100</span><span class="op">*</span>Abs_TMM_InAlPonly],</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>              colors<span class="op">=</span>pal,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>              labels<span class="op">=</span>[<span class="st">'Absorbed in GaAs'</span>, <span class="st">'Absorbed in InGaP'</span>, <span class="st">'Absorbed in InAlP'</span>])</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">300</span>, <span class="dv">950</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">90</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wavelength (nm)'</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'EQE (%)'</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">'upper right'</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="5a-ultrathin_GaAs_cell_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The plot above shows that at short wavelengths, even very thin layers (in this case, 20 nm of InGaP) can absorb a very significant fraction of the incident radiation. Depending on the device, the carriers generated here may or may not be extracted as current.</p>
+</section>
+<section id="calculating-photogenerated-current" class="level2">
+<h2 class="anchored" data-anchor-id="calculating-photogenerated-current">Calculating photogenerated current</h2>
+<p>Finally, we use the photon flux in the AM0 spectrum to calculate the maximum possible achievable current for these devices.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>onsubs <span class="op">=</span> <span class="fl">0.1</span> <span class="op">*</span> q <span class="op">*</span> np.trapz(Abs_onsubs<span class="op">*</span>AM0, wavelengths)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>Ag <span class="op">=</span> <span class="fl">0.1</span> <span class="op">*</span> q <span class="op">*</span> np.trapz(Abs_TMM<span class="op">*</span>AM0, wavelengths)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>DTL <span class="op">=</span> <span class="fl">0.1</span> <span class="op">*</span> q <span class="op">*</span> np.trapz(Abs_DTL<span class="op">*</span>AM0, wavelengths)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>DTL_ARC <span class="op">=</span> <span class="fl">0.1</span> <span class="op">*</span> q <span class="op">*</span> np.trapz(Abs_DTL_ARC<span class="op">*</span>AM0, wavelengths)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'On substrate device current: </span><span class="sc">%.1f</span><span class="st"> mA/cm2 '</span> <span class="op">%</span> onsubs)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Planar Ag mirror device current: </span><span class="sc">%.1f</span><span class="st"> mA/cm2 '</span> <span class="op">%</span> Ag)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Nanophotonic grating (no ARC) device current: </span><span class="sc">%.1f</span><span class="st"> mA/cm2 '</span> <span class="op">%</span> DTL)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Nanophotonic grating (with ARC) device current: </span><span class="sc">%.1f</span><span class="st"> mA/cm2 '</span> <span class="op">%</span> DTL_ARC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>On substrate device current: 9.5 mA/cm2 
+Planar Ag mirror device current: 13.8 mA/cm2 
+Nanophotonic grating (no ARC) device current: 18.0 mA/cm2 
+Nanophotonic grating (with ARC) device current: 23.0 mA/cm2 </code></pre>
+</div>
+</div>
+<p>As expected, simply adding a planar mirror boosts the current significantly. The addition of a nanophotonic grating gives a further boost (note that the grating we used here is optimized in terms of grating pitch (period) and dimension; not all gratings would give a boost in current, and some may even reduce performance due to e.g.&nbsp;parasitic absorption).</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
