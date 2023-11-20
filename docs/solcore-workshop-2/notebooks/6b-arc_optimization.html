@@ -177,7 +177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p>In the previous example, we introduced a simple one-layer anti-reflection coating (ARC); ARCs are a standard feature of all high-efficiency solar cells. But how do you find out the right thickness for the anti-reflection coating layer(s) (or the right dimensions for a light-trapping grating, or some other structure in your cell)? This is where optimization comes in. Here, we will look at a very simple ‘brute-force’ optimization for a single or double-layer ARC.</p>
-<div class="cell" data-execution_count="38">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -193,106 +193,111 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rayflare.transfer_matrix_method <span class="im">import</span> tmm_structure</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rayflare.options <span class="im">import</span> default_options</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>WARNING: The RCWA solver will not be available because an S4 installation has not been found.
+WARNING: The Poisson - Drift-Diffusion solver will not be available because the ddModel fortran library could not be imported.
+name 'dd' is not defined</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/z3533914/.pyenv/versions/3.11.5/lib/python3.11/site-packages/solcore/registries.py:73: UserWarning: Optics solver 'RCWA' will not be available. An installation of S4 has not been found.
+  warn(</code></pre>
+</div>
 </div>
 <section id="setting-up" class="level2">
 <h2 class="anchored" data-anchor-id="setting-up">Setting up</h2>
 <p>We set some options, as in previous examples, setting the wavelengths and defining the incident spectrum. We are going to do a partially coherent calculation, treating the ARC as a coherent layer and the thick Si layer as incoherent (no thin-film interference).</p>
-<div class="cell" data-execution_count="57">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>opts <span class="op">=</span> State()</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>wavelengths <span class="op">=</span> np.linspace(<span class="dv">300</span>, <span class="dv">1200</span>, <span class="dv">800</span>)<span class="op">*</span><span class="fl">1e-9</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>AM15g <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">"standard"</span>, version<span class="op">=</span><span class="st">"AM1.5g"</span>, output_units<span class="op">=</span><span class="st">"photon_flux_per_m"</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>spectrum <span class="op">=</span> AM15g.spectrum(wavelengths)[<span class="dv">1</span>]</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>normalised_spectrum <span class="op">=</span> spectrum<span class="op">/</span>np.<span class="bu">max</span>(spectrum)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>opts.wavelength <span class="op">=</span> wavelengths</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>opts.coherency_list <span class="op">=</span> [<span class="st">'c'</span>, <span class="st">'i'</span>]</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>opts.optics_method <span class="op">=</span> <span class="st">'TMM'</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>opts.position <span class="op">=</span> <span class="fl">100e-6</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>opts.no_back_reflection <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>Si <span class="op">=</span> material(<span class="st">"Si"</span>)()</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>SiN <span class="op">=</span> material(<span class="st">"Si3N4"</span>)()</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>Ag <span class="op">=</span> material(<span class="st">"Ag"</span>)()</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>Air <span class="op">=</span> material(<span class="st">"Air"</span>)()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>opts <span class="op">=</span> State()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>wavelengths <span class="op">=</span> np.linspace(<span class="dv">300</span>, <span class="dv">1200</span>, <span class="dv">800</span>)<span class="op">*</span><span class="fl">1e-9</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>AM15g <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">"standard"</span>, version<span class="op">=</span><span class="st">"AM1.5g"</span>, output_units<span class="op">=</span><span class="st">"photon_flux_per_m"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>spectrum <span class="op">=</span> AM15g.spectrum(wavelengths)[<span class="dv">1</span>]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>normalised_spectrum <span class="op">=</span> spectrum<span class="op">/</span>np.<span class="bu">max</span>(spectrum)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>opts.wavelength <span class="op">=</span> wavelengths</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>opts.coherency_list <span class="op">=</span> [<span class="st">'c'</span>, <span class="st">'i'</span>]</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>opts.optics_method <span class="op">=</span> <span class="st">'TMM'</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>opts.position <span class="op">=</span> <span class="fl">100e-6</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>opts.no_back_reflection <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>Si <span class="op">=</span> material(<span class="st">"Si"</span>)()</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>SiN <span class="op">=</span> material(<span class="st">"Si3N4"</span>)()</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>Ag <span class="op">=</span> material(<span class="st">"Ag"</span>)()</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>Air <span class="op">=</span> material(<span class="st">"Air"</span>)()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="single-layer-arc" class="level2">
 <h2 class="anchored" data-anchor-id="single-layer-arc">Single-layer ARC</h2>
 <p>Here, we will calculate the behaviour of a single-layer SiN anti-reflection coating on Si while changing the ARC thickness between 0 and 200 nm. We will consider two values to optimize: the mean reflectance <code>mean_R</code>, and the reflectance weighted by the photon flux in an AM1.5G spectrum (<code>weighted_R</code>). The reason for considering the second value is that it is more useful to suppress reflection at wavelengths where there are more photons which could be absorbed by the cell (up to the cell’s bandgap).</p>
 <p>We will loop through the different ARC thicknesses in <code>d_range</code>, build the structure for each case, and then calculate the reflectance. We then save the mean reflected and weighted mean reflectance in the corresponding arrays. We also plot the reflectance for each 15th loop (this is just so the plot does not get too crowded).</p>
-<div class="cell" data-execution_count="58">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>d_range <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">200</span>, <span class="dv">200</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>mean_R <span class="op">=</span> np.empty_like(d_range)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>weighted_R <span class="op">=</span> np.empty_like(d_range)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> sns.cubehelix_palette(np.ceil(<span class="bu">len</span>(d_range)<span class="op">/</span><span class="dv">15</span>))</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>jcol <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i1, d <span class="kw">in</span> <span class="bu">enumerate</span>(d_range):</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    struct <span class="op">=</span> SolarCell([Layer(si(d, <span class="st">'nm'</span>), SiN), Layer(si(<span class="st">'120um'</span>), Si)], substrate<span class="op">=</span>Ag)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    solar_cell_solver(struct, task<span class="op">=</span><span class="st">'optics'</span>, user_options<span class="op">=</span>opts)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i1 <span class="op">%</span> <span class="dv">15</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, struct.reflected, label<span class="op">=</span><span class="bu">str</span>(np.<span class="bu">round</span>(d, <span class="dv">0</span>)), color<span class="op">=</span>cols[jcol])</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        jcol <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    mean_R[i1] <span class="op">=</span> np.mean(struct.reflected)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    weighted_R[i1] <span class="op">=</span> np.mean(struct.reflected<span class="op">*</span>normalised_spectrum)</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>d_range <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">200</span>, <span class="dv">200</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>mean_R <span class="op">=</span> np.empty_like(d_range)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>weighted_R <span class="op">=</span> np.empty_like(d_range)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> sns.cubehelix_palette(np.ceil(<span class="bu">len</span>(d_range)<span class="op">/</span><span class="dv">15</span>))</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>jcol <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i1, d <span class="kw">in</span> <span class="bu">enumerate</span>(d_range):</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    struct <span class="op">=</span> SolarCell([Layer(si(d, <span class="st">'nm'</span>), SiN), Layer(si(<span class="st">'120um'</span>), Si)], substrate<span class="op">=</span>Ag)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    solar_cell_solver(struct, task<span class="op">=</span><span class="st">'optics'</span>, user_options<span class="op">=</span>opts)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i1 <span class="op">%</span> <span class="dv">15</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, struct.reflected, label<span class="op">=</span><span class="bu">str</span>(np.<span class="bu">round</span>(d, <span class="dv">0</span>)), color<span class="op">=</span>cols[jcol])</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        jcol <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    mean_R[i1] <span class="op">=</span> np.mean(struct.reflected)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    weighted_R[i1] <span class="op">=</span> np.mean(struct.reflected<span class="op">*</span>normalised_spectrum)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We now find at which index <code>mean_R</code> and <code>weighted_R</code> are minimised using <code>np.argmin</code>, and use this to print the ARC thickness at which this occurs (rounded to 1 decimal place).</p>
-<div class="cell" data-execution_count="47">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Minimum mean reflection occurs at d = '</span> <span class="op">+</span> <span class="bu">str</span>(np.<span class="bu">round</span>(d_range[np.argmin(mean_R)], <span class="dv">1</span>)) <span class="op">+</span> <span class="st">' nm'</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Minimum weighted reflection occurs at d = '</span> <span class="op">+</span> <span class="bu">str</span>(np.<span class="bu">round</span>(d_range[np.argmin(weighted_R)], <span class="dv">1</span>)) <span class="op">+</span> <span class="st">' nm'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Minimum mean reflection occurs at d = '</span> <span class="op">+</span> <span class="bu">str</span>(np.<span class="bu">round</span>(d_range[np.argmin(mean_R)], <span class="dv">1</span>)) <span class="op">+</span> <span class="st">' nm'</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Minimum weighted reflection occurs at d = '</span> <span class="op">+</span> <span class="bu">str</span>(np.<span class="bu">round</span>(d_range[np.argmin(weighted_R)], <span class="dv">1</span>)) <span class="op">+</span> <span class="st">' nm'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Minimum mean reflection occurs at d = 67.3 nm
 Minimum weighted reflection occurs at d = 74.4 nm</code></pre>
 </div>
 </div>
 <p>We see that the values of <span class="math inline">\(d\)</span> for the two different ways of optimizing are very similar, but not exactly the same, as we would expect. The minimum in both cases occurs around 70 nm. We can also plot the variation of the mean and weighted <span class="math inline">\(R\)</span> with ARC thickness <span class="math inline">\(d\)</span>:</p>
-<div class="cell" data-execution_count="48">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.plot(d_range, mean_R, label<span class="op">=</span><span class="st">'Mean reflection'</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.plot(d_range[np.argmin(mean_R)], np.<span class="bu">min</span>(mean_R), <span class="st">'ok'</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>plt.plot(d_range, weighted_R, label<span class="op">=</span><span class="st">'Weighted mean reflection'</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.plot(d_range[np.argmin(weighted_R)], np.<span class="bu">min</span>(weighted_R), <span class="st">'ok'</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'d$_</span><span class="sc">{SiN}</span><span class="st">$'</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'(Weighted) mean reflection 300-1200 nm'</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.plot(d_range, mean_R, label<span class="op">=</span><span class="st">'Mean reflection'</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.plot(d_range[np.argmin(mean_R)], np.<span class="bu">min</span>(mean_R), <span class="st">'ok'</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plt.plot(d_range, weighted_R, label<span class="op">=</span><span class="st">'Weighted mean reflection'</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.plot(d_range[np.argmin(weighted_R)], np.<span class="bu">min</span>(weighted_R), <span class="st">'ok'</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'d$_</span><span class="sc">{SiN}</span><span class="st">$'</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'(Weighted) mean reflection 300-1200 nm'</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="6b-arc_optimization_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>Now, to see what the reflectance looks like for the optimized structure, we make new <code>tmm_structure</code>s with the optimal values and calculate and plot the reflectance:</p>
-<div class="cell" data-execution_count="49">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>struct_1 <span class="op">=</span> SolarCell([Layer(si(d_range[np.argmin(mean_R)], <span class="st">'nm'</span>), SiN), Layer(si(<span class="st">'120um'</span>), Si)], substrate<span class="op">=</span>Ag)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(struct_1, task<span class="op">=</span><span class="st">'optics'</span>, user_options<span class="op">=</span>opts)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>R_1 <span class="op">=</span> struct_1.reflected</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>struct_2 <span class="op">=</span> SolarCell([Layer(si(d_range[np.argmin(weighted_R)], <span class="st">'nm'</span>), SiN), Layer(si(<span class="st">'120um'</span>), Si)], substrate<span class="op">=</span>Ag)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(struct_2, task<span class="op">=</span><span class="st">'optics'</span>, user_options<span class="op">=</span>opts)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>R_2 <span class="op">=</span> struct_2.reflected</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, R_1, label<span class="op">=</span><span class="st">'Mean R minimum'</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, R_2, label<span class="op">=</span><span class="st">'Weighted R minimum'</span>)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"R"</span>)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO: Solving optics of the solar cell...
-INFO: Solving optics of the solar cell...</code></pre>
-</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>struct_1 <span class="op">=</span> SolarCell([Layer(si(d_range[np.argmin(mean_R)], <span class="st">'nm'</span>), SiN), Layer(si(<span class="st">'120um'</span>), Si)], substrate<span class="op">=</span>Ag)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(struct_1, task<span class="op">=</span><span class="st">'optics'</span>, user_options<span class="op">=</span>opts)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>R_1 <span class="op">=</span> struct_1.reflected</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>struct_2 <span class="op">=</span> SolarCell([Layer(si(d_range[np.argmin(weighted_R)], <span class="st">'nm'</span>), SiN), Layer(si(<span class="st">'120um'</span>), Si)], substrate<span class="op">=</span>Ag)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(struct_2, task<span class="op">=</span><span class="st">'optics'</span>, user_options<span class="op">=</span>opts)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>R_2 <span class="op">=</span> struct_2.reflected</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, R_1, label<span class="op">=</span><span class="st">'Mean R minimum'</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths<span class="op">*</span><span class="fl">1e9</span>, R_2, label<span class="op">=</span><span class="st">'Weighted R minimum'</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"R"</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Treating layer(s) 1 incoherently
 Calculating RAT...
@@ -302,7 +307,7 @@ Calculating RAT...
 Calculating absorption profile...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="6b-arc_optimization_files/figure-html/cell-7-output-3.png" class="img-fluid"></p>
+<p><img src="6b-arc_optimization_files/figure-html/cell-7-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 <p>We see that the two reflectance curves are very similar, as expected because the layer thicknesses are very similar.</p>
@@ -311,25 +316,16 @@ Calculating absorption profile...</code></pre>
 <h2 class="anchored" data-anchor-id="double-layer-arc">Double-layer ARC</h2>
 <p>We will now consider a similar situation, but for a double-layer MgF<span class="math inline">\(_2\)</span>/Ta<span class="math inline">\(_2\)</span>O<span class="math inline">\(_5\)</span> ARC on GaAs.</p>
 <p>Solcore can directly interface with the database from www.refractiveindex.info, which contains around 3000 sets of data for a large number of different materials. Before the first use, it is necessary to download the database. This only needs to be done once, so you can comment this line out after it’s done:</p>
-<div class="cell" data-execution_count="50">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>download_db(confirm<span class="op">=</span><span class="va">True</span>) <span class="co"># only needs to be done once</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>download_db(confirm<span class="op">=</span><span class="va">True</span>) <span class="co"># only needs to be done once</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Database file found at /Users/z3533914/.solcore/nk/nk.db
 Making request to https://refractiveindex.info/download/database/rii-database-2021-07-18.zip
-Downloaded and extracting...
-Wrote /var/folders/wh/w5k56r_927j4yp3mh91bggfc0000gq/T/tmpfnrk4_hu/database from https://refractiveindex.info/download/database/rii-database-2021-07-18.zip
-LOG: 2746,other,PtAl2,Chen : Bad Material YAML File.
-***Wrote SQLite DB on  /Users/z3533914/.solcore/nk/nk.db</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/Users/z3533914/.pyenv/versions/3.11.5/lib/python3.11/site-packages/solcore/material_data/refractiveindex_info_DB/dbmaterial.py:278: RuntimeWarning: invalid value encountered in sqrt
-  n = numpy.sqrt(nsq)
-/Users/z3533914/.pyenv/versions/3.11.5/lib/python3.11/site-packages/solcore/material_data/refractiveindex_info_DB/dbmaterial.py:299: RuntimeWarning: invalid value encountered in sqrt
-  n = numpy.sqrt(n)</code></pre>
+Downloaded and extracting...</code></pre>
 </div>
 </div>
 <p>We search for materials in the refractiveindex.info database, and use only the part of the solar spectrum relevant for absorption in GaAs (in this case, there is no benefit to reducing absorption above the GaAs bandgap around 900 nm). We will only consider the weighted mean <span class="math inline">\(R\)</span> in this case. Since all the layers in the structure are relatively thin compared to the wavelengths of light, we do a coherent calculation.</p>
-<div class="cell" data-execution_count="68">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pageid_MgF2 <span class="op">=</span> search_db(os.path.join(<span class="st">"MgF2"</span>, <span class="st">"Rodriguez-de Marcos"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>pageid_Ta2O5 <span class="op">=</span> search_db(os.path.join(<span class="st">"Ta2O5"</span>, <span class="st">"Rodriguez-de Marcos"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -350,7 +346,7 @@ LOG: 2746,other,PtAl2,Chen : Bad Material YAML File.
 <span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>opts.position <span class="op">=</span> <span class="fl">20e-6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We now have two thicknesses to loop through; otherwise, the procedure is similar to the single-layer ARC example.</p>
-<div class="cell" data-execution_count="69">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i1, d_MgF2 <span class="kw">in</span> <span class="bu">enumerate</span>(MgF2_thickness):</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j1, d_Ta2O5 <span class="kw">in</span> <span class="bu">enumerate</span>(Ta2O5_thickness):</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        struct <span class="op">=</span> SolarCell([Layer(si(d_MgF2, <span class="st">'nm'</span>), MgF2), Layer(si(d_Ta2O5, <span class="st">'nm'</span>), Ta2O5),</span>
@@ -365,7 +361,7 @@ LOG: 2746,other,PtAl2,Chen : Bad Material YAML File.
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>ri, ci <span class="op">=</span> np.unravel_index(weighted_R_matrix.argmin(), weighted_R_matrix.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We plot the total absorption (<span class="math inline">\(1-R\)</span>) in the structure with the optimized ARC, and print the thicknesses of MgF<span class="math inline">\(_2\)</span> and Ta<span class="math inline">\(_2\)</span>O<span class="math inline">\(_5\)</span> at which this occurs:</p>
-<div class="cell" data-execution_count="70">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(<span class="dv">1</span><span class="op">-</span>weighted_R_matrix, extent<span class="op">=</span>[<span class="bu">min</span>(Ta2O5_thickness), <span class="bu">max</span>(Ta2O5_thickness),</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="bu">min</span>(MgF2_thickness), <span class="bu">max</span>(MgF2_thickness)],</span>
@@ -378,12 +374,6 @@ LOG: 2746,other,PtAl2,Chen : Bad Material YAML File.
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Minimum reflection occurs at MgF2 / Ta2O5 thicknesses of </span><span class="sc">%.1f</span><span class="st"> / </span><span class="sc">%.1f</span><span class="st"> nm "</span></span>
 <span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>     <span class="op">%</span> (MgF2_thickness[ri], Ta2O5_thickness[ci]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="6b-arc_optimization_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Minimum reflection occurs at MgF2 / Ta2O5 thicknesses of 73.7 / 53.7 nm </code></pre>
-</div>
 </div>
 <p>For these two examples, where we are only trying to optimize one and two parameters respectively across a relatively small range, using a method (TMM) which executes quickly, brute force searching is possible. However, as we introduce more parameters, a wider parameter space, and slower simulation methods, it may no longer be computationally tractable; in that case, using for example differential evolution or other types of numerical optimization may be more appropriate (see <a href="../../solar-cell-simulation/notebooks/7b-optimization.html">this example</a>).</p>
 </section>
