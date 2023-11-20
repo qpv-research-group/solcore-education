@@ -32,8 +32,10 @@ from rayflare.transfer_matrix_method import tmm_structure
 
 print("Success!")
 
-   If this prints the "Success!" to your terminal, things are installed. Do
-   not worry about any warnings which appear.
+   If this prints the "Success!" to your terminal, things are installed. Note: you
+   will get a warning message which says "WARNING: The RCWA solver will not be
+   available because an S4  installation has not been found." - this is fine, do
+   not worry about it.
 
 8. We will also be using Jupyter notebooks during the workshop (these are files
    which let you combine Python code blocks, normal text, images etc.). First, 
