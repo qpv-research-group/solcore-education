@@ -192,7 +192,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>All the inputs are numeric other than the aod_model whose options are: ‘rural’, ‘urban’, ‘maritime’ and ‘tropospheric’.</p>
 <section id="comparison-between-spctral2-with-default-parameters-and-am1.5g" class="level2">
 <h2 class="anchored" data-anchor-id="comparison-between-spctral2-with-default-parameters-and-am1.5g">Comparison between SPCTRAL2 with default parameters and AM1.5G</h2>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-11-15T08:49:44.226972Z&quot;,&quot;start_time&quot;:&quot;2023-11-15T08:49:42.713752Z&quot;}">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-11-15T08:49:44.226972Z&quot;,&quot;start_time&quot;:&quot;2023-11-15T08:49:42.713752Z&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.light_source <span class="im">import</span> LightSource</span>
@@ -211,44 +211,65 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wavelength (nm)'</span>)</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Power density (Wm$^{-2}$nm$^{-1}$)'</span>)</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>WARNING: The RCWA solver will not be available because an S4 installation has not been found.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>&lt;matplotlib.legend.Legend at 0x12ee06f50&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="4-Spectral2_files/figure-html/cell-2-output-3.png" class="img-fluid"></p>
+</div>
 </div>
 </section>
 <section id="adjusting-the-precipitable-water-value" class="level2">
 <h2 class="anchored" data-anchor-id="adjusting-the-precipitable-water-value">Adjusting the precipitable water value</h2>
 <p>The default SPCTRAL2 parameters results in almost no atmospheric absorption. This suggests the precipitable water column thickness is much too low, the default is 0.00142 cm. Let’s increase that value to 1cm to roughly match AM1.5G:</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-11-15T08:49:44.353622Z&quot;,&quot;start_time&quot;:&quot;2023-11-15T08:49:44.234106Z&quot;}">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>spc2pc <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'SPECTRAL2'</span>, precipwater<span class="op">=</span><span class="fl">1.0</span>, x<span class="op">=</span>wl <span class="op">*</span> <span class="fl">1e9</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Comparions between SPCTRAL2 defaults, 1cm precipitable water &amp; AM1.5G'</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>am15g.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'AM1.5G'</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>spc2default.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'SPC-default'</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>spc2pc.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'PC water'</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">300</span>, <span class="dv">3000</span>)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wavelength (nm)'</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Power density (Wm$^{-2}$nm$^{-1}$)'</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-11-15T08:49:44.353622Z&quot;,&quot;start_time&quot;:&quot;2023-11-15T08:49:44.234106Z&quot;}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>spc2pc <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'SPECTRAL2'</span>, precipwater<span class="op">=</span><span class="fl">1.0</span>, x<span class="op">=</span>wl <span class="op">*</span> <span class="fl">1e9</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Comparions between SPCTRAL2 defaults, 1cm precipitable water &amp; AM1.5G'</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>am15g.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'AM1.5G'</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>spc2default.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'SPC-default'</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>spc2pc.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'PC water'</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">300</span>, <span class="dv">3000</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wavelength (nm)'</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Power density (Wm$^{-2}$nm$^{-1}$)'</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>&lt;matplotlib.legend.Legend at 0x12ef7a890&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="4-Spectral2_files/figure-html/cell-3-output-2.png" class="img-fluid"></p>
+</div>
 </div>
 </section>
 <section id="atmospheric-turbidity" class="level2">
 <h2 class="anchored" data-anchor-id="atmospheric-turbidity">Atmospheric Turbidity</h2>
 <p>The short wavelength is attenuated which is likely due to a high level of aerosol loading in the default spectrum. To address this atmospheric turbidity can be reduced to around 0.05.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-11-15T08:49:44.486531Z&quot;,&quot;start_time&quot;:&quot;2023-11-15T08:49:44.360339Z&quot;}">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>spc2high <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'SPECTRAL2'</span>, precipwater<span class="op">=</span><span class="fl">1.0</span>, turbidity<span class="op">=</span><span class="fl">0.2</span>, x<span class="op">=</span>wl <span class="op">*</span> <span class="fl">1e9</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>spc2med <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'SPECTRAL2'</span>, precipwater<span class="op">=</span><span class="fl">1.0</span>, turbidity<span class="op">=</span><span class="fl">0.1</span>, x<span class="op">=</span>wl <span class="op">*</span> <span class="fl">1e9</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>spc2low <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'SPECTRAL2'</span>, precipwater<span class="op">=</span><span class="fl">1.0</span>, turbidity<span class="op">=</span><span class="fl">0.05</span>, x<span class="op">=</span>wl <span class="op">*</span> <span class="fl">1e9</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Spectral Irradiance Plotted for Different Aersol Models'</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>am15g.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'AM1.5G'</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>spc2high.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'Turbidity = 0.2'</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>spc2med.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'Turbidity = 0.1'</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>spc2low.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'Turbidity = 0.05'</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">300</span>, <span class="dv">3000</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wavelength (nm)'</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Power density (Wm$^{-2}$nm$^{-1}$)'</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-11-15T08:49:44.486531Z&quot;,&quot;start_time&quot;:&quot;2023-11-15T08:49:44.360339Z&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>spc2high <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'SPECTRAL2'</span>, precipwater<span class="op">=</span><span class="fl">1.0</span>, turbidity<span class="op">=</span><span class="fl">0.2</span>, x<span class="op">=</span>wl <span class="op">*</span> <span class="fl">1e9</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>spc2med <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'SPECTRAL2'</span>, precipwater<span class="op">=</span><span class="fl">1.0</span>, turbidity<span class="op">=</span><span class="fl">0.1</span>, x<span class="op">=</span>wl <span class="op">*</span> <span class="fl">1e9</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>spc2low <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'SPECTRAL2'</span>, precipwater<span class="op">=</span><span class="fl">1.0</span>, turbidity<span class="op">=</span><span class="fl">0.05</span>, x<span class="op">=</span>wl <span class="op">*</span> <span class="fl">1e9</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Spectral Irradiance Plotted for Different Aersol Models'</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>am15g.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'AM1.5G'</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>spc2high.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'Turbidity = 0.2'</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>spc2med.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'Turbidity = 0.1'</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>spc2low.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'Turbidity = 0.05'</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">300</span>, <span class="dv">3000</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wavelength (nm)'</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Power density (Wm$^{-2}$nm$^{-1}$)'</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>&lt;matplotlib.legend.Legend at 0x12f727450&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="4-Spectral2_files/figure-html/cell-4-output-2.png" class="img-fluid"></p>
+</div>
 </div>
 </section>
 <section id="variation-with-aerosol-models" class="level2">
@@ -256,45 +277,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Several standard aerosol models are implemented in SPCTRAL 2 that were established by Shettle &amp; Fenn.</p>
 <p><em>Shettle, E. P., and R. W. Fenn, “Models of the Atmospheric Aerosol and Their Optical Properties, II Proceedings of the Advisory Group for Aerospace Reseach and Development Conference No . 183, Optical Propagation in the Atmosphere, 1975, pp.&nbsp;2.1-2.16. Presented at the Electromagnetic Wave Propagation Panel Symposium, Lyngby, Denmark; 27-31 October 1975.</em></p>
 <p>Here we plot some of them with a turbidity of 0.2 to emphasise the different spectral behaviour:</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-11-15T08:49:44.614439Z&quot;,&quot;start_time&quot;:&quot;2023-11-15T08:49:44.492681Z&quot;}">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>spc2rural <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'SPECTRAL2'</span>, precipwater<span class="op">=</span><span class="fl">1.0</span>, turbidity<span class="op">=</span><span class="fl">0.2</span>,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                        aod_model<span class="op">=</span><span class="st">'rural'</span>, x<span class="op">=</span>wl <span class="op">*</span> <span class="fl">1e9</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>spc2marit <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'SPECTRAL2'</span>, precipwater<span class="op">=</span><span class="fl">1.0</span>, turbidity<span class="op">=</span><span class="fl">0.2</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                        aod_model<span class="op">=</span><span class="st">'maritime'</span>, x<span class="op">=</span>wl <span class="op">*</span> <span class="fl">1e9</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>spc2tropo <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'SPECTRAL2'</span>, precipwater<span class="op">=</span><span class="fl">1.0</span>, turbidity<span class="op">=</span><span class="fl">0.2</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                        aod_model<span class="op">=</span><span class="st">'tropospheric'</span>, x<span class="op">=</span>wl <span class="op">*</span> <span class="fl">1e9</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>plt.figure(<span class="dv">1</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Spectral Irradiance Plotted for Different Aersol Models'</span>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>am15g.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'AM1.5G'</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>spc2rural.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'rural'</span>)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>spc2marit.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'maritime'</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>spc2tropo.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'tropospheric'</span>)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">300</span>, <span class="dv">3000</span>)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wavelength (nm)'</span>)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Power density (Wm$^{-2}$nm$^{-1}$)'</span>)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-11-15T08:49:44.614439Z&quot;,&quot;start_time&quot;:&quot;2023-11-15T08:49:44.492681Z&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>spc2rural <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'SPECTRAL2'</span>, precipwater<span class="op">=</span><span class="fl">1.0</span>, turbidity<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                        aod_model<span class="op">=</span><span class="st">'rural'</span>, x<span class="op">=</span>wl <span class="op">*</span> <span class="fl">1e9</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>spc2marit <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'SPECTRAL2'</span>, precipwater<span class="op">=</span><span class="fl">1.0</span>, turbidity<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                        aod_model<span class="op">=</span><span class="st">'maritime'</span>, x<span class="op">=</span>wl <span class="op">*</span> <span class="fl">1e9</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>spc2tropo <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'SPECTRAL2'</span>, precipwater<span class="op">=</span><span class="fl">1.0</span>, turbidity<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                        aod_model<span class="op">=</span><span class="st">'tropospheric'</span>, x<span class="op">=</span>wl <span class="op">*</span> <span class="fl">1e9</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.figure(<span class="dv">1</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Spectral Irradiance Plotted for Different Aersol Models'</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>am15g.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'AM1.5G'</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>spc2rural.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'rural'</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>spc2marit.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'maritime'</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>spc2tropo.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'tropospheric'</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">300</span>, <span class="dv">3000</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wavelength (nm)'</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Power density (Wm$^{-2}$nm$^{-1}$)'</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>&lt;matplotlib.legend.Legend at 0x12f7769d0&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="4-Spectral2_files/figure-html/cell-5-output-2.png" class="img-fluid"></p>
+</div>
 </div>
 </section>
 <section id="changing-the-time-of-day" class="level2">
 <h2 class="anchored" data-anchor-id="changing-the-time-of-day">Changing the time of day</h2>
 <p>One of the most common uses for a spectral irradiance model such as SPCTRAL2 is to calculate how a particular solar cell technology behaves under varying spectral conditions during the day. This is particularly important whan working with series connected tandem solar cells where the current matching condition will vary according to the incident spectrum. Here we plot the spectral irradiance at 12pm, 2pm, 3pm, 4pm, 5pm, 6pm and 7pm. Note the strong relative loss in short-wavelength light relative to the infrared as the air-mass increases throughout the afternoon.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-11-15T08:49:44.752337Z&quot;,&quot;start_time&quot;:&quot;2023-11-15T08:49:44.619234Z&quot;}">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> datetime</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.figure(<span class="dv">1</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Spectral Irradiance plotted from 12pm-7pm'</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>hours<span class="op">=</span>[<span class="dv">12</span>, <span class="dv">14</span>, <span class="dv">15</span>, <span class="dv">16</span>, <span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>]</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> h <span class="kw">in</span> hours:</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    spc2 <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'SPECTRAL2'</span>, dateAndTime<span class="op">=</span>datetime.datetime(<span class="dv">2011</span>, <span class="dv">6</span>, <span class="dv">30</span>, h, <span class="dv">00</span>),</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                       precipwater<span class="op">=</span><span class="fl">1.0</span>, turbidity<span class="op">=</span><span class="fl">0.05</span>, x<span class="op">=</span>wl <span class="op">*</span> <span class="fl">1e9</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    plt.plot(<span class="op">*</span>spc2.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'hour '</span><span class="op">+</span> <span class="bu">str</span>(h))</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">300</span>, <span class="dv">3000</span>)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wavelength (nm)'</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Power density (Wm$^{-2}$nm$^{-1}$)'</span>)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-11-15T08:49:44.752337Z&quot;,&quot;start_time&quot;:&quot;2023-11-15T08:49:44.619234Z&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> datetime</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.figure(<span class="dv">1</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Spectral Irradiance plotted from 12pm-7pm'</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>hours<span class="op">=</span>[<span class="dv">12</span>, <span class="dv">14</span>, <span class="dv">15</span>, <span class="dv">16</span>, <span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>]</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> h <span class="kw">in</span> hours:</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    spc2 <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'SPECTRAL2'</span>, dateAndTime<span class="op">=</span>datetime.datetime(<span class="dv">2011</span>, <span class="dv">6</span>, <span class="dv">30</span>, h, <span class="dv">00</span>),</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                       precipwater<span class="op">=</span><span class="fl">1.0</span>, turbidity<span class="op">=</span><span class="fl">0.05</span>, x<span class="op">=</span>wl <span class="op">*</span> <span class="fl">1e9</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    plt.plot(<span class="op">*</span>spc2.spectrum(wl<span class="op">*</span><span class="fl">1e9</span>), label<span class="op">=</span><span class="st">'hour '</span><span class="op">+</span> <span class="bu">str</span>(h))</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">300</span>, <span class="dv">3000</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wavelength (nm)'</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Power density (Wm$^{-2}$nm$^{-1}$)'</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>&lt;matplotlib.legend.Legend at 0x12f8a5d10&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="4-Spectral2_files/figure-html/cell-6-output-2.png" class="img-fluid"></p>
+</div>
 </div>
 
 
