@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Solcore Education - Section 8: Textured Si</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Solcore Education</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../solar-cell-simulation/tutorials.html" rel="" target="">
+ <span class="menu-text">Tutorials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../solcore-workshop/workshop2023.html" rel="" target="">
+ <span class="menu-text">Solcore Workshop 2023 (SKKU)</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../solcore-workshop-2/workshop2023.html" rel="" target="">
+ <span class="menu-text">Solcore Workshop 2023 (UNSW)</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#setting-up" id="toc-setting-up" class="nav-link active" data-scroll-target="#setting-up">Setting up</a></li>
+  <li><a href="#defining-the-structures" id="toc-defining-the-structures" class="nav-link" data-scroll-target="#defining-the-structures">Defining the structures</a></li>
+  <li><a href="#calculating-rat" id="toc-calculating-rat" class="nav-link" data-scroll-target="#calculating-rat">Calculating R/A/T</a></li>
+  <li><a href="#plotting" id="toc-plotting" class="nav-link" data-scroll-target="#plotting">Plotting</a></li>
+  <li><a href="#redistribution-matrices" id="toc-redistribution-matrices" class="nav-link" data-scroll-target="#redistribution-matrices">Redistribution matrices</a></li>
+  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Section 8: Textured Si</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>This example is based on Figures 6, 7 and 8 from <a href="https://doi.org/10.1364/OE.23.0A1720">this paper</a>. This compares three different structures, all based on a 200 micron thick slab of silicon with different surface textures:</p>
+<ol type="1">
+<li>Planar front surface (TMM), crossed grating at rear (RCWA)</li>
+<li>Inverted pyramids on the front surface (RT_Fresnel), planar rear surface (TMM)</li>
+<li>Inverted pyramids on the front surface (RT_Fresnel), crossed grating at rear (RCWA)</li>
+</ol>
+<p>The methods which will be used to calculate the redistribution matrices in each case are given in brackets. If case 1 and 2 are calculated first, then case 3 does not require the calculations of any additional matrices, since it will use the rear matrix from (1) and the front matrix from (2).</p>
+<section id="setting-up" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up">Setting up</h2>
+<p>First, importing relevant packages:</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-11-15T09:07:26.494790Z&quot;,&quot;start_time&quot;:&quot;2023-11-15T09:07:25.022732Z&quot;}" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># solcore imports</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.structure <span class="im">import</span> Layer</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore <span class="im">import</span> material</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore <span class="im">import</span> si</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rayflare.structure <span class="im">import</span> Interface, BulkLayer, Structure</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rayflare.matrix_formalism <span class="im">import</span> process_structure, calculate_RAT</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rayflare.utilities <span class="im">import</span> get_savepath</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rayflare.transfer_matrix_method <span class="im">import</span> tmm_structure</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rayflare.angles <span class="im">import</span> theta_summary, make_angle_vector</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rayflare.textures <span class="im">import</span> regular_pyramids</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rayflare.options <span class="im">import</span> default_options</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib <span class="im">as</span> mpl</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sparse <span class="im">import</span> load_npz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>WARNING: The RCWA solver will not be available because an S4 installation has not been found.</code></pre>
+</div>
+</div>
+<p>Setting options (taking the default options for everything not specified explicitly):</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-11-15T09:07:32.483132Z&quot;,&quot;start_time&quot;:&quot;2023-11-15T09:07:32.464888Z&quot;}" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>angle_degrees_in <span class="op">=</span> <span class="dv">8</span> <span class="co"># same as in Fraunhofer paper</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>wavelengths <span class="op">=</span> np.linspace(<span class="dv">900</span>, <span class="dv">1200</span>, <span class="dv">20</span>) <span class="op">*</span> <span class="fl">1e-9</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>Si <span class="op">=</span> material(<span class="st">"Si"</span>)()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>Air <span class="op">=</span> material(<span class="st">"Air"</span>)()</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>options <span class="op">=</span> default_options()</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>options.wavelength <span class="op">=</span> wavelengths</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>options.theta_in <span class="op">=</span> angle_degrees_in <span class="op">*</span> np.pi <span class="op">/</span> <span class="dv">180</span> <span class="co"># incidence angle (polar angle)</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>options.n_theta_bins <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>options.c_azimuth <span class="op">=</span> <span class="fl">0.25</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>options.n_rays <span class="op">=</span> <span class="fl">5e4</span> <span class="co"># number of rays per wavelength in ray-tracing</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>options.project_name <span class="op">=</span> <span class="st">"OPTOS_comparison"</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>options.orders <span class="op">=</span> <span class="dv">60</span> <span class="co"># number of RCWA orders to use (more = better convergence, but slower)</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>options.pol <span class="op">=</span> <span class="st">"u"</span> <span class="co"># unpolarized light</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>options.only_incidence_angle <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>options.RCWA_method <span class="op">=</span> <span class="st">"Inkstone"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="defining-the-structures" class="level2">
+<h2 class="anchored" data-anchor-id="defining-the-structures">Defining the structures</h2>
+<p>Now, set up the grating basis vectors for the RCWA calculations and define the grating structure. These are squares, rotated by 45 degrees. The halfwidth is calculated based on the area fill factor of the etched pillars given in the paper.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-11-15T09:07:34.414573Z&quot;,&quot;start_time&quot;:&quot;2023-11-15T09:07:34.408237Z&quot;}" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>d_vectors <span class="op">=</span> ((x, <span class="dv">0</span>), (<span class="dv">0</span>, x))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>area_fill_factor <span class="op">=</span> <span class="fl">0.36</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>hw <span class="op">=</span> np.sqrt(area_fill_factor) <span class="op">*</span> <span class="dv">500</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>back_materials <span class="op">=</span> [</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    Layer(width<span class="op">=</span>si(<span class="st">"120nm"</span>), material<span class="op">=</span>Si,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        geometry<span class="op">=</span>[{<span class="st">"type"</span>: <span class="st">"rectangle"</span>, <span class="st">"mat"</span>: Air, <span class="st">"center"</span>: (x <span class="op">/</span> <span class="dv">2</span>, x <span class="op">/</span> <span class="dv">2</span>),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                <span class="st">"halfwidths"</span>: (hw, hw), <span class="st">"angle"</span>: <span class="dv">45</span>}],</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    )]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we define the pyramid texture for the front surface in case (2) and (3) and make the four possible different surfaces: planar front and rear, front with pyramids, rear with grating. We specify the method to use to calculate the redistribution matrices in each case and create the bulk layer.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-11-15T09:07:35.630980Z&quot;,&quot;start_time&quot;:&quot;2023-11-15T09:07:35.626657Z&quot;}" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>surf <span class="op">=</span> regular_pyramids(elevation_angle<span class="op">=</span><span class="dv">55</span>, upright<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>front_surf_pyramids <span class="op">=</span> Interface(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"RT_Fresnel"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    texture<span class="op">=</span>surf,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    layers<span class="op">=</span>[],</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"inv_pyramids_front_"</span> <span class="op">+</span> <span class="bu">str</span>(options[<span class="st">"n_rays"</span>]),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>front_surf_planar <span class="op">=</span> Interface(<span class="st">"TMM"</span>, layers<span class="op">=</span>[], name<span class="op">=</span><span class="st">"planar_front"</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>back_surf_grating <span class="op">=</span> Interface(</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"RCWA"</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    layers<span class="op">=</span>back_materials,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"crossed_grating_back"</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    d_vectors<span class="op">=</span>d_vectors,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    rcwa_orders<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>back_surf_planar <span class="op">=</span> Interface(<span class="st">"TMM"</span>, layers<span class="op">=</span>[], name<span class="op">=</span><span class="st">"planar_back"</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>bulk_Si <span class="op">=</span> BulkLayer(<span class="fl">200e-6</span>, Si, name<span class="op">=</span><span class="st">"Si_bulk"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we create the different structures and ‘process’ them (this will calculate the relevant matrices if necessary, or do nothing if it finds the matrices have previously been calculated and the files already exist). We don’t need to process the final structure because it will use matrices calculated for <code>SC_fig6</code> and <code>SC_fig7</code>.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-11-15T09:07:41.065063Z&quot;,&quot;start_time&quot;:&quot;2023-11-15T09:07:38.929572Z&quot;}" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>SC_fig6 <span class="op">=</span> Structure(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    [front_surf_planar, bulk_Si, back_surf_grating], incidence<span class="op">=</span>Air, transmission<span class="op">=</span>Air</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>SC_fig7 <span class="op">=</span> Structure(</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    [front_surf_pyramids, bulk_Si, back_surf_planar], incidence<span class="op">=</span>Air, transmission<span class="op">=</span>Air</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>SC_fig8 <span class="op">=</span> Structure(</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    [front_surf_pyramids, bulk_Si, back_surf_grating], incidence<span class="op">=</span>Air, transmission<span class="op">=</span>Air</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>process_structure(SC_fig6, options, save_location<span class="op">=</span><span class="st">'current'</span>) <span class="co"># if you want to overwrite previous results, add overwrite=Trues</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>process_structure(SC_fig7, options, save_location<span class="op">=</span><span class="st">'current'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>INFO: Making matrix for planar surface using TMM for element 0 in structure
+INFO: Existing angular redistribution matrices found
+INFO: Existing angular redistribution matrices found
+INFO: RCWA calculation for element 2 in structure
+INFO: Existing angular redistribution matrices found
+INFO: Ray tracing with Fresnel equations for element 0 in structure
+INFO: Existing angular redistribution matrices found
+INFO: RT calculation for wavelength = 947.3684210526316 nm
+INFO: RT calculation for wavelength = 915.7894736842105 nm
+INFO: RT calculation for wavelength = 931.578947368421 nm
+INFO: RT calculation for wavelength = 994.7368421052631 nm
+INFO: RT calculation for wavelength = 1010.5263157894736 nm
+INFO: RT calculation for wavelength = 900.0000000000001 nm
+INFO: RT calculation for wavelength = 1026.3157894736842 nm
+INFO: RT calculation for wavelength = 978.9473684210526 nm
+INFO: RT calculation for wavelength = 1042.1052631578948 nm
+INFO: RT calculation for wavelength = 963.1578947368421 nm
+INFO: RT calculation for wavelength = 1057.8947368421054 nm
+INFO: RT calculation for wavelength = 1073.6842105263158 nm
+INFO: RT calculation for wavelength = 1089.4736842105265 nm
+INFO: RT calculation for wavelength = 1105.2631578947369 nm
+INFO: RT calculation for wavelength = 1121.0526315789475 nm
+INFO: RT calculation for wavelength = 1136.842105263158 nm
+INFO: RT calculation for wavelength = 1152.6315789473683 nm
+INFO: RT calculation for wavelength = 1168.421052631579 nm
+INFO: RT calculation for wavelength = 1184.2105263157896 nm
+INFO: RT calculation for wavelength = 1200.0000000000002 nm
+INFO: Making matrix for planar surface using TMM for element 2 in structure</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>WARNING: The RCWA solver will not be available because an S4 installation has not been found.WARNING: The RCWA solver will not be available because an S4 installation has not been found.
+WARNING: The RCWA solver will not be available because an S4 installation has not been found.
+WARNING: The RCWA solver will not be available because an S4 installation has not been found.
+WARNING: The RCWA solver will not be available because an S4 installation has not been found.
+
+WARNING: The RCWA solver will not be available because an S4 installation has not been found.
+WARNING: The RCWA solver will not be available because an S4 installation has not been found.
+WARNING: The RCWA solver will not be available because an S4 installation has not been found.
+WARNING: The RCWA solver will not be available because an S4 installation has not been found.
+WARNING: The RCWA solver will not be available because an S4 installation has not been found.</code></pre>
+</div>
+</div>
+</section>
+<section id="calculating-rat" class="level2">
+<h2 class="anchored" data-anchor-id="calculating-rat">Calculating R/A/T</h2>
+<p>Then we ask RayFlare to calculate the reflection, transmission and absorption through matrix multiplication, and get the required result out (absorption in the bulk) for each cell. We also load the results from the reference paper to compare them to the ones calculated with RayFlare.</p>
+<div class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>results_fig6 <span class="op">=</span> calculate_RAT(SC_fig6, options, save_location<span class="op">=</span><span class="st">'current'</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>results_fig7 <span class="op">=</span> calculate_RAT(SC_fig7, options, save_location<span class="op">=</span><span class="st">'current'</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>results_fig8 <span class="op">=</span> calculate_RAT(SC_fig8, options, save_location<span class="op">=</span><span class="st">'current'</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>RAT_fig6 <span class="op">=</span> results_fig6[<span class="dv">0</span>]</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>RAT_fig7 <span class="op">=</span> results_fig7[<span class="dv">0</span>]</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>RAT_fig8 <span class="op">=</span> results_fig8[<span class="dv">0</span>]</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>sim_fig6 <span class="op">=</span> np.loadtxt(<span class="st">"data/optos_fig6_sim.csv"</span>, delimiter<span class="op">=</span><span class="st">","</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>sim_fig7 <span class="op">=</span> np.loadtxt(<span class="st">"data/optos_fig7_sim.csv"</span>, delimiter<span class="op">=</span><span class="st">","</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>sim_fig8 <span class="op">=</span> np.loadtxt(<span class="st">"data/optos_fig8_sim.csv"</span>, delimiter<span class="op">=</span><span class="st">","</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>INFO: After iteration 1: maximum power fraction remaining = 0.2955034746873003
+INFO: After iteration 2: maximum power fraction remaining = 0.24735134017097984
+INFO: After iteration 3: maximum power fraction remaining = 0.2163507471365699
+INFO: After iteration 4: maximum power fraction remaining = 0.19159890069625435
+INFO: After iteration 5: maximum power fraction remaining = 0.17095529483161526
+INFO: After iteration 6: maximum power fraction remaining = 0.15344062600062974
+INFO: After iteration 7: maximum power fraction remaining = 0.1384291294436452
+INFO: After iteration 8: maximum power fraction remaining = 0.12547688890130715
+INFO: After iteration 9: maximum power fraction remaining = 0.11424326382940328
+INFO: After iteration 10: maximum power fraction remaining = 0.10445704654991224
+INFO: After iteration 11: maximum power fraction remaining = 0.09589761402726735
+INFO: After iteration 12: maximum power fraction remaining = 0.0883830436692257
+INFO: After iteration 13: maximum power fraction remaining = 0.08176193170317834
+INFO: After iteration 14: maximum power fraction remaining = 0.07590744044348399
+INFO: After iteration 15: maximum power fraction remaining = 0.07071278644058707
+INFO: After iteration 16: maximum power fraction remaining = 0.06608771669781371
+INFO: After iteration 17: maximum power fraction remaining = 0.0619556977477
+INFO: After iteration 18: maximum power fraction remaining = 0.05825164073869242
+INFO: After iteration 19: maximum power fraction remaining = 0.05492004211445781
+INFO: After iteration 20: maximum power fraction remaining = 0.05191345343864926
+INFO: After iteration 21: maximum power fraction remaining = 0.04919121562204323
+INFO: After iteration 22: maximum power fraction remaining = 0.046718407568182026
+INFO: After iteration 23: maximum power fraction remaining = 0.044464969858259776
+INFO: After iteration 24: maximum power fraction remaining = 0.042404972041952975
+INFO: After iteration 25: maximum power fraction remaining = 0.04051599822739152
+INFO: After iteration 26: maximum power fraction remaining = 0.038778630473564266
+INFO: After iteration 27: maximum power fraction remaining = 0.03717601330766723
+INFO: After iteration 28: maximum power fraction remaining = 0.03569348574421198
+INFO: After iteration 29: maximum power fraction remaining = 0.034318269637635124
+INFO: After iteration 30: maximum power fraction remaining = 0.03303920518123784
+INFO: After iteration 31: maximum power fraction remaining = 0.031846525969740455
+INFO: After iteration 32: maximum power fraction remaining = 0.030731667346668046
+INFO: After iteration 33: maximum power fraction remaining = 0.029687102821135403
+INFO: After iteration 34: maximum power fraction remaining = 0.028706204208766243
+INFO: After iteration 35: maximum power fraction remaining = 0.027783121866022602
+INFO: After iteration 36: maximum power fraction remaining = 0.026912681975976842
+INFO: After iteration 37: maximum power fraction remaining = 0.026090298330296663
+INFO: After iteration 38: maximum power fraction remaining = 0.025311896455915424
+INFO: After iteration 39: maximum power fraction remaining = 0.024573848270729514
+INFO: After iteration 40: maximum power fraction remaining = 0.023872915732924625
+INFO: After iteration 41: maximum power fraction remaining = 0.023206202183040037
+INFO: After iteration 42: maximum power fraction remaining = 0.022571110274614448
+INFO: After iteration 43: maximum power fraction remaining = 0.02196530555470288
+INFO: After iteration 44: maximum power fraction remaining = 0.021386684895000417
+INFO: After iteration 45: maximum power fraction remaining = 0.02083334909208419
+INFO: After iteration 46: maximum power fraction remaining = 0.020303579054949197
+INFO: After iteration 47: maximum power fraction remaining = 0.019795815082497975
+INFO: After iteration 48: maximum power fraction remaining = 0.019308638805378607
+INFO: After iteration 49: maximum power fraction remaining = 0.018840757427562815
+INFO: After iteration 50: maximum power fraction remaining = 0.018390989954995544
+INFO: After iteration 51: maximum power fraction remaining = 0.01795825514292941
+INFO: After iteration 52: maximum power fraction remaining = 0.017541560931354713
+INFO: After iteration 53: maximum power fraction remaining = 0.017139995170233478
+INFO: After iteration 54: maximum power fraction remaining = 0.016752717463871532
+INFO: After iteration 55: maximum power fraction remaining = 0.016378951987414226
+INFO: After iteration 56: maximum power fraction remaining = 0.01601798114871917
+INFO: After iteration 57: maximum power fraction remaining = 0.01566913998624118
+INFO: After iteration 58: maximum power fraction remaining = 0.015331811208484045
+INFO: After iteration 59: maximum power fraction remaining = 0.015005420793388834
+INFO: After iteration 60: maximum power fraction remaining = 0.014689434077044667
+INFO: After iteration 61: maximum power fraction remaining = 0.014383352270584045
+INFO: After iteration 62: maximum power fraction remaining = 0.014086709352282257
+INFO: After iteration 63: maximum power fraction remaining = 0.013799069288907425
+INFO: After iteration 64: maximum power fraction remaining = 0.013520023546425057
+INFO: After iteration 65: maximum power fraction remaining = 0.013249188855386125
+INFO: After iteration 66: maximum power fraction remaining = 0.012986205200837965
+INFO: After iteration 67: maximum power fraction remaining = 0.01273073401049334
+INFO: After iteration 68: maximum power fraction remaining = 0.012482456518260769
+INFO: After iteration 69: maximum power fraction remaining = 0.012241072283152531
+INFO: After iteration 70: maximum power fraction remaining = 0.012006297846108658
+INFO: After iteration 71: maximum power fraction remaining = 0.011777865509460205
+INFO: After iteration 72: maximum power fraction remaining = 0.011555522225649468
+INFO: After iteration 73: maximum power fraction remaining = 0.011339028583468616
+INFO: After iteration 74: maximum power fraction remaining = 0.011128157881506017
+INFO: After iteration 75: maximum power fraction remaining = 0.010922695279730358
+INFO: After iteration 76: maximum power fraction remaining = 0.010722437021222662
+INFO: After iteration 77: maximum power fraction remaining = 0.010527189717006499
+INFO: After iteration 78: maximum power fraction remaining = 0.010336769687746671
+INFO: After iteration 79: maximum power fraction remaining = 0.010151002356801959
+INFO: After iteration 80: maximum power fraction remaining = 0.009969721689742805
+INFO: After iteration 1: maximum power fraction remaining = 0.6904687021340956
+INFO: After iteration 2: maximum power fraction remaining = 0.5529545101509352
+INFO: After iteration 3: maximum power fraction remaining = 0.511292942194319
+INFO: After iteration 4: maximum power fraction remaining = 0.44224378131338016
+INFO: After iteration 5: maximum power fraction remaining = 0.39997454451423775
+INFO: After iteration 6: maximum power fraction remaining = 0.3485295085904421
+INFO: After iteration 7: maximum power fraction remaining = 0.3138482613917786
+INFO: After iteration 8: maximum power fraction remaining = 0.27553594442668927
+INFO: After iteration 9: maximum power fraction remaining = 0.24751635054463023
+INFO: After iteration 10: maximum power fraction remaining = 0.21840401464945428
+INFO: After iteration 11: maximum power fraction remaining = 0.19583800968944132
+INFO: After iteration 12: maximum power fraction remaining = 0.17344166256983365
+INFO: After iteration 13: maximum power fraction remaining = 0.15530793273842505
+INFO: After iteration 14: maximum power fraction remaining = 0.13789731413300393
+INFO: After iteration 15: maximum power fraction remaining = 0.12335775256871925
+INFO: After iteration 16: maximum power fraction remaining = 0.10971979419070547
+INFO: After iteration 17: maximum power fraction remaining = 0.09808315863565356
+INFO: After iteration 18: maximum power fraction remaining = 0.08734240233208478
+INFO: After iteration 19: maximum power fraction remaining = 0.0780417094944075
+INFO: After iteration 20: maximum power fraction remaining = 0.06955082453103606
+INFO: After iteration 21: maximum power fraction remaining = 0.06212436763500962
+INFO: After iteration 22: maximum power fraction remaining = 0.05539475523478134
+INFO: After iteration 23: maximum power fraction remaining = 0.04946888092506737
+INFO: After iteration 24: maximum power fraction remaining = 0.04412586351647957
+INFO: After iteration 25: maximum power fraction remaining = 0.03939959150147595
+INFO: After iteration 26: maximum power fraction remaining = 0.035152466756422904
+INFO: After iteration 27: maximum power fraction remaining = 0.03138417210722542
+INFO: After iteration 28: maximum power fraction remaining = 0.02800549474394666
+INFO: After iteration 29: maximum power fraction remaining = 0.025001662835576158
+INFO: After iteration 30: maximum power fraction remaining = 0.022336528444980536
+INFO: After iteration 31: maximum power fraction remaining = 0.019970345021341422
+INFO: After iteration 32: maximum power fraction remaining = 0.017850251895806992
+INFO: After iteration 33: maximum power fraction remaining = 0.01595879897926111
+INFO: After iteration 34: maximum power fraction remaining = 0.014265341950741119
+INFO: After iteration 35: maximum power fraction remaining = 0.012753479233909213
+INFO: After iteration 36: maximum power fraction remaining = 0.01140055750519969
+INFO: After iteration 37: maximum power fraction remaining = 0.010192162654957652
+INFO: After iteration 38: maximum power fraction remaining = 0.009111167021520275
+INFO: After iteration 1: maximum power fraction remaining = 0.7673983435875205
+INFO: After iteration 2: maximum power fraction remaining = 0.6372585557661392
+INFO: After iteration 3: maximum power fraction remaining = 0.5414879294120498
+INFO: After iteration 4: maximum power fraction remaining = 0.46198278041320184
+INFO: After iteration 5: maximum power fraction remaining = 0.39433973016867285
+INFO: After iteration 6: maximum power fraction remaining = 0.33676090679898063
+INFO: After iteration 7: maximum power fraction remaining = 0.28761095693740824
+INFO: After iteration 8: maximum power fraction remaining = 0.2456437571054792
+INFO: After iteration 9: maximum power fraction remaining = 0.20980167029275584
+INFO: After iteration 10: maximum power fraction remaining = 0.17918990119472689
+INFO: After iteration 11: maximum power fraction remaining = 0.15304474763794992
+INFO: After iteration 12: maximum power fraction remaining = 0.13071442653724563
+INFO: After iteration 13: maximum power fraction remaining = 0.11164227220874255
+INFO: After iteration 14: maximum power fraction remaining = 0.09535288871681696
+INFO: After iteration 15: maximum power fraction remaining = 0.08144024158383945
+INFO: After iteration 16: maximum power fraction remaining = 0.06955754767323634
+INFO: After iteration 17: maximum power fraction remaining = 0.059408621208283954
+INFO: After iteration 18: maximum power fraction remaining = 0.05074049344792487
+INFO: After iteration 19: maximum power fraction remaining = 0.04333710537780831
+INFO: After iteration 20: maximum power fraction remaining = 0.03701392274486675
+INFO: After iteration 21: maximum power fraction remaining = 0.03161333608191989
+INFO: After iteration 22: maximum power fraction remaining = 0.02700073227373622
+INFO: After iteration 23: maximum power fraction remaining = 0.02306113917976735
+INFO: After iteration 24: maximum power fraction remaining = 0.0196963598948841
+INFO: After iteration 25: maximum power fraction remaining = 0.016822525118259837
+INFO: After iteration 26: maximum power fraction remaining = 0.014368002659713427
+INFO: After iteration 27: maximum power fraction remaining = 0.012271611959434315
+INFO: After iteration 28: maximum power fraction remaining = 0.010481099123494625
+INFO: After iteration 29: maximum power fraction remaining = 0.008951834461485581</code></pre>
+</div>
+</div>
+<p>Finally, we use TMM to calculate the absorption in a structure with a planar front and planar rear, as a reference.</p>
+<div class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>struc <span class="op">=</span> tmm_structure([Layer(si(<span class="st">"200um"</span>), Si)], incidence<span class="op">=</span>Air, transmission<span class="op">=</span>Air)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>options.coherent <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>options.coherency_list <span class="op">=</span> [<span class="st">"i"</span>]</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>RAT <span class="op">=</span> tmm_structure.calculate(struc, options)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="plotting" class="level2">
+<h2 class="anchored" data-anchor-id="plotting">Plotting</h2>
+<p>Plot everything together, including data from the reference paper for comparison:</p>
+<div class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>palhf <span class="op">=</span> sns.color_palette(<span class="st">"hls"</span>, <span class="dv">4</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>plt.plot(sim_fig6[:, <span class="dv">0</span>], sim_fig6[:, <span class="dv">1</span>],</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"--"</span>, color<span class="op">=</span>palhf[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"OPTOS - rear grating (1)"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig6[<span class="st">"A_bulk"</span>][<span class="dv">0</span>],</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-o"</span>, color<span class="op">=</span>palhf[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"RayFlare - rear grating (1)"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>plt.plot(sim_fig7[:, <span class="dv">0</span>], sim_fig7[:, <span class="dv">1</span>],</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"--"</span>, color<span class="op">=</span>palhf[<span class="dv">1</span>], label<span class="op">=</span><span class="st">"OPTOS - front pyramids (2)"</span>,)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig7[<span class="st">"A_bulk"</span>][<span class="dv">0</span>],</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-o"</span>, color<span class="op">=</span>palhf[<span class="dv">1</span>], label<span class="op">=</span><span class="st">"RayFlare - front pyramids (2)"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>plt.plot(sim_fig8[:, <span class="dv">0</span>], sim_fig8[:, <span class="dv">1</span>],</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"--"</span>, color<span class="op">=</span>palhf[<span class="dv">2</span>], label<span class="op">=</span><span class="st">"OPTOS - grating + pyramids (3)"</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig8[<span class="st">"A_bulk"</span>][<span class="dv">0</span>],</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-o"</span>, color<span class="op">=</span>palhf[<span class="dv">2</span>],label<span class="op">=</span><span class="st">"RayFlare - grating + pyramids (3)"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>,)</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT[<span class="st">"A_per_layer"</span>][:, <span class="dv">0</span>], <span class="st">"-k"</span>, label<span class="op">=</span><span class="st">"Planar"</span>)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">"lower left"</span>)</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Absorption in Si"</span>)</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>plt.xlim([<span class="dv">900</span>, <span class="dv">1200</span>])</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="dv">0</span>, <span class="dv">1</span>])</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="9-grating_pyramids_OPTOS_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>We can see good agreement between the reference values and our calculated values. The structure with rear grating also behaves identically to the planar TMM reference case at the short wavelengths where front surface reflection dominates the result, as expected. Clearly, the pyramids perform much better overall, giving a large boost in the absorption at long wavelengths and also reducing the reflection significantly at shorter wavelengths. Plotting reflection and transmission emphasises this:</p>
+<div class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>,RAT_fig6[<span class="st">"R"</span>][<span class="dv">0</span>],</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-o"</span>, color<span class="op">=</span>palhf[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"RayFlare - rear grating (1)"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig7[<span class="st">"R"</span>][<span class="dv">0</span>],</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-o"</span>, color<span class="op">=</span>palhf[<span class="dv">1</span>], label<span class="op">=</span><span class="st">"RayFlare - front pyramids (2)"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig8[<span class="st">"R"</span>][<span class="dv">0</span>],</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-o"</span>, color<span class="op">=</span>palhf[<span class="dv">2</span>], label<span class="op">=</span><span class="st">"RayFlare - grating + pyramids (3)"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig6[<span class="st">"T"</span>][<span class="dv">0</span>], <span class="st">"--o"</span>, color<span class="op">=</span>palhf[<span class="dv">0</span>])</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig7[<span class="st">"T"</span>][<span class="dv">0</span>], <span class="st">"--o"</span>, color<span class="op">=</span>palhf[<span class="dv">1</span>])</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, RAT_fig8[<span class="st">"T"</span>][<span class="dv">0</span>], <span class="st">"--o"</span>, color<span class="op">=</span>palhf[<span class="dv">2</span>])</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># these are just to create the legend:</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="st">"k-o"</span>, label<span class="op">=</span><span class="st">"R"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="st">"k--o"</span>, label<span class="op">=</span><span class="st">"T"</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Reflected/transmitted fraction"</span>)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>plt.xlim([<span class="dv">900</span>, <span class="dv">1200</span>])</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="dv">0</span>, <span class="fl">0.6</span>])</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="9-grating_pyramids_OPTOS_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="redistribution-matrices" class="level2">
+<h2 class="anchored" data-anchor-id="redistribution-matrices">Redistribution matrices</h2>
+<p>Plot the redistribution matrix for the rear grating (summed over azimuthal angles) at 1100 nm:</p>
+<div class="cell" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>theta_intv, phi_intv, angle_vector <span class="op">=</span> make_angle_vector(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    options[<span class="st">"n_theta_bins"</span>], options[<span class="st">"phi_symmetry"</span>], options[<span class="st">"c_azimuth"</span>])</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> get_savepath(save_location<span class="op">=</span><span class="st">'current'</span>, project_name<span class="op">=</span>options.project_name)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>sprs <span class="op">=</span> load_npz(os.path.join(path, SC_fig6[<span class="dv">2</span>].name <span class="op">+</span> <span class="st">"frontRT.npz"</span>))</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>wl_to_plot <span class="op">=</span> <span class="fl">1100e-9</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>wl_index <span class="op">=</span> np.argmin(np.<span class="bu">abs</span>(wavelengths <span class="op">-</span> wl_to_plot))</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>full <span class="op">=</span> sprs[wl_index].todense()</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>summat <span class="op">=</span> theta_summary(full, angle_vector, options[<span class="st">"n_theta_bins"</span>], <span class="st">"front"</span>)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>summat_r <span class="op">=</span> summat[: options[<span class="st">"n_theta_bins"</span>], :]</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>summat_r <span class="op">=</span> summat_r.rename({ <span class="vs">r"$\theta_</span><span class="sc">{in}</span><span class="vs">$"</span>: <span class="vs">r"$\sin(\theta_</span><span class="sc">{in}</span><span class="vs">)$"</span>,</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>        <span class="vs">r"$\theta_</span><span class="sc">{out}</span><span class="vs">$"</span>: <span class="vs">r"$\sin(\theta_</span><span class="sc">{out}</span><span class="vs">)$"</span>})</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>summat_r <span class="op">=</span> summat_r.assign_coords({<span class="vs">r"$\sin(\theta_</span><span class="sc">{in}</span><span class="vs">)$"</span>: np.sin(summat_r.coords[<span class="vs">r"$\sin(\theta_</span><span class="sc">{in}</span><span class="vs">)$"</span>]).data,</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="vs">r"$\sin(\theta_</span><span class="sc">{out}</span><span class="vs">)$"</span>: np.sin(summat_r.coords[<span class="vs">r"$\sin(\theta_</span><span class="sc">{out}</span><span class="vs">)$"</span>]).data})</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>palhf <span class="op">=</span> sns.cubehelix_palette(<span class="dv">256</span>, start<span class="op">=</span><span class="fl">0.5</span>, rot<span class="op">=-</span><span class="fl">0.9</span>)</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>palhf.reverse()</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>seamap <span class="op">=</span> mpl.colors.ListedColormap(palhf)</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> plt.subplot(<span class="dv">111</span>)</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> summat_r.plot.imshow(ax<span class="op">=</span>ax, cmap<span class="op">=</span>seamap, vmax<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="9-grating_pyramids_OPTOS_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="questions" class="level2">
+<h2 class="anchored" data-anchor-id="questions">Questions</h2>
+<ul>
+<li>If you can add only one of the textures (pyramids or a grating), which one is better? Why?</li>
+<li>Why do the structures with a front-surface texture have high reflection at long wavelengths? The anti-reflection properties of pyramids (treated with ray optics) are mostly independent of the wavelength, so why does apparent reflection increase near the bandgap of Si?</li>
+<li>Can you explain any of the features present in the angular redistribution matrix of the rear grating surface?</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

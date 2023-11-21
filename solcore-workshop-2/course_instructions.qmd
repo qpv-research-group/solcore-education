@@ -1,0 +1,19 @@
+---
+title: "Course instructions"
+---
+
+## Updating to the most recent version of Solcore and RayFlare
+
+We need to make sure everyone is running the most recent version of Solcore and RayFlare. To do this, open VSCode, make
+sure you have a command line with the right Python interpreter open (we will demonstrate this, don't worry) and run:
+
+```
+python3.11 -m pip install --upgrade solcore rayflare
+```
+
+## Link to examples:
+
+You can find the examples we will be going through [here](https://github.com/qpv-research-group/solcore-education/tree/solcore-workshop).
+
+Download the files by clicking "Code" (green box, top right) and then "Download ZIP". Then unzip this folder and open
+it in VSCode.
