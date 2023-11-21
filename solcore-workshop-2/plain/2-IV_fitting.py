@@ -3,13 +3,13 @@
 
 # # Fitting IV data using Shockley's Diode Equation
 # 
-# We have seen how we can calculate the radiative limits to solar cell efficiency.  Let us now tackle the problem from the opposite direction and fit data to an empirical 2-diode model:
+# We have seen how we can calculate the radiative limits to solar cell efficiency.  Let us now tackle the problem from the opposite direction and fit data to an empirical 2-diode model 
 # 
-# $J = J_{\mathrm{ph}}-J_{01}\left[\exp \left\{q\left(V+J R_s\right) / n_1 k T\right\}-1\right] -J_{02}\left[\exp \left\{q\left(V+J R_s\right) / n_2 k T\right\}-1\right]-\left(V+J R_s\right) / R_{\mathrm{sh}}$
+# $J= J_{\mathrm{ph}}-J_{01}\left[\exp \left\{q\left(V+J R_s\right) / n_1 k T\right\}-1\right] -J_{02}\left[\exp \left\{q\left(V+J R_s\right) / n_2 k T\right\}-1\right]-\left(V+J R_s\right) / R_{\mathrm{sh}}$
 # 
 # Where $J_{01}$ is the diode saturation current with ideality $n_1$, $J_{02}$ is the diode satudation current with ideality $n_2$, $R_s$ is the lumped series resistance and $R_{sh}$ is the shunt resistance. 
 # 
-# The diode ideality factors are sometimes used as free parameters when fitting IV data.  Here we choose to assign specific values so provide physical meaning to the $J_0$ values.  Setting $n_1=1$ means $J_01$ accounts for all radiative processes throughout the device and non-radiative processes in the neutral regions of the device, including surface recombination.  Setting $n_2=2$ approximates Shockley-Read-Hall recombination in the space-charge-region of the junction where the electron and hole carrier densities are similar. 
+# The diode ideality factors are sometimes used as free parameters when fitting IV data.  Here we choose to assign specific values so provide physical meaning to the $J_0$ values.  Setting $n_1=1$ means $J_{01}$ accounts for all radiative processes throughout the device and non-radiative processes in the neutral regions of the device, including surface recombination.  Setting $n_2=2$ approximates Shockley-Read-Hall recombination in the space-charge-region of the junction where the electron and hole carrier densities are similar. 
 # 
 # ## Fitting IV data
 # 
