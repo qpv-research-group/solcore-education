@@ -379,3 +379,7 @@ plt.show()
 
 
 # As expected, we see that at forward bias, the band-bending is reduced. We also see that at the rear, where the cell is very highly doped, the electron quasi-Fermi level is inside the conduction band.
+
+# ## Questions
+# 
+# - What are some of the pros and cons of using the depletion approximation vs. the drift-diffusion solver?

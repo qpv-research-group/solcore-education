@@ -4,7 +4,7 @@
 # # Section 9b: Planar III-V epoxy-bonded to textured Si
 # 
 # The structure in this example is based on that of
-# [the previous example (9a)](9a-GaInP_GaAs_Si_grating.ipynb), but
+# [the previous example)](10a-GaInP_GaAs_Si_grating.ipynb), but
 # with the planar bottom Si cell replaced by a Si cell with a pyramidal texture, bonded
 #  to the III-V top cells with a low-index epoxy/glass layer.
 # 
@@ -260,7 +260,7 @@ plt.show()
 # - What happens if only the rear surface is textured? Would a structure without the
 #   front texture have other advantages?
 # - Why does the Si have lower absorption/limiting current in this structure compared to
-#   the [previous example](9a-GaInP_GaAs_Si_grating.ipynb)?
+#   the [previous example](10a-GaInP_GaAs_Si_grating.ipynb)?
 
 # ## Electrical calculation 
 # 

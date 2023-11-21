@@ -28,7 +28,7 @@ import matplotlib.pyplot as plt
 
 
 # As before, we load some materials from the refractiveindex.info database. The MgF$_2$
-#  and Ta$_2$O$_5$ are the same as the [ARC example](6b-arc_optimization.ipynb); the SU8
+#  and Ta$_2$O$_5$ are the same as the [ARC example](6-arc_optimization.ipynb); the SU8
 #   is a negative photoresist which was used in the reference paper The optical
 #   constants for silver are also loaded from a reliable literature source. Note that
 #   the exact compositions of some semiconductor alloy layers (InGaP, AlInP and AlGaAs)
@@ -71,7 +71,7 @@ Si_junction = [Layer(280e-6, Si(Nd=si("2e18cm-3"), hole_diffusion_length=2e-6), 
 coh_layers = len(ARC) + len(GaInP_junction) + len(tunnel_1) + len(GaAs_junction) + len(tunnel_2)
 
 
-# As for [Example 7](7-InGaP_Si_planar.ipynb), to get physically reasonable results we
+# As for [the InGaP//Si example](8-InGaP_Si_planar.ipynb), to get physically reasonable results we
 # must treat the very thick layers in the structure incoherently. The `coh_layers`
 # variable sums up how many thin layers (which must be treated coherently) must be
 # included in the `coherency_list` options.
@@ -145,7 +145,7 @@ plt.show()
 # must combine the calculation of absorption in a very thick (compared to the
 # wavelengths of light) layer of Si with the effect of a wavelength-scale (1000 nm
 # pitch) diffraction grating. For this, we will use the Angular Redistribution Matrix
-# Method (ARMM) which was also used in [Example 8](8-grating_pyramids_OPTOS.ipynb).
+# Method (ARMM) which was also used in [the textured Si example](9-grating_pyramids_OPTOS.ipynb).
 # 
 # The front surface of the cell (i.e. all the layers on top of Si) are planar, and can
 # be treated using TMM. The rear surface of the cell, which has a crossed grating
