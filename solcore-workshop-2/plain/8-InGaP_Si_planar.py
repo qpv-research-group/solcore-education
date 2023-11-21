@@ -17,6 +17,8 @@
 # Because we do not have AlGaInP built in to Solcore's database, this is replaced by a
 # GaInP homojunction in this example.
 
+# 
+
 # In[1]:
 
 

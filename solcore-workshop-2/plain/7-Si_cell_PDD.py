@@ -7,7 +7,7 @@
 # 
 # The script starts of in much the same way as the DA cell in the previous example: we import relevant external packages and Solcore features, define some of the materials we will use, and set user options for ``solar_cell_solver``.
 
-# In[33]:
+# In[1]:
 
 
 from solcore.solar_cell import SolarCell, Junction, Layer
@@ -50,7 +50,7 @@ options.position = 1e-9
 # 
 # Of course, there are many other material parameters which the PDD solver must have access to, such as radiative and Auger recombination rates, electron affinity, etc.; these are stored in Solcore's material database, but they can always be overridden by user-specified values when calling the ``material`` function.
 
-# In[34]:
+# In[2]:
 
 
 Si_pn = material("Si")(electron_mobility=si("1e4cm2"), hole_mobility=si("1e3cm2"),
@@ -59,7 +59,7 @@ Si_pn = material("Si")(electron_mobility=si("1e4cm2"), hole_mobility=si("1e3cm2"
 
 # Now we will define the doping profile. We will define a p-n junction, with the highly-doped region (the emitter) at the rear and an complimentary error function ('erfc') profile at the front and rear surfaces. Note that Solcore expects the doping to be provided in base Si units (per m3). Solcore expects the doping profile information in the form of a function which returns the doping at a given depth (in m) in the junction. Positive values are n-type doping, negative values are p-type.
 
-# In[35]:
+# In[3]:
 
 
 nD = si("1e20cm-3") # maximum n-type (donor) doping
@@ -82,7 +82,7 @@ def doping_profile_func(x):
 
 # To check it looks reasonable, let's plot this doping profile:
 
-# In[36]:
+# In[4]:
 
 
 depth = np.linspace(0, d_bulk, int(1e5))
@@ -96,7 +96,7 @@ plt.show()
 
 # That didn't help very much, because the cell is too wide compared to the region where the doping is changing! Let's try again but splitting the plot into two parts for the front and rear surface (since nothing interesting is happening in the middle).
 
-# In[37]:
+# In[5]:
 
 
 fig, (ax1, ax2) = plt.subplots(1, 2, sharey=True, figsize=(5, 3))
@@ -115,7 +115,7 @@ plt.show()
 
 # We will add transparent conducting oxides (TCOs) and an anti-reflection coating. Note that a real Si cell would have a more complicated layer structure (for example, for a heterojunction cell, the amorphous Si layers); we can add as many layers as we want for Solcore to consider, but will keep it simple here. In this case, these layers will be outside the junction: this means they will have optical effects but will not be included in the drift-diffusion calculation. They can be included in the junction, but this requires setting the relevant transport-related parameters.
 
-# In[38]:
+# In[6]:
 
 
 front_materials = [Layer(80e-9, MgF2), Layer(55e-9, TCO)]
@@ -128,7 +128,7 @@ back_materials = [Layer(55e-9, TCO),
 # 
 # Another important cell parameter, for both the depletion approximation and the drift-diffusion solvers, is the surface recombination. This is passed to Solcore as a surface recombination velocity (SRV). With the `Si_pn` material, the doping profile function, and the SRVs, we define the Junction. We set the `kind` of junction to `sesame_PDD`, so that Solcore knows to use the Sesame PDD solver.
 
-# In[39]:
+# In[7]:
 
 
 Si_junction = [Junction([Layer(d_bulk, Si_pn)],
@@ -139,7 +139,7 @@ Si_junction = [Junction([Layer(d_bulk, Si_pn)],
 
 # Now we combine the surface layers and the junction into a solar cell, with 2% shading and a silver back mirror.
 
-# In[40]:
+# In[8]:
 
 
 Si_cell = SolarCell(front_materials +
@@ -154,7 +154,7 @@ Si_cell = SolarCell(front_materials +
 # 
 # Now we ask Solcore to solve both the light IV and QE of the cell:
 
-# In[41]:
+# In[9]:
 
 
 solar_cell_solver(Si_cell, 'qe', options)
@@ -163,7 +163,7 @@ solar_cell_solver(Si_cell, 'iv', options)
 
 # Now we plot the results. Here we have multiple layers, and the junction is actually the third element in the solar cell, so we could access its properties by typing ``Si_cell[2]`` (since Python starts counting at 0). However, Solcore has a built-in way to find only the junctions (so, the electrically active) parts of the cell: ``Si_cell(0)`` will automatically find the first junction. Similarly, ``Si_cell(1)`` would give us the second junction, etc. This avoids having to manually count layers to find out which ones are the Junctions.
 
-# In[42]:
+# In[10]:
 
 
 result_stack = np.vstack([Si_cell.reflected, [layer.layer_absorption for layer in Si_cell], Si_cell.transmitted])
@@ -233,7 +233,7 @@ plt.show()
 # 
 # Recently, record-efficiency silicon cells have been optimized to such a level that Auger recombination (rather than Shockley-Read-Hall recombination) becomes the dominant recombination mechanism. SRH recombination is parameterized in the PDD solver through the minority lifetimes. Here, we will scan through different minority carrier lifetimes and look at the effect on cell parameters. Other cell parameters are assumed to stay the same.
 
-# In[43]:
+# In[11]:
 
 
 lifetime_exp = np.linspace(-4, -1.5, 6) # exponent for the lifetimes
@@ -267,7 +267,7 @@ for i1, lt in enumerate(lifetimes): # loop through the lifetimes
 
 # Now we plot the results. The points are labelled with the lifetime in ms in the left-hand plot.
 
-# In[48]:
+# In[12]:
 
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 3.5))
@@ -302,7 +302,7 @@ plt.show()
 # 
 # First, we find the index in the voltage array where the voltage is zero (i.e. short circuit), and the index where it is closest to the voltage at the maximum power point (Vmpp), which was calculated during the IV calculation earlier.
 
-# In[45]:
+# In[13]:
 
 
 # index where voltage is zero:
@@ -312,21 +312,25 @@ MPP_ind = np.argmin(np.abs(options.internal_voltages - Si_cell.iv.Vmpp)) # index
 
 # Now we get the conduction and valence band energy levels (Ec and Ev) and the electron and hole quasi-Fermi levels (Efe and Efh), at both of these voltages. The additional outpit from the PDD model are stored in each junction:
 
-# Ec_sc = Si_cell(0).pdd_output.Ec[SC_ind]
-# Ev_sc = Si_cell(0).pdd_output.Ev[SC_ind]
-# 
-# Efe_sc = Si_cell(0).pdd_output.Efe[SC_ind]
-# Efh_sc = Si_cell(0).pdd_output.Efh[SC_ind]
-# 
-# Ec_mpp = Si_cell(0).pdd_output.Ec[MPP_ind]
-# Ev_mpp = Si_cell(0).pdd_output.Ev[MPP_ind]
-# 
-# Efe_mpp = Si_cell(0).pdd_output.Efe[MPP_ind]
-# Efh_mpp = Si_cell(0).pdd_output.Efh[MPP_ind]
+# In[15]:
+
+
+Ec_sc = Si_cell(0).pdd_output.Ec[SC_ind]
+Ev_sc = Si_cell(0).pdd_output.Ev[SC_ind]
+
+Efe_sc = Si_cell(0).pdd_output.Efe[SC_ind]
+Efh_sc = Si_cell(0).pdd_output.Efh[SC_ind]
+
+Ec_mpp = Si_cell(0).pdd_output.Ec[MPP_ind]
+Ev_mpp = Si_cell(0).pdd_output.Ev[MPP_ind]
+
+Efe_mpp = Si_cell(0).pdd_output.Efe[MPP_ind]
+Efh_mpp = Si_cell(0).pdd_output.Efh[MPP_ind]
+
 
 # Now we plot thesince the cell is very wide, let's split the plot into two parts again, like we did for the doping, and plot the quantities we just extracted for at short circuit:
 
-# In[51]:
+# In[16]:
 
 
 fig, (ax1, ax2) = plt.subplots(1, 2, sharey=True, figsize=(5, 3))
@@ -353,7 +357,7 @@ plt.show()
 
 # And at the maximum power point:
 
-# In[49]:
+# In[ ]:
 
 
 fig, (ax1, ax2) = plt.subplots(1, 2, sharey=True, figsize=(5, 3))
