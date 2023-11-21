@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Section 7: Planar GaInP//Si tandem cell
+# # Planar GaInP//Si tandem cell
 # 
 # This example is partly based on the structure presented in
 # [this paper](https://doi.org/10.1109/PVSC40753.2019.9198960), but with planar interfaces instead of a

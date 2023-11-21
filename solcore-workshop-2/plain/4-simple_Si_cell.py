@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Section 5a: Planar Si solar cell using DA
+# # Planar Si solar cell using DA
 # 
 # In this first set of examples, we will look at simple planar Si solar cell.
 # 
@@ -14,6 +14,12 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+
+
+# In[ ]:
+
+
+
 
 
 # Numpy is a Python library which adds supports for multi-dimensional data arrays and matrices, so it is very useful for

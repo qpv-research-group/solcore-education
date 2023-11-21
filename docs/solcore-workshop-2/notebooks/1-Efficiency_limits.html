@@ -213,7 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="solar-spectrum" class="level3">
 <h3 class="anchored" data-anchor-id="solar-spectrum">Solar Spectrum</h3>
 <p>The solar spectrum defines the ultimate current that a solar cell can produce. First we will plot the AM1.5G solar spectrum <span class="math inline">\(b(\lambda)\)</span> as a spectral irradiance, meaning that the y-axis has units of <span class="math inline">\(W.m^{-2}.nm^{-1}\)</span></p>
-<div class="cell">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.light_source <span class="im">import</span> LightSource</span>
@@ -231,101 +231,143 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wavelength (nm)'</span>)</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Power density (Wm$^{-2}$nm$^{-1}$)'</span>)</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>WARNING: The RCWA solver will not be available because an S4 installation has not been found.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>&lt;matplotlib.legend.Legend at 0x2920443d0&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="1-Efficiency_limits_files/figure-html/cell-2-output-3.png" class="img-fluid"></p>
+</div>
 </div>
 <p>Let us now integrate the solar spectrum to provide the total irradiance in units of [<span class="math inline">\(W.m^{-2}\)</span>]. The code below performs the following operation <span class="math inline">\(b=\int^{\infty}_{0} b(\lambda) d\lambda\)</span></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Since .spectrum function returns a tuple (x,y) but np.trapz requires data in format (y,x) these are extracted into separate 1D np arrays.</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>yval <span class="op">=</span> am15g.spectrum()[<span class="dv">1</span>]</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>xval <span class="op">=</span> am15g.spectrum()[<span class="dv">0</span>]</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>integrated_value <span class="op">=</span> np.trapz(yval,xval)  <span class="co"># Perform integration using trapezium rule</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> integrated_value  <span class="co"># Save the integrated power density for the sun for later.</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'b = '</span>, integrated_value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Since .spectrum function returns a tuple (x,y) but np.trapz requires data in format (y,x) these are extracted into separate 1D np arrays.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>yval <span class="op">=</span> am15g.spectrum()[<span class="dv">1</span>]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>xval <span class="op">=</span> am15g.spectrum()[<span class="dv">0</span>]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>integrated_value <span class="op">=</span> np.trapz(yval,xval)  <span class="co"># Perform integration using trapezium rule</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> integrated_value  <span class="co"># Save the integrated power density for the sun for later.</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'b = '</span>, integrated_value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>b =  1000.3974821197136</code></pre>
+</div>
 </div>
 <p>Let’s take the opportunity to learn how to format numbers nicely in Python. Here we use the command “%.0f” % to display the value to zero decimal places.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'b = '</span>,<span class="st">"%.0f"</span> <span class="op">%</span> integrated_value,<span class="st">"W.m-2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'b = '</span>,<span class="st">"%.0f"</span> <span class="op">%</span> integrated_value,<span class="st">"W.m-2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>b =  1000 W.m-2</code></pre>
+</div>
 </div>
 <p>Solcore performs this integration for us internally. Let’s try the same exercise but for the extraterrestrial solar spectrum, AM0</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>am0 <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'standard'</span>, x<span class="op">=</span>wl<span class="op">*</span><span class="fl">1e9</span>, version<span class="op">=</span><span class="st">'AM0'</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"AM0 integrates to"</span>, <span class="st">"%.0f"</span> <span class="op">%</span> am0.power_density, <span class="st">"W.m-2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>am0 <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'standard'</span>, x<span class="op">=</span>wl<span class="op">*</span><span class="fl">1e9</span>, version<span class="op">=</span><span class="st">'AM0'</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"AM0 integrates to"</span>, <span class="st">"%.0f"</span> <span class="op">%</span> am0.power_density, <span class="st">"W.m-2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AM0 integrates to 1348 W.m-2</code></pre>
+</div>
 </div>
 </section>
 <section id="spectral-photon-flux" class="level3">
 <h3 class="anchored" data-anchor-id="spectral-photon-flux">Spectral Photon Flux</h3>
 <p>To calculate a short-circuit current it is convenient to change the units. Two changes are necessary : 1. Since we specify band-gap energies in electron volts (eV) we need to transform the x-axis from nm to eV 2. Photocurrent is proportional to the incident photon flux (number of photons per second) not the irradiance (watts) so we need to convert the y-axis from energy to photon number.</p>
 <p>Note: The conversion is performed internally within the software but be aware that because the transformation from wavelength is non-linear, changing the x-axis from nm to eV also changes the y-values of the data. This is known as a Jacobian transformation and discussed in more detail in an article <a href="http://pubs.acs.org/doi/abs/10.1021/jz401508t">“Getting the basics right: Jacobian Conversion of Wavelength and Energy Scales for Quantatitive Analysis of Emission Spectra”, Journal of Physical Chemistry, 4(19) 3316 (2013)</a></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ev <span class="op">=</span> np.linspace(<span class="fl">0.02</span>,<span class="dv">4</span>,<span class="dv">4000</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>flux <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'standard'</span>, version<span class="op">=</span><span class="st">'AM1.5g'</span>, x<span class="op">=</span>ev, output_units<span class="op">=</span><span class="st">'photon_flux_per_ev'</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'AM1.5G Spectral Photon Flux'</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>flux.spectrum(), label<span class="op">=</span><span class="st">'AM1.5G'</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="fl">0.2</span>, <span class="dv">4</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Photon Energy (eV)'</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Photon flux N ($ph.s^{-1}m^{-2}eV^{-1}$)'</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ev <span class="op">=</span> np.linspace(<span class="fl">0.02</span>,<span class="dv">4</span>,<span class="dv">4000</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>flux <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'standard'</span>, version<span class="op">=</span><span class="st">'AM1.5g'</span>, x<span class="op">=</span>ev, output_units<span class="op">=</span><span class="st">'photon_flux_per_ev'</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'AM1.5G Spectral Photon Flux'</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">*</span>flux.spectrum(), label<span class="op">=</span><span class="st">'AM1.5G'</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="fl">0.2</span>, <span class="dv">4</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Photon Energy (eV)'</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Photon flux N ($ph.s^{-1}m^{-2}eV^{-1}$)'</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>&lt;matplotlib.legend.Legend at 0x2928a8cd0&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="1-Efficiency_limits_files/figure-html/cell-6-output-2.png" class="img-fluid"></p>
+</div>
 </div>
 </section>
 <section id="calculating-the-short-circuit-current" class="level3">
 <h3 class="anchored" data-anchor-id="calculating-the-short-circuit-current">Calculating the short-circuit current</h3>
 <p>Integrating the photon flux can provide an upper limit to the short-circuit current [<span class="math inline">\(A.m^{-2}\)</span>]. We can integrate the spectrum over the entire spectral range using <span class="math inline">\(J_{sc}=q\int_{0}^{\infty}N(E)dE\)</span></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="fl">1.60217662E-19</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>yval <span class="op">=</span> flux.spectrum()[<span class="dv">1</span>]</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>xval <span class="op">=</span> flux.spectrum()[<span class="dv">0</span>]</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>yint <span class="op">=</span> q<span class="op">*</span>np.trapz(yval,xval)  <span class="co"># Perform integration using trapezium rule</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"%.0f"</span> <span class="op">%</span> yint)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="fl">1.60217662E-19</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>yval <span class="op">=</span> flux.spectrum()[<span class="dv">1</span>]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>xval <span class="op">=</span> flux.spectrum()[<span class="dv">0</span>]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>yint <span class="op">=</span> q<span class="op">*</span>np.trapz(yval,xval)  <span class="co"># Perform integration using trapezium rule</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"%.0f"</span> <span class="op">%</span> yint)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>690</code></pre>
+</div>
 </div>
 <p>A more useful calculation is to calculate the current that a solar cell would produce with a particular band-gap energy. To do this requires a bit more coding, since we now wish to integrate between limits: <span class="math inline">\(J_{sc}=q\int_{Eg}^{\infty}N(E)dE\)</span></p>
 <p>Let’s do this for a band-gap of 1.42 eV:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="fl">1.60217662E-19</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>eg <span class="op">=</span> <span class="fl">1.42</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>yval <span class="op">=</span> flux.spectrum()[<span class="dv">1</span>]</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>xval <span class="op">=</span> flux.spectrum()[<span class="dv">0</span>]</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>yval[xval <span class="op">&lt;</span> eg] <span class="op">=</span> <span class="dv">0</span> <span class="co"># set photon flux to zero for photon energies below the band-gap</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>yint <span class="op">=</span> q<span class="op">*</span>np.trapz(yval,xval)  <span class="co"># Perform integration using trapezium rule</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"%.0f"</span> <span class="op">%</span> yint)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="fl">1.60217662E-19</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>eg <span class="op">=</span> <span class="fl">1.42</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>yval <span class="op">=</span> flux.spectrum()[<span class="dv">1</span>]</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>xval <span class="op">=</span> flux.spectrum()[<span class="dv">0</span>]</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>yval[xval <span class="op">&lt;</span> eg] <span class="op">=</span> <span class="dv">0</span> <span class="co"># set photon flux to zero for photon energies below the band-gap</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>yint <span class="op">=</span> q<span class="op">*</span>np.trapz(yval,xval)  <span class="co"># Perform integration using trapezium rule</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"%.0f"</span> <span class="op">%</span> yint)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>321</code></pre>
+</div>
 </div>
 <p>Let’s reproduce the <span class="math inline">\(J_{sc}\)</span> vs <span class="math inline">\(E_g\)</span> graph that is shown on p.&nbsp;87 of Martin Green’s Solar Cells book:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="fl">1.60217662E-19</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> getJsc(eg):</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    yval <span class="op">=</span> flux.spectrum()[<span class="dv">1</span>]  <span class="co"># Start with the solar spectrum in yval &amp; xval</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    xval <span class="op">=</span> flux.spectrum()[<span class="dv">0</span>]</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    yval[xval <span class="op">&lt;</span> eg] <span class="op">=</span> <span class="dv">0</span> <span class="co"># set photon flux to zero for photon energies below the band-gap</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> q<span class="op">*</span>np.trapz(yval,xval)  <span class="co"># return the integrated value</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>eg <span class="op">=</span> np.linspace(<span class="fl">0.5</span>,<span class="fl">2.5</span>,<span class="dv">100</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>jsc <span class="op">=</span> np.vectorize(getJsc)(eg)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'AM1.5G Limit to the short-circuit current $J_</span><span class="sc">{sc}</span><span class="st">$'</span>)</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>plt.plot(eg, jsc<span class="op">/</span><span class="dv">10</span>, label<span class="op">=</span><span class="st">'AM1.5G'</span>)  <span class="co"># Divide by 10 to convert from A.m^-2 to mA.cm^-2</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="fl">0.5</span>, <span class="fl">2.5</span>)</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Band Gap energy (eV)'</span>)</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'$J_</span><span class="sc">{sc}</span><span class="st">$ ($mA.cm^{-2}$)'</span>)</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="fl">1.60217662E-19</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> getJsc(eg):</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    yval <span class="op">=</span> flux.spectrum()[<span class="dv">1</span>]  <span class="co"># Start with the solar spectrum in yval &amp; xval</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    xval <span class="op">=</span> flux.spectrum()[<span class="dv">0</span>]</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    yval[xval <span class="op">&lt;</span> eg] <span class="op">=</span> <span class="dv">0</span> <span class="co"># set photon flux to zero for photon energies below the band-gap</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> q<span class="op">*</span>np.trapz(yval,xval)  <span class="co"># return the integrated value</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>eg <span class="op">=</span> np.linspace(<span class="fl">0.5</span>,<span class="fl">2.5</span>,<span class="dv">100</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>jsc <span class="op">=</span> np.vectorize(getJsc)(eg)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'AM1.5G Limit to the short-circuit current $J_</span><span class="sc">{sc}</span><span class="st">$'</span>)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>plt.plot(eg, jsc<span class="op">/</span><span class="dv">10</span>, label<span class="op">=</span><span class="st">'AM1.5G'</span>)  <span class="co"># Divide by 10 to convert from A.m^-2 to mA.cm^-2</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="fl">0.5</span>, <span class="fl">2.5</span>)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Band Gap energy (eV)'</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'$J_</span><span class="sc">{sc}</span><span class="st">$ ($mA.cm^{-2}$)'</span>)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>&lt;matplotlib.legend.Legend at 0x29294f490&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="1-Efficiency_limits_files/figure-html/cell-9-output-2.png" class="img-fluid"></p>
+</div>
 </div>
 </section>
 <section id="calculating-the-trivich-flinn-efficiency-limit" class="level3">
 <h3 class="anchored" data-anchor-id="calculating-the-trivich-flinn-efficiency-limit">Calculating the Trivich-Flinn Efficiency limit</h3>
 <p>Now that the limit to <span class="math inline">\(J_{sc}\)</span> is known, we can estimate the power of delivered by the solar cell by evaluating <span class="math inline">\(\frac{Eg J_{sc}}{b}\)</span></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'AM1.5G Trivich-Flinn Single Junction Efficiency Limit'</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.plot(eg, <span class="dv">100</span><span class="op">*</span>eg<span class="op">*</span>jsc<span class="op">/</span>b,label<span class="op">=</span><span class="st">'AM1.5G'</span>)  <span class="co"># Divide by 10 to convert from A.m^-2 to mA.cm^-2</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="fl">0.5</span>, <span class="fl">2.5</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Band Gap energy (eV)'</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Efficiency (%)'</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'AM1.5G Trivich-Flinn Single Junction Efficiency Limit'</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>plt.plot(eg, <span class="dv">100</span><span class="op">*</span>eg<span class="op">*</span>jsc<span class="op">/</span>b,label<span class="op">=</span><span class="st">'AM1.5G'</span>)  <span class="co"># Divide by 10 to convert from A.m^-2 to mA.cm^-2</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="fl">0.5</span>, <span class="fl">2.5</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Band Gap energy (eV)'</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Efficiency (%)'</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>&lt;matplotlib.legend.Legend at 0x2929c8cd0&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="1-Efficiency_limits_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
+</div>
 </div>
 </section>
 </section>
@@ -335,226 +377,283 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To do this, a model is required for the recombination processes between the conduction and valance bands. The most fundamental (and inescapable) recombination mechanism is the radiative process. In section 3 we will derive a limit to Shockley’s diode equation <span class="math inline">\(J=J_0 e^{\frac{V}{kT}}\)</span> for the radiative limit, that being a diode where all current flows are linked to an optical process, either absorption or recombination.</p>
 <p>In the radiative limit and an abrupt band-edge at band-gap energy <span class="math inline">\(E_g\)</span> it can be shown that <span class="math inline">\(J_0\)</span> is approximated by <span class="math inline">\(J_0=q \frac{2 \pi}{c^2 h^3} kT \left(E_g^2+2 E_g k T+2 k^2 T^2\right) e^{\frac{-E_g}{k T}}\)</span></p>
 <p>We can now plot a chart of <span class="math inline">\(J_0\)</span> as a function of band-gap energy using this expression:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define some physical constants:</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="fl">1.60217662E-19</span>  <span class="co"># electronic charge [C]</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="fl">1.38064852E-23</span><span class="op">/</span>q   <span class="co"># Boltzmann constant [eV/K]</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> <span class="fl">6.62607004E-34</span><span class="op">/</span>q  <span class="co"># Planck constant expressed in [eV.s]</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> <span class="dv">299792458</span>  <span class="co"># Speed of light [m.s^-1]</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="dv">300</span>  <span class="co"># Perform the calculation for a solar cell at 300K.</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a function to return J0 implementing the expression above</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> getJ0(eg):</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> k<span class="op">*</span>t<span class="op">*</span>q<span class="op">*</span>(<span class="dv">2</span><span class="op">*</span>np.pi<span class="op">/</span>(c<span class="op">**</span><span class="dv">2</span><span class="op">*</span>h<span class="op">**</span><span class="dv">3</span>))<span class="op">*</span>(eg<span class="op">**</span><span class="dv">2</span><span class="op">+</span><span class="dv">2</span><span class="op">*</span>eg<span class="op">*</span>k<span class="op">*</span>t<span class="op">+</span><span class="dv">2</span><span class="op">*</span>k<span class="op">**</span><span class="dv">2</span><span class="op">*</span>t<span class="op">**</span><span class="dv">2</span>)<span class="op">*</span>np.exp(<span class="op">-</span>eg<span class="op">/</span>(k<span class="op">*</span>t))</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>eg <span class="op">=</span> np.linspace(<span class="fl">0.5</span>,<span class="fl">2.5</span>,<span class="dv">100</span>)</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>j0 <span class="op">=</span> np.vectorize(getJ0)(eg)</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'The radiative limit to $J_0$ plotted as a function of band-gap energy Eg'</span>)</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>plt.plot(eg,j0,label<span class="op">=</span><span class="st">'J0'</span>)  <span class="co"># Divide by 10 to convert from A.m^-2 to mA.cm^-2</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="fl">0.2</span>, <span class="fl">2.5</span>)</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Band Gap energy (eV)'</span>)</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'$J_</span><span class="sc">{0}</span><span class="st">$ ($A.m^{-2}$)'</span>)</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>plt.yscale(<span class="st">"log"</span>)</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define some physical constants:</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="fl">1.60217662E-19</span>  <span class="co"># electronic charge [C]</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="fl">1.38064852E-23</span><span class="op">/</span>q   <span class="co"># Boltzmann constant [eV/K]</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> <span class="fl">6.62607004E-34</span><span class="op">/</span>q  <span class="co"># Planck constant expressed in [eV.s]</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> <span class="dv">299792458</span>  <span class="co"># Speed of light [m.s^-1]</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="dv">300</span>  <span class="co"># Perform the calculation for a solar cell at 300K.</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a function to return J0 implementing the expression above</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> getJ0(eg):</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> k<span class="op">*</span>t<span class="op">*</span>q<span class="op">*</span>(<span class="dv">2</span><span class="op">*</span>np.pi<span class="op">/</span>(c<span class="op">**</span><span class="dv">2</span><span class="op">*</span>h<span class="op">**</span><span class="dv">3</span>))<span class="op">*</span>(eg<span class="op">**</span><span class="dv">2</span><span class="op">+</span><span class="dv">2</span><span class="op">*</span>eg<span class="op">*</span>k<span class="op">*</span>t<span class="op">+</span><span class="dv">2</span><span class="op">*</span>k<span class="op">**</span><span class="dv">2</span><span class="op">*</span>t<span class="op">**</span><span class="dv">2</span>)<span class="op">*</span>np.exp(<span class="op">-</span>eg<span class="op">/</span>(k<span class="op">*</span>t))</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>eg <span class="op">=</span> np.linspace(<span class="fl">0.5</span>,<span class="fl">2.5</span>,<span class="dv">100</span>)</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>j0 <span class="op">=</span> np.vectorize(getJ0)(eg)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'The radiative limit to $J_0$ plotted as a function of band-gap energy Eg'</span>)</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>plt.plot(eg,j0,label<span class="op">=</span><span class="st">'J0'</span>)  <span class="co"># Divide by 10 to convert from A.m^-2 to mA.cm^-2</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="fl">0.2</span>, <span class="fl">2.5</span>)</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Band Gap energy (eV)'</span>)</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'$J_</span><span class="sc">{0}</span><span class="st">$ ($A.m^{-2}$)'</span>)</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>plt.yscale(<span class="st">"log"</span>)</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>&lt;matplotlib.legend.Legend at 0x292a9f490&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="1-Efficiency_limits_files/figure-html/cell-11-output-2.png" class="img-fluid"></p>
+</div>
 </div>
 <p>Let’s obtain J0 for GaAs and InGaP, two common III-V materials that are used in tandem solar cells: evaluate getJ0() for Eg=1.42 and Eg=1.88</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>getJ0(<span class="fl">1.42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>getJ0(<span class="fl">1.42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>1.195457897843886e-17</code></pre>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>getJ0(<span class="fl">1.88</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>getJ0(<span class="fl">1.88</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>3.888154629395649e-25</code></pre>
+</div>
 </div>
 </section>
 <section id="calculating-the-iv-curve" class="level2">
 <h2 class="anchored" data-anchor-id="calculating-the-iv-curve">Calculating the IV curve</h2>
 <p>We are now able to calculate the limiting efficiency for a solar cell using the simple Shockley diode expression <span class="math inline">\(J(V)=J_{s c}-J_0\left(e^{\frac{q V}{k T}}-1\right)\)</span>. Let’s plot the IV curve for a band-gap of 1.42eV</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> getJ(v,eg):</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> getJsc(eg) <span class="op">-</span> getJ0(eg)<span class="op">*</span>(np.exp(v<span class="op">/</span>(k<span class="op">*</span>t)) <span class="op">-</span> <span class="dv">1</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>eg <span class="op">=</span> <span class="fl">1.42</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> np.linspace(<span class="dv">0</span>,<span class="fl">1.2</span>,<span class="dv">100</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>j <span class="op">=</span> np.vectorize(getJ)(v,eg)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>plt.figure(<span class="dv">3</span>)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'AM1.5G Limiting Efficiency IV curve for Eg=1.42eV (GaAs)'</span>)</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>plt.plot(v,j<span class="op">/</span><span class="dv">10</span>)  <span class="co">#convert to mA.cm^-2</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="fl">0.2</span>, <span class="fl">1.2</span>)</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>,<span class="dv">35</span>)</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Voltage (V)'</span>)</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Current ($mA.cm^{-2}$)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> getJ(v,eg):</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> getJsc(eg) <span class="op">-</span> getJ0(eg)<span class="op">*</span>(np.exp(v<span class="op">/</span>(k<span class="op">*</span>t)) <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>eg <span class="op">=</span> <span class="fl">1.42</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> np.linspace(<span class="dv">0</span>,<span class="fl">1.2</span>,<span class="dv">100</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>j <span class="op">=</span> np.vectorize(getJ)(v,eg)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>plt.figure(<span class="dv">3</span>)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'AM1.5G Limiting Efficiency IV curve for Eg=1.42eV (GaAs)'</span>)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>plt.plot(v,j<span class="op">/</span><span class="dv">10</span>)  <span class="co">#convert to mA.cm^-2</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="fl">0.2</span>, <span class="fl">1.2</span>)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>,<span class="dv">35</span>)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Voltage (V)'</span>)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Current ($mA.cm^{-2}$)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>Text(0, 0.5, 'Current ($mA.cm^{-2}$)')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="1-Efficiency_limits_files/figure-html/cell-14-output-2.png" class="img-fluid"></p>
+</div>
 </div>
 </section>
 <section id="calculating-the-electrical-power-curve-and-finding-the-maximum-power" class="level2">
 <h2 class="anchored" data-anchor-id="calculating-the-electrical-power-curve-and-finding-the-maximum-power">Calculating the electrical power curve and finding the maximum power</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'AM1.5G Limiting Efficiency power curve for $E_g$ = 1.42 eV (GaAs)'</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>plt.plot(v,v<span class="op">*</span>j)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="fl">0.2</span>, <span class="fl">1.2</span>)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>,<span class="dv">350</span>)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Voltage (V)'</span>)</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Power ($W.m^{-2}$)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'AM1.5G Limiting Efficiency power curve for $E_g$ = 1.42 eV (GaAs)'</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>plt.plot(v,v<span class="op">*</span>j)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="fl">0.2</span>, <span class="fl">1.2</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>,<span class="dv">350</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Voltage (V)'</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Power ($W.m^{-2}$)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>Text(0, 0.5, 'Power ($W.m^{-2}$)')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="1-Efficiency_limits_files/figure-html/cell-15-output-2.png" class="img-fluid"></p>
+</div>
 </div>
 <p>Define a function to find the maximum power point of the curve above:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> getPmax(eg):</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    v <span class="op">=</span> np.linspace(<span class="dv">0</span>,eg<span class="op">-</span><span class="fl">0.1</span>,<span class="dv">500</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> v<span class="op">*</span>np.vectorize(getJ)(v,eg)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (np.amax(p))  <span class="co"># The amax command returns the maximum value in the array p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> getPmax(eg):</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    v <span class="op">=</span> np.linspace(<span class="dv">0</span>,eg<span class="op">-</span><span class="fl">0.1</span>,<span class="dv">500</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> v<span class="op">*</span>np.vectorize(getJ)(v,eg)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (np.amax(p))  <span class="co"># The amax command returns the maximum value in the array p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Test it out on the curve above</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>getPmax(<span class="fl">1.42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>getPmax(<span class="fl">1.42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>331.6412760959975</code></pre>
+</div>
 </div>
 <section id="plotting-the-shockley-queisser-efficiency-limit-graph" class="level3">
 <h3 class="anchored" data-anchor-id="plotting-the-shockley-queisser-efficiency-limit-graph">Plotting the Shockley-Queisser efficiency limit graph:</h3>
 <p>Finally we can calculate the Shockley-Queisser efficiency limit for AM1.5G</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>eg <span class="op">=</span> np.linspace(<span class="fl">0.5</span>,<span class="fl">2.5</span>,<span class="dv">100</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> np.vectorize(getPmax)(eg)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>plt.figure(<span class="dv">3</span>)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Limiting Shockley-Queisser Efficiency Curve'</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>plt.plot(eg, p<span class="op">/</span>b, label<span class="op">=</span><span class="st">'AM1.5G'</span>)  <span class="co"># Remember b is the integrated power of the</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># incident sunlight</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="fl">0.2</span>, <span class="fl">2.5</span>)</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Band Gap energy (eV)'</span>)</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Efficiency (%)'</span>)</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>eg <span class="op">=</span> np.linspace(<span class="fl">0.5</span>,<span class="fl">2.5</span>,<span class="dv">100</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> np.vectorize(getPmax)(eg)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>plt.figure(<span class="dv">3</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Limiting Shockley-Queisser Efficiency Curve'</span>)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>plt.plot(eg, p<span class="op">/</span>b, label<span class="op">=</span><span class="st">'AM1.5G'</span>)  <span class="co"># Remember b is the integrated power of the</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co"># incident sunlight</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="fl">0.2</span>, <span class="fl">2.5</span>)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Band Gap energy (eV)'</span>)</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Efficiency (%)'</span>)</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>&lt;matplotlib.legend.Legend at 0x292b28950&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="1-Efficiency_limits_files/figure-html/cell-18-output-2.png" class="img-fluid"></p>
+</div>
 </div>
 </section>
 </section>
 <section id="an-easier-way-using-solcore" class="level2">
 <h2 class="anchored" data-anchor-id="an-easier-way-using-solcore">An easier way – using Solcore!</h2>
 <p>The Solcore library has all the functions we have written above built into it. We worked through this example step by step, but we can calculate the same result using the code below. First let’s calculate an IV curve for a Shockley-Queisser solar cell with a band-gap of 1.42eV:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.light_source <span class="im">import</span> LightSource</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell <span class="im">import</span> SolarCell</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell_solver <span class="im">import</span> solar_cell_solver</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.structure <span class="im">import</span> Junction</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the AM1.5G solar spectrum</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>wl <span class="op">=</span> np.linspace(<span class="dv">300</span>, <span class="dv">4000</span>, <span class="dv">4000</span>) <span class="op">*</span> <span class="fl">1e-9</span>    <span class="co"># wl contains the x-coordinate in wavelength</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>am15g <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'standard'</span>, x<span class="op">=</span>wl, version<span class="op">=</span><span class="st">'AM1.5g'</span>)</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>eg <span class="op">=</span> <span class="fl">1.42</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="fl">1.3</span>, <span class="dv">500</span>)</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>db_junction <span class="op">=</span> Junction(kind<span class="op">=</span><span class="st">'DB'</span>, T<span class="op">=</span><span class="dv">300</span>, Eg<span class="op">=</span>eg, A<span class="op">=</span><span class="dv">1</span>, R_shunt<span class="op">=</span>np.inf, n<span class="op">=</span><span class="dv">1</span>) <span class="co">#</span></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="co"># detailed-balance junction (Shockley-Queisser limit)</span></span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>my_solar_cell <span class="op">=</span> SolarCell([db_junction], T<span class="op">=</span><span class="dv">300</span>, R_series<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(my_solar_cell, <span class="st">'iv'</span>,</span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>                      user_options<span class="op">=</span>{<span class="st">'T_ambient'</span>: <span class="dv">300</span>, <span class="st">'db_mode'</span>: <span class="st">'top_hat'</span>, <span class="st">'voltages'</span>: V, <span class="st">'light_iv'</span>: <span class="va">True</span>,</span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">'internal_voltages'</span>: np.linspace(<span class="dv">0</span>, <span class="fl">1.3</span>, <span class="dv">400</span>), <span class="st">'wavelength'</span>: wl,</span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">'mpp'</span>: <span class="va">True</span>, <span class="st">'light_source'</span>: am15g})</span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Limiting Efficiency IV curve for $E_g$ = 1.42eV'</span>)</span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>plt.plot(V, my_solar_cell.iv.IV[<span class="dv">1</span>], <span class="st">'k'</span>)</span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">350</span>)</span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="fl">1.2</span>)</span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="fl">0.1</span>,<span class="dv">300</span>,<span class="ss">f'Jsc: </span><span class="sc">{</span>my_solar_cell<span class="sc">.</span>iv<span class="sc">.</span>Isc<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
-<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="fl">0.1</span>,<span class="dv">280</span>,<span class="ss">f'Voc: </span><span class="sc">{</span>my_solar_cell<span class="sc">.</span>iv<span class="sc">.</span>Voc<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
-<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="fl">0.1</span>,<span class="dv">260</span>,<span class="ss">f'Pmax: </span><span class="sc">{</span>my_solar_cell<span class="sc">.</span>iv<span class="sc">.</span>Pmpp<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
-<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Voltage (V)'</span>)</span>
-<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Current (A/m$^2$)'</span>)</span>
-<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.light_source <span class="im">import</span> LightSource</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell <span class="im">import</span> SolarCell</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell_solver <span class="im">import</span> solar_cell_solver</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.structure <span class="im">import</span> Junction</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the AM1.5G solar spectrum</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>wl <span class="op">=</span> np.linspace(<span class="dv">300</span>, <span class="dv">4000</span>, <span class="dv">4000</span>) <span class="op">*</span> <span class="fl">1e-9</span>    <span class="co"># wl contains the x-coordinate in wavelength</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>am15g <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'standard'</span>, x<span class="op">=</span>wl, version<span class="op">=</span><span class="st">'AM1.5g'</span>)</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>eg <span class="op">=</span> <span class="fl">1.42</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="fl">1.3</span>, <span class="dv">500</span>)</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>db_junction <span class="op">=</span> Junction(kind<span class="op">=</span><span class="st">'DB'</span>, T<span class="op">=</span><span class="dv">300</span>, Eg<span class="op">=</span>eg, A<span class="op">=</span><span class="dv">1</span>, R_shunt<span class="op">=</span>np.inf, n<span class="op">=</span><span class="dv">1</span>) <span class="co">#</span></span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="co"># detailed-balance junction (Shockley-Queisser limit)</span></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>my_solar_cell <span class="op">=</span> SolarCell([db_junction], T<span class="op">=</span><span class="dv">300</span>, R_series<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(my_solar_cell, <span class="st">'iv'</span>,</span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>                      user_options<span class="op">=</span>{<span class="st">'T_ambient'</span>: <span class="dv">300</span>, <span class="st">'db_mode'</span>: <span class="st">'top_hat'</span>, <span class="st">'voltages'</span>: V, <span class="st">'light_iv'</span>: <span class="va">True</span>,</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">'internal_voltages'</span>: np.linspace(<span class="dv">0</span>, <span class="fl">1.3</span>, <span class="dv">400</span>), <span class="st">'wavelength'</span>: wl,</span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">'mpp'</span>: <span class="va">True</span>, <span class="st">'light_source'</span>: am15g})</span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Limiting Efficiency IV curve for $E_g$ = 1.42eV'</span>)</span>
+<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a>plt.plot(V, my_solar_cell.iv.IV[<span class="dv">1</span>], <span class="st">'k'</span>)</span>
+<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">350</span>)</span>
+<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="fl">1.2</span>)</span>
+<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="fl">0.1</span>,<span class="dv">300</span>,<span class="ss">f'Jsc: </span><span class="sc">{</span>my_solar_cell<span class="sc">.</span>iv<span class="sc">.</span>Isc<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
+<span id="cb35-30"><a href="#cb35-30" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="fl">0.1</span>,<span class="dv">280</span>,<span class="ss">f'Voc: </span><span class="sc">{</span>my_solar_cell<span class="sc">.</span>iv<span class="sc">.</span>Voc<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
+<span id="cb35-31"><a href="#cb35-31" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="fl">0.1</span>,<span class="dv">260</span>,<span class="ss">f'Pmax: </span><span class="sc">{</span>my_solar_cell<span class="sc">.</span>iv<span class="sc">.</span>Pmpp<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
+<span id="cb35-32"><a href="#cb35-32" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Voltage (V)'</span>)</span>
+<span id="cb35-33"><a href="#cb35-33" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Current (A/m$^2$)'</span>)</span>
+<span id="cb35-34"><a href="#cb35-34" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/z3533914/.pyenv/versions/3.11.5/lib/python3.11/site-packages/solcore/registries.py:73: UserWarning: Optics solver 'RCWA' will not be available. An installation of S4 has not been found.
+  warn(</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Solving IV of the junctions...
+Solving IV of the tunnel junctions...
+Solving IV of the total solar cell...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="1-Efficiency_limits_files/figure-html/cell-19-output-3.png" class="img-fluid"></p>
+</div>
 </div>
 <p>The Shockley-Queisser efficiency calculation can now be performed over a range of band-gap energies. To do this, we make a function that calculates the maximum power Pmax as a function of band-gap energy.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A command that prevents the screen from filling up with unnecessary working</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Function that returns the maximum power for a Shockley-Queisser solar cell with band-gap Eg</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> getPmax(eg):</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> np.linspace(<span class="dv">0</span>, eg<span class="op">-</span><span class="fl">0.1</span>, <span class="dv">500</span>)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    db_junction <span class="op">=</span> Junction(kind<span class="op">=</span><span class="st">'DB'</span>, T<span class="op">=</span><span class="dv">300</span>, Eg<span class="op">=</span>eg, A<span class="op">=</span><span class="dv">1</span>, R_shunt<span class="op">=</span>np.inf, n<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    my_solar_cell <span class="op">=</span> SolarCell([db_junction], T<span class="op">=</span><span class="dv">300</span>, R_series<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    solar_cell_solver(my_solar_cell, <span class="st">'iv'</span>,</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>                      user_options<span class="op">=</span>{<span class="st">'T_ambient'</span>: <span class="dv">300</span>, <span class="st">'db_mode'</span>: <span class="st">'top_hat'</span>, <span class="st">'voltages'</span>: V, <span class="st">'light_iv'</span>: <span class="va">True</span>, <span class="st">'wavelength'</span>: wl,</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">'mpp'</span>: <span class="va">True</span>, <span class="st">'light_source'</span>: am15g})</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>(my_solar_cell.iv.Pmpp)</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the range of band-gaps to perform the calculation over</span></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>eg<span class="op">=</span>np.linspace(<span class="fl">0.5</span>,<span class="fl">2.5</span>,<span class="dv">100</span>)</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the claculation for all values of eg</span></span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>p<span class="op">=</span>np.vectorize(getPmax)(eg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A command that prevents the screen from filling up with unnecessary working</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Function that returns the maximum power for a Shockley-Queisser solar cell with band-gap Eg</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> getPmax(eg):</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> np.linspace(<span class="dv">0</span>, eg<span class="op">-</span><span class="fl">0.1</span>, <span class="dv">500</span>)</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    db_junction <span class="op">=</span> Junction(kind<span class="op">=</span><span class="st">'DB'</span>, T<span class="op">=</span><span class="dv">300</span>, Eg<span class="op">=</span>eg, A<span class="op">=</span><span class="dv">1</span>, R_shunt<span class="op">=</span>np.inf, n<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    my_solar_cell <span class="op">=</span> SolarCell([db_junction], T<span class="op">=</span><span class="dv">300</span>, R_series<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>    solar_cell_solver(my_solar_cell, <span class="st">'iv'</span>,</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>                      user_options<span class="op">=</span>{<span class="st">'T_ambient'</span>: <span class="dv">300</span>, <span class="st">'db_mode'</span>: <span class="st">'top_hat'</span>, <span class="st">'voltages'</span>: V, <span class="st">'light_iv'</span>: <span class="va">True</span>, <span class="st">'wavelength'</span>: wl,</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">'mpp'</span>: <span class="va">True</span>, <span class="st">'light_source'</span>: am15g})</span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>(my_solar_cell.iv.Pmpp)</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the range of band-gaps to perform the calculation over</span></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>eg<span class="op">=</span>np.linspace(<span class="fl">0.5</span>,<span class="fl">2.5</span>,<span class="dv">100</span>)</span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the claculation for all values of eg</span></span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>p<span class="op">=</span>np.vectorize(getPmax)(eg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now let’s plot the result:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>plt.figure()  <span class="co"># Plot the results calculated above:</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Shockley-Queisser Limiting Efficiency for Unconentrated Sunlight'</span>)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>plt.plot(eg, p<span class="op">/</span>am15g.power_density,label<span class="op">=</span><span class="st">'AM1.5G'</span>)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="fl">0.5</span>, <span class="fl">2.5</span>)</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Band Gap energy (eV)'</span>)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Efficiency (%)'</span>)</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>plt.figure()  <span class="co"># Plot the results calculated above:</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Shockley-Queisser Limiting Efficiency for Unconentrated Sunlight'</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>plt.plot(eg, p<span class="op">/</span>am15g.power_density,label<span class="op">=</span><span class="st">'AM1.5G'</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="fl">0.5</span>, <span class="fl">2.5</span>)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Band Gap energy (eV)'</span>)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Efficiency (%)'</span>)</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<pre><code>&lt;matplotlib.legend.Legend at 0x2935ef490&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="1-Efficiency_limits_files/figure-html/cell-21-output-2.png" class="img-fluid"></p>
+</div>
 </div>
 <section id="effect-of-solar-concentration-on-a-shockley-queisser-solar-cell" class="level3">
 <h3 class="anchored" data-anchor-id="effect-of-solar-concentration-on-a-shockley-queisser-solar-cell">Effect of solar concentration on a Shockley-Queisser Solar Cell</h3>
 <p>In a Trivich-Flinn model for a solar cell, concentrated sunlight is only expected to increase the current of a solar cell, not the voltage. In that model the current would increase in proportion with the concentration so the efficiency of the solar cell would be unchanged.</p>
 <p>In the Shockley-Queisser model, concentrated sunlight increased both the current and the voltage of the solar cell which, in the absence of series resistance losses, leads to an increase in the efficiency of the solar cell. Here we calculate the Shockley-Queisser efficiency at different solar concentrations under the direct solar spectrum AM1.5D:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up a series of AM1.5D solar spectra at different concentrations</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>wl <span class="op">=</span> np.linspace(<span class="dv">300</span>, <span class="dv">4000</span>, <span class="dv">4000</span>) <span class="op">*</span> <span class="fl">1e-9</span>    <span class="co">#wl contains the x-ordinate in wavelength</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>am15d1x <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'standard'</span>, x<span class="op">=</span>wl, version<span class="op">=</span><span class="st">'AM1.5d'</span>, concentration<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>am15d30x <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'standard'</span>, x<span class="op">=</span>wl, version<span class="op">=</span><span class="st">'AM1.5d'</span>, concentration<span class="op">=</span><span class="dv">30</span>)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>am15d1000x <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'standard'</span>, x<span class="op">=</span>wl, version<span class="op">=</span><span class="st">'AM1.5d'</span>,</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>                         concentration<span class="op">=</span><span class="dv">1000</span>)</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Define a function to find Pmax for a particular band-gap energy and solar spectrum</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> getPmax(eg,spectrum):</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> np.linspace(<span class="dv">0</span>, eg<span class="op">-</span><span class="fl">0.1</span>, <span class="dv">500</span>)</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    db_junction <span class="op">=</span> Junction(kind<span class="op">=</span><span class="st">'DB'</span>, T<span class="op">=</span><span class="dv">300</span>, Eg<span class="op">=</span>eg, A<span class="op">=</span><span class="dv">1</span>, R_shunt<span class="op">=</span>np.inf, n<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    my_solar_cell <span class="op">=</span> SolarCell([db_junction], T<span class="op">=</span><span class="dv">300</span>, R_series<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    solar_cell_solver(my_solar_cell, <span class="st">'iv'</span>,</span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>                      user_options<span class="op">=</span>{<span class="st">'T_ambient'</span>: <span class="dv">300</span>, <span class="st">'db_mode'</span>: <span class="st">'top_hat'</span>, <span class="st">'voltages'</span>: V, <span class="st">'light_iv'</span>: <span class="va">True</span>, <span class="st">'wavelength'</span>: wl,</span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">'mpp'</span>: <span class="va">True</span>, <span class="st">'light_source'</span>: spectrum})</span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> my_solar_cell.iv.Pmpp</span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the Pmax function for band-gaps spanning 0.8 to 1.6eV and concentrations 1x,30x,1000x</span></span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>eg <span class="op">=</span> np.linspace(<span class="fl">0.8</span>,<span class="fl">1.6</span>,<span class="dv">100</span>)</span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>p1x <span class="op">=</span> np.vectorize(getPmax)(eg, am15d1x)</span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>p30x <span class="op">=</span> np.vectorize(getPmax)(eg, am15d30x)</span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>p1000x <span class="op">=</span> np.vectorize(getPmax)(eg, am15d1000x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up a series of AM1.5D solar spectra at different concentrations</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>wl <span class="op">=</span> np.linspace(<span class="dv">300</span>, <span class="dv">4000</span>, <span class="dv">4000</span>) <span class="op">*</span> <span class="fl">1e-9</span>    <span class="co">#wl contains the x-ordinate in wavelength</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>am15d1x <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'standard'</span>, x<span class="op">=</span>wl, version<span class="op">=</span><span class="st">'AM1.5d'</span>, concentration<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>am15d30x <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'standard'</span>, x<span class="op">=</span>wl, version<span class="op">=</span><span class="st">'AM1.5d'</span>, concentration<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>am15d1000x <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">'standard'</span>, x<span class="op">=</span>wl, version<span class="op">=</span><span class="st">'AM1.5d'</span>,</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>                         concentration<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Define a function to find Pmax for a particular band-gap energy and solar spectrum</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> getPmax(eg,spectrum):</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> np.linspace(<span class="dv">0</span>, eg<span class="op">-</span><span class="fl">0.1</span>, <span class="dv">500</span>)</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>    db_junction <span class="op">=</span> Junction(kind<span class="op">=</span><span class="st">'DB'</span>, T<span class="op">=</span><span class="dv">300</span>, Eg<span class="op">=</span>eg, A<span class="op">=</span><span class="dv">1</span>, R_shunt<span class="op">=</span>np.inf, n<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>    my_solar_cell <span class="op">=</span> SolarCell([db_junction], T<span class="op">=</span><span class="dv">300</span>, R_series<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>    solar_cell_solver(my_solar_cell, <span class="st">'iv'</span>,</span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>                      user_options<span class="op">=</span>{<span class="st">'T_ambient'</span>: <span class="dv">300</span>, <span class="st">'db_mode'</span>: <span class="st">'top_hat'</span>, <span class="st">'voltages'</span>: V, <span class="st">'light_iv'</span>: <span class="va">True</span>, <span class="st">'wavelength'</span>: wl,</span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">'mpp'</span>: <span class="va">True</span>, <span class="st">'light_source'</span>: spectrum})</span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> my_solar_cell.iv.Pmpp</span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the Pmax function for band-gaps spanning 0.8 to 1.6eV and concentrations 1x,30x,1000x</span></span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>eg <span class="op">=</span> np.linspace(<span class="fl">0.8</span>,<span class="fl">1.6</span>,<span class="dv">100</span>)</span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>p1x <span class="op">=</span> np.vectorize(getPmax)(eg, am15d1x)</span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>p30x <span class="op">=</span> np.vectorize(getPmax)(eg, am15d30x)</span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a>p1000x <span class="op">=</span> np.vectorize(getPmax)(eg, am15d1000x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setup a figure for dual y-axes</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the SQ curves</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> sns.color_palette(<span class="st">'husl'</span>, n_colors<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>ax.plot(eg, <span class="dv">100</span><span class="op">*</span>p1x<span class="op">/</span>am15d1x.power_density,label<span class="op">=</span><span class="st">'$\eta$ @ AM1.5d 1x'</span>, color<span class="op">=</span>colors[<span class="dv">0</span>])</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>ax.axvline(eg[np.argmax(p1x)], color<span class="op">=</span>colors[<span class="dv">0</span>])</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>ax.plot(eg, <span class="dv">100</span><span class="op">*</span>p30x<span class="op">/</span>am15d30x.power_density,label<span class="op">=</span><span class="st">'$\eta$ @ AM1.5d 30x'</span>, color<span class="op">=</span>colors[<span class="dv">1</span>])</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>ax.axvline(eg[np.argmax(p30x)], color<span class="op">=</span>colors[<span class="dv">1</span>])</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>ax.plot(eg, <span class="dv">100</span><span class="op">*</span>p1000x<span class="op">/</span>am15d1000x.power_density,label<span class="op">=</span><span class="st">'$\eta$ @ AM1.5d 1000x'</span>, color<span class="op">=</span>colors[<span class="dv">2</span>])</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>ax.axvline(eg[np.argmax(p1000x)], color<span class="op">=</span>colors[<span class="dv">2</span>])</span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the second y-axis and plot the photon flux in units of eV</span></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> ax.twinx()</span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>ax2.plot(eg, am15d1x.spectrum(x<span class="op">=</span>eg, output_units<span class="op">=</span><span class="st">"photon_flux_per_ev"</span>)[<span class="dv">1</span>],</span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>         <span class="st">'--'</span>, color<span class="op">=</span><span class="st">'grey'</span>, label<span class="op">=</span><span class="st">"AM1.5d"</span>)</span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="fl">0.8</span>, <span class="fl">1.6</span>)</span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Band Gap energy (eV)'</span>)</span>
-<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Efficiency (%)'</span>)</span>
-<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="vs">r'Photon flux (s$^{-1}$ m$^{-2}$ eV$^{-1}$)'</span>)</span>
-<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
-<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>ax2.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setup a figure for dual y-axes</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the SQ curves</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> sns.color_palette(<span class="st">'husl'</span>, n_colors<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>ax.plot(eg, <span class="dv">100</span><span class="op">*</span>p1x<span class="op">/</span>am15d1x.power_density,label<span class="op">=</span><span class="st">'$\eta$ @ AM1.5d 1x'</span>, color<span class="op">=</span>colors[<span class="dv">0</span>])</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>ax.axvline(eg[np.argmax(p1x)], color<span class="op">=</span>colors[<span class="dv">0</span>])</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>ax.plot(eg, <span class="dv">100</span><span class="op">*</span>p30x<span class="op">/</span>am15d30x.power_density,label<span class="op">=</span><span class="st">'$\eta$ @ AM1.5d 30x'</span>, color<span class="op">=</span>colors[<span class="dv">1</span>])</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>ax.axvline(eg[np.argmax(p30x)], color<span class="op">=</span>colors[<span class="dv">1</span>])</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>ax.plot(eg, <span class="dv">100</span><span class="op">*</span>p1000x<span class="op">/</span>am15d1000x.power_density,label<span class="op">=</span><span class="st">'$\eta$ @ AM1.5d 1000x'</span>, color<span class="op">=</span>colors[<span class="dv">2</span>])</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>ax.axvline(eg[np.argmax(p1000x)], color<span class="op">=</span>colors[<span class="dv">2</span>])</span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the second y-axis and plot the photon flux in units of eV</span></span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> ax.twinx()</span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>ax2.plot(eg, am15d1x.spectrum(x<span class="op">=</span>eg, output_units<span class="op">=</span><span class="st">"photon_flux_per_ev"</span>)[<span class="dv">1</span>],</span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>         <span class="st">'--'</span>, color<span class="op">=</span><span class="st">'grey'</span>, label<span class="op">=</span><span class="st">"AM1.5d"</span>)</span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="fl">0.8</span>, <span class="fl">1.6</span>)</span>
+<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Band Gap energy (eV)'</span>)</span>
+<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Efficiency (%)'</span>)</span>
+<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="vs">r'Photon flux (s$^{-1}$ m$^{-2}$ eV$^{-1}$)'</span>)</span>
+<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a>ax2.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>&lt;matplotlib.legend.Legend at 0x293686fd0&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="1-Efficiency_limits_files/figure-html/cell-23-output-2.png" class="img-fluid"></p>
+</div>
 </div>
 <p>The maximum band-gap energy moves to lower energies with increaseing solar concentration. This arises since although the current increases with increasing solar concentration, the cell voltage also increases which means the optimal effiicency is obtained at lower band-gaps. However, the drop in band-gap energy is modest owing to a strong atmospheric absorption feature at 1.1um which serves to pin the optimum bandgap around 1.12eV.</p>
 </section>

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Section 6b: Optimizing an ARC
+# # Optimizing an anti-reflection coating
 # 
 # In the previous example, we introduced a simple one-layer anti-reflection coating
 # (ARC); ARCs are a standard feature of all high-efficiency solar cells. But how do you

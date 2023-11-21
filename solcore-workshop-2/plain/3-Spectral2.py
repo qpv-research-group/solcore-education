@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Section 4: Calculating Spectral Irradiance using SPCTRAL 2
+# # Calculating Spectral Irradiance using SPCTRAL 2
 # 
 # SPCTRAL 2 is a clear-sky spectral irradiance model that accounts for variations in the atmospheric conditions and air-mass.  Developed at NREL in 1984, it generates terrestrial spectral irradiance from 300nm to 4um with a resolution of approximately 10nm.
 # 

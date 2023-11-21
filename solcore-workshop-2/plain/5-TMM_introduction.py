@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Section 6a: Basic cell optics
+# # Basic cell optics
 # In this script, we will build on the TMM model from example 1(a) and look at the effects of interference.
 
 # In[1]:

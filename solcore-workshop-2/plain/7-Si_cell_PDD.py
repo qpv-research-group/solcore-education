@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Section 5b: Planar Si solar cell using PDD
+# # Planar Si solar cell using PDD
 # 
 # In the previous example, we looked at a silicon cell using the depletion approximation. Here, we will instead use one of Solcore's Poisson drift-diffusion (PDD) solvers, which can handle doping profiles (not just constant doping levels). Note that Solcore actually has two PDD solvers: a built-in one which was developed in Fortran specifically for cells with quantum wells, and an interface to the [Sesame](https://pages.nist.gov/sesame/) package, which was written in Python and developed for silicon-based cells. Here, we will use the Sesame solver. 
 # 
@@ -21,7 +21,6 @@ import matplotlib.pyplot as plt
 
 from solcore import material, si
 
-Air = material("Air")()
 MgF2 = material("MgF2")()
 Ag = material("Ag")()
 TCO = material('ITO2')()
@@ -236,33 +235,7 @@ plt.show()
 # In[11]:
 
 
-lifetime_exp = np.linspace(-4, -1.5, 6) # exponent for the lifetimes
-
-lifetimes = 10.0**lifetime_exp # lifetimes which are linearly spaced on a log scale
-
-cell_results = np.zeros(([len(lifetimes), 4])) # make an array to store the efficiency, FF, Voc, Jsc for each lifetime
-
-for i1, lt in enumerate(lifetimes): # loop through the lifetimes
-
-    options.recalculate_absorption = True
-
-    Si_pn = material("Si")(electron_mobility=si("1e4cm2"), hole_mobility=si("1e3cm2"),
-                           electron_minority_lifetime=lt, hole_minority_lifetime=lt)
-
-    Si_junction = [Junction([Layer(d_bulk, Si_pn)],
-                            doping_profile=doping_profile_func, kind='sesame_PDD',
-                             sn=2, sp=1)]
-
-    Si_cell = SolarCell(front_materials +
-                         Si_junction +
-                         back_materials,
-                        shading=0.02,
-                        substrate=Ag,
-                        )
-
-    solar_cell_solver(Si_cell, 'iv', options)
-
-    cell_results[i1] = np.array([100*Si_cell.iv.Eta, 100*Si_cell.iv.FF, Si_cell.iv.Voc, Si_cell.iv.Isc/10])
+get_ipython().run_cell_magic('capture', '', '\nlifetime_exp = np.linspace(-4, -1.5, 6) # exponent for the lifetimes\n\nlifetimes = 10.0**lifetime_exp # lifetimes which are linearly spaced on a log scale\n\ncell_results = np.zeros(([len(lifetimes), 4])) # make an array to store the efficiency, FF, Voc, Jsc for each lifetime\n\nfor i1, lt in enumerate(lifetimes): # loop through the lifetimes\n\n    options.recalculate_absorption = True\n\n    Si_pn = material("Si")(electron_mobility=si("1e4cm2"), hole_mobility=si("1e3cm2"),\n                           electron_minority_lifetime=lt, hole_minority_lifetime=lt)\n\n    Si_junction = [Junction([Layer(d_bulk, Si_pn)],\n                            doping_profile=doping_profile_func, kind=\'sesame_PDD\',\n                             sn=2, sp=1)]\n\n    Si_cell = SolarCell(front_materials +\n                         Si_junction +\n                         back_materials,\n                        shading=0.02,\n                        substrate=Ag,\n                        )\n\n    solar_cell_solver(Si_cell, \'iv\', options)\n\n    cell_results[i1] = np.array([100*Si_cell.iv.Eta, 100*Si_cell.iv.FF, Si_cell.iv.Voc, Si_cell.iv.Isc/10])\n')
 
 
 # Now we plot the results. The points are labelled with the lifetime in ms in the left-hand plot.
@@ -312,7 +285,7 @@ MPP_ind = np.argmin(np.abs(options.internal_voltages - Si_cell.iv.Vmpp)) # index
 
 # Now we get the conduction and valence band energy levels (Ec and Ev) and the electron and hole quasi-Fermi levels (Efe and Efh), at both of these voltages. The additional outpit from the PDD model are stored in each junction:
 
-# In[15]:
+# In[14]:
 
 
 Ec_sc = Si_cell(0).pdd_output.Ec[SC_ind]
@@ -330,7 +303,7 @@ Efh_mpp = Si_cell(0).pdd_output.Efh[MPP_ind]
 
 # Now we plot thesince the cell is very wide, let's split the plot into two parts again, like we did for the doping, and plot the quantities we just extracted for at short circuit:
 
-# In[16]:
+# In[15]:
 
 
 fig, (ax1, ax2) = plt.subplots(1, 2, sharey=True, figsize=(5, 3))
@@ -357,7 +330,7 @@ plt.show()
 
 # And at the maximum power point:
 
-# In[ ]:
+# In[16]:
 
 
 fig, (ax1, ax2) = plt.subplots(1, 2, sharey=True, figsize=(5, 3))

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Section 9a: Planar III-V on planar Si, with rear grating
+# # Planar III-V on planar Si, with rear grating
 # 
 # In this example, we will build two structures similar to those described in [this
 # paper](https://doi.org/10.1038/s41560-018-0125-0). These are both triple-junction,

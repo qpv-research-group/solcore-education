@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Solcore Education - Section 5b: Planar Si solar cell using PDD</title>
+<title>Solcore Education - Planar Si solar cell using PDD</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -161,7 +161,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Section 5b: Planar Si solar cell using PDD</h1>
+<h1 class="title">Planar Si solar cell using PDD</h1>
 </div>
 
 
@@ -190,26 +190,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore <span class="im">import</span> material, si</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>Air <span class="op">=</span> material(<span class="st">"Air"</span>)()</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>MgF2 <span class="op">=</span> material(<span class="st">"MgF2"</span>)()</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>Ag <span class="op">=</span> material(<span class="st">"Ag"</span>)()</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>TCO <span class="op">=</span> material(<span class="st">'ITO2'</span>)()</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>wavelengths <span class="op">=</span> np.linspace(<span class="dv">280</span>, <span class="dv">1200</span>, <span class="dv">100</span>)<span class="op">*</span><span class="fl">1e-9</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>options <span class="op">=</span> State() <span class="co"># initialise the options</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>options.wavelength <span class="op">=</span> wavelengths</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>options.optics_method <span class="op">=</span> <span class="st">'TMM'</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>options.light_iv <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>options.T <span class="op">=</span> <span class="dv">298</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>options.light_source <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">"standard"</span>,</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>                           version<span class="op">=</span><span class="st">"AM1.5g"</span>, x<span class="op">=</span>options.wavelength)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>options.voltages <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="fl">0.8</span>, <span class="dv">40</span>)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>options.internal_voltages <span class="op">=</span> options.voltages</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>options.mpp <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>options.no_back_reflection <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>options.position <span class="op">=</span> <span class="fl">1e-9</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>MgF2 <span class="op">=</span> material(<span class="st">"MgF2"</span>)()</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>Ag <span class="op">=</span> material(<span class="st">"Ag"</span>)()</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>TCO <span class="op">=</span> material(<span class="st">'ITO2'</span>)()</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>wavelengths <span class="op">=</span> np.linspace(<span class="dv">280</span>, <span class="dv">1200</span>, <span class="dv">100</span>)<span class="op">*</span><span class="fl">1e-9</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>options <span class="op">=</span> State() <span class="co"># initialise the options</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>options.wavelength <span class="op">=</span> wavelengths</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>options.optics_method <span class="op">=</span> <span class="st">'TMM'</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>options.light_iv <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>options.T <span class="op">=</span> <span class="dv">298</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>options.light_source <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">"standard"</span>,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>                           version<span class="op">=</span><span class="st">"AM1.5g"</span>, x<span class="op">=</span>options.wavelength)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>options.voltages <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="fl">0.8</span>, <span class="dv">40</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>options.internal_voltages <span class="op">=</span> options.voltages</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>options.mpp <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>options.no_back_reflection <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>options.position <span class="op">=</span> <span class="fl">1e-9</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>WARNING: The RCWA solver will not be available because an S4 installation has not been found.</code></pre>
 </div>
@@ -390,96 +389,60 @@ Solving IV of the total solar cell...</code></pre>
 <h2 class="anchored" data-anchor-id="auger-limited-cell">Auger-limited cell</h2>
 <p>Recently, record-efficiency silicon cells have been optimized to such a level that Auger recombination (rather than Shockley-Read-Hall recombination) becomes the dominant recombination mechanism. SRH recombination is parameterized in the PDD solver through the minority lifetimes. Here, we will scan through different minority carrier lifetimes and look at the effect on cell parameters. Other cell parameters are assumed to stay the same.</p>
 <div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>lifetime_exp <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">4</span>, <span class="op">-</span><span class="fl">1.5</span>, <span class="dv">6</span>) <span class="co"># exponent for the lifetimes</span></span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>lifetimes <span class="op">=</span> <span class="fl">10.0</span><span class="op">**</span>lifetime_exp <span class="co"># lifetimes which are linearly spaced on a log scale</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>lifetime_exp <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">4</span>, <span class="op">-</span><span class="fl">1.5</span>, <span class="dv">6</span>) <span class="co"># exponent for the lifetimes</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>cell_results <span class="op">=</span> np.zeros(([<span class="bu">len</span>(lifetimes), <span class="dv">4</span>])) <span class="co"># make an array to store the efficiency, FF, Voc, Jsc for each lifetime</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>lifetimes <span class="op">=</span> <span class="fl">10.0</span><span class="op">**</span>lifetime_exp <span class="co"># lifetimes which are linearly spaced on a log scale</span></span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i1, lt <span class="kw">in</span> <span class="bu">enumerate</span>(lifetimes): <span class="co"># loop through the lifetimes</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>cell_results <span class="op">=</span> np.zeros(([<span class="bu">len</span>(lifetimes), <span class="dv">4</span>])) <span class="co"># make an array to store the efficiency, FF, Voc, Jsc for each lifetime</span></span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    options.recalculate_absorption <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i1, lt <span class="kw">in</span> <span class="bu">enumerate</span>(lifetimes): <span class="co"># loop through the lifetimes</span></span>
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    Si_pn <span class="op">=</span> material(<span class="st">"Si"</span>)(electron_mobility<span class="op">=</span>si(<span class="st">"1e4cm2"</span>), hole_mobility<span class="op">=</span>si(<span class="st">"1e3cm2"</span>),</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>                           electron_minority_lifetime<span class="op">=</span>lt, hole_minority_lifetime<span class="op">=</span>lt)</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    Si_junction <span class="op">=</span> [Junction([Layer(d_bulk, Si_pn)],</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>                            doping_profile<span class="op">=</span>doping_profile_func, kind<span class="op">=</span><span class="st">'sesame_PDD'</span>,</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>                             sn<span class="op">=</span><span class="dv">2</span>, sp<span class="op">=</span><span class="dv">1</span>)]</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    Si_cell <span class="op">=</span> SolarCell(front_materials <span class="op">+</span></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>                         Si_junction <span class="op">+</span></span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>                         back_materials,</span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>                        shading<span class="op">=</span><span class="fl">0.02</span>,</span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>                        substrate<span class="op">=</span>Ag,</span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>                        )</span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>    solar_cell_solver(Si_cell, <span class="st">'iv'</span>, options)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    options.recalculate_absorption <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    Si_pn <span class="op">=</span> material(<span class="st">"Si"</span>)(electron_mobility<span class="op">=</span>si(<span class="st">"1e4cm2"</span>), hole_mobility<span class="op">=</span>si(<span class="st">"1e3cm2"</span>),</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>                           electron_minority_lifetime<span class="op">=</span>lt, hole_minority_lifetime<span class="op">=</span>lt)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    Si_junction <span class="op">=</span> [Junction([Layer(d_bulk, Si_pn)],</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>                            doping_profile<span class="op">=</span>doping_profile_func, kind<span class="op">=</span><span class="st">'sesame_PDD'</span>,</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>                             sn<span class="op">=</span><span class="dv">2</span>, sp<span class="op">=</span><span class="dv">1</span>)]</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    Si_cell <span class="op">=</span> SolarCell(front_materials <span class="op">+</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>                         Si_junction <span class="op">+</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>                         back_materials,</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>                        shading<span class="op">=</span><span class="fl">0.02</span>,</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>                        substrate<span class="op">=</span>Ag,</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>                        )</span>
 <span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>    cell_results[i1] <span class="op">=</span> np.array([<span class="dv">100</span><span class="op">*</span>Si_cell.iv.Eta, <span class="dv">100</span><span class="op">*</span>Si_cell.iv.FF, Si_cell.iv.Voc, Si_cell.iv.Isc<span class="op">/</span><span class="dv">10</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Treating layer(s) 2 incoherently
-Calculating RAT...
-Calculating absorption profile...
-Solving IV of the junctions...
-Solving IV of the tunnel junctions...
-Solving IV of the total solar cell...
-Treating layer(s) 2 incoherently
-Calculating RAT...
-Calculating absorption profile...
-Solving IV of the junctions...
-Solving IV of the tunnel junctions...
-Solving IV of the total solar cell...
-Treating layer(s) 2 incoherently
-Calculating RAT...
-Calculating absorption profile...
-Solving IV of the junctions...
-Solving IV of the tunnel junctions...
-Solving IV of the total solar cell...
-Treating layer(s) 2 incoherently
-Calculating RAT...
-Calculating absorption profile...
-Solving IV of the junctions...
-Solving IV of the tunnel junctions...
-Solving IV of the total solar cell...
-Treating layer(s) 2 incoherently
-Calculating RAT...
-Calculating absorption profile...
-Solving IV of the junctions...
-Solving IV of the tunnel junctions...
-Solving IV of the total solar cell...
-Treating layer(s) 2 incoherently
-Calculating RAT...
-Calculating absorption profile...
-Solving IV of the junctions...
-Solving IV of the tunnel junctions...
-Solving IV of the total solar cell...</code></pre>
-</div>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>    solar_cell_solver(Si_cell, <span class="st">'iv'</span>, options)</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>    cell_results[i1] <span class="op">=</span> np.array([<span class="dv">100</span><span class="op">*</span>Si_cell.iv.Eta, <span class="dv">100</span><span class="op">*</span>Si_cell.iv.FF, Si_cell.iv.Voc, Si_cell.iv.Isc<span class="op">/</span><span class="dv">10</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we plot the results. The points are labelled with the lifetime in ms in the left-hand plot.</p>
 <div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="fl">3.5</span>))</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>ax1.plot(cell_results[:, <span class="dv">2</span>], cell_results[:, <span class="dv">1</span>], <span class="st">'ko'</span>)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, lt <span class="kw">in</span> <span class="bu">enumerate</span>(lifetimes):</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    ax1.annotate(<span class="bu">str</span>(np.<span class="bu">round</span>(<span class="dv">1000</span><span class="op">*</span>lt,<span class="dv">2</span>)), (cell_results[i, <span class="dv">2</span>] <span class="op">-</span> <span class="fl">0.001</span>, cell_results[i, <span class="dv">1</span>]), ha<span class="op">=</span><span class="st">'right'</span>)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="vs">r'V$_</span><span class="sc">{oc}</span><span class="vs">$ (V)'</span>)</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'FF (%)'</span>)</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>ax1.set_xlim(<span class="fl">0.69</span>, <span class="fl">0.75</span>)</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>ax2.semilogx(lifetimes, cell_results[:, <span class="dv">0</span>], <span class="st">'o'</span>, color<span class="op">=</span><span class="st">'k'</span>)</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Efficiency (%)'</span>)</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>ax3 <span class="op">=</span> ax2.twinx()</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>ax3.plot(lifetimes, cell_results[:, <span class="dv">3</span>], <span class="st">'o'</span>, color<span class="op">=</span><span class="st">'r'</span>, markerfacecolor<span class="op">=</span><span class="st">'none'</span>)</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>ax3.set_ylim(<span class="dv">33</span>, <span class="dv">34</span>)</span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>ax3.set_ylabel(<span class="vs">r'$J_</span><span class="sc">{sc}</span><span class="vs">$ (mA/cm$^2$)'</span>, color<span class="op">=</span><span class="st">'r'</span>)</span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="vs">r'$\tau$ (s)'</span>)</span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="fl">3.5</span>))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>ax1.plot(cell_results[:, <span class="dv">2</span>], cell_results[:, <span class="dv">1</span>], <span class="st">'ko'</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, lt <span class="kw">in</span> <span class="bu">enumerate</span>(lifetimes):</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    ax1.annotate(<span class="bu">str</span>(np.<span class="bu">round</span>(<span class="dv">1000</span><span class="op">*</span>lt,<span class="dv">2</span>)), (cell_results[i, <span class="dv">2</span>] <span class="op">-</span> <span class="fl">0.001</span>, cell_results[i, <span class="dv">1</span>]), ha<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="vs">r'V$_</span><span class="sc">{oc}</span><span class="vs">$ (V)'</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'FF (%)'</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>ax1.set_xlim(<span class="fl">0.69</span>, <span class="fl">0.75</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>ax2.semilogx(lifetimes, cell_results[:, <span class="dv">0</span>], <span class="st">'o'</span>, color<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Efficiency (%)'</span>)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>ax3 <span class="op">=</span> ax2.twinx()</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>ax3.plot(lifetimes, cell_results[:, <span class="dv">3</span>], <span class="st">'o'</span>, color<span class="op">=</span><span class="st">'r'</span>, markerfacecolor<span class="op">=</span><span class="st">'none'</span>)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>ax3.set_ylim(<span class="dv">33</span>, <span class="dv">34</span>)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>ax3.set_ylabel(<span class="vs">r'$J_</span><span class="sc">{sc}</span><span class="vs">$ (mA/cm$^2$)'</span>, color<span class="op">=</span><span class="st">'r'</span>)</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="vs">r'$\tau$ (s)'</span>)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="7-Si_cell_PDD_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
 </div>
@@ -491,72 +454,72 @@ Solving IV of the total solar cell...</code></pre>
 <p>Because we used a PDD solver, there are additional outputs in additional to the ones provided by all the junction models (open-circuit voltage, short-circuit current, efficiency, fill factor, etc.). Since solving the PDD equations requires calculating the distribution of carriers in the cell depending on the light and voltage biasing, we can access this information. Here, we will plot the energy levels of the conduction and valence band, and the electron and hole quasi-Fermi levels.</p>
 <p>First, we find the index in the voltage array where the voltage is zero (i.e.&nbsp;short circuit), and the index where it is closest to the voltage at the maximum power point (Vmpp), which was calculated during the IV calculation earlier.</p>
 <div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># index where voltage is zero:</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>SC_ind <span class="op">=</span> np.argmin(np.<span class="bu">abs</span>(options.internal_voltages)) <span class="co"># index in voltage array where voltage is (closest to) zero: short circuit</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>MPP_ind <span class="op">=</span> np.argmin(np.<span class="bu">abs</span>(options.internal_voltages <span class="op">-</span> Si_cell.iv.Vmpp)) <span class="co"># index in voltage array where voltage is closest to Vmpp.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># index where voltage is zero:</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>SC_ind <span class="op">=</span> np.argmin(np.<span class="bu">abs</span>(options.internal_voltages)) <span class="co"># index in voltage array where voltage is (closest to) zero: short circuit</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>MPP_ind <span class="op">=</span> np.argmin(np.<span class="bu">abs</span>(options.internal_voltages <span class="op">-</span> Si_cell.iv.Vmpp)) <span class="co"># index in voltage array where voltage is closest to Vmpp.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we get the conduction and valence band energy levels (Ec and Ev) and the electron and hole quasi-Fermi levels (Efe and Efh), at both of these voltages. The additional outpit from the PDD model are stored in each junction:</p>
-<div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Ec_sc <span class="op">=</span> Si_cell(<span class="dv">0</span>).pdd_output.Ec[SC_ind]</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>Ev_sc <span class="op">=</span> Si_cell(<span class="dv">0</span>).pdd_output.Ev[SC_ind]</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>Efe_sc <span class="op">=</span> Si_cell(<span class="dv">0</span>).pdd_output.Efe[SC_ind]</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>Efh_sc <span class="op">=</span> Si_cell(<span class="dv">0</span>).pdd_output.Efh[SC_ind]</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>Ec_mpp <span class="op">=</span> Si_cell(<span class="dv">0</span>).pdd_output.Ec[MPP_ind]</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>Ev_mpp <span class="op">=</span> Si_cell(<span class="dv">0</span>).pdd_output.Ev[MPP_ind]</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>Efe_mpp <span class="op">=</span> Si_cell(<span class="dv">0</span>).pdd_output.Efe[MPP_ind]</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>Efh_mpp <span class="op">=</span> Si_cell(<span class="dv">0</span>).pdd_output.Efh[MPP_ind]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Ec_sc <span class="op">=</span> Si_cell(<span class="dv">0</span>).pdd_output.Ec[SC_ind]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>Ev_sc <span class="op">=</span> Si_cell(<span class="dv">0</span>).pdd_output.Ev[SC_ind]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>Efe_sc <span class="op">=</span> Si_cell(<span class="dv">0</span>).pdd_output.Efe[SC_ind]</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>Efh_sc <span class="op">=</span> Si_cell(<span class="dv">0</span>).pdd_output.Efh[SC_ind]</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>Ec_mpp <span class="op">=</span> Si_cell(<span class="dv">0</span>).pdd_output.Ec[MPP_ind]</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>Ev_mpp <span class="op">=</span> Si_cell(<span class="dv">0</span>).pdd_output.Ev[MPP_ind]</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>Efe_mpp <span class="op">=</span> Si_cell(<span class="dv">0</span>).pdd_output.Efe[MPP_ind]</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>Efh_mpp <span class="op">=</span> Si_cell(<span class="dv">0</span>).pdd_output.Efh[MPP_ind]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we plot thesince the cell is very wide, let’s split the plot into two parts again, like we did for the doping, and plot the quantities we just extracted for at short circuit:</p>
-<div class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">3</span>))</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>ax1.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Ec_sc, label<span class="op">=</span><span class="st">'CB'</span>, color<span class="op">=</span><span class="st">'k'</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>ax1.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Ev_sc, label<span class="op">=</span><span class="st">'VB'</span>, color<span class="op">=</span><span class="st">'g'</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>ax1.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Efe_sc, label<span class="op">=</span><span class="vs">r'$E_{f, e}$'</span>, color<span class="op">=</span><span class="st">'r'</span>)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>ax1.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Efh_sc, label<span class="op">=</span><span class="vs">r'$E_{f, h}$'</span>, color<span class="op">=</span><span class="st">'b'</span>)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>ax1.set_xlim(<span class="dv">0</span>, <span class="dv">2</span>)</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'x (um)'</span>)</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>ax1.legend()</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"Short circuit"</span>, loc<span class="op">=</span><span class="st">'left'</span>)</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>ax2.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Ec_sc, label<span class="op">=</span><span class="st">'CB'</span>, color<span class="op">=</span><span class="st">'k'</span>)</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>ax2.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Ev_sc, label<span class="op">=</span><span class="st">'VB'</span>, color<span class="op">=</span><span class="st">'g'</span>)</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>ax2.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Efe_sc, label<span class="op">=</span><span class="vs">r'$E_{f, e}$'</span>, color<span class="op">=</span><span class="st">'r'</span>)</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>ax2.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Efh_sc, label<span class="op">=</span><span class="vs">r'$E_{f, h}$'</span>, color<span class="op">=</span><span class="st">'b'</span>)</span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>ax2.set_xlim(d_bulk<span class="op">*</span><span class="fl">1e6</span> <span class="op">-</span> <span class="dv">2</span>, d_bulk<span class="op">*</span><span class="fl">1e6</span>)</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'x (um)'</span>)</span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">3</span>))</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>ax1.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Ec_sc, label<span class="op">=</span><span class="st">'CB'</span>, color<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>ax1.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Ev_sc, label<span class="op">=</span><span class="st">'VB'</span>, color<span class="op">=</span><span class="st">'g'</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>ax1.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Efe_sc, label<span class="op">=</span><span class="vs">r'$E_{f, e}$'</span>, color<span class="op">=</span><span class="st">'r'</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>ax1.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Efh_sc, label<span class="op">=</span><span class="vs">r'$E_{f, h}$'</span>, color<span class="op">=</span><span class="st">'b'</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>ax1.set_xlim(<span class="dv">0</span>, <span class="dv">2</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'x (um)'</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>ax1.legend()</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"Short circuit"</span>, loc<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>ax2.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Ec_sc, label<span class="op">=</span><span class="st">'CB'</span>, color<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>ax2.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Ev_sc, label<span class="op">=</span><span class="st">'VB'</span>, color<span class="op">=</span><span class="st">'g'</span>)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>ax2.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Efe_sc, label<span class="op">=</span><span class="vs">r'$E_{f, e}$'</span>, color<span class="op">=</span><span class="st">'r'</span>)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>ax2.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Efh_sc, label<span class="op">=</span><span class="vs">r'$E_{f, h}$'</span>, color<span class="op">=</span><span class="st">'b'</span>)</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>ax2.set_xlim(d_bulk<span class="op">*</span><span class="fl">1e6</span> <span class="op">-</span> <span class="dv">2</span>, d_bulk<span class="op">*</span><span class="fl">1e6</span>)</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'x (um)'</span>)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="7-Si_cell_PDD_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>And at the maximum power point:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">3</span>))</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>ax1.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Ec_mpp, label<span class="op">=</span><span class="st">'CB'</span>, color<span class="op">=</span><span class="st">'k'</span>)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>ax1.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Ev_mpp, label<span class="op">=</span><span class="st">'VB'</span>, color<span class="op">=</span><span class="st">'g'</span>)</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>ax1.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Efe_mpp, label<span class="op">=</span><span class="vs">r'$E_{f, e}$'</span>, color<span class="op">=</span><span class="st">'r'</span>)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>ax1.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Efh_mpp, label<span class="op">=</span><span class="vs">r'$E_{f, h}$'</span>, color<span class="op">=</span><span class="st">'b'</span>)</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>ax1.set_xlim(<span class="dv">0</span>, <span class="dv">2</span>)</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'x (um)'</span>)</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>ax1.legend()</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"Maximum power point"</span>, loc<span class="op">=</span><span class="st">'left'</span>)</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>ax2.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Ec_mpp, label<span class="op">=</span><span class="st">'CB'</span>, color<span class="op">=</span><span class="st">'k'</span>)</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>ax2.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Ev_mpp, label<span class="op">=</span><span class="st">'VB'</span>, color<span class="op">=</span><span class="st">'g'</span>)</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>ax2.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Efe_mpp, label<span class="op">=</span><span class="vs">r'$E_{f, e}$'</span>, color<span class="op">=</span><span class="st">'r'</span>)</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>ax2.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Efh_mpp, label<span class="op">=</span><span class="vs">r'$E_{f, h}$'</span>, color<span class="op">=</span><span class="st">'b'</span>)</span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>ax2.set_xlim(d_bulk<span class="op">*</span><span class="fl">1e6</span> <span class="op">-</span> <span class="dv">2</span>, d_bulk<span class="op">*</span><span class="fl">1e6</span>)</span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'x (um)'</span>)</span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">3</span>))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>ax1.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Ec_mpp, label<span class="op">=</span><span class="st">'CB'</span>, color<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>ax1.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Ev_mpp, label<span class="op">=</span><span class="st">'VB'</span>, color<span class="op">=</span><span class="st">'g'</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>ax1.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Efe_mpp, label<span class="op">=</span><span class="vs">r'$E_{f, e}$'</span>, color<span class="op">=</span><span class="st">'r'</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>ax1.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Efh_mpp, label<span class="op">=</span><span class="vs">r'$E_{f, h}$'</span>, color<span class="op">=</span><span class="st">'b'</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>ax1.set_xlim(<span class="dv">0</span>, <span class="dv">2</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'x (um)'</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>ax1.legend()</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"Maximum power point"</span>, loc<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>ax2.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Ec_mpp, label<span class="op">=</span><span class="st">'CB'</span>, color<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>ax2.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Ev_mpp, label<span class="op">=</span><span class="st">'VB'</span>, color<span class="op">=</span><span class="st">'g'</span>)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>ax2.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Efe_mpp, label<span class="op">=</span><span class="vs">r'$E_{f, e}$'</span>, color<span class="op">=</span><span class="st">'r'</span>)</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>ax2.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, Efh_mpp, label<span class="op">=</span><span class="vs">r'$E_{f, h}$'</span>, color<span class="op">=</span><span class="st">'b'</span>)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>ax2.set_xlim(d_bulk<span class="op">*</span><span class="fl">1e6</span> <span class="op">-</span> <span class="dv">2</span>, d_bulk<span class="op">*</span><span class="fl">1e6</span>)</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'x (um)'</span>)</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="7-Si_cell_PDD_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
 </div>

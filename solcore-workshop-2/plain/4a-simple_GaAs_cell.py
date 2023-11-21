@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Section 5b: GaAs solar cell
+# # GaAs solar cell
 
 # ## Fitting the EQE of a GaAs solar cell
 # 
