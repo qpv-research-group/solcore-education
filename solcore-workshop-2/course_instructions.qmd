@@ -17,3 +17,5 @@ You can find the examples we will be going through [here](https://github.com/qpv
 
 Download the files by clicking "Code" (green box, top right) and then "Download ZIP". Then unzip this folder and open
 it in VSCode.
+
+If you have trouble with the installation or running the files locally, you can try running them in the cloud [here](https://mybinder.org/v2/gh/qpv-research-group/solcore-education/solcore-workshop?labpath=solcore-workshop-2%2Fnotebooks)

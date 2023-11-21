@@ -984,7 +984,7 @@
     "href": "solcore-workshop-2/course_instructions.html#link-to-examples",
     "title": "Course instructions",
     "section": "Link to examples:",
-    "text": "Link to examples:\nYou can find the examples we will be going through here.\nDownload the files by clicking “Code” (green box, top right) and then “Download ZIP”. Then unzip this folder and open it in VSCode."
+    "text": "Link to examples:\nYou can find the examples we will be going through here.\nDownload the files by clicking “Code” (green box, top right) and then “Download ZIP”. Then unzip this folder and open it in VSCode.\nIf you have trouble with the installation or running the files locally, you can try running them in the cloud here"
   },
   {
     "objectID": "solcore-workshop-2/notebooks/1-Efficiency_limits.html",
