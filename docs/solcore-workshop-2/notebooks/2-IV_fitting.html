@@ -182,7 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p>We have seen how we can calculate the radiative limits to solar cell efficiency. Let us now tackle the problem from the opposite direction and fit data to an empirical 2-diode model</p>
-<p>$ J= J_{}-J_{01}-J_{02}-(V+J R_s) / R_{}$</p>
+<p><span class="math inline">\(J= J_{\mathrm{ph}}-J_{01}\left[\exp \left\{q\left(V+J R_s\right) / n_1 k T\right\}-1\right] -J_{02}\left[\exp \left\{q\left(V+J R_s\right) / n_2 k T\right\}-1\right]-\left(V+J R_s\right) / R_{\mathrm{sh}}\)</span></p>
 <p>Where <span class="math inline">\(J_{01}\)</span> is the diode saturation current with ideality <span class="math inline">\(n_1\)</span>, <span class="math inline">\(J_{02}\)</span> is the diode satudation current with ideality <span class="math inline">\(n_2\)</span>, <span class="math inline">\(R_s\)</span> is the lumped series resistance and <span class="math inline">\(R_{sh}\)</span> is the shunt resistance.</p>
 <p>The diode ideality factors are sometimes used as free parameters when fitting IV data. Here we choose to assign specific values so provide physical meaning to the <span class="math inline">\(J_0\)</span> values. Setting <span class="math inline">\(n_1=1\)</span> means <span class="math inline">\(J_{01}\)</span> accounts for all radiative processes throughout the device and non-radiative processes in the neutral regions of the device, including surface recombination. Setting <span class="math inline">\(n_2=2\)</span> approximates Shockley-Read-Hall recombination in the space-charge-region of the junction where the electron and hole carrier densities are similar.</p>
 <section id="fitting-iv-data" class="level2">
