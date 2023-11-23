@@ -177,7 +177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p>In the previous example, we introduced a simple one-layer anti-reflection coating (ARC); ARCs are a standard feature of all high-efficiency solar cells. But how do you find out the right thickness for the anti-reflection coating layer(s) (or the right dimensions for a light-trapping grating, or some other structure in your cell)? This is where optimization comes in. Here, we will look at a very simple ‘brute-force’ optimization for a single or double-layer ARC.</p>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -197,7 +197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="setting-up" class="level2">
 <h2 class="anchored" data-anchor-id="setting-up">Setting up</h2>
 <p>We set some options, as in previous examples, setting the wavelengths and defining the incident spectrum. We are going to do a partially coherent calculation, treating the ARC as a coherent layer and the thick Si layer as incoherent (no thin-film interference).</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>opts <span class="op">=</span> State()</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>wavelengths <span class="op">=</span> np.linspace(<span class="dv">300</span>, <span class="dv">1200</span>, <span class="dv">800</span>)<span class="op">*</span><span class="fl">1e-9</span></span>
@@ -222,7 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="single-layer-arc">Single-layer ARC</h2>
 <p>Here, we will calculate the behaviour of a single-layer SiN anti-reflection coating on Si while changing the ARC thickness between 0 and 200 nm. We will consider two values to optimize: the mean reflectance <code>mean_R</code>, and the reflectance weighted by the photon flux in an AM1.5G spectrum (<code>weighted_R</code>). The reason for considering the second value is that it is more useful to suppress reflection at wavelengths where there are more photons which could be absorbed by the cell (up to the cell’s bandgap).</p>
 <p>We will loop through the different ARC thicknesses in <code>d_range</code>, build the structure for each case, and then calculate the reflectance. We then save the mean reflected and weighted mean reflectance in the corresponding arrays. We also plot the reflectance for each 15th loop (this is just so the plot does not get too crowded).</p>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>d_range <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">200</span>, <span class="dv">200</span>)</span>
@@ -251,7 +251,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We now find at which index <code>mean_R</code> and <code>weighted_R</code> are minimised using <code>np.argmin</code>, and use this to print the ARC thickness at which this occurs (rounded to 1 decimal place).</p>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Minimum mean reflection occurs at d = '</span> <span class="op">+</span> <span class="bu">str</span>(np.<span class="bu">round</span>(d_range[np.argmin(mean_R)], <span class="dv">1</span>)) <span class="op">+</span> <span class="st">' nm'</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Minimum weighted reflection occurs at d = '</span> <span class="op">+</span> <span class="bu">str</span>(np.<span class="bu">round</span>(d_range[np.argmin(weighted_R)], <span class="dv">1</span>)) <span class="op">+</span> <span class="st">' nm'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -260,7 +260,7 @@ Minimum weighted reflection occurs at d = 74.4 nm</code></pre>
 </div>
 </div>
 <p>We see that the values of <span class="math inline">\(d\)</span> for the two different ways of optimizing are very similar, but not exactly the same, as we would expect. The minimum in both cases occurs around 70 nm. We can also plot the variation of the mean and weighted <span class="math inline">\(R\)</span> with ARC thickness <span class="math inline">\(d\)</span>:</p>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.plot(d_range, mean_R, label<span class="op">=</span><span class="st">'Mean reflection'</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.plot(d_range[np.argmin(mean_R)], np.<span class="bu">min</span>(mean_R), <span class="st">'ok'</span>)</span>
@@ -275,7 +275,7 @@ Minimum weighted reflection occurs at d = 74.4 nm</code></pre>
 </div>
 </div>
 <p>Now, to see what the reflectance looks like for the optimized structure, we make new <code>tmm_structure</code>s with the optimal values and calculate and plot the reflectance:</p>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>struct_1 <span class="op">=</span> SolarCell([Layer(si(d_range[np.argmin(mean_R)], <span class="st">'nm'</span>), SiN), Layer(si(<span class="st">'120um'</span>), Si)], substrate<span class="op">=</span>Ag)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(struct_1, task<span class="op">=</span><span class="st">'optics'</span>, user_options<span class="op">=</span>opts)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>R_1 <span class="op">=</span> struct_1.reflected</span>
@@ -307,21 +307,21 @@ Calculating absorption profile...</code></pre>
 </section>
 <section id="double-layer-arc" class="level2">
 <h2 class="anchored" data-anchor-id="double-layer-arc">Double-layer ARC</h2>
-<p>We will now consider a similar situation, but for a double-layer MgF<span class="math inline">\(_2\)</span>/Ta<span class="math inline">\(_2\)</span>O<span class="math inline">\(_5\)</span> ARC on GaAs.</p>
+<p>We will now consider a similar situation, but for a double-layer MgF <span class="math inline">\(_2\)</span> /Ta <span class="math inline">\(_2\)</span> O <span class="math inline">\(_5\)</span> ARC on GaAs.</p>
 <p>Solcore can directly interface with the database from www.refractiveindex.info, which contains around 3000 sets of data for a large number of different materials. Before the first use, it is necessary to download the database. This only needs to be done once, so you can comment this line out after it’s done:</p>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>download_db(confirm<span class="op">=</span><span class="va">True</span>) <span class="co"># only needs to be done once</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Database file found at /Users/z3533914/.solcore/nk/nk.db
 Making request to https://refractiveindex.info/download/database/rii-database-2021-07-18.zip
 Downloaded and extracting...
-Wrote /var/folders/wh/w5k56r_927j4yp3mh91bggfc0000gq/T/tmp48b25bqt/database from https://refractiveindex.info/download/database/rii-database-2021-07-18.zip
+Wrote /var/folders/wh/w5k56r_927j4yp3mh91bggfc0000gq/T/tmp7874qpi4/database from https://refractiveindex.info/download/database/rii-database-2021-07-18.zip
 LOG: 2746,other,PtAl2,Chen : Bad Material YAML File.
 ***Wrote SQLite DB on  /Users/z3533914/.solcore/nk/nk.db</code></pre>
 </div>
 </div>
 <p>We search for materials in the refractiveindex.info database, and use only the part of the solar spectrum relevant for absorption in GaAs (in this case, there is no benefit to reducing absorption above the GaAs bandgap around 900 nm). We will only consider the weighted mean <span class="math inline">\(R\)</span> in this case. Since all the layers in the structure are relatively thin compared to the wavelengths of light, we do a coherent calculation.</p>
-<div class="cell" data-execution_count="19">
+<div class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>pageid_MgF2 <span class="op">=</span> search_db(os.path.join(<span class="st">"MgF2"</span>, <span class="st">"Rodriguez-de Marcos"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]</span>
@@ -344,7 +344,7 @@ LOG: 2746,other,PtAl2,Chen : Bad Material YAML File.
 <span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>opts.position <span class="op">=</span> <span class="fl">20e-6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We now have two thicknesses to loop through; otherwise, the procedure is similar to the single-layer ARC example.</p>
-<div class="cell" data-execution_count="20">
+<div class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i1, d_MgF2 <span class="kw">in</span> <span class="bu">enumerate</span>(MgF2_thickness):</span>
@@ -360,8 +360,8 @@ LOG: 2746,other,PtAl2,Chen : Bad Material YAML File.
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># find the row and column indices of the minimum weighted R value</span></span>
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>ri, ci <span class="op">=</span> np.unravel_index(weighted_R_matrix.argmin(), weighted_R_matrix.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We plot the total absorption (<span class="math inline">\(1-R\)</span>) in the structure with the optimized ARC, and print the thicknesses of MgF<span class="math inline">\(_2\)</span> and Ta<span class="math inline">\(_2\)</span>O<span class="math inline">\(_5\)</span> at which this occurs:</p>
-<div class="cell" data-execution_count="21">
+<p>We plot the total absorption (<span class="math inline">\(1-R\)</span>) in the structure with the optimized ARC, and print the thicknesses of MgF <span class="math inline">\(_2\)</span> and Ta <span class="math inline">\(_2\)</span> O <span class="math inline">\(_5\)</span> at which this occurs:</p>
+<div class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(<span class="dv">1</span><span class="op">-</span>weighted_R_matrix, extent<span class="op">=</span>[<span class="bu">min</span>(Ta2O5_thickness), <span class="bu">max</span>(Ta2O5_thickness),</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="bu">min</span>(MgF2_thickness), <span class="bu">max</span>(MgF2_thickness)],</span>

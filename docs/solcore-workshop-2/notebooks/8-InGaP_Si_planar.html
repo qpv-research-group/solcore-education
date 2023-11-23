@@ -179,7 +179,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>This example is partly based on the structure presented in <a href="https://doi.org/10.1109/PVSC40753.2019.9198960">this paper</a>, but with planar interfaces instead of a textured Si surface. This is a four-terminal GaInP/Si device which uses an epoxy and glass to bond the two cells together mechanically. First, we will do optical-only calculations to look at the effect of an intermediate anti-reflection coating (on top of the epoxy/glass) on the absorption in the bottom Si cell, and then we will use the results of the optical calculation to do a device simulation and calculate external quantum efficiency and current-voltage under AM1.5G.</p>
 <p>Note: the paper linked above has a GaInP/AlGaInP heterojunction as the top junction. Because we do not have AlGaInP built in to Solcore’s database, this is replaced by a GaInP homojunction in this example.</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore <span class="im">import</span> material, si</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator <span class="im">import</span> search_db, download_db</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -190,61 +190,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.constants <span class="im">import</span> q</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>WARNING: The RCWA solver will not be available because an S4 installation has not been found.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/Users/z3533914/.pyenv/versions/3.11.5/lib/python3.11/site-packages/solcore/registries.py:73: UserWarning: Optics solver 'RCWA' will not be available. An installation of S4 has not been found.
-  warn(</code></pre>
-</div>
 </div>
 <section id="defining-materials-layers-and-junctions" class="level2">
 <h2 class="anchored" data-anchor-id="defining-materials-layers-and-junctions">Defining materials, layers and junctions</h2>
 <p>The paper referenced above uses a double-layer anti-reflection coating (ARC) made of MgF<span class="math inline">\(_2\)</span> and ZnS. As in the previous example, we use the interface to the refractiveindex.info database to select optical constant data from specific sources, and define Solcore materials using this data. The III-V materials are taken from Solcore’s own material database.</p>
 <p>Note that for the epoxy/glass layer, we use only a single material (BK7 glass). The epoxy and glass used in the paper have the same refractive index (n = 1.56), so we can use a single material with an appropriate refractive index to represent them.</p>
-<div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>download_db(confirm<span class="op">=</span><span class="va">True</span>) <span class="co"># uncomment to download database</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Database file found at /Users/z3533914/.solcore/nk/nk.db
-Making request to https://refractiveindex.info/download/database/rii-database-2021-07-18.zip
-Downloaded and extracting...
-Wrote /var/folders/wh/w5k56r_927j4yp3mh91bggfc0000gq/T/tmpxl4nacr8/database from https://refractiveindex.info/download/database/rii-database-2021-07-18.zip
-LOG: 2746,other,PtAl2,Chen : Bad Material YAML File.
-***Wrote SQLite DB on  /Users/z3533914/.solcore/nk/nk.db</code></pre>
+<div class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download_db(confirm=True) # uncomment to download database</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/Users/z3533914/.pyenv/versions/3.11.5/lib/python3.11/site-packages/solcore/material_data/refractiveindex_info_DB/dbmaterial.py:278: RuntimeWarning: invalid value encountered in sqrt
-  n = numpy.sqrt(nsq)
-/Users/z3533914/.pyenv/versions/3.11.5/lib/python3.11/site-packages/solcore/material_data/refractiveindex_info_DB/dbmaterial.py:299: RuntimeWarning: invalid value encountered in sqrt
-  n = numpy.sqrt(n)</code></pre>
+<div class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>MgF2_pageid <span class="op">=</span> search_db(os.path.join(<span class="st">"MgF2"</span>, <span class="st">"Rodriguez-de Marcos"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ZnS_pageid <span class="op">=</span> search_db(os.path.join(<span class="st">"ZnS"</span>, <span class="st">"Querry"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>MgF2 <span class="op">=</span> material(<span class="bu">str</span>(MgF2_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()<span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>ZnS <span class="op">=</span> material(<span class="bu">str</span>(ZnS_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()<span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>window <span class="op">=</span> material(<span class="st">"AlInP"</span>)(Al<span class="op">=</span><span class="fl">0.52</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>GaInP <span class="op">=</span> material(<span class="st">"GaInP"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>BSF <span class="op">=</span> material(<span class="st">"AlGaAs"</span>)(Al<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>epoxy <span class="op">=</span> material(<span class="st">"BK7"</span>)()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>MgF2_pageid <span class="op">=</span> search_db(os.path.join(<span class="st">"MgF2"</span>, <span class="st">"Rodriguez-de Marcos"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>ZnS_pageid <span class="op">=</span> search_db(os.path.join(<span class="st">"ZnS"</span>, <span class="st">"Querry"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>MgF2 <span class="op">=</span> material(<span class="bu">str</span>(MgF2_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()<span class="op">;</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>ZnS <span class="op">=</span> material(<span class="bu">str</span>(ZnS_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()<span class="op">;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>window <span class="op">=</span> material(<span class="st">"AlInP"</span>)(Al<span class="op">=</span><span class="fl">0.52</span>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>GaInP <span class="op">=</span> material(<span class="st">"GaInP"</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>BSF <span class="op">=</span> material(<span class="st">"AlGaAs"</span>)(Al<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>epoxy <span class="op">=</span> material(<span class="st">"BK7"</span>)()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>For the Si cell, the front surface has both a low-index and high-index SiN<span class="math inline">\(x\)</span> layer. The rear surface uses Al<span class="math inline">\(2\)</span>O<span class="math inline">\(3\)</span>, and the cell has Al at the rear surface.</p>
-<div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>SiOx <span class="op">=</span> material(<span class="st">"SiO"</span>)()</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>SiN_191_pageid <span class="op">=</span> search_db(<span class="st">"Vogt-1.91"</span>)[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>SiN_213_pageid <span class="op">=</span> search_db(<span class="st">"Vogt-2.13"</span>)[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>SiN_191 <span class="op">=</span> material(<span class="bu">str</span>(SiN_191_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()<span class="op">;</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>SiN_213 <span class="op">=</span> material(<span class="bu">str</span>(SiN_213_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()<span class="op">;</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>Si <span class="op">=</span> material(<span class="st">"Si"</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>Al2O3 <span class="op">=</span> material(<span class="st">"Al2O3P"</span>)()</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>Al <span class="op">=</span> material(<span class="st">"Al"</span>)()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For the Si cell, the front surface has both a low-index and high-index SiN <span class="math inline">\(_x\)</span> layer. The rear surface uses Al <span class="math inline">\(_2\)</span> O <span class="math inline">\(_3\)</span>, and the cell has Al at the rear surface.</p>
+<div class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>SiOx <span class="op">=</span> material(<span class="st">"SiO"</span>)()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>SiN_191_pageid <span class="op">=</span> search_db(<span class="st">"Vogt-1.91"</span>)[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>SiN_213_pageid <span class="op">=</span> search_db(<span class="st">"Vogt-2.13"</span>)[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>SiN_191 <span class="op">=</span> material(<span class="bu">str</span>(SiN_191_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()<span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>SiN_213 <span class="op">=</span> material(<span class="bu">str</span>(SiN_213_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()<span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>Si <span class="op">=</span> material(<span class="st">"Si"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>Al2O3 <span class="op">=</span> material(<span class="st">"Al2O3P"</span>)()</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>Al <span class="op">=</span> material(<span class="st">"Al"</span>)()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Database file found at /Users/z3533914/.solcore/nk/nk.db
 1 results found.
@@ -257,122 +236,98 @@ pageid  shelf   book    page    filepath    hasrefractive   hasextinction   rang
 </div>
 </div>
 <p>We now define the layers used in the top cell stack: the ARC and window layer for the top cell, and the GaInP junction itself. The ARC and window layers are not involved in the electrical calculation using the depletion approximation, so they are defined as simple layers, while the GaInP emitter and base are defined as part of a <code>Junction</code> object.</p>
-<div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ARC_window <span class="op">=</span> [</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">97e-9</span>, MgF2),</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">41e-9</span>, ZnS),</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">17e-9</span>, window, role<span class="op">=</span><span class="st">"window"</span>),</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>GaInP_junction <span class="op">=</span> Junction([</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">200e-9</span>, GaInP(In<span class="op">=</span><span class="fl">0.50</span>, Nd<span class="op">=</span>si(<span class="st">"2e18cm-3"</span>), hole_diffusion_length<span class="op">=</span>si(<span class="st">"300nm"</span>)),</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>          role<span class="op">=</span><span class="st">"emitter"</span>),</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">750e-9</span>, GaInP(In<span class="op">=</span><span class="fl">0.50</span>, Na<span class="op">=</span>si(<span class="st">"1e17cm-3"</span>), electron_diffusion_length<span class="op">=</span>si(</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"800nm"</span>)),</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>          role<span class="op">=</span><span class="st">"base"</span>),</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">500e-9</span>, BSF, role<span class="op">=</span><span class="st">"bsf"</span>)], kind<span class="op">=</span><span class="st">"DA"</span>, sn<span class="op">=</span><span class="dv">1</span>, sp<span class="op">=</span><span class="dv">1</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ARC_window <span class="op">=</span> [</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">97e-9</span>, MgF2),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">41e-9</span>, ZnS),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">17e-9</span>, window, role<span class="op">=</span><span class="st">"window"</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>GaInP_junction <span class="op">=</span> Junction([</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">200e-9</span>, GaInP(In<span class="op">=</span><span class="fl">0.50</span>, Nd<span class="op">=</span>si(<span class="st">"2e18cm-3"</span>), hole_diffusion_length<span class="op">=</span>si(<span class="st">"300nm"</span>)), role<span class="op">=</span><span class="st">"emitter"</span>),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">750e-9</span>, GaInP(In<span class="op">=</span><span class="fl">0.50</span>, Na<span class="op">=</span>si(<span class="st">"1e17cm-3"</span>), electron_diffusion_length<span class="op">=</span>si(<span class="st">"800nm"</span>)), role<span class="op">=</span><span class="st">"base"</span>),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">500e-9</span>, BSF, role<span class="op">=</span><span class="st">"bsf"</span>)], kind<span class="op">=</span><span class="st">"DA"</span>, sn<span class="op">=</span><span class="dv">1</span>, sp<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We now define the spacer layer, with and without a ZnS anti-reflection coating, so we can compare their performance in the cell stack. Note that we set the epoxy thickness here to be 10 microns, although the real thickness is much higher - this is because the epoxy/glass is not absorbing at the wavelengths which are able to reach it (which are not absorbed in the GaInP top cell), and we will treat it <em>incoherently</em> (no thin-film interference), so the exact thickness does not matter.</p>
-<div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>spacer <span class="op">=</span> [</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">82e-9</span>, ZnS),</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">10e-6</span>, epoxy), <span class="co"># real thickness is much higher, but since this layer is</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># non-absorbing at the relevant wavelength (&gt; 650 nm) and treated incoherently,</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># this does not matter</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>spacer_noARC <span class="op">=</span> [</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">10e-6</span>, epoxy),</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>spacer <span class="op">=</span> [</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">82e-9</span>, ZnS),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">10e-6</span>, epoxy), <span class="co"># real thickness is much higher, but since this layer is</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># non-absorbing at the relevant wavelength (&gt; 650 nm) and treated incoherently,</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># this does not matter</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>spacer_noARC <span class="op">=</span> [</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">10e-6</span>, epoxy),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now we define the layer stacks for the Si cell, including the front SiO<span class="math inline">\(_x\)</span>/SiN<span class="math inline">\(_x\)</span> stack, the junction itself, and the back dielectric layers.</p>
-<div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Si_front_surf <span class="op">=</span> [</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">100e-9</span>, SiOx),</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">70e-9</span>, SiN_191),</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">15e-9</span>, SiN_213),</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>Si_junction <span class="op">=</span> Junction([</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">1e-6</span>, Si(Nd<span class="op">=</span>si(<span class="st">"2e18cm-3"</span>), hole_diffusion_length<span class="op">=</span><span class="fl">2e-6</span>), role<span class="op">=</span><span class="st">"emitter"</span>),</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">150e-6</span>, Si(Na<span class="op">=</span>si(<span class="st">"2e15cm-3"</span>), electron_diffusion_length<span class="op">=</span><span class="fl">150e-6</span>), role<span class="op">=</span><span class="st">"base"</span>),</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>], kind<span class="op">=</span><span class="st">"DA"</span>, sn<span class="op">=</span><span class="fl">0.1</span>, sp<span class="op">=</span><span class="fl">0.1</span>)</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>Si_back_surf <span class="op">=</span> [</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">15e-9</span>, Al2O3),</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">120e-9</span>, SiN_191)</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we define the layer stacks for the Si cell, including the front SiO <span class="math inline">\(_x\)</span> /SiN <span class="math inline">\(_x\)</span> stack, the junction itself, and the back dielectric layers.</p>
+<div class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Si_front_surf <span class="op">=</span> [</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">100e-9</span>, SiOx),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">70e-9</span>, SiN_191),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">15e-9</span>, SiN_213),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>Si_junction <span class="op">=</span> Junction([</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">1e-6</span>, Si(Nd<span class="op">=</span>si(<span class="st">"2e18cm-3"</span>), hole_diffusion_length<span class="op">=</span><span class="fl">2e-6</span>), role<span class="op">=</span><span class="st">"emitter"</span>),</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">150e-6</span>, Si(Na<span class="op">=</span>si(<span class="st">"2e15cm-3"</span>), electron_diffusion_length<span class="op">=</span><span class="fl">150e-6</span>), role<span class="op">=</span><span class="st">"base"</span>),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>], kind<span class="op">=</span><span class="st">"DA"</span>, sn<span class="op">=</span><span class="fl">0.1</span>, sp<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>Si_back_surf <span class="op">=</span> [</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">15e-9</span>, Al2O3),</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">120e-9</span>, SiN_191)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="comparing-the-optical-performance-with-and-without-intermediate-arc" class="level2">
 <h2 class="anchored" data-anchor-id="comparing-the-optical-performance-with-and-without-intermediate-arc">Comparing the optical performance with and without intermediate ARC</h2>
 <p>Now we will run the calculation. We will treat some of the layers (those above the epoxy) with a <em>coherent</em> TMM calculation, and the epoxy and the layers below it using <em>incoherent</em> TMM. We will discuss the difference this makes, why this is important, and when to use coherent and incoherent layers.</p>
-<div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>n_coh_layers <span class="op">=</span> <span class="bu">len</span>(ARC_window <span class="op">+</span> GaInP_junction)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>n_inc_layers <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> <span class="bu">len</span>(Si_front_surf <span class="op">+</span> Si_junction <span class="op">+</span> Si_back_surf)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>wl <span class="op">=</span> np.linspace(<span class="dv">300</span>, <span class="dv">1200</span>, <span class="dv">600</span>) <span class="op">*</span> <span class="fl">1e-9</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>options <span class="op">=</span> default_options</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>options.recalculate_absorption <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>options.wavelength <span class="op">=</span> wl</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>options.optics_method <span class="op">=</span> <span class="st">'TMM'</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>AM15G <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">"standard"</span>, version<span class="op">=</span><span class="st">"AM1.5g"</span>, x<span class="op">=</span>wl<span class="op">*</span><span class="fl">1e9</span>,</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                    output_units<span class="op">=</span><span class="st">"photon_flux_per_nm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>n_coh_layers <span class="op">=</span> <span class="bu">len</span>(ARC_window <span class="op">+</span> GaInP_junction)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>n_inc_layers <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> <span class="bu">len</span>(Si_front_surf <span class="op">+</span> Si_junction <span class="op">+</span> Si_back_surf)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>wl <span class="op">=</span> np.linspace(<span class="dv">300</span>, <span class="dv">1200</span>, <span class="dv">600</span>) <span class="op">*</span> <span class="fl">1e-9</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>options <span class="op">=</span> default_options</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>options.recalculate_absorption <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>options.wavelength <span class="op">=</span> wl</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>options.optics_method <span class="op">=</span> <span class="st">'TMM'</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>AM15G <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">"standard"</span>, version<span class="op">=</span><span class="st">"AM1.5g"</span>, x<span class="op">=</span>wl<span class="op">*</span><span class="fl">1e9</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                    output_units<span class="op">=</span><span class="st">"photon_flux_per_nm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we define two versions of the cell for optical calculations, without and with the ZnS anti-reflection coating on the epoxy. Note that we also set the substrate for the calculation (aluminium) here.</p>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cell_no_ARC <span class="op">=</span> SolarCell(</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    ARC_window <span class="op">+</span> GaInP_junction <span class="op">+</span> spacer_noARC <span class="op">+</span> Si_front_surf <span class="op">+</span> Si_junction <span class="op">+</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    Si_back_surf,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    substrate<span class="op">=</span>Al,</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>cell_with_ARC <span class="op">=</span> SolarCell(</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    ARC_window <span class="op">+</span> GaInP_junction <span class="op">+</span> spacer <span class="op">+</span> Si_front_surf <span class="op">+</span> Si_junction <span class="op">+</span> Si_back_surf,</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    substrate<span class="op">=</span>Al,</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cell_no_ARC <span class="op">=</span> SolarCell(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    ARC_window <span class="op">+</span> GaInP_junction <span class="op">+</span> spacer_noARC <span class="op">+</span> Si_front_surf <span class="op">+</span> Si_junction <span class="op">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    Si_back_surf,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    substrate<span class="op">=</span>Al,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>cell_with_ARC <span class="op">=</span> SolarCell(</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    ARC_window <span class="op">+</span> GaInP_junction <span class="op">+</span> spacer <span class="op">+</span> Si_front_surf <span class="op">+</span> Si_junction <span class="op">+</span> Si_back_surf,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    substrate<span class="op">=</span>Al,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We set the appropriate coherency list for the structure (a list with entry ‘c’ for a coherent layer or ‘i’ for an incoherent layer), and solve for the cell optics of the cell without the intermediate ARC. We get the total absorption in the GaInP and Si junctions.</p>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>options.coherency_list <span class="op">=</span> [<span class="st">'c'</span>]<span class="op">*</span>(n_coh_layers) <span class="op">+</span> [<span class="st">'i'</span>]<span class="op">*</span>n_inc_layers</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(cell_no_ARC, <span class="st">"optics"</span>, options)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>GaInP_A <span class="op">=</span> cell_no_ARC[<span class="dv">3</span>].layer_absorption <span class="op">+</span> cell_no_ARC[<span class="dv">4</span>].layer_absorption</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>Si_A <span class="op">=</span> cell_no_ARC[<span class="dv">10</span>].layer_absorption <span class="op">+</span> cell_no_ARC[<span class="dv">11</span>].layer_absorption</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Treating layer(s) 11 incoherently
-Calculating RAT...
-Database file found at /Users/z3533914/.solcore/nk/nk.db
-Material main/MgF2/Rodriguez-de Marcos.yml loaded.
-Database file found at /Users/z3533914/.solcore/nk/nk.db
-Material main/MgF2/Rodriguez-de Marcos.yml loaded.
-Database file found at /Users/z3533914/.solcore/nk/nk.db
-Material main/ZnS/Querry.yml loaded.
-Database file found at /Users/z3533914/.solcore/nk/nk.db
-Material main/ZnS/Querry.yml loaded.
-Database file found at /Users/z3533914/.solcore/nk/nk.db
-Material anti-reflective coatings/SiN/Vogt-1.91.yml loaded.
-Database file found at /Users/z3533914/.solcore/nk/nk.db
-Material anti-reflective coatings/SiN/Vogt-1.91.yml loaded.
-Database file found at /Users/z3533914/.solcore/nk/nk.db
-Material anti-reflective coatings/SiN/Vogt-2.13.yml loaded.
-Database file found at /Users/z3533914/.solcore/nk/nk.db
-Material anti-reflective coatings/SiN/Vogt-2.13.yml loaded.
-Calculating absorption profile...</code></pre>
-</div>
+<div class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>options.coherency_list <span class="op">=</span> [<span class="st">'c'</span>]<span class="op">*</span>(n_coh_layers) <span class="op">+</span> [<span class="st">'i'</span>]<span class="op">*</span>n_inc_layers</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(cell_no_ARC, <span class="st">"optics"</span>, options)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>GaInP_A <span class="op">=</span> cell_no_ARC[<span class="dv">3</span>].layer_absorption <span class="op">+</span> cell_no_ARC[<span class="dv">4</span>].layer_absorption</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>Si_A <span class="op">=</span> cell_no_ARC[<span class="dv">10</span>].layer_absorption <span class="op">+</span> cell_no_ARC[<span class="dv">11</span>].layer_absorption</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>As above, but for the cell with an intermediate ARC:</p>
-<div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>options.coherency_list <span class="op">=</span> [<span class="st">"c"</span>]<span class="op">*</span>(n_coh_layers <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> [<span class="st">'i'</span>]<span class="op">*</span>n_inc_layers</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(cell_with_ARC, <span class="st">"optics"</span>, options)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>GaInP_A_ARC <span class="op">=</span> cell_with_ARC[<span class="dv">3</span>].layer_absorption <span class="op">+</span> cell_with_ARC[<span class="dv">4</span>].layer_absorption</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>Si_A_ARC <span class="op">=</span> cell_with_ARC[<span class="dv">11</span>].layer_absorption <span class="op">+</span> cell_with_ARC[<span class="dv">12</span>].layer_absorption</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>options.coherency_list <span class="op">=</span> [<span class="st">"c"</span>]<span class="op">*</span>(n_coh_layers <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> [<span class="st">'i'</span>]<span class="op">*</span>n_inc_layers</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(cell_with_ARC, <span class="st">"optics"</span>, options)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>GaInP_A_ARC <span class="op">=</span> cell_with_ARC[<span class="dv">3</span>].layer_absorption <span class="op">+</span> cell_with_ARC[<span class="dv">4</span>].layer_absorption</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>Si_A_ARC <span class="op">=</span> cell_with_ARC[<span class="dv">11</span>].layer_absorption <span class="op">+</span> cell_with_ARC[<span class="dv">12</span>].layer_absorption</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Treating layer(s) 12 incoherently
 Calculating RAT...
@@ -380,39 +335,39 @@ Calculating absorption profile...</code></pre>
 </div>
 </div>
 <p>Now we plot the GaInP and Si absorption, and the reflectance of the whole structure, for both cells:</p>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, GaInP_A_ARC, <span class="st">"-k"</span>, label<span class="op">=</span><span class="st">"GaInP"</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, Si_A_ARC, <span class="st">"-r"</span>, label<span class="op">=</span><span class="st">"Si"</span>)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, cell_with_ARC.reflected, <span class="st">'-b'</span>, label<span class="op">=</span><span class="st">"R"</span>)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, GaInP_A, <span class="st">"--k"</span>, label<span class="op">=</span><span class="st">"No middle ARC"</span>)</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, Si_A, <span class="st">"--r"</span>)</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, cell_no_ARC.reflected, <span class="st">'--b'</span>)</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">'upper right'</span>)</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Absorptance/Reflectance"</span>)</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, GaInP_A_ARC, <span class="st">"-k"</span>, label<span class="op">=</span><span class="st">"GaInP"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, Si_A_ARC, <span class="st">"-r"</span>, label<span class="op">=</span><span class="st">"Si"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, cell_with_ARC.reflected, <span class="st">'-b'</span>, label<span class="op">=</span><span class="st">"R"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, GaInP_A, <span class="st">"--k"</span>, label<span class="op">=</span><span class="st">"No middle ARC"</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, Si_A, <span class="st">"--r"</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, cell_no_ARC.reflected, <span class="st">'--b'</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">'upper right'</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Absorptance/Reflectance"</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="8-InGaP_Si_planar_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>We see that the cell without an ARC on the epoxy shows much stronger interference fringes (due to the thickness of the top stack), and higher reflectance overall in the long-wavelength region (at short wavelengths, light is absorbed before it is able to reach the epoxy at all). Before doing an actual electrical calculation, we will calculate the limiting current in both of the sub-cells (assuming all the generated charge carriers can be collected):</p>
-<div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>J_GaInP <span class="op">=</span> q<span class="op">*</span>np.trapz(GaInP_A <span class="op">*</span> AM15G.spectrum()[<span class="dv">1</span>], wl<span class="op">*</span><span class="fl">1e9</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>J_Si <span class="op">=</span> q<span class="op">*</span>np.trapz(Si_A <span class="op">*</span> AM15G.spectrum()[<span class="dv">1</span>], wl<span class="op">*</span><span class="fl">1e9</span>)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Limiting short-circuit currents without ARC (mA/cm2): </span><span class="sc">{:.1f}</span><span class="st"> / </span><span class="sc">{:.1f}</span><span class="st">"</span>.<span class="bu">format</span>(</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>      J_GaInP<span class="op">/</span><span class="dv">10</span>, J_Si<span class="op">/</span><span class="dv">10</span>))</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>J_GaInP_ARC <span class="op">=</span> q<span class="op">*</span>np.trapz(GaInP_A_ARC <span class="op">*</span> AM15G.spectrum()[<span class="dv">1</span>], wl<span class="op">*</span><span class="fl">1e9</span>)</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>J_Si_ARC <span class="op">=</span> q<span class="op">*</span>np.trapz(Si_A_ARC <span class="op">*</span> AM15G.spectrum()[<span class="dv">1</span>], wl<span class="op">*</span><span class="fl">1e9</span>)</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Limiting short-circuit currents with ARC (mA/cm2): </span><span class="sc">{:.1f}</span><span class="st"> / </span><span class="sc">{:.1f}</span><span class="st">"</span>.<span class="bu">format</span>(</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    J_GaInP_ARC<span class="op">/</span><span class="dv">10</span>, J_Si_ARC<span class="op">/</span><span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>J_GaInP <span class="op">=</span> q<span class="op">*</span>np.trapz(GaInP_A <span class="op">*</span> AM15G.spectrum()[<span class="dv">1</span>], wl<span class="op">*</span><span class="fl">1e9</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>J_Si <span class="op">=</span> q<span class="op">*</span>np.trapz(Si_A <span class="op">*</span> AM15G.spectrum()[<span class="dv">1</span>], wl<span class="op">*</span><span class="fl">1e9</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Limiting short-circuit currents without ARC (mA/cm2): </span><span class="sc">{:.1f}</span><span class="st"> / </span><span class="sc">{:.1f}</span><span class="st">"</span>.<span class="bu">format</span>(</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>      J_GaInP<span class="op">/</span><span class="dv">10</span>, J_Si<span class="op">/</span><span class="dv">10</span>))</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>J_GaInP_ARC <span class="op">=</span> q<span class="op">*</span>np.trapz(GaInP_A_ARC <span class="op">*</span> AM15G.spectrum()[<span class="dv">1</span>], wl<span class="op">*</span><span class="fl">1e9</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>J_Si_ARC <span class="op">=</span> q<span class="op">*</span>np.trapz(Si_A_ARC <span class="op">*</span> AM15G.spectrum()[<span class="dv">1</span>], wl<span class="op">*</span><span class="fl">1e9</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Limiting short-circuit currents with ARC (mA/cm2): </span><span class="sc">{:.1f}</span><span class="st"> / </span><span class="sc">{:.1f}</span><span class="st">"</span>.<span class="bu">format</span>(</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    J_GaInP_ARC<span class="op">/</span><span class="dv">10</span>, J_Si_ARC<span class="op">/</span><span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Limiting short-circuit currents without ARC (mA/cm2): 16.4 / 15.5
 Limiting short-circuit currents with ARC (mA/cm2): 16.4 / 17.4</code></pre>
@@ -423,33 +378,33 @@ Limiting short-circuit currents with ARC (mA/cm2): 16.4 / 17.4</code></pre>
 <section id="eqe-and-iv-calculation" class="level2">
 <h2 class="anchored" data-anchor-id="eqe-and-iv-calculation">EQE and IV calculation</h2>
 <p>Now, just taking the structure with an intermediate ARC, we do a cell calculation using the depletion approximation.</p>
-<div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>options.mpp <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>options.light_iv <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>options.voltages <span class="op">=</span> np.linspace(<span class="op">-</span><span class="fl">1.9</span>, <span class="fl">0.1</span>, <span class="dv">100</span>)</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>options.light_source <span class="op">=</span> AM15G</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>solar_cell <span class="op">=</span> SolarCell(</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    ARC_window <span class="op">+</span> [GaInP_junction] <span class="op">+</span> spacer <span class="op">+</span> Si_front_surf <span class="op">+</span> [Si_junction] <span class="op">+</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    Si_back_surf,</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    substrate<span class="op">=</span>Al,</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>options.mpp <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>options.light_iv <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>options.voltages <span class="op">=</span> np.linspace(<span class="op">-</span><span class="fl">1.9</span>, <span class="fl">0.1</span>, <span class="dv">100</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>options.light_source <span class="op">=</span> AM15G</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>solar_cell <span class="op">=</span> SolarCell(</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    ARC_window <span class="op">+</span> [GaInP_junction] <span class="op">+</span> spacer <span class="op">+</span> Si_front_surf <span class="op">+</span> [Si_junction] <span class="op">+</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    Si_back_surf,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    substrate<span class="op">=</span>Al,</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>First, we calculate and plot the external quantum efficiency (EQE):</p>
-<div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell, <span class="st">'qe'</span>, options)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, GaInP_A_ARC, <span class="st">"--k"</span>, label<span class="op">=</span><span class="st">"GaInP only absorption"</span>)</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, Si_A_ARC, <span class="st">"--r"</span>, label<span class="op">=</span><span class="st">"Si only absorption"</span>)</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>plt.plot(wl<span class="op">*</span><span class="fl">1e9</span>, solar_cell[<span class="dv">3</span>].eqe(wl), <span class="st">'-k'</span>)</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>plt.plot(wl<span class="op">*</span><span class="fl">1e9</span>, solar_cell[<span class="dv">9</span>].eqe(wl), <span class="st">'-r'</span>)</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">'upper right'</span>)</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Absorptance/EQE"</span>)</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>,<span class="dv">1</span>)</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell, <span class="st">'qe'</span>, options)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, GaInP_A_ARC, <span class="st">"--k"</span>, label<span class="op">=</span><span class="st">"GaInP only absorption"</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, Si_A_ARC, <span class="st">"--r"</span>, label<span class="op">=</span><span class="st">"Si only absorption"</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>plt.plot(wl<span class="op">*</span><span class="fl">1e9</span>, solar_cell[<span class="dv">3</span>].eqe(wl), <span class="st">'-k'</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>plt.plot(wl<span class="op">*</span><span class="fl">1e9</span>, solar_cell[<span class="dv">9</span>].eqe(wl), <span class="st">'-r'</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">'upper right'</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Absorptance/EQE"</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Treating layer(s) 12 incoherently
 Calculating RAT...
@@ -461,24 +416,24 @@ Solving QE of the solar cell...</code></pre>
 </div>
 </div>
 <p>And the current-voltage under AM1.5G:</p>
-<div class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell, <span class="st">'iv'</span>, options)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">-</span>options.voltages, <span class="op">-</span>solar_cell.iv[<span class="st">'IV'</span>][<span class="dv">1</span>]<span class="op">/</span><span class="dv">10</span>, <span class="st">'k'</span>, linewidth<span class="op">=</span><span class="dv">3</span>,</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>         label<span class="op">=</span><span class="st">'Total (2-terminal)'</span>)</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">-</span>options.voltages, solar_cell[<span class="dv">3</span>].iv(options.voltages)<span class="op">/</span><span class="dv">10</span>, <span class="st">'b'</span>,</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>         label<span class="op">=</span><span class="st">'GaInP'</span>)</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">-</span>options.voltages, solar_cell[<span class="dv">9</span>].iv(options.voltages)<span class="op">/</span><span class="dv">10</span>, <span class="st">'g'</span>,</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>         label<span class="op">=</span><span class="st">'Si'</span>)</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="fl">0.1</span>, <span class="dv">18</span>, <span class="vs">r"2-terminal $\eta$ = </span><span class="sc">{:.2f}</span><span class="vs">%"</span>.<span class="bu">format</span>(solar_cell.iv[<span class="st">"Eta"</span>]<span class="op">*</span><span class="dv">100</span>))</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">20</span>)</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="fl">1.9</span>)</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Current (mA/cm$^2$)'</span>)</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Voltage (V)'</span>)</span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell, <span class="st">'iv'</span>, options)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">-</span>options.voltages, <span class="op">-</span>solar_cell.iv[<span class="st">'IV'</span>][<span class="dv">1</span>]<span class="op">/</span><span class="dv">10</span>, <span class="st">'k'</span>, linewidth<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>         label<span class="op">=</span><span class="st">'Total (2-terminal)'</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">-</span>options.voltages, solar_cell[<span class="dv">3</span>].iv(options.voltages)<span class="op">/</span><span class="dv">10</span>, <span class="st">'b'</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>         label<span class="op">=</span><span class="st">'GaInP'</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="op">-</span>options.voltages, solar_cell[<span class="dv">9</span>].iv(options.voltages)<span class="op">/</span><span class="dv">10</span>, <span class="st">'g'</span>,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>         label<span class="op">=</span><span class="st">'Si'</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="fl">0.1</span>, <span class="dv">18</span>, <span class="vs">r"2-terminal $\eta$ = </span><span class="sc">{:.2f}</span><span class="vs">%"</span>.<span class="bu">format</span>(solar_cell.iv[<span class="st">"Eta"</span>]<span class="op">*</span><span class="dv">100</span>))</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">20</span>)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="fl">1.9</span>)</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Current (mA/cm$^2$)'</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Voltage (V)'</span>)</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Treating layer(s) 12 incoherently
 Calculating RAT...
@@ -495,20 +450,21 @@ Solving IV of the total solar cell...</code></pre>
 <section id="two-vs.-four-terminal-efficiency" class="level2">
 <h2 class="anchored" data-anchor-id="two-vs.-four-terminal-efficiency">Two vs.&nbsp;four-terminal efficiency</h2>
 <p>By default, Solcore assumes any SolarCell object is a two-terminal device, and will thus calculate the total I-V curve assuming the cells are connected in series and that the current is limited by the lowest-current sub-cell. However, it will also calculate the I-V curves of the individual cells, so we can use this information to calculate the possible power output in a 4-terminal configuration where the cells operate independently from an electrical point of view:</p>
-<div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="fl">1.3</span>, <span class="dv">100</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>P_GaInP <span class="op">=</span> V<span class="op">*</span>solar_cell[<span class="dv">3</span>].iv(V)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>P_Si <span class="op">=</span> V<span class="op">*</span>solar_cell[<span class="dv">9</span>].iv(V)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>P_MPP_GaInP <span class="op">=</span> <span class="bu">max</span>(P_GaInP)</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>P_MPP_Si <span class="op">=</span> <span class="bu">max</span>(P_Si)</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>eta_4T <span class="op">=</span> (P_MPP_GaInP <span class="op">+</span> P_MPP_Si)<span class="op">/</span>AM15G.power_density</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'4-terminal efficiency: </span><span class="sc">{:.1f}</span><span class="st"> %'</span>.<span class="bu">format</span>(eta_4T<span class="op">*</span><span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>(Note: there was a typo/sign error here!)</p>
+<div class="cell" data-execution_count="48">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> np.linspace(<span class="op">-</span><span class="fl">1.3</span>, <span class="dv">0</span>, <span class="dv">100</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>P_GaInP <span class="op">=</span> <span class="op">-</span>V<span class="op">*</span>solar_cell[<span class="dv">3</span>].iv(V)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>P_Si <span class="op">=</span> <span class="op">-</span>V<span class="op">*</span>solar_cell[<span class="dv">9</span>].iv(V)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>P_MPP_GaInP <span class="op">=</span> <span class="bu">max</span>(P_GaInP)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>P_MPP_Si <span class="op">=</span> <span class="bu">max</span>(P_Si)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>eta_4T <span class="op">=</span> (P_MPP_GaInP <span class="op">+</span> P_MPP_Si)<span class="op">/</span>AM15G.power_density</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'4-terminal efficiency: </span><span class="sc">{:.1f}</span><span class="st"> %'</span>.<span class="bu">format</span>(eta_4T<span class="op">*</span><span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>4-terminal efficiency: 39.6 %</code></pre>
+<pre><code>4-terminal efficiency: 22.8 %</code></pre>
 </div>
 </div>
 </section>
