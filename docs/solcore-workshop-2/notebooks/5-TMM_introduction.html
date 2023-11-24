@@ -179,7 +179,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p>In this script, we will build on the TMM model from the previous example and look at the effects of interference.</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -191,18 +191,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="setting-up" class="level2">
 <h2 class="anchored" data-anchor-id="setting-up">Setting up</h2>
 <p>First, let’s define some materials:</p>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Si <span class="op">=</span> material(<span class="st">"Si"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>SiN <span class="op">=</span> material(<span class="st">"Si3N4"</span>)()</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Ag <span class="op">=</span> material(<span class="st">"Ag"</span>)()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note the second set of brackets (or lack thereof). The Solcore material system essentially operates in two stages; we first call the <code>material</code> function with the name of the material we want to use, for example Si = material(“Si”), which creates a general Python class corresponding to that material. We then call this class to specify further details, such as the temperature, doping level, or alloy composition (where relavant). This happens below when defining Si_n and Si_p; both are use the Si class defined above, and adding further details to the material. For the definitions of SiN and Ag above, we do both steps in a single line, hence the two sets of brackets.</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Si_n <span class="op">=</span> Si(Nd<span class="op">=</span>si(<span class="st">"1e21cm-3"</span>), hole_diffusion_length<span class="op">=</span>si(<span class="st">"10um"</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Si_p <span class="op">=</span> Si(Na<span class="op">=</span>si(<span class="st">"1e16cm-3"</span>), electron_diffusion_length<span class="op">=</span>si(<span class="st">"400um"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To look at the effect of interference in the Si layer at different thicknesses, we make a list of thicknesses to test (evenly spaced on a log scale from 400 nm to 300 um):</p>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Si_thicknesses <span class="op">=</span> np.linspace(np.log(<span class="fl">0.4e-6</span>), np.log(<span class="fl">300e-6</span>), <span class="dv">8</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Si_thicknesses <span class="op">=</span> np.exp(Si_thicknesses)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -215,12 +215,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>           }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Make a color palette using the seaborn package to make the plots look nicer</p>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> sns.color_palette(<span class="st">'rocket'</span>, n_colors<span class="op">=</span><span class="bu">len</span>(Si_thicknesses))</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>colors.reverse()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>create an ARC layer:</p>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ARC_layer <span class="op">=</span> Layer(width<span class="op">=</span>si(<span class="st">'75nm'</span>), material<span class="op">=</span>SiN)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -229,7 +229,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Now we are going to loop through the different Si thicknesses generated above, and create a simple solar cell-like structure. Because we will only do an optical calculation, we don’t need to define a junction and can just make a simple stack of layers.</p>
 <p>We then calculate reflection, absorption and transmission (RAT) for two different situations: 1. a fully coherent stack 2. assuming the silicon layer is incoherent. This means that light which enters the Si layer cannot interfere with itself, but light in the ARC layer can still show interference. In very thick layers (much thicker than the wavelength of light being considered) this is likely to be more physically accurate because real light does not have infinite coherence length; i.e.&nbsp;if you measured wavelength-dependent transmission or reflection of a Si wafer hundreds of microns thick you would not expect to see interference fringes.</p>
 <p><strong>PLOT 1</strong></p>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i1, Si_t <span class="kw">in</span> <span class="bu">enumerate</span>(Si_thicknesses):</span>
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="effect-of-reflective-substrate">Effect of reflective substrate</h2>
 <p>Now we repeat the calculation, but with an Ag substrate under the Si. Previously, we did not specify the substrate and so it was assumed by Solcore to be air (<span class="math inline">\(n\)</span> = 1, <span class="math inline">\(\kappa\)</span> = 0).</p>
 <p><strong>PLOT 2</strong></p>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i1, Si_t <span class="kw">in</span> <span class="bu">enumerate</span>(Si_thicknesses):</span>
@@ -300,7 +300,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="effect-of-polarization-and-angle-of-incidence">Effect of polarization and angle of incidence</h2>
 <p>Finally, we look at the effect of incidence angle and polarization of the light hitting the cell.</p>
 <p><strong>PLOT 3</strong></p>
-<div class="cell" data-execution_count="19">
+<div class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>angles <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">30</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">89</span>] <span class="co"># angles in degrees</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ARC_layer <span class="op">=</span> Layer(width<span class="op">=</span>si(<span class="st">'75nm'</span>), material<span class="op">=</span>SiN)</span>

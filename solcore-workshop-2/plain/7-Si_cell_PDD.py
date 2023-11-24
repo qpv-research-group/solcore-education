@@ -112,15 +112,14 @@ plt.tight_layout()
 plt.show()
 
 
-# We will add transparent conducting oxides (TCOs) and an anti-reflection coating. Note that a real Si cell would have a more complicated layer structure (for example, for a heterojunction cell, the amorphous Si layers); we can add as many layers as we want for Solcore to consider, but will keep it simple here. In this case, these layers will be outside the junction: this means they will have optical effects but will not be included in the drift-diffusion calculation. They can be included in the junction, but this requires setting the relevant transport-related parameters.
+# We will add transparent conducting oxides (TCOs) and an anti-reflection coating. Note that a real Si cell would have a more complicated layer structure (for example, for a heterojunction cell, the amorphous Si layers); we can add as many layers as we want for Solcore to consider, but will keep it simple here. In this case, these layers will be outside the junction: this means they will have optical effects but will not be included in the drift-diffusion calculation. They can be included in the junction, but this requires setting the relevant carrier transport-related parameters.
 
 # In[6]:
 
 
 front_materials = [Layer(80e-9, MgF2), Layer(55e-9, TCO)]
 
-back_materials = [Layer(55e-9, TCO),
-                  Layer(120e-9, MgF2)]
+back_materials = [Layer(55e-9, TCO), Layer(120e-9, MgF2)]
 
 
 # ## Defining the junction and the cell
@@ -132,18 +131,16 @@ back_materials = [Layer(55e-9, TCO),
 
 Si_junction = [Junction([Layer(d_bulk, Si_pn)],
                         doping_profile=doping_profile_func, kind='sesame_PDD',
-                        sn=2, sp=1 # SRVs. Note these should be in m/s, not cm/s! sn refers to the n-type region (can be at the back or the front!), sp to the p-type.
+                        sn=2, sp=1, # SRVs. Note these should be in m/s, not cm/s! sn refers to the n-type region (can be at the back or the front!), sp to the p-type.
                         )]
 
 
 # Now we combine the surface layers and the junction into a solar cell, with 2% shading and a silver back mirror.
 
-# In[8]:
+# In[9]:
 
 
-Si_cell = SolarCell(front_materials +
-                     Si_junction +
-                     back_materials,
+Si_cell = SolarCell(front_materials +  Si_junction + back_materials,
                     shading=0.02,
                     substrate=Ag,
                     )
@@ -153,7 +150,7 @@ Si_cell = SolarCell(front_materials +
 # 
 # Now we ask Solcore to solve both the light IV and QE of the cell:
 
-# In[9]:
+# In[10]:
 
 
 solar_cell_solver(Si_cell, 'qe', options)
@@ -162,7 +159,7 @@ solar_cell_solver(Si_cell, 'iv', options)
 
 # Now we plot the results. Here we have multiple layers, and the junction is actually the third element in the solar cell, so we could access its properties by typing ``Si_cell[2]`` (since Python starts counting at 0). However, Solcore has a built-in way to find only the junctions (so, the electrically active) parts of the cell: ``Si_cell(0)`` will automatically find the first junction. Similarly, ``Si_cell(1)`` would give us the second junction, etc. This avoids having to manually count layers to find out which ones are the Junctions.
 
-# In[10]:
+# In[12]:
 
 
 result_stack = np.vstack([Si_cell.reflected, [layer.layer_absorption for layer in Si_cell], Si_cell.transmitted])
@@ -198,12 +195,12 @@ ax3.plot(options.voltages, Si_cell.iv['IV'][0] * Si_cell.iv['IV'][1],
 ax3.set_ylabel('Power density (W m$^{-2}$)')
 ax3.set_ylim(0, 1.03 * jsc * 10)
 
+# change colour of right-hand axis to red
 ax3.spines['right'].set_color('r')
 ax3.yaxis.label.set_color('r')
 ax3.tick_params(axis='y', colors='r')
 
-ax2.set_axisbelow(True)
-ax3.set_axisbelow(True)
+# Everything here is to add text to the right-hand plot:
 
 ax2.text(0.02, 0.9 * jsc, r'$J_{SC}$', zorder=5)
 ax2.text(0.02, 0.8 * jsc, r'$V_{OC}$')
@@ -232,7 +229,7 @@ plt.show()
 # 
 # Recently, record-efficiency silicon cells have been optimized to such a level that Auger recombination (rather than Shockley-Read-Hall recombination) becomes the dominant recombination mechanism. SRH recombination is parameterized in the PDD solver through the minority lifetimes. Here, we will scan through different minority carrier lifetimes and look at the effect on cell parameters. Other cell parameters are assumed to stay the same.
 
-# In[11]:
+# In[13]:
 
 
 get_ipython().run_cell_magic('capture', '', '\nlifetime_exp = np.linspace(-4, -1.5, 6) # exponent for the lifetimes\n\nlifetimes = 10.0**lifetime_exp # lifetimes which are linearly spaced on a log scale\n\ncell_results = np.zeros(([len(lifetimes), 4])) # make an array to store the efficiency, FF, Voc, Jsc for each lifetime\n\nfor i1, lt in enumerate(lifetimes): # loop through the lifetimes\n\n    options.recalculate_absorption = True\n\n    Si_pn = material("Si")(electron_mobility=si("1e4cm2"), hole_mobility=si("1e3cm2"),\n                           electron_minority_lifetime=lt, hole_minority_lifetime=lt)\n\n    Si_junction = [Junction([Layer(d_bulk, Si_pn)],\n                            doping_profile=doping_profile_func, kind=\'sesame_PDD\',\n                             sn=2, sp=1)]\n\n    Si_cell = SolarCell(front_materials +\n                         Si_junction +\n                         back_materials,\n                        shading=0.02,\n                        substrate=Ag,\n                        )\n\n    solar_cell_solver(Si_cell, \'iv\', options)\n\n    cell_results[i1] = np.array([100*Si_cell.iv.Eta, 100*Si_cell.iv.FF, Si_cell.iv.Voc, Si_cell.iv.Isc/10])\n')
@@ -275,7 +272,7 @@ plt.show()
 # 
 # First, we find the index in the voltage array where the voltage is zero (i.e. short circuit), and the index where it is closest to the voltage at the maximum power point (Vmpp), which was calculated during the IV calculation earlier.
 
-# In[13]:
+# In[26]:
 
 
 # index where voltage is zero:
@@ -285,7 +282,7 @@ MPP_ind = np.argmin(np.abs(options.internal_voltages - Si_cell.iv.Vmpp)) # index
 
 # Now we get the conduction and valence band energy levels (Ec and Ev) and the electron and hole quasi-Fermi levels (Efe and Efh), at both of these voltages. The additional outpit from the PDD model are stored in each junction:
 
-# In[14]:
+# In[27]:
 
 
 Ec_sc = Si_cell(0).pdd_output.Ec[SC_ind]
@@ -303,7 +300,7 @@ Efh_mpp = Si_cell(0).pdd_output.Efh[MPP_ind]
 
 # Now we plot thesince the cell is very wide, let's split the plot into two parts again, like we did for the doping, and plot the quantities we just extracted for at short circuit:
 
-# In[15]:
+# In[28]:
 
 
 fig, (ax1, ax2) = plt.subplots(1, 2, sharey=True, figsize=(5, 3))
@@ -330,7 +327,7 @@ plt.show()
 
 # And at the maximum power point:
 
-# In[16]:
+# In[29]:
 
 
 fig, (ax1, ax2) = plt.subplots(1, 2, sharey=True, figsize=(5, 3))
@@ -360,3 +357,9 @@ plt.show()
 # ## Questions
 # 
 # - What are some of the pros and cons of using the depletion approximation vs. the drift-diffusion solver?
+# 
+# 
+# ## Exercise
+# 
+# Have a look at the [list of quantities](http://docs.solcore.solar/en/latest/Solvers/SesameDDsolver.html) which are contained in the ``pdd_output`` attribute of the Si junction,
+# and try to produce plots like the ones above (or at any other voltage you are interested in) of the electron and hole densities as a function of position in the junction.

@@ -292,13 +292,7 @@ options.recalculate_absorption = True
 # In[20]:
 
 
-#| output: false
-
-options.bulk_profile = True
-options.depth_spacing = 1e-9
-options.depth_spacing_bulk = 10e-9
-
-profile_data = optical_structure.calculate_profile(options)
+get_ipython().run_cell_magic('capture', '', '#| output: false\n\noptions.bulk_profile = True\noptions.depth_spacing = 1e-9\noptions.depth_spacing_bulk = 10e-9\n\nprofile_data = optical_structure.calculate_profile(options)\n')
 
 
 # We not only want to calculate the absorption profile in the bulk layers (the Si) but also the front surface layers, since the GaInP and GaAs junctions are defined as part of the front interface. This was the reason for defining the surface as:

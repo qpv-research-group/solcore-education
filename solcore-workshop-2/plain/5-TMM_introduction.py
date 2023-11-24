@@ -2,9 +2,9 @@
 # coding: utf-8
 
 # # Basic cell optics
-# In this script, we will build on the TMM model from example 1(a) and look at the effects of interference.
+# In this script, we will build on the TMM model from the previous example and look at the effects of interference.
 
-# In[1]:
+# In[17]:
 
 
 import numpy as np
@@ -20,7 +20,7 @@ import seaborn as sns
 # 
 # First, let's define some materials:
 
-# In[2]:
+# In[18]:
 
 
 Si = material("Si")
@@ -35,7 +35,7 @@ Ag = material("Ag")()
 # are use the Si class defined above, and adding further details to the material. For the definitions of SiN and Ag above,
 # we do both steps in a single line, hence the two sets of brackets.
 
-# In[3]:
+# In[19]:
 
 
 Si_n = Si(Nd=si("1e21cm-3"), hole_diffusion_length=si("10um"))
@@ -45,7 +45,7 @@ Si_p = Si(Na=si("1e16cm-3"), electron_diffusion_length=si("400um"))
 # To look at the effect of interference in the Si layer at different thicknesses, we make a list of thicknesses to test
 # (evenly spaced on a log scale from 400 nm to 300 um):
 
-# In[4]:
+# In[20]:
 
 
 Si_thicknesses = np.linspace(np.log(0.4e-6), np.log(300e-6), 8)
@@ -62,7 +62,7 @@ options = {
 
 # Make a color palette using the seaborn package to make the plots look nicer
 
-# In[5]:
+# In[21]:
 
 
 colors = sns.color_palette('rocket', n_colors=len(Si_thicknesses))
@@ -71,7 +71,7 @@ colors.reverse()
 
 # create an ARC layer:
 
-# In[6]:
+# In[22]:
 
 
 ARC_layer = Layer(width=si('75nm'), material=SiN)
@@ -92,7 +92,7 @@ ARC_layer = Layer(width=si('75nm'), material=SiN)
 # 
 # **PLOT 1**
 
-# In[7]:
+# In[23]:
 
 
 plt.figure()
@@ -136,7 +136,7 @@ plt.show()
 # 
 # **PLOT 2**
 
-# In[8]:
+# In[24]:
 
 
 plt.figure()
@@ -173,7 +173,7 @@ plt.show()
 # 
 # **PLOT 3**
 
-# In[9]:
+# In[26]:
 
 
 angles = [0, 30, 60, 70, 80, 89] # angles in degrees
@@ -210,9 +210,7 @@ plt.show()
 
 
 # For normal incidence ($\theta = 0^\circ$), *s* (solid lines) and *p* (dashed lines) polarization are equivalent. As the incidence
-# angle increases, in general absorption is higher for p-polarized light (due to lower reflection). Usually, sunlight is
-# modelled as unpolarized light, which computationally is usually done by averaging the results for s and p-polarized light.
-# 
+# angle increases, in general absorption is higher for p-polarized light (due to lower reflection). 
 # 
 # ## Conclusions
 # 

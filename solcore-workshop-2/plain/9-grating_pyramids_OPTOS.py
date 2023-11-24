@@ -131,7 +131,7 @@ bulk_Si = BulkLayer(200e-6, Si, name="Si_bulk")
 # In[6]:
 
 
-get_ipython().run_cell_magic('capture', '', "\nSC_fig6 = Structure(\n    [front_surf_planar, bulk_Si, back_surf_grating], incidence=Air, transmission=Air\n)\nSC_fig7 = Structure(\n    [front_surf_pyramids, bulk_Si, back_surf_planar], incidence=Air, transmission=Air\n)\nSC_fig8 = Structure(\n    [front_surf_pyramids, bulk_Si, back_surf_grating], incidence=Air, transmission=Air\n)\n\nprocess_structure(SC_fig6, options, save_location='current') # if you want to overwrite previous results, add overwrite=Trues\nprocess_structure(SC_fig7, options, save_location='current')\n")
+get_ipython().run_cell_magic('capture', '', "\nSC_fig6 = Structure([front_surf_planar, bulk_Si, back_surf_grating], incidence=Air, transmission=Air)\n\nSC_fig7 = Structure([front_surf_pyramids, bulk_Si, back_surf_planar], incidence=Air, transmission=Air)\n\nSC_fig8 = Structure([front_surf_pyramids, bulk_Si, back_surf_grating], incidence=Air, transmission=Air)\n\nprocess_structure(SC_fig6, options, save_location='current') # if you want to overwrite previous results, add overwrite=Trues\nprocess_structure(SC_fig7, options, save_location='current')\n")
 
 
 # ## Calculating R/A/T
@@ -189,7 +189,10 @@ plt.ylim([0, 1])
 plt.show()
 
 
-# We can see good agreement between the reference values and our calculated values. The structure
+# We can see good (qualitative) agreement between the reference values and our calculated values. The default
+# values for the number of rays, RCWA orders, and bins in the angular redistribution matrix in this example
+# are set to be quite low -- agreement between the literature values and the values calculated before improves if
+# these are increased (but the calculation takes much longer). The structure
 # with rear grating also behaves identically to the planar TMM reference case at the short wavelengths
 # where front surface reflection dominates the result, as expected. Clearly, the pyramids perform
 # much better overall, giving a large boost in the absorption at long wavelengths and also reducing the reflection

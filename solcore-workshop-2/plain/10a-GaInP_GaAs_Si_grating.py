@@ -10,7 +10,7 @@
 # 
 # ## Setting up
 
-# In[1]:
+# In[6]:
 
 
 from solcore import material, si
@@ -34,17 +34,17 @@ import matplotlib.pyplot as plt
 #   the exact compositions of some semiconductor alloy layers (InGaP, AlInP and AlGaAs)
 #    are not given in the paper and are thus reasonable guesses.
 
-# In[2]:
+# In[7]:
 
 
 # download_db(confirm=True) # only needs to be run once
 # commented out because this should have already been done in a previous example. Uncomment if necessary.
 
 
-# In[3]:
+# In[8]:
 
 
-get_ipython().run_cell_magic('capture', '', '\nMgF2_pageid = search_db(os.path.join("MgF2", "Rodriguez-de Marcos"))[0][0];\nTa2O5_pageid = search_db(os.path.join("Ta2O5", "Rodriguez-de Marcos"))[0][0];\nSU8_pageid = search_db("SU8")[0][0];\nAg_pageid = search_db(os.path.join("Ag", "Jiang"))[0][0];\n\nMgF2 = material(str(MgF2_pageid), nk_db=True)();\nTa2O5 = material(str(Ta2O5_pageid), nk_db=True)();\nSU8 = material(str(SU8_pageid), nk_db=True)();\nAg = material(str(Ag_pageid), nk_db=True)();\n\nwindow = material("AlInP")(Al=0.52)\nGaInP = material("GaInP")(In=0.5)\nAlGaAs = material("AlGaAs")(Al=0.8)\nGaAs = material("GaAs")()\nSi = material("Si")\n\nAir = material("Air")()\nAl2O3 = material("Al2O3P")()\nAl = material("Al")()\n')
+get_ipython().run_cell_magic('capture', '', '\nMgF2_pageid = search_db(os.path.join("MgF2", "Rodriguez-de Marcos"))[0][0];\nTa2O5_pageid = search_db(os.path.join("Ta2O5", "Rodriguez-de Marcos"))[0][0];\nSU8_pageid = search_db("SU8")[0][0];\nAg_pageid = search_db(os.path.join("Ag", "Jiang"))[0][0];\n\nMgF2 = material(str(MgF2_pageid), nk_db=True)();\nTa2O5 = material(str(Ta2O5_pageid), nk_db=True)();\nSU8 = material(str(SU8_pageid), nk_db=True)();\nAg = material(str(Ag_pageid), nk_db=True)();\n\nwindow = material("AlInP")(Al=0.52)\nGaInP = material("GaInP")(In=0.5)\nAlGaAs = material("AlGaAs")(Al=0.8)\nGaAs = material("GaAs")()\nSi = material("Si")()\n\nAir = material("Air")()\nAl2O3 = material("Al2O3P")()\nAl = material("Al")()\n')
 
 
 # ## Defining the cell layers
@@ -53,7 +53,7 @@ get_ipython().run_cell_magic('capture', '', '\nMgF2_pageid = search_db(os.path.j
 # together in a logical way. In this example, we will only do optical simulations, so
 # we will not set e.g. diffusion lengths or doping levels.
 
-# In[4]:
+# In[9]:
 
 
 ARC = [Layer(110e-9, MgF2), Layer(65e-9, Ta2O5)]
@@ -66,7 +66,7 @@ GaAs_junction = [Layer(17e-9, GaInP), Layer(1050e-9, GaAs), Layer(70e-9, AlGaAs)
 
 tunnel_2 = [Layer(50e-9, AlGaAs), Layer(125e-9, GaAs)]
 
-Si_junction = [Layer(280e-6, Si(Nd=si("2e18cm-3"), hole_diffusion_length=2e-6), role="emitter")]
+Si_junction = [Layer(280e-6, Si)]
 
 coh_layers = len(ARC) + len(GaInP_junction) + len(tunnel_1) + len(GaAs_junction) + len(tunnel_2)
 
@@ -80,7 +80,7 @@ coh_layers = len(ARC) + len(GaInP_junction) + len(tunnel_1) + len(GaAs_junction)
 # 
 # Now we define the planar cell, and options for the solver:
 
-# In[5]:
+# In[10]:
 
 
 cell_planar = tmm_structure(
@@ -90,7 +90,7 @@ cell_planar = tmm_structure(
 
 n_layers = cell_planar.layer_stack.num_layers
 
-coherency_list = ["c"]*coh_layers + ["i"]*(n_layers-coh_layers)
+coherency_list = ["c"]*coh_layers + ["i"] # Si to be treated incoherently
 
 options = default_options()
 
@@ -107,7 +107,7 @@ options.coherent = False
 # absorptions. These are used to calculate limiting currents (100% internal quantum
 # efficiency), which are displayed on the plot with the absorption in each layer.
 
-# In[6]:
+# In[11]:
 
 
 tmm_result = cell_planar.calculate(options=options)
@@ -157,7 +157,7 @@ plt.show()
 #  of different shapes can be defined for the RCWA solver can be found
 #  [here](https://rayflare.readthedocs.io/en/latest/Examples/rcwa_examples.html).
 
-# In[7]:
+# In[12]:
 
 
 x = 1000
@@ -176,10 +176,10 @@ back_materials = [
 # interface. Finally, we put everything together into the ARMM `Structure`, also giving
 #  the incidence and transmission materials.
 
-# In[8]:
+# In[14]:
 
 
-bulk_Si = BulkLayer(280e-6, Si(), name="Si_bulk")
+bulk_Si = BulkLayer(280e-6, Si, name="Si_bulk")
 
 III_V_layers = ARC + GaInP_junction + tunnel_1 + GaAs_junction + tunnel_2
 
@@ -201,7 +201,7 @@ cell_grating = Structure([front_surf_planar, bulk_Si, back_surf_grating],
 #  back mirror, and only doing the new calculation at these wavelengths. At shorter
 #  wavelengths, the results previously calculated using TMM can be used.
 
-# In[9]:
+# In[15]:
 
 
 get_ipython().run_cell_magic('capture', '', '\nwl_rcwa = wl[tmm_result[\'T\'] > 1e-4] # check where transmission fraction is bigger\n# than 1E-4\n\noptions.wavelength = wl_rcwa\noptions.project_name = "III_V_Si_cell"\noptions.n_theta_bins = 30\noptions.c_azimuth = 0.25\noptions.RCWA_method = "inkstone"\n\nprocess_structure(cell_grating, options, save_location=\'current\')\nresults_armm = calculate_RAT(cell_grating, options, save_location=\'current\')\nRAT = results_armm[0]\n')
@@ -213,7 +213,7 @@ get_ipython().run_cell_magic('capture', '', '\nwl_rcwa = wl[tmm_result[\'T\'] > 
 # limiting current for the Si junction. The plot compares the absorption in the Si with
 #  and without the grating.
 
-# In[10]:
+# In[16]:
 
 
 Si_A_total = np.zeros(len(wl))
@@ -243,3 +243,4 @@ plt.show()
 # - Why does the grating only affect the absorption in Si at long wavelengths?
 # - What is the reason for using the angular redistribution matrix method, rather
 #   than defining an RCWA-only structure (`rcwa_structure`)?
+# - We did not explicitly set the Si to be incoherent in the second calculation (with the diffraction) grating, but we do not see any sharp interference fringes, indicating that interference in the Si was actually disregarded. Why?

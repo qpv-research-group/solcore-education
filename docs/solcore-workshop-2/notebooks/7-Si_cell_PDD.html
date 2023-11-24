@@ -153,6 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#auger-limited-cell" id="toc-auger-limited-cell" class="nav-link" data-scroll-target="#auger-limited-cell">Auger-limited cell</a></li>
   <li><a href="#other-outputs-from-the-pdd-solver" id="toc-other-outputs-from-the-pdd-solver" class="nav-link" data-scroll-target="#other-outputs-from-the-pdd-solver">Other outputs from the PDD solver</a></li>
   <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions</a></li>
+  <li><a href="#exercise" id="toc-exercise" class="nav-link" data-scroll-target="#exercise">Exercise</a></li>
   </ul>
 </nav>
     </div>
@@ -178,7 +179,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>In the previous example, we looked at a silicon cell using the depletion approximation. Here, we will instead use one of Solcore’s Poisson drift-diffusion (PDD) solvers, which can handle doping profiles (not just constant doping levels). Note that Solcore actually has two PDD solvers: a built-in one which was developed in Fortran specifically for cells with quantum wells, and an interface to the <a href="https://pages.nist.gov/sesame/">Sesame</a> package, which was written in Python and developed for silicon-based cells. Here, we will use the Sesame solver.</p>
 <p>The script starts of in much the same way as the DA cell in the previous example: we import relevant external packages and Solcore features, define some of the materials we will use, and set user options for <code>solar_cell_solver</code>.</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell <span class="im">import</span> SolarCell, Junction, Layer</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.state <span class="im">import</span> State</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell_solver <span class="im">import</span> solar_cell_solver</span>
@@ -221,12 +222,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="defining-materials-and-doping-profile">Defining materials and doping profile</h2>
 <p>The Sesame PDD solver which we will be using can accept depth-dependent doping profiles (although you can also still set constant doping, like in the previous example, for each layer). Because we are going to pass a doping profile rather than distinct p and n-type materials, we just define one Si material which will be used for the whole junction, with electron and hole mobilities and lifetimes.</p>
 <p>Of course, there are many other material parameters which the PDD solver must have access to, such as radiative and Auger recombination rates, electron affinity, etc.; these are stored in Solcore’s material database, but they can always be overridden by user-specified values when calling the <code>material</code> function.</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Si_pn <span class="op">=</span> material(<span class="st">"Si"</span>)(electron_mobility<span class="op">=</span>si(<span class="st">"1e4cm2"</span>), hole_mobility<span class="op">=</span>si(<span class="st">"1e3cm2"</span>),</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                       electron_minority_lifetime<span class="op">=</span><span class="fl">0.001</span>, hole_minority_lifetime<span class="op">=</span><span class="fl">0.001</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we will define the doping profile. We will define a p-n junction, with the highly-doped region (the emitter) at the rear and an complimentary error function (‘erfc’) profile at the front and rear surfaces. Note that Solcore expects the doping to be provided in base Si units (per m3). Solcore expects the doping profile information in the form of a function which returns the doping at a given depth (in m) in the junction. Positive values are n-type doping, negative values are p-type.</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nD <span class="op">=</span> si(<span class="st">"1e20cm-3"</span>) <span class="co"># maximum n-type (donor) doping</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>nA <span class="op">=</span> si(<span class="st">"1e19cm-3"</span>) <span class="co"># maximum p-type (acceptor) doping</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>bulk_doping <span class="op">=</span> si(<span class="st">"5e15cm-3"</span>) <span class="co"># n type bulk doping</span></span>
@@ -245,7 +246,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> doping_profile <span class="op">+</span> doping_profile_rear <span class="op">+</span> bulk_doping</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To check it looks reasonable, let’s plot this doping profile:</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>depth <span class="op">=</span> np.linspace(<span class="dv">0</span>, d_bulk, <span class="bu">int</span>(<span class="fl">1e5</span>))</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
@@ -258,7 +259,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>That didn’t help very much, because the cell is too wide compared to the region where the doping is changing! Let’s try again but splitting the plot into two parts for the front and rear surface (since nothing interesting is happening in the middle).</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">3</span>))</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>ax1.plot(depth<span class="op">*</span><span class="fl">1e6</span>, doping_profile_func(depth))</span>
@@ -276,7 +277,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>We will add transparent conducting oxides (TCOs) and an anti-reflection coating. Note that a real Si cell would have a more complicated layer structure (for example, for a heterojunction cell, the amorphous Si layers); we can add as many layers as we want for Solcore to consider, but will keep it simple here. In this case, these layers will be outside the junction: this means they will have optical effects but will not be included in the drift-diffusion calculation. They can be included in the junction, but this requires setting the relevant carrier transport-related parameters.</p>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>front_materials <span class="op">=</span> [Layer(<span class="fl">80e-9</span>, MgF2), Layer(<span class="fl">55e-9</span>, TCO)]</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>back_materials <span class="op">=</span> [Layer(<span class="fl">55e-9</span>, TCO), Layer(<span class="fl">120e-9</span>, MgF2)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -285,14 +286,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="defining-the-junction-and-the-cell" class="level2">
 <h2 class="anchored" data-anchor-id="defining-the-junction-and-the-cell">Defining the junction and the cell</h2>
 <p>Another important cell parameter, for both the depletion approximation and the drift-diffusion solvers, is the surface recombination. This is passed to Solcore as a surface recombination velocity (SRV). With the <code>Si_pn</code> material, the doping profile function, and the SRVs, we define the Junction. We set the <code>kind</code> of junction to <code>sesame_PDD</code>, so that Solcore knows to use the Sesame PDD solver.</p>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Si_junction <span class="op">=</span> [Junction([Layer(d_bulk, Si_pn)],</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                        doping_profile<span class="op">=</span>doping_profile_func, kind<span class="op">=</span><span class="st">'sesame_PDD'</span>,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                        sn<span class="op">=</span><span class="dv">2</span>, sp<span class="op">=</span><span class="dv">1</span> <span class="co"># SRVs. Note these should be in m/s, not cm/s! sn refers to the n-type region (can be at the back or the front!), sp to the p-type.</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                        sn<span class="op">=</span><span class="dv">2</span>, sp<span class="op">=</span><span class="dv">1</span>, <span class="co"># SRVs. Note these should be in m/s, not cm/s! sn refers to the n-type region (can be at the back or the front!), sp to the p-type.</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                        )]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we combine the surface layers and the junction into a solar cell, with 2% shading and a silver back mirror.</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Si_cell <span class="op">=</span> SolarCell(front_materials <span class="op">+</span>  Si_junction <span class="op">+</span> back_materials,</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                    shading<span class="op">=</span><span class="fl">0.02</span>,</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                    substrate<span class="op">=</span>Ag,</span>
@@ -302,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="calculating-the-iv-and-qe" class="level2">
 <h2 class="anchored" data-anchor-id="calculating-the-iv-and-qe">Calculating the IV and QE</h2>
 <p>Now we ask Solcore to solve both the light IV and QE of the cell:</p>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(Si_cell, <span class="st">'qe'</span>, options)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(Si_cell, <span class="st">'iv'</span>, options)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -316,7 +317,7 @@ Solving IV of the total solar cell...</code></pre>
 </div>
 </div>
 <p>Now we plot the results. Here we have multiple layers, and the junction is actually the third element in the solar cell, so we could access its properties by typing <code>Si_cell[2]</code> (since Python starts counting at 0). However, Solcore has a built-in way to find only the junctions (so, the electrically active) parts of the cell: <code>Si_cell(0)</code> will automatically find the first junction. Similarly, <code>Si_cell(1)</code> would give us the second junction, etc. This avoids having to manually count layers to find out which ones are the Junctions.</p>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>result_stack <span class="op">=</span> np.vstack([Si_cell.reflected, [layer.layer_absorption <span class="cf">for</span> layer <span class="kw">in</span> Si_cell], Si_cell.transmitted])</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>fig, (ax, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="fl">3.5</span>))</span>
@@ -385,7 +386,7 @@ Solving IV of the total solar cell...</code></pre>
 <section id="auger-limited-cell" class="level2">
 <h2 class="anchored" data-anchor-id="auger-limited-cell">Auger-limited cell</h2>
 <p>Recently, record-efficiency silicon cells have been optimized to such a level that Auger recombination (rather than Shockley-Read-Hall recombination) becomes the dominant recombination mechanism. SRH recombination is parameterized in the PDD solver through the minority lifetimes. Here, we will scan through different minority carrier lifetimes and look at the effect on cell parameters. Other cell parameters are assumed to stay the same.</p>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>lifetime_exp <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">4</span>, <span class="op">-</span><span class="fl">1.5</span>, <span class="dv">6</span>) <span class="co"># exponent for the lifetimes</span></span>
@@ -528,30 +529,10 @@ Solving IV of the total solar cell...</code></pre>
 <ul>
 <li>What are some of the pros and cons of using the depletion approximation vs.&nbsp;the drift-diffusion solver?</li>
 </ul>
-<div class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>n_sc <span class="op">=</span> Si_cell(<span class="dv">0</span>).pdd_output.n[SC_ind]</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>p_sc <span class="op">=</span> Si_cell(<span class="dv">0</span>).pdd_output.p[SC_ind]</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">3</span>))</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>ax1.semilogy(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, n_sc<span class="op">/</span><span class="fl">1e6</span>, label<span class="op">=</span><span class="st">'e-'</span>, color<span class="op">=</span><span class="st">'k'</span>)</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>ax1.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, p_sc<span class="op">/</span><span class="fl">1e6</span>, label<span class="op">=</span><span class="st">'h+'</span>, color<span class="op">=</span><span class="st">'g'</span>)</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>ax1.set_xlim(<span class="dv">0</span>, <span class="dv">5</span>)</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'x (um)'</span>)</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>ax1.legend()</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"Maximum power point"</span>, loc<span class="op">=</span><span class="st">'left'</span>)</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>ax2.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, n_sc<span class="op">/</span><span class="fl">1e6</span>, label<span class="op">=</span><span class="st">'e-'</span>, color<span class="op">=</span><span class="st">'k'</span>)</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>ax2.plot(Si_cell(<span class="dv">0</span>).mesh<span class="op">*</span><span class="fl">1e6</span>, p_sc<span class="op">/</span><span class="fl">1e6</span>, label<span class="op">=</span><span class="st">'h+'</span>, color<span class="op">=</span><span class="st">'g'</span>)</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>ax2.set_xlim(d_bulk<span class="op">*</span><span class="fl">1e6</span> <span class="op">-</span> <span class="dv">4</span>, d_bulk<span class="op">*</span><span class="fl">1e6</span>)</span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'x (um)'</span>)</span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="7-Si_cell_PDD_files/figure-html/cell-18-output-1.png" class="img-fluid"></p>
-</div>
-</div>
+</section>
+<section id="exercise" class="level2">
+<h2 class="anchored" data-anchor-id="exercise">Exercise</h2>
+<p>Have a look at the <a href="http://docs.solcore.solar/en/latest/Solvers/SesameDDsolver.html">list of quantities</a> which are contained in the <code>pdd_output</code> attribute of the Si junction, and try to produce plots like the ones above (or at any other voltage you are interested in) of the electron and hole densities as a function of position in the junction.</p>
 
 
 </section>

@@ -10,7 +10,7 @@
 #  for a light-trapping grating, or some other structure in your cell)? This is where
 #  optimization comes in. Here, we will look at a very simple 'brute-force' optimization for a single or double-layer ARC.
 
-# In[12]:
+# In[11]:
 
 
 import numpy as np
@@ -36,7 +36,7 @@ import seaborn as sns
 # the ARC as a coherent layer and the thick Si layer as incoherent (no thin-film
 # interference).
 
-# In[13]:
+# In[12]:
 
 
 opts = State()
@@ -70,7 +70,7 @@ Air = material("Air")()
 # 
 # We will loop through the different ARC thicknesses in `d_range`, build the structure for each case, and then calculate the reflectance. We then save the mean reflected and weighted mean reflectance in the corresponding arrays. We also plot the reflectance for each 15th loop (this is just so the plot does not get too crowded).
 
-# In[14]:
+# In[13]:
 
 
 get_ipython().run_cell_magic('capture', '', "\nd_range = np.linspace(0, 200, 200)\n\nmean_R = np.empty_like(d_range)\nweighted_R = np.empty_like(d_range)\n\ncols = sns.cubehelix_palette(np.ceil(len(d_range)/15))\n\nplt.figure()\njcol = 0\n\nfor i1, d in enumerate(d_range):\n\n    struct = SolarCell([Layer(si(d, 'nm'), SiN), Layer(si('120um'), Si)], substrate=Ag)\n    solar_cell_solver(struct, task='optics', user_options=opts)\n\n    if i1 % 15 == 0:\n        plt.plot(wavelengths*1e9, struct.reflected, label=str(np.round(d, 0)), color=cols[jcol])\n        jcol += 1\n\n    mean_R[i1] = np.mean(struct.reflected)\n    weighted_R[i1] = np.mean(struct.reflected*normalised_spectrum)\n\nplt.legend()\nplt.show()\n")
@@ -78,7 +78,7 @@ get_ipython().run_cell_magic('capture', '', "\nd_range = np.linspace(0, 200, 200
 
 # We now find at which index `mean_R` and `weighted_R` are minimised using `np.argmin`, and use this to print the ARC thickness at which this occurs (rounded to 1 decimal place).
 
-# In[15]:
+# In[14]:
 
 
 print('Minimum mean reflection occurs at d = ' + str(np.round(d_range[np.argmin(mean_R)], 1)) + ' nm')
@@ -90,7 +90,7 @@ print('Minimum weighted reflection occurs at d = ' + str(np.round(d_range[np.arg
 # occurs around 70 nm. We can also plot the variation of the mean and weighted $R$ with
 # ARC thickness $d$:
 
-# In[16]:
+# In[15]:
 
 
 plt.figure()
@@ -107,7 +107,7 @@ plt.show()
 # Now, to see what the reflectance looks like for the optimized structure, we make new
 # `tmm_structure`s with the optimal values and calculate and plot the reflectance:
 
-# In[17]:
+# In[16]:
 
 
 struct_1 = SolarCell([Layer(si(d_range[np.argmin(mean_R)], 'nm'), SiN), Layer(si('120um'), Si)], substrate=Ag)
@@ -132,7 +132,7 @@ plt.show()
 # 
 # ## Double-layer ARC
 # 
-# We will now consider a similar situation, but for a double-layer MgF$_2$/Ta$_2$O$_5$
+# We will now consider a similar situation, but for a double-layer MgF $_2$ /Ta $_2$ O $_5$ 
 # ARC on GaAs.
 # 
 # Solcore can directly interface with the database from www.refractiveindex.info,
@@ -140,7 +140,7 @@ plt.show()
 # Before the first use, it is necessary to download the database. This only needs to
 # be done once, so you can comment this line out after it’s done:
 
-# In[18]:
+# In[17]:
 
 
 download_db(confirm=True) # only needs to be done once
@@ -153,7 +153,7 @@ download_db(confirm=True) # only needs to be done once
 # structure are relatively thin compared to the wavelengths of light, we do a
 # coherent calculation.
 
-# In[19]:
+# In[18]:
 
 
 get_ipython().run_cell_magic('capture', '', '\npageid_MgF2 = search_db(os.path.join("MgF2", "Rodriguez-de Marcos"))[0][0]\npageid_Ta2O5 = search_db(os.path.join("Ta2O5", "Rodriguez-de Marcos"))[0][0]\n\nGaAs = material("GaAs")()\nMgF2 = material(str(pageid_MgF2), nk_db=True)()\nTa2O5 = material(str(pageid_Ta2O5), nk_db=True)()\n\nMgF2_thickness = np.linspace(50, 100, 20)\nTa2O5_thickness = np.linspace(30, 80, 20)\n\nweighted_R_matrix = np.zeros((len(MgF2_thickness), len(Ta2O5_thickness)))\n\nwavelengths_GaAs = wavelengths[wavelengths < 900e-9]\nnormalised_spectrum_GaAs = normalised_spectrum[wavelengths < 900e-9]\n\nopts.coherency_list = None\nopts.wavelength = wavelengths_GaAs\nopts.position = 20e-6\n')
@@ -161,15 +161,15 @@ get_ipython().run_cell_magic('capture', '', '\npageid_MgF2 = search_db(os.path.j
 
 # We now have two thicknesses to loop through; otherwise, the procedure is similar to the single-layer ARC example.
 
-# In[20]:
+# In[19]:
 
 
 get_ipython().run_cell_magic('capture', '', "\nfor i1, d_MgF2 in enumerate(MgF2_thickness):\n    for j1, d_Ta2O5 in enumerate(Ta2O5_thickness):\n        struct = SolarCell([Layer(si(d_MgF2, 'nm'), MgF2), Layer(si(d_Ta2O5, 'nm'), Ta2O5),\n                                Layer(si('20um'), GaAs)],\n                               substrate=Ag)\n        solar_cell_solver(struct, 'optics', opts)\n        R = struct.reflected\n\n        weighted_R_matrix[i1, j1] = np.mean(R * normalised_spectrum_GaAs)\n\n# find the row and column indices of the minimum weighted R value\nri, ci = np.unravel_index(weighted_R_matrix.argmin(), weighted_R_matrix.shape)\n")
 
 
-# We plot the total absorption ($1-R$) in the structure with the optimized ARC, and print the thicknesses of MgF$_2$ and Ta$_2$O$_5$ at which this occurs:
+# We plot the total absorption ($1-R$) in the structure with the optimized ARC, and print the thicknesses of MgF $_2$ and Ta $_2$ O $_5$ at which this occurs:
 
-# In[21]:
+# In[20]:
 
 
 plt.figure()

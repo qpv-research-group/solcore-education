@@ -60,7 +60,8 @@ from solcore.solar_cell_solver import solar_cell_solver
 from solcore.structure import Junction
 
 # Units for j0 values are A.m-2
-gaas_junction = Junction(kind='2D', T=300, n1=1,n2=2, jref=300,  j01=1.3e-19*1E4,j02=5.82E-12*1E4, R_series=0.000000012, R_shunt=1500000.0,jsc=1E-10)
+gaas_junction = Junction(kind='2D', T=300, n1=1,n2=2, jref=300, j01=1.3e-19*1E4,
+                         j02=5.82E-12*1E4, R_series=0.000000012, R_shunt=1500000.0, jsc=1E-10)
 
 V = np.linspace(0.2, 1.2, 300)
 
@@ -91,7 +92,8 @@ plt.show()
 
 
 # All parameters are entered in units of A & m-2
-gaas_junction = Junction(kind='2D', T=300, n1=1,n2=2, jref=300,  j01=1.3e-19*1E4,j02=5.82E-12*1E4, R_series=0.000000012, R_shunt=1500000.0,jsc=278.9)
+gaas_junction = Junction(kind='2D', T=300, n1=1, n2=2, jref=300, j01=1.3e-19*1E4, j02=5.82E-12*1E4, 
+                         R_series=0.000000012, R_shunt=1500000.0, jsc=278.9)
 
 gaas_solar_cell = SolarCell([gaas_junction], T=300)
 
@@ -192,5 +194,3 @@ plt.ylabel('Current / mA')
 plt.legend()
 plt.show()
 
-
-# 

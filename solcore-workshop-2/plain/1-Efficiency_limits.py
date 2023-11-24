@@ -29,7 +29,7 @@
 # 
 # The solar spectrum defines the ultimate current that a solar cell can produce.  First we will plot the AM1.5G solar spectrum $b(\lambda)$ as a spectral irradiance, meaning that the y-axis has units of $W.m^{-2}.nm^{-1}$
 
-# In[1]:
+# In[11]:
 
 
 import numpy as np
@@ -53,7 +53,7 @@ plt.legend()
 
 # Let us now integrate the solar spectrum to provide the total irradiance in units of \[$W.m^{-2}$\].  The code below performs the following operation $b=\int^{\infty}_{0} b(\lambda) d\lambda$
 
-# In[2]:
+# In[12]:
 
 
 # Since .spectrum function returns a tuple (x,y) but np.trapz requires data in format (y,x) these are extracted into separate 1D np arrays.
@@ -66,7 +66,7 @@ print('b = ', integrated_value)
 
 # Let's take the opportunity to learn how to format numbers nicely in Python.  Here we use  the command "%.0f" % to display the value to zero decimal places.
 
-# In[3]:
+# In[13]:
 
 
 print('b = ',"%.0f" % integrated_value,"W.m-2")
@@ -74,7 +74,7 @@ print('b = ',"%.0f" % integrated_value,"W.m-2")
 
 # Solcore performs this integration for us internally.  Let's try the same exercise but for the extraterrestrial solar spectrum, AM0
 
-# In[4]:
+# In[14]:
 
 
 am0 = LightSource(source_type='standard', x=wl*1e9, version='AM0')
@@ -89,7 +89,7 @@ print("AM0 integrates to", "%.0f" % am0.power_density, "W.m-2")
 # 
 # Note: The conversion is performed internally within the software but be aware that because the transformation from wavelength is non-linear, changing the x-axis from nm to eV also changes the y-values of the data. This is known as a Jacobian transformation and discussed in more detail in an article ["Getting the basics right: Jacobian Conversion of Wavelength and Energy Scales for Quantatitive Analysis of Emission Spectra", Journal of Physical Chemistry, 4(19) 3316 (2013)](http://pubs.acs.org/doi/abs/10.1021/jz401508t)
 
-# In[5]:
+# In[15]:
 
 
 ev = np.linspace(0.02,4,4000)
@@ -108,7 +108,7 @@ plt.legend()
 # 
 # Integrating the photon flux can provide an upper limit to the short-circuit current [$A.m^{-2}$]. We can integrate the spectrum over the entire spectral range using $J_{sc}=q\int_{0}^{\infty}N(E)dE$
 
-# In[6]:
+# In[16]:
 
 
 q = 1.60217662E-19
@@ -125,7 +125,7 @@ print("%.0f" % yint)
 # Let's do this for a band-gap of 1.42 eV:
 # 
 
-# In[7]:
+# In[17]:
 
 
 q = 1.60217662E-19
@@ -143,7 +143,7 @@ print("%.0f" % yint)
 # Let's reproduce the $J_{sc}$ vs $E_g$ graph that is shown on p. 87 of Martin Green's
 # Solar Cells book:
 
-# In[8]:
+# In[18]:
 
 
 q = 1.60217662E-19
@@ -171,7 +171,7 @@ plt.legend()
 # Now that the limit to $J_{sc}$ is known, we can estimate the power of delivered by the
 # solar cell by evaluating $\frac{Eg J_{sc}}{b}$
 
-# In[9]:
+# In[19]:
 
 
 plt.figure()
@@ -194,7 +194,7 @@ plt.legend()
 
 # We can now plot a chart of $J_0$ as a function of band-gap energy using this expression:
 
-# In[10]:
+# In[20]:
 
 
 # Define some physical constants:
@@ -224,13 +224,13 @@ plt.legend()
 
 # Let's obtain J0 for GaAs and InGaP, two common III-V materials that are used in tandem solar cells:  evaluate getJ0() for Eg=1.42 and Eg=1.88
 
-# In[11]:
+# In[21]:
 
 
 getJ0(1.42)
 
 
-# In[12]:
+# In[22]:
 
 
 getJ0(1.88)
@@ -240,7 +240,7 @@ getJ0(1.88)
 # 
 # We are now able to calculate the limiting efficiency for a solar cell using the simple Shockley diode expression $J(V)=J_{s c}-J_0\left(e^{\frac{q V}{k T}}-1\right)$.  Let's plot the IV curve for a band-gap of 1.42eV
 
-# In[13]:
+# In[23]:
 
 
 def getJ(v,eg):
@@ -261,7 +261,7 @@ plt.ylabel('Current ($mA.cm^{-2}$)')
 
 # ## Calculating the electrical power curve and finding the maximum power
 
-# In[14]:
+# In[24]:
 
 
 plt.figure()
@@ -275,7 +275,7 @@ plt.ylabel('Power ($W.m^{-2}$)')
 
 # Define a function to find the maximum power point of the curve above:
 
-# In[15]:
+# In[25]:
 
 
 def getPmax(eg):
@@ -286,7 +286,7 @@ def getPmax(eg):
 
 # Test it out on the curve above
 
-# In[16]:
+# In[26]:
 
 
 getPmax(1.42)
@@ -296,7 +296,7 @@ getPmax(1.42)
 # 
 # Finally we can calculate the Shockley-Queisser efficiency limit for AM1.5G
 
-# In[17]:
+# In[27]:
 
 
 eg = np.linspace(0.5,2.5,100)
@@ -316,7 +316,7 @@ plt.legend()
 # 
 # The Solcore library has all the functions we have written above built into it.  We worked through this example step by step, but we can calculate the same result using the code below.  First let's calculate an IV curve for a Shockley-Queisser solar cell with a band-gap of 1.42eV:
 
-# In[18]:
+# In[28]:
 
 
 import numpy as np
@@ -357,7 +357,7 @@ plt.show()
 
 # The Shockley-Queisser efficiency calculation can now be performed over a range of band-gap energies.  To do this, we make a function that calculates the maximum power Pmax as a function of band-gap energy.
 
-# In[19]:
+# In[29]:
 
 
 get_ipython().run_cell_magic('capture', '', "# A command that prevents the screen from filling up with unnecessary working\n\n# Function that returns the maximum power for a Shockley-Queisser solar cell with band-gap Eg\ndef getPmax(eg):\n    V = np.linspace(0, eg-0.1, 500)\n    db_junction = Junction(kind='DB', T=300, Eg=eg, A=1, R_shunt=np.inf, n=1)\n    my_solar_cell = SolarCell([db_junction], T=300, R_series=0)\n\n    solar_cell_solver(my_solar_cell, 'iv',\n                      user_options={'T_ambient': 300, 'db_mode': 'top_hat', 'voltages': V, 'light_iv': True, 'wavelength': wl,\n                                    'mpp': True, 'light_source': am15g})\n    return(my_solar_cell.iv.Pmpp)\n\n# Define the range of band-gaps to perform the calculation over\neg=np.linspace(0.5,2.5,100)\n# Perform the claculation for all values of eg\np=np.vectorize(getPmax)(eg)\n")
@@ -365,11 +365,11 @@ get_ipython().run_cell_magic('capture', '', "# A command that prevents the scree
 
 # Now let's plot the result:
 
-# In[20]:
+# In[33]:
 
 
 plt.figure()  # Plot the results calculated above:
-plt.title('Shockley-Queisser Limiting Efficiency for Unconentrated Sunlight')
+plt.title('Shockley-Queisser Limiting Efficiency for Unconcentrated Sunlight')
 plt.plot(eg, p/am15g.power_density,label='AM1.5G')
 plt.xlim(0.5, 2.5)
 plt.xlabel('Band Gap energy (eV)')
@@ -385,13 +385,13 @@ plt.legend()
 # In the Shockley-Queisser model, concentrated sunlight increased both the current and
 # the voltage of the solar cell which, in the absence of series resistance losses, leads to an increase in the efficiency of the solar cell.  Here we calculate the Shockley-Queisser efficiency at different solar concentrations under the direct solar spectrum AM1.5D:
 
-# In[21]:
+# In[34]:
 
 
-get_ipython().run_cell_magic('capture', '', "\n# Set up a series of AM1.5D solar spectra at different concentrations\nwl = np.linspace(300, 4000, 4000) * 1e-9    #wl contains the x-ordinate in wavelength\nam15d1x = LightSource(source_type='standard', x=wl, version='AM1.5d', concentration=1)\nam15d30x = LightSource(source_type='standard', x=wl, version='AM1.5d', concentration=30)\nam15d1000x = LightSource(source_type='standard', x=wl, version='AM1.5d',\n                         concentration=1000)\n\n#Define a function to find Pmax for a particular band-gap energy and solar spectrum\ndef getPmax(eg,spectrum):\n    V = np.linspace(0, eg-0.1, 500)\n    db_junction = Junction(kind='DB', T=300, Eg=eg, A=1, R_shunt=np.inf, n=1)\n    my_solar_cell = SolarCell([db_junction], T=300, R_series=0)\n\n    solar_cell_solver(my_solar_cell, 'iv',\n                      user_options={'T_ambient': 300, 'db_mode': 'top_hat', 'voltages': V, 'light_iv': True, 'wavelength': wl,\n                                    'mpp': True, 'light_source': spectrum})\n    return my_solar_cell.iv.Pmpp\n\n# Evaluate the Pmax function for band-gaps spanning 0.8 to 1.6eV and concentrations 1x,30x,1000x\neg = np.linspace(0.8,1.6,100)\np1x = np.vectorize(getPmax)(eg, am15d1x)\np30x = np.vectorize(getPmax)(eg, am15d30x)\np1000x = np.vectorize(getPmax)(eg, am15d1000x)\n")
+get_ipython().run_cell_magic('capture', '', "\n# Set up a series of AM1.5D solar spectra at different concentrations\nwl = np.linspace(300, 4000, 4000) * 1e-9    #wl contains the x-ordinate in wavelength\nam15d1x = LightSource(source_type='standard', x=wl, version='AM0', concentration=1)\nam15d30x = LightSource(source_type='standard', x=wl, version='AM0', concentration=30)\nam15d1000x = LightSource(source_type='standard', x=wl, version='AM0',\n                         concentration=1000)\n\n#Define a function to find Pmax for a particular band-gap energy and solar spectrum\ndef getPmax(eg,spectrum):\n    V = np.linspace(0, eg-0.1, 500)\n    db_junction = Junction(kind='DB', T=300, Eg=eg, A=1, R_shunt=np.inf, n=1)\n    my_solar_cell = SolarCell([db_junction], T=300, R_series=0)\n\n    solar_cell_solver(my_solar_cell, 'iv',\n                      user_options={'T_ambient': 300, 'db_mode': 'top_hat', 'voltages': V, 'light_iv': True, 'wavelength': wl,\n                                    'mpp': True, 'light_source': spectrum})\n    return my_solar_cell.iv.Pmpp\n\n# Evaluate the Pmax function for band-gaps spanning 0.8 to 1.6eV and concentrations 1x,30x,1000x\neg = np.linspace(0.8,1.6,100)\np1x = np.vectorize(getPmax)(eg, am15d1x)\np30x = np.vectorize(getPmax)(eg, am15d30x)\np1000x = np.vectorize(getPmax)(eg, am15d1000x)\n")
 
 
-# In[22]:
+# In[35]:
 
 
 # Setup a figure for dual y-axes

@@ -17,9 +17,7 @@
 # Because we do not have AlGaInP built in to Solcore's database, this is replaced by a
 # GaInP homojunction in this example.
 
-# 
-
-# In[1]:
+# In[26]:
 
 
 from solcore import material, si
@@ -46,22 +44,22 @@ import matplotlib.pyplot as plt
 # epoxy and glass used in the paper have the same refractive index (n = 1.56), so we
 # can use a single material with an appropriate refractive index to represent them.
 
-# In[2]:
+# In[27]:
 
 
-download_db(confirm=True) # uncomment to download database
+# download_db(confirm=True) # uncomment to download database
 
 
-# In[3]:
+# In[28]:
 
 
 get_ipython().run_cell_magic('capture', '', '\nMgF2_pageid = search_db(os.path.join("MgF2", "Rodriguez-de Marcos"))[0][0];\nZnS_pageid = search_db(os.path.join("ZnS", "Querry"))[0][0];\nMgF2 = material(str(MgF2_pageid), nk_db=True)();\nZnS = material(str(ZnS_pageid), nk_db=True)();\n\nwindow = material("AlInP")(Al=0.52)\nGaInP = material("GaInP")\nBSF = material("AlGaAs")(Al=0.5)\n\nepoxy = material("BK7")()\n')
 
 
-# For the Si cell, the front surface has both a low-index and high-index SiN$x$ layer.
-# The rear surface uses Al$2$O$3$, and the cell has Al at the rear surface.
+# For the Si cell, the front surface has both a low-index and high-index SiN $_x$ layer.
+# The rear surface uses Al $_2$ O $_3$, and the cell has Al at the rear surface.
 
-# In[4]:
+# In[29]:
 
 
 SiOx = material("SiO")()
@@ -82,7 +80,7 @@ Al = material("Al")()
 #  defined as simple layers, while the GaInP emitter and base are defined as part of a
 #  `Junction` object.
 
-# In[5]:
+# In[30]:
 
 
 ARC_window = [
@@ -92,11 +90,8 @@ ARC_window = [
 ]
 
 GaInP_junction = Junction([
-    Layer(200e-9, GaInP(In=0.50, Nd=si("2e18cm-3"), hole_diffusion_length=si("300nm")),
-          role="emitter"),
-    Layer(750e-9, GaInP(In=0.50, Na=si("1e17cm-3"), electron_diffusion_length=si(
-        "800nm")),
-          role="base"),
+    Layer(200e-9, GaInP(In=0.50, Nd=si("2e18cm-3"), hole_diffusion_length=si("300nm")), role="emitter"),
+    Layer(750e-9, GaInP(In=0.50, Na=si("1e17cm-3"), electron_diffusion_length=si("800nm")), role="base"),
     Layer(500e-9, BSF, role="bsf")], kind="DA", sn=1, sp=1
 )
 
@@ -108,7 +103,7 @@ GaInP_junction = Junction([
 #  reach it (which are not absorbed in the GaInP top cell), and we will treat it
 #  *incoherently* (no thin-film interference), so the exact thickness does not matter.
 
-# In[6]:
+# In[31]:
 
 
 spacer = [
@@ -123,10 +118,10 @@ spacer_noARC = [
 ]
 
 
-# Now we define the layer stacks for the Si cell, including the front SiO$_x$/SiN$_x$
+# Now we define the layer stacks for the Si cell, including the front SiO $_x$ /SiN $_x$ 
 # stack, the junction itself, and the back dielectric layers.
 
-# In[7]:
+# In[32]:
 
 
 Si_front_surf = [
@@ -153,7 +148,7 @@ Si_back_surf = [
 #  *incoherent* TMM. We will discuss the difference this makes, why this is important,
 #  and when to use coherent and incoherent layers.
 
-# In[8]:
+# In[33]:
 
 
 n_coh_layers = len(ARC_window + GaInP_junction)
@@ -174,7 +169,7 @@ AM15G = LightSource(source_type="standard", version="AM1.5g", x=wl*1e9,
 #  ZnS anti-reflection coating on the epoxy. Note that we also set the substrate for
 #  the calculation (aluminium) here.
 
-# In[9]:
+# In[34]:
 
 
 cell_no_ARC = SolarCell(
@@ -194,7 +189,7 @@ cell_with_ARC = SolarCell(
 #   cell without the intermediate ARC. We
 #  get the total absorption in the GaInP and Si junctions.
 
-# In[10]:
+# In[35]:
 
 
 get_ipython().run_cell_magic('capture', '', '\noptions.coherency_list = [\'c\']*(n_coh_layers) + [\'i\']*n_inc_layers\nsolar_cell_solver(cell_no_ARC, "optics", options)\n\nGaInP_A = cell_no_ARC[3].layer_absorption + cell_no_ARC[4].layer_absorption\nSi_A = cell_no_ARC[10].layer_absorption + cell_no_ARC[11].layer_absorption\n')
@@ -202,7 +197,7 @@ get_ipython().run_cell_magic('capture', '', '\noptions.coherency_list = [\'c\']*
 
 # As above, but for the cell with an intermediate ARC:
 
-# In[11]:
+# In[36]:
 
 
 options.coherency_list = ["c"]*(n_coh_layers + 1) + ['i']*n_inc_layers
@@ -215,7 +210,7 @@ Si_A_ARC = cell_with_ARC[11].layer_absorption + cell_with_ARC[12].layer_absorpti
 # Now we plot the GaInP and Si absorption, and the reflectance of the whole structure,
 # for both cells:
 
-# In[12]:
+# In[37]:
 
 
 plt.figure()
@@ -242,7 +237,7 @@ plt.show()
 #  calculate the limiting current in both of the sub-cells (assuming all the generated
 #  charge carriers can be collected):
 
-# In[13]:
+# In[38]:
 
 
 J_GaInP = q*np.trapz(GaInP_A * AM15G.spectrum()[1], wl*1e9)
@@ -266,7 +261,7 @@ print("Limiting short-circuit currents with ARC (mA/cm2): {:.1f} / {:.1f}".forma
 # Now, just taking the structure with an intermediate ARC, we do a cell calculation
 # using the depletion approximation.
 
-# In[14]:
+# In[39]:
 
 
 options.mpp = True
@@ -283,7 +278,7 @@ solar_cell = SolarCell(
 
 # First, we calculate and plot the external quantum efficiency (EQE):
 
-# In[15]:
+# In[40]:
 
 
 solar_cell_solver(solar_cell, 'qe', options)
@@ -291,8 +286,8 @@ solar_cell_solver(solar_cell, 'qe', options)
 plt.figure()
 plt.plot(wl * 1e9, GaInP_A_ARC, "--k", label="GaInP only absorption")
 plt.plot(wl * 1e9, Si_A_ARC, "--r", label="Si only absorption")
-plt.plot(wl*1e9, solar_cell[3].eqe(wl), '-k')
-plt.plot(wl*1e9, solar_cell[9].eqe(wl), '-r')
+plt.plot(wl*1e9, solar_cell(0).eqe(wl), '-k')
+plt.plot(wl*1e9, solar_cell(1).eqe(wl), '-r')
 plt.legend(loc='upper right')
 plt.xlabel("Wavelength (nm)")
 plt.ylabel("Absorptance/EQE")
@@ -303,7 +298,7 @@ plt.show()
 
 # And the current-voltage under AM1.5G:
 
-# In[16]:
+# In[41]:
 
 
 solar_cell_solver(solar_cell, 'iv', options)
@@ -311,9 +306,9 @@ solar_cell_solver(solar_cell, 'iv', options)
 plt.figure()
 plt.plot(-options.voltages, -solar_cell.iv['IV'][1]/10, 'k', linewidth=3,
          label='Total (2-terminal)')
-plt.plot(-options.voltages, solar_cell[3].iv(options.voltages)/10, 'b',
+plt.plot(-options.voltages, solar_cell(0).iv(options.voltages)/10, 'b',
          label='GaInP')
-plt.plot(-options.voltages, solar_cell[9].iv(options.voltages)/10, 'g',
+plt.plot(-options.voltages, solar_cell(1).iv(options.voltages)/10, 'g',
          label='Si')
 plt.text(0.1, 18, r"2-terminal $\eta$ = {:.2f}%".format(solar_cell.iv["Eta"]*100))
 plt.legend()
@@ -333,13 +328,15 @@ plt.show()
 # calculate the I-V curves of the individual cells, so we can use this information to
 # calculate the possible power output in a 4-terminal configuration where the cells
 # operate independently from an electrical point of view:
+# 
+# (Note: there was a typo/sign error here!)
 
-# In[17]:
+# In[42]:
 
 
-V = np.linspace(0, 1.3, 100)
-P_GaInP = V*solar_cell[3].iv(V)
-P_Si = V*solar_cell[9].iv(V)
+V = np.linspace(-1.3, 0, 100)
+P_GaInP = -V*solar_cell[3].iv(V)
+P_Si = -V*solar_cell[9].iv(V)
 
 P_MPP_GaInP = max(P_GaInP)
 

@@ -9,17 +9,11 @@
 # 
 # First, lets import some very commonly-used Python packages:
 
-# In[23]:
+# In[102]:
 
 
 import numpy as np
 import matplotlib.pyplot as plt
-
-
-# In[ ]:
-
-
-
 
 
 # Numpy is a Python library which adds supports for multi-dimensional data arrays and matrices, so it is very useful for
@@ -29,7 +23,7 @@ import matplotlib.pyplot as plt
 # 
 # Now, let's import some things from Solcore (which will be explained as we use them):
 
-# In[24]:
+# In[103]:
 
 
 from solcore import material, si
@@ -50,7 +44,7 @@ from solcore.interpolate import interp1d
 # dielectrics, and metals common in
 # solar cells, is included in Solcore's database:
 
-# In[25]:
+# In[104]:
 
 
 Si = material("Si")
@@ -62,7 +56,7 @@ Si = material("Si")
 # convert all quantities to base units
 # e.g. m, m$^{-3}$...
 
-# In[26]:
+# In[105]:
 
 
 Si_p = Si(Na=si("1e21cm-3"), electron_diffusion_length=si("4um"))
@@ -75,7 +69,7 @@ Si_n = Si(Nd=si("1e16cm-3"), hole_diffusion_length=si("200um"))
 # are made of and the role they play within the cell (emitter or base). We create a
 # junction which is a total of 200 $\mu$m thick, with a 1 $\mu$m junction depth.
 
-# In[27]:
+# In[106]:
 
 
 emitter_layer = Layer(width=si("1um"), material=Si_p, role='emitter')
@@ -85,7 +79,7 @@ base_layer = Layer(width=si("199um"), material=Si_n, role='base')
 # Now we create the p-n junction using the layers defined above. We set kind="DA" to tell
 # Solcore to use the Depletion Approximation in the calculation:
 
-# In[28]:
+# In[107]:
 
 
 Si_junction = Junction([emitter_layer, base_layer], kind="DA")
@@ -95,7 +89,7 @@ Si_junction = Junction([emitter_layer, base_layer], kind="DA")
 # 
 # Wavelengths we want to use in the calculations; wavelengths between 300 and 1200 nm, at 200 evenly spaced intervals:
 
-# In[29]:
+# In[108]:
 
 
 wavelengths = si(np.linspace(300, 1200, 200), "nm")
@@ -112,7 +106,7 @@ wavelengths = si(np.linspace(300, 1200, 200), "nm")
 # optics of the cell rather than re-using previous results. We can specify the options
 # in a Python format called a dictionary:
 
-# In[30]:
+# In[109]:
 
 
 options = {
@@ -126,7 +120,7 @@ options = {
 # 
 # Define the solar cell; in this case it is very simple and we just have a single junction:
 
-# In[31]:
+# In[110]:
 
 
 solar_cell = SolarCell([Si_junction])
@@ -136,7 +130,7 @@ solar_cell = SolarCell([Si_junction])
 # solar_cell_solver to calculate 'qe', 'optics' or 'iv'.
 # 
 
-# In[32]:
+# In[111]:
 
 
 solar_cell_solver(solar_cell, 'qe', options)
@@ -147,7 +141,7 @@ solar_cell_solver(solar_cell, 'qe', options)
 # absorption law and we did not specify external reflectance, the reflectance = 0 over
 # the whole wavelength range.
 
-# In[33]:
+# In[112]:
 
 
 plt.figure()
@@ -171,7 +165,7 @@ plt.show()
 # wavelengths of light we care about) then the
 # reflectance will approach the reflectivity of a simple air/Si interface. We can calculate what this is using the [Fresnel equation for reflectivity]( https://en.wikipedia.org/wiki/Fresnel_equations).
 
-# In[34]:
+# In[113]:
 
 
 def calculate_R_Fresnel(incidence_n, transmission_n, wl):
@@ -187,7 +181,7 @@ def calculate_R_Fresnel(incidence_n, transmission_n, wl):
 # in Solcore. The incidence_n = 1 (air). Note that the function above is
 # specifically for normal incidence.
 
-# In[35]:
+# In[114]:
 
 
 trns_n = Si_n.n(wavelengths) + 1j*Si_n.k(wavelengths)
@@ -198,7 +192,7 @@ reflectivity_fn = calculate_R_Fresnel(1, trns_n, wavelengths)
 # for the externally-calculated reflectivity, and calculate the optics (reflection,
 # absorption, transmission) again:
 
-# In[36]:
+# In[115]:
 
 
 solar_cell_fresnel = SolarCell([Si_junction], reflectivity=reflectivity_fn)
@@ -212,7 +206,7 @@ solar_cell_solver(solar_cell_fresnel, 'optics', options)
 # "TMM" (Transfer Matrix Method), to correctly calculate reflection at the front
 # surface. We will learn more about the transfer matrix method later.
 
-# In[37]:
+# In[116]:
 
 
 Si_junction = Junction([emitter_layer, base_layer], kind="DA")
@@ -222,7 +216,7 @@ solar_cell_TMM = SolarCell([Si_junction])
 
 # Set some more options for the cell calculation:
 
-# In[38]:
+# In[117]:
 
 
 options["optics_method"] = "TMM"
@@ -236,7 +230,7 @@ options["internal_voltages"] = voltages
 # we calculate the QE and the IV (we set the light_iv option to True; if we don't do this, Solcore just calculates the
 # dark IV). We also ask Solcore to find the maximum power point (mpp) so we can get the efficiency. Note that the sign convention used by Solcore means that an n-on-p cell with have a negative open-circuit voltage.
 
-# In[39]:
+# In[118]:
 
 
 solar_cell_solver(solar_cell_TMM, 'iv', options)
@@ -247,7 +241,7 @@ solar_cell_solver(solar_cell_TMM, 'qe', options)
 # and with the TMM solver in Solcore, showing that for this simple situation (no anti-reflection coating, thick Si junction)
 # they are exactly equivalent.
 
-# In[40]:
+# In[119]:
 
 
 plt.figure()
@@ -268,7 +262,7 @@ plt.show()
 # the inclusion of front surface reflection, which is ~ 30% or more over the wavelength
 #  range of interest for a bare Si surface.
 
-# In[41]:
+# In[120]:
 
 
 plt.figure()
@@ -290,7 +284,7 @@ plt.show()
 # anti-reflection coating (ARC), a single layer of
 # silicon nitride (Si$_3$N$_4$):
 
-# In[42]:
+# In[121]:
 
 
 SiN = material("Si3N4")()
@@ -306,7 +300,7 @@ solar_cell_solver(solar_cell_TMM_ARC, 'iv', options)
 # **PLOT 4**: Absorption, EQE, reflection and transmission for the cell with a simple one-layer ARC. We see the reflection
 # is significantly reduced from the previous plot leading to higher absorption/EQE.
 
-# In[43]:
+# In[122]:
 
 
 plt.figure()
@@ -327,7 +321,7 @@ plt.show()
 # examples we will set the light source used for light IV simulations explicitly.
 # 
 
-# In[46]:
+# In[123]:
 
 
 plt.figure()
@@ -367,7 +361,7 @@ plt.show()
 #   Beer-Lambert absorption in the cell.
 # - Adding a simple, one-layer ARC can significantly reduce front-surface reflection for a single-junction
 #   cell, leading to improved short-circuit current. To correctly account for interference
-#    in this layer, which is what causes its anti-reflective properties, we most use
+#    in this layer, which is in part what causes its anti-reflective properties, we must use
 #    the transfer-matrix method (TMM) optical solver.
 # 
 # ## Questions
