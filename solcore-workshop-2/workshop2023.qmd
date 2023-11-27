@@ -4,6 +4,8 @@ title: "Solcore Workshop 2023 (UNSW)"
 
 [Click here](course_instructions.qmd) for course instructions on the day.
 
+[Click here](Workshop_all_slides.pdf) to view all the presentation slides.
+
 ## Installation instructions
 
 If you are familiar with Python/have a working installation (Python >= 3.7, <= 3.11),

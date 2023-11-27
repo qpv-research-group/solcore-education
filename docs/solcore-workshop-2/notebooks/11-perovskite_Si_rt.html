@@ -177,7 +177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>This example shows how you can simulate a perovskite-Si tandem cell with pyramidal surface textures, where the perovskite and other surface layers are assumed to be deposited conformally (i.e., also in a pyramid shape) on top of the Si. The perovskite optical constants are from <a href="https://pubs.acs.org/doi/pdf/10.1021/acsenergylett.8b00089">this paper</a>, while the structure is based on <a href="https://doi.org/10.1038/s41563-018-0115-4">this paper</a> We will calculate total reflection, transmission and absorption per layer as well as the wavelength-dependent absorption profiles in the perovskite and Si, which can be used in e.g.&nbsp;device simulations. We will look at the effect of treating the layers deposited on Si (including the perovskite) coherently or incoherently.</p>
 <p>First, import relevant packages and RayFlare functions:</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -199,7 +199,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Now we set some relevant options. We will scan across 20 x 20 surface points of the pyramid unit cell between 300 and 1200 nm, for unpolarized, normally-incident light. The <code>randomize_surface</code> option is set to True to prevent <a href="https://aip.scitation%20.org/doi/pdf/10.1063/1.339189">correlation between the incident position on the front and rear pyramids</a>. The <code>n_jobs</code> option is set to -1, which means that all available cores will be used. If you want to use all but one core, change this to -2 etc. We also need to provide a <code>project_name</code> to save the lookup tables which will be calculated using TMM to use during ray-tracing.</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>wavelengths <span class="op">=</span> np.linspace(<span class="dv">300</span>, <span class="dv">1200</span>, <span class="dv">40</span>) <span class="op">*</span> <span class="fl">1e-9</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>AM15G <span class="op">=</span> LightSource(source_type<span class="op">=</span><span class="st">"standard"</span>, version<span class="op">=</span><span class="st">"AM1.5g"</span>, x<span class="op">=</span>wavelengths,</span>
@@ -211,16 +211,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>options.ny <span class="op">=</span> options.nx</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>options.n_rays <span class="op">=</span> <span class="dv">4</span> <span class="op">*</span> options.nx<span class="op">**</span><span class="dv">2</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>options.depth_spacing <span class="op">=</span> <span class="fl">1e-9</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>options.pol <span class="op">=</span> <span class="st">"u"</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>options.I_thresh <span class="op">=</span> <span class="fl">1e-3</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>options.project_name <span class="op">=</span> <span class="st">"perovskite_Si_rt"</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>options.randomize_surface <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>options.n_jobs <span class="op">=</span> <span class="op">-</span><span class="dv">1</span> <span class="co"># use all cores; to use all but one, change to -2 etc.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>options.depth_spacing_bulk <span class="op">=</span> <span class="fl">1e-6</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>options.pol <span class="op">=</span> <span class="st">"u"</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>options.I_thresh <span class="op">=</span> <span class="fl">1e-3</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>options.project_name <span class="op">=</span> <span class="st">"perovskite_Si_rt"</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>options.randomize_surface <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>options.parallel <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>options.n_jobs <span class="op">=</span> <span class="op">-</span><span class="dv">4</span> <span class="co"># use all cores; to use all but one, change to -2 etc.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="adding-custom-materials" class="level2">
 <h2 class="anchored" data-anchor-id="adding-custom-materials">Adding custom materials</h2>
 <p>We define our materials. Note that some of these are custom materials added to the database; we only need to do this once. We then define the front layer stack (i.e.&nbsp;all the materials which are on top of the Si, excluding Si itself, which will be the ‘bulk’ material) and the rear layer stack. Layer stacks are always defined starting with the layer closest to the top of the cell.</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Can comment out this block after running once to add materials to the database</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.material_system <span class="im">import</span> create_new_material</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -239,63 +241,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>create_new_material(<span class="st">"IZO"</span>, <span class="st">"data/IZO_Ballif_rO2_10pcnt_n.txt"</span>,</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"data/IZO_Ballif_rO2_10pcnt_k.txt"</span>)</span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Comment out until here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Material created with optical constants n and k only.
-Material created with optical constants n and k only.
-Material created with optical constants n and k only.
-Material created with optical constants n and k only.
-Material created with optical constants n and k only.
-Material created with optical constants n and k only.</code></pre>
-</div>
-</div>
-<div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download_db()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>MgF2_pageid <span class="op">=</span> search_db(os.path.join(<span class="st">"MgF2"</span>, <span class="st">"Rodriguez-de Marcos"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Ag_pageid <span class="op">=</span> search_db(os.path.join(<span class="st">"Ag"</span>, <span class="st">"Jiang"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>Si <span class="op">=</span> material(<span class="st">"Si"</span>)()</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>Air <span class="op">=</span> material(<span class="st">"Air"</span>)()</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>MgF2 <span class="op">=</span> material(<span class="bu">str</span>(MgF2_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>ITO_back <span class="op">=</span> material(<span class="st">"ITO_lowdoping"</span>)()</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>Perovskite <span class="op">=</span> material(<span class="st">"Perovskite_CsBr_1p6eV"</span>)()</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>Ag <span class="op">=</span> material(<span class="bu">str</span>(Ag_pageid), nk_db<span class="op">=</span><span class="va">True</span>)()</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>aSi_i <span class="op">=</span> material(<span class="st">"aSi_i"</span>)()</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>aSi_p <span class="op">=</span> material(<span class="st">"aSi_p"</span>)()</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>aSi_n <span class="op">=</span> material(<span class="st">"aSi_n"</span>)()</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>LiF <span class="op">=</span> material(<span class="st">"LiF"</span>)()</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>IZO <span class="op">=</span> material(<span class="st">"IZO"</span>)()</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>C60 <span class="op">=</span> material(<span class="st">"C60"</span>)()</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co"># stack based on doi:10.1038/s41563-018-0115-4</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>front_materials <span class="op">=</span> [</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">100e-9</span>, MgF2),</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">110e-9</span>, IZO),</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">15e-9</span>, C60),</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">1e-9</span>, LiF),</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">440e-9</span>, Perovskite),</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">6.5e-9</span>, aSi_n),</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">6.5e-9</span>, aSi_i),</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>back_materials <span class="op">=</span> [Layer(<span class="fl">6.5e-9</span>, aSi_i), Layer(<span class="fl">6.5e-9</span>, aSi_p), Layer(<span class="fl">240e-9</span>, ITO_back)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Database file found at /Users/z3533914/.solcore/nk/nk.db
-1 results found.
-pageid  shelf   book    page    filepath    hasrefractive   hasextinction   rangeMin    rangeMax    points
-234 main    MgF2    Rodriguez-de_Marcos main/MgF2/Rodriguez-de Marcos.yml   1   1   0.0299919   2.00146 960
-Database file found at /Users/z3533914/.solcore/nk/nk.db
-1 results found.
-pageid  shelf   book    page    filepath    hasrefractive   hasextinction   rangeMin    rangeMax    points
-2   main    Ag  Jiang   main/Ag/Jiang.yml   1   1   0.3 2.0 1701</code></pre>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download_db()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># MgF2_pageid = search_db(os.path.join("MgF2", "Rodriguez-de Marcos"))[0][0];</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Ag_pageid = search_db(os.path.join("Ag", "Jiang"))[0][0];</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>MgF2 <span class="op">=</span> material(<span class="st">"MgF2"</span>)()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>Ag <span class="op">=</span> material(<span class="st">"Ag"</span>)()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>Si <span class="op">=</span> material(<span class="st">"Si"</span>)()</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>Air <span class="op">=</span> material(<span class="st">"Air"</span>)()</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># MgF2 = material(str(MgF2_pageid), nk_db=True)()</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>ITO_back <span class="op">=</span> material(<span class="st">"ITO_lowdoping"</span>)()</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>Perovskite <span class="op">=</span> material(<span class="st">"Perovskite_CsBr_1p6eV"</span>)()</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Ag = material(str(Ag_pageid), nk_db=True)()</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>aSi_i <span class="op">=</span> material(<span class="st">"aSi_i"</span>)()</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>aSi_p <span class="op">=</span> material(<span class="st">"aSi_p"</span>)()</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>aSi_n <span class="op">=</span> material(<span class="st">"aSi_n"</span>)()</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>LiF <span class="op">=</span> material(<span class="st">"LiF"</span>)()</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>IZO <span class="op">=</span> material(<span class="st">"IZO"</span>)()</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>C60 <span class="op">=</span> material(<span class="st">"C60"</span>)()</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># stack based on doi:10.1038/s41563-018-0115-4</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>front_materials <span class="op">=</span> [</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">100e-9</span>, MgF2),</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">110e-9</span>, IZO),</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">15e-9</span>, C60),</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">1e-9</span>, LiF),</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">440e-9</span>, Perovskite),</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">6.5e-9</span>, aSi_n),</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    Layer(<span class="fl">6.5e-9</span>, aSi_i),</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>back_materials <span class="op">=</span> [Layer(<span class="fl">6.5e-9</span>, aSi_i), Layer(<span class="fl">6.5e-9</span>, aSi_p), Layer(<span class="fl">240e-9</span>, ITO_back)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>material(<span class="st">"MgF2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>solcore.material_system.material_system.MaterialSystem.sopra_material.&lt;locals&gt;.SpecificMaterial</code></pre>
 </div>
 </div>
 </section>
 <section id="defining-the-interfaces-and-structure" class="level2">
 <h2 class="anchored" data-anchor-id="defining-the-interfaces-and-structure">Defining the interfaces and structure</h2>
 <p>Now we define our front and back surfaces, including <code>interface_layers</code>. We will use regular pyramids for both the front and back surface; these pyramids point out on both sides, but since the direction of the pyramids is defined relative to the front surface, we must set <code>upright=True</code> for the top surface and <code>upright=False</code> for the rear surface. We also gives the surfaces a name (used to save the lookup table data) and ask RayFlare to calculate the absorption profile in the 5th layer, which is the perovskite.</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>triangle_surf <span class="op">=</span> regular_pyramids(</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    elevation_angle<span class="op">=</span><span class="dv">55</span>,</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    upright<span class="op">=</span><span class="va">True</span>,</span>
@@ -315,7 +308,7 @@ pageid  shelf   book    page    filepath    hasrefractive   hasextinction   rang
 <span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we make our ray-tracing structure by combining the front and back surfaces, specifying the material in between (Si) and setting its width to 260 microns. In order to use the TMM lookuptables to calculate reflection/transmission/absorption probabilities we must also set <code>use_TMM=True</code>.</p>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>rtstr_coh <span class="op">=</span> rt_structure(</span>
@@ -333,55 +326,12 @@ pageid  shelf   book    page    filepath    hasrefractive   hasextinction   rang
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate:</span></span>
 <span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>result_coh <span class="op">=</span> rtstr_coh.calculate(options)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>INFO: Pre-computing TMM lookup table(s)
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...
-INFO: Calculating next wavelength...</code></pre>
+<pre><code>INFO: Pre-computing TMM lookup table(s)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>WARNING: The RCWA solver will not be available because an S4 installation has not been found.
-WARNING: The RCWA solver will not be available because an S4 installation has not been found.
-WARNING: The RCWA solver will not be available because an S4 installation has not been found.
-WARNING: The RCWA solver will not be available because an S4 installation has not been found.
-WARNING: The RCWA solver will not be available because an S4 installation has not been found.
-WARNING: The RCWA solver will not be available because an S4 installation has not been found.
+WARNING: The RCWA solver will not be available because an S4 installation has not been found.WARNING: The RCWA solver will not be available because an S4 installation has not been found.
+
 WARNING: The RCWA solver will not be available because an S4 installation has not been found.
 WARNING: The RCWA solver will not be available because an S4 installation has not been found.
 WARNING: The RCWA solver will not be available because an S4 installation has not been found.
@@ -392,7 +342,7 @@ WARNING: The RCWA solver will not be available because an S4 installation has no
 <section id="incoherent-calculation" class="level2">
 <h2 class="anchored" data-anchor-id="incoherent-calculation">Incoherent calculation</h2>
 <p>Now we define the same front surface and structure again, except now we will treat all the layers incoherently (i.e.&nbsp;no thin-film interference) in the TMM.</p>
-<div class="cell" data-execution_count="8">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>triangle_surf <span class="op">=</span> regular_pyramids(</span>
@@ -400,7 +350,7 @@ WARNING: The RCWA solver will not be available because an S4 installation has no
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    upright<span class="op">=</span><span class="va">True</span>,</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    size<span class="op">=</span><span class="dv">1</span>,</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    interface_layers<span class="op">=</span>front_materials,</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    coherency_list<span class="op">=</span>[<span class="st">"i"</span>] <span class="op">*</span> <span class="bu">len</span>(front_materials),</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    coherency_list<span class="op">=</span>[<span class="st">"c"</span>, <span class="st">"c"</span>] <span class="op">+</span> [<span class="st">"i"</span>] <span class="op">*</span>(<span class="bu">len</span>(front_materials) <span class="op">-</span> <span class="dv">2</span>),</span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"inc_front"</span>,</span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    prof_layers<span class="op">=</span>[<span class="dv">5</span>],</span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>)</span>
@@ -461,122 +411,137 @@ INFO: Calculating next wavelength...
 INFO: Calculating next wavelength...
 INFO: Calculating next wavelength...</code></pre>
 </div>
+<div class="cell-output cell-output-stdout">
+<pre><code>WARNING: The RCWA solver will not be available because an S4 installation has not been found.
+WARNING: The RCWA solver will not be available because an S4 installation has not been found.
+WARNING: The RCWA solver will not be available because an S4 installation has not been found.
+WARNING: The RCWA solver will not be available because an S4 installation has not been found.
+WARNING: The RCWA solver will not be available because an S4 installation has not been found.
+WARNING: The RCWA solver will not be available because an S4 installation has not been found.
+WARNING: The RCWA solver will not be available because an S4 installation has not been found.</code></pre>
+</div>
 </div>
 <p>Now we plot the results for reflection, transmission, and absorption per layer for both the coherent and incoherent cases.</p>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pal <span class="op">=</span> sns.color_palette(<span class="st">"husl"</span>, n_colors<span class="op">=</span><span class="bu">len</span>(front_materials) <span class="op">+</span> <span class="bu">len</span>(back_materials) <span class="op">+</span> <span class="dv">2</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># create a colour palette</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> cycler(<span class="st">"color"</span>, pal)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># set this as the default colour palette in matplotlib</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.prop_cycle"</span>: cols,</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update(params)</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="fl">3.7</span>))</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_coh[<span class="st">"R"</span>], <span class="st">"-ko"</span>, label<span class="op">=</span><span class="st">"R"</span>)</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_coh[<span class="st">"T"</span>], mfc<span class="op">=</span><span class="st">"none"</span>, label<span class="op">=</span><span class="st">"T"</span>)</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_coh[<span class="st">"A_per_layer"</span>][:, <span class="dv">0</span>], <span class="st">"-o"</span>, label<span class="op">=</span><span class="st">'Si'</span>)</span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_coh[<span class="st">"A_per_interface"</span>][<span class="dv">0</span>], <span class="st">"-o"</span>,</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>         label<span class="op">=</span>[<span class="va">None</span>, <span class="st">"IZO"</span>, <span class="st">"C60"</span>, <span class="va">None</span>, <span class="st">"Perovskite"</span>, <span class="va">None</span>, <span class="va">None</span>])</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_coh[<span class="st">"A_per_interface"</span>][<span class="dv">1</span>], <span class="st">"-o"</span>,</span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>         label<span class="op">=</span>[<span class="va">None</span>, <span class="va">None</span>, <span class="st">"ITO"</span>])</span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_inc[<span class="st">"R"</span>], <span class="st">"--ko"</span>, mfc<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_inc[<span class="st">"T"</span>], mfc<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_inc[<span class="st">"A_per_layer"</span>][:, <span class="dv">0</span>], <span class="st">"--o"</span>, mfc<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_inc[<span class="st">"A_per_interface"</span>][<span class="dv">0</span>], <span class="st">"--o"</span>, mfc<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_inc[<span class="st">"A_per_interface"</span>][<span class="dv">1</span>], <span class="st">"--o"</span>, mfc<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">300</span>, <span class="dv">301</span>], [<span class="dv">0</span>, <span class="dv">0</span>], <span class="st">"-k"</span>, label<span class="op">=</span><span class="st">"coherent"</span>)</span>
-<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">300</span>, <span class="dv">301</span>], [<span class="dv">0</span>, <span class="dv">0</span>], <span class="st">"--k"</span>, label<span class="op">=</span><span class="st">"incoherent"</span>)</span>
-<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
-<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"R / A / T"</span>)</span>
-<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">300</span>, <span class="dv">1200</span>)</span>
-<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>, <span class="dv">1</span>))</span>
-<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="11-perovskite_Si_rt_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pal <span class="op">=</span> sns.color_palette(<span class="st">"husl"</span>, n_colors<span class="op">=</span><span class="bu">len</span>(front_materials) <span class="op">+</span> <span class="bu">len</span>(back_materials) <span class="op">+</span> <span class="dv">2</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># create a colour palette</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> cycler(<span class="st">"color"</span>, pal)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># set this as the default colour palette in matplotlib</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.prop_cycle"</span>: cols,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update(params)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="fl">3.7</span>))</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_coh[<span class="st">"R"</span>], <span class="st">"-ko"</span>, label<span class="op">=</span><span class="st">"R"</span>)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_coh[<span class="st">"T"</span>], mfc<span class="op">=</span><span class="st">"none"</span>, label<span class="op">=</span><span class="st">"T"</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_coh[<span class="st">"A_per_layer"</span>][:, <span class="dv">0</span>], <span class="st">"-o"</span>, label<span class="op">=</span><span class="st">'Si'</span>)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_coh[<span class="st">"A_per_interface"</span>][<span class="dv">0</span>], <span class="st">"-o"</span>,</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>         label<span class="op">=</span>[<span class="va">None</span>, <span class="st">"IZO"</span>, <span class="st">"C60"</span>, <span class="va">None</span>, <span class="st">"Perovskite"</span>, <span class="va">None</span>, <span class="va">None</span>])</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_coh[<span class="st">"A_per_interface"</span>][<span class="dv">1</span>], <span class="st">"-o"</span>,</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>         label<span class="op">=</span>[<span class="va">None</span>, <span class="va">None</span>, <span class="st">"ITO"</span>])</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_inc[<span class="st">"R"</span>], <span class="st">"--ko"</span>, mfc<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_inc[<span class="st">"T"</span>], mfc<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_inc[<span class="st">"A_per_layer"</span>][:, <span class="dv">0</span>], <span class="st">"--o"</span>, mfc<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_inc[<span class="st">"A_per_interface"</span>][<span class="dv">0</span>], <span class="st">"--o"</span>, mfc<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>plt.plot(wavelengths <span class="op">*</span> <span class="fl">1e9</span>, result_inc[<span class="st">"A_per_interface"</span>][<span class="dv">1</span>], <span class="st">"--o"</span>, mfc<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">300</span>, <span class="dv">301</span>], [<span class="dv">0</span>, <span class="dv">0</span>], <span class="st">"-k"</span>, label<span class="op">=</span><span class="st">"coherent"</span>)</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">300</span>, <span class="dv">301</span>], [<span class="dv">0</span>, <span class="dv">0</span>], <span class="st">"--k"</span>, label<span class="op">=</span><span class="st">"incoherent"</span>)</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Wavelength (nm)"</span>)</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"R / A / T"</span>)</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">300</span>, <span class="dv">1200</span>)</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>, <span class="dv">1</span>))</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>NameError: name 'sns' is not defined</code></pre>
 </div>
 </div>
 <p>Calculate and print the limiting short-circuit current per junction:</p>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Jmax_Pero_coh <span class="op">=</span> q<span class="op">*</span>np.trapz(result_coh[<span class="st">"A_per_interface"</span>][<span class="dv">0</span>][:,<span class="dv">4</span>]<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>],</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                                                        x<span class="op">=</span>wavelengths)<span class="op">/</span><span class="dv">10</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>Jmax_Si_coh <span class="op">=</span> q<span class="op">*</span>np.trapz(result_coh[<span class="st">"A_per_layer"</span>][:, <span class="dv">0</span>]<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>],</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                     x<span class="op">=</span>wavelengths)<span class="op">/</span><span class="dv">10</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Limiting short-circuit currents in coherent calculation (mA/cm2): </span><span class="sc">{:.2f}</span><span class="st"> / {:"</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">".2f}"</span>.<span class="bu">format</span>(Jmax_Pero_coh, Jmax_Si_coh))</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>Jmax_Pero_inc <span class="op">=</span> q<span class="op">*</span>np.trapz(result_inc[<span class="st">"A_per_interface"</span>][<span class="dv">0</span>][:,<span class="dv">4</span>]<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>],</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>                                                        x<span class="op">=</span>wavelengths)<span class="op">/</span><span class="dv">10</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>Jmax_Si_inc <span class="op">=</span> q<span class="op">*</span>np.trapz(result_inc[<span class="st">"A_per_layer"</span>][:, <span class="dv">0</span>]<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>],</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>                     x<span class="op">=</span>wavelengths)<span class="op">/</span><span class="dv">10</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Limiting short-circuit currents in coherent calculation (mA/cm2): </span><span class="sc">{:.2f}</span><span class="st"> / {:"</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>      <span class="st">".2f}"</span>.<span class="bu">format</span>(Jmax_Pero_inc, Jmax_Si_inc))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Jmax_Pero_coh <span class="op">=</span> q<span class="op">*</span>np.trapz(result_coh[<span class="st">"A_per_interface"</span>][<span class="dv">0</span>][:,<span class="dv">4</span>]<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>],</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                                                        x<span class="op">=</span>wavelengths)<span class="op">/</span><span class="dv">10</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>Jmax_Si_coh <span class="op">=</span> q<span class="op">*</span>np.trapz(result_coh[<span class="st">"A_per_layer"</span>][:, <span class="dv">0</span>]<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>],</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                     x<span class="op">=</span>wavelengths)<span class="op">/</span><span class="dv">10</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Limiting short-circuit currents in coherent calculation (mA/cm2): </span><span class="sc">{:.2f}</span><span class="st"> / {:"</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">".2f}"</span>.<span class="bu">format</span>(Jmax_Pero_coh, Jmax_Si_coh))</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>Jmax_Pero_inc <span class="op">=</span> q<span class="op">*</span>np.trapz(result_inc[<span class="st">"A_per_interface"</span>][<span class="dv">0</span>][:,<span class="dv">4</span>]<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>],</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>                                                        x<span class="op">=</span>wavelengths)<span class="op">/</span><span class="dv">10</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>Jmax_Si_inc <span class="op">=</span> q<span class="op">*</span>np.trapz(result_inc[<span class="st">"A_per_layer"</span>][:, <span class="dv">0</span>]<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>],</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>                     x<span class="op">=</span>wavelengths)<span class="op">/</span><span class="dv">10</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Limiting short-circuit currents in coherent calculation (mA/cm2): </span><span class="sc">{:.2f}</span><span class="st"> / {:"</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>      <span class="st">".2f}"</span>.<span class="bu">format</span>(Jmax_Pero_inc, Jmax_Si_inc))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Limiting short-circuit currents in coherent calculation (mA/cm2): 19.38 / 21.41
-Limiting short-circuit currents in coherent calculation (mA/cm2): 18.64 / 20.98</code></pre>
+<pre><code>Limiting short-circuit currents in coherent calculation (mA/cm2): 19.32 / 21.49
+Limiting short-circuit currents in coherent calculation (mA/cm2): 18.75 / 21.19</code></pre>
 </div>
 </div>
 </section>
 <section id="absorption-profiles" class="level2">
 <h2 class="anchored" data-anchor-id="absorption-profiles">Absorption profiles</h2>
 <p>We can also plot the absorption profiles, for wavelengths up to 800 nm, in the perovskite (since we asked the solver to calculate the profile in the perovskite layer above).</p>
-<div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>wl_Eg <span class="op">=</span> wavelengths <span class="op">&lt;</span> <span class="fl">800e-9</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>pal <span class="op">=</span> sns.cubehelix_palette(<span class="bu">sum</span>(wl_Eg), reverse<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> cycler(<span class="st">"color"</span>, pal)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.prop_cycle"</span>: cols,</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update(params)</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>pos <span class="op">=</span> np.arange(<span class="dv">0</span>, rtstr_coh.interface_layer_widths[<span class="dv">0</span>][<span class="dv">4</span>], options.depth_spacing<span class="op">*</span><span class="fl">1e9</span>)</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>ax1.plot(pos, result_coh[<span class="st">"interface_profiles"</span>][<span class="dv">0</span>][wl_Eg].T)</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>ax1.set_ylim(<span class="dv">0</span>, <span class="fl">0.02</span>)</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">"z (nm)"</span>)</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">"a(z)"</span>)</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"Coherent"</span>)</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>ax2.plot(pos, result_inc[<span class="st">"interface_profiles"</span>][<span class="dv">0</span>][wl_Eg].T)</span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>ax2.set_ylim(<span class="dv">0</span>, <span class="fl">0.02</span>)</span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>ax2.yaxis.set_ticklabels([])</span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">"z (nm)"</span>)</span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">"Incoherent"</span>)</span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>wl_Eg <span class="op">=</span> wavelengths <span class="op">&lt;</span> <span class="fl">800e-9</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>pal <span class="op">=</span> sns.cubehelix_palette(<span class="bu">sum</span>(wl_Eg), reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> cycler(<span class="st">"color"</span>, pal)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.prop_cycle"</span>: cols,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update(params)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>pos <span class="op">=</span> np.arange(<span class="dv">0</span>, rtstr_coh.interface_layer_widths[<span class="dv">0</span>][<span class="dv">4</span>], options.depth_spacing<span class="op">*</span><span class="fl">1e9</span>)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>ax1.plot(pos, result_coh[<span class="st">"interface_profiles"</span>][<span class="dv">0</span>][wl_Eg].T)</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>ax1.set_ylim(<span class="dv">0</span>, <span class="fl">0.02</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">"z (nm)"</span>)</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">"a(z)"</span>)</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"Coherent"</span>)</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>ax2.plot(pos, result_inc[<span class="st">"interface_profiles"</span>][<span class="dv">0</span>][wl_Eg].T)</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>ax2.set_ylim(<span class="dv">0</span>, <span class="fl">0.02</span>)</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>ax2.yaxis.set_ticklabels([])</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">"z (nm)"</span>)</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">"Incoherent"</span>)</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="11-perovskite_Si_rt_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+<p><img src="11-perovskite_Si_rt_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>result_coh[<span class="st">"interface_profiles"</span>][<span class="dv">0</span>].shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<pre><code>(40, 440)</code></pre>
 </div>
 </div>
 <p>We see that, as expected, the coherent case shows interference fringes while the incoherent case does not. We can also plot the absorption profile in the Si (&gt; 800 nm):</p>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pos_bulk <span class="op">=</span> pos <span class="op">=</span> np.arange(<span class="dv">0</span>, rtstr_coh.widths[<span class="dv">0</span>]<span class="op">*</span><span class="fl">1e6</span>, options.depth_spacing_bulk<span class="op">*</span><span class="fl">1e6</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>ax1.semilogy(pos, result_coh[<span class="st">"profile"</span>][<span class="op">~</span>wl_Eg].T)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>ax1.set_ylim(<span class="fl">1e-8</span>, <span class="fl">0.00015</span>)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">"z (um)"</span>)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">"a(z)"</span>)</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"Coherent"</span>)</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>ax2.semilogy(pos, result_inc[<span class="st">"profile"</span>][<span class="op">~</span>wl_Eg].T)</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>ax2.set_ylim(<span class="fl">1e-8</span>, <span class="fl">0.00015</span>)</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>ax2.yaxis.set_ticklabels([])</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">"z (um)"</span>)</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">"Incoherent"</span>)</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>pos_bulk <span class="op">=</span> pos <span class="op">=</span> np.arange(<span class="dv">0</span>, rtstr_coh.widths[<span class="dv">0</span>]<span class="op">*</span><span class="fl">1e6</span>, options.depth_spacing_bulk<span class="op">*</span><span class="fl">1e6</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>ax1.semilogy(pos, result_coh[<span class="st">"profile"</span>][<span class="op">~</span>wl_Eg].T)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>ax1.set_ylim(<span class="fl">1e-8</span>, <span class="fl">0.00015</span>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">"z (um)"</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">"a(z)"</span>)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"Coherent"</span>)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>ax2.semilogy(pos, result_inc[<span class="st">"profile"</span>][<span class="op">~</span>wl_Eg].T)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>ax2.set_ylim(<span class="fl">1e-8</span>, <span class="fl">0.00015</span>)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>ax2.yaxis.set_ticklabels([])</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">"z (um)"</span>)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">"Incoherent"</span>)</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="11-perovskite_Si_rt_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
+<p><img src="11-perovskite_Si_rt_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>

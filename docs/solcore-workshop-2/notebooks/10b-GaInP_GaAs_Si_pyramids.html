@@ -184,7 +184,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="setting-up" class="level2">
 <h2 class="anchored" data-anchor-id="setting-up">Setting up</h2>
 <p>We load relevant packages and define materials, the same as in the previous example.</p>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore <span class="im">import</span> material, si</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.absorption_calculator <span class="im">import</span> search_db, download_db</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -200,7 +200,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># download_db()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>MgF2_pageid <span class="op">=</span> search_db(os.path.join(<span class="st">"MgF2"</span>, <span class="st">"Rodriguez-de Marcos"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Ta2O5_pageid <span class="op">=</span> search_db(os.path.join(<span class="st">"Ta2O5"</span>, <span class="st">"Rodriguez-de Marcos"</span>))[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>SU8_pageid <span class="op">=</span> search_db(<span class="st">"SU8"</span>)[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">;</span></span>
@@ -245,8 +245,8 @@ pageid  shelf   book    page    filepath    hasrefractive   hasextinction   rang
 2   main    Ag  Jiang   main/Ag/Jiang.yml   1   1   0.3 2.0 1701</code></pre>
 </div>
 </div>
-<p>We define the layers we will need, as before. We specify the thickness of the silicon (280 <span class="math inline">\(\mu\)</span>m) and epoxy (1 mm) at the top:</p>
-<div class="cell" data-execution_count="12">
+<p>We define the layers we will need, as before. We specify the thickness of the silicon (280 <span class="math inline">\(\mu\)</span> m) and epoxy (1 mm) at the top:</p>
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>d_Si <span class="op">=</span> <span class="fl">280e-6</span> <span class="co"># thickness of Si wafer</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>d_epoxy <span class="op">=</span> <span class="fl">1e-6</span> <span class="co"># thickness of epoxy. In reality, the epoxy is much thicker, but the exact thickness doesn't matter </span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>               <span class="co"># because the material is transparent and we will treat it incoherently.</span></span>
@@ -275,7 +275,7 @@ pageid  shelf   book    page    filepath    hasrefractive   hasextinction   rang
 <li>the rear surface of the cell, where the Si again has a pyramidal texture (and we assume there is a silver back mirror behind the cell)</li>
 </ol>
 <p>These 3 interfaces are defined here, using the pre-defined textures for a planar surface or regular pyramids:</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>front_layers <span class="op">=</span> ARC <span class="op">+</span> GaInP_junction <span class="op">+</span> tunnel_1 <span class="op">+</span> GaAs_junction <span class="op">+</span> spacer_ARC</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>front_surf <span class="op">=</span> planar_surface(interface_layers <span class="op">=</span> front_layers, prof_layers<span class="op">=</span>np.arange(<span class="dv">1</span>, <span class="bu">len</span>(front_layers)<span class="op">+</span><span class="dv">1</span>))</span>
@@ -285,7 +285,7 @@ pageid  shelf   book    page    filepath    hasrefractive   hasextinction   rang
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>Si_back <span class="op">=</span> regular_pyramids(elevation_angle<span class="op">=</span><span class="dv">50</span>, upright<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we set relevant options for the solver. We set the number of rays to trace at each wavelength (more rays will make the result less noisy, but increase computation time) and whether to calculate the absorption profile in the bulk layers (no, in this case). The <code>randomize_surface</code> options determines whether the ray keeps track of its positions in the unit cell while travelling between surfaces; we set this to <code>False</code> to mimic random pyramids.</p>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>options <span class="op">=</span> default_options()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>wl <span class="op">=</span> np.arange(<span class="dv">300</span>, <span class="dv">1201</span>, <span class="dv">10</span>) <span class="op">*</span> <span class="fl">1e-9</span></span>
@@ -303,7 +303,7 @@ pageid  shelf   book    page    filepath    hasrefractive   hasextinction   rang
 <section id="defining-the-structures" class="level2">
 <h2 class="anchored" data-anchor-id="defining-the-structures">Defining the structures</h2>
 <p>Finally, we define the ray-tracing structure we will use, using the interfaces, bulk materials, and options set above. Because we want to calculate the reflection/absorption/transmission probabilities at the front surface using TMM, we set the <code>use_TMM</code> argument to True. We also define a completely planar cell with the same layer thicknesses etc. to compare and evaluate the effect of the textures Si surfaces.</p>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>optical_structure <span class="op">=</span> rt_structure(</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    textures<span class="op">=</span>[front_surf, Si_front, Si_back],</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    materials<span class="op">=</span>[epoxy, Si()],</span>
@@ -355,7 +355,7 @@ Material main/Ta2O5/Rodriguez-de Marcos.yml loaded.</code></pre>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>Jmax_Si_tmm <span class="op">=</span> q<span class="op">*</span>np.trapz(Si_A_tmm<span class="op">*</span>AM15G.spectrum()[<span class="dv">1</span>], x<span class="op">=</span>wl)<span class="op">/</span><span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Calculate the R/A/T for the textured cell:</p>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>rt_result <span class="op">=</span> optical_structure.calculate(options<span class="op">=</span>options)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>GaInP_absorption_ARC <span class="op">=</span> rt_result[<span class="st">'A_per_interface'</span>][<span class="dv">0</span>][:,<span class="dv">3</span>]</span>
@@ -370,7 +370,7 @@ Material main/Ta2O5/Rodriguez-de Marcos.yml loaded.</code></pre>
 <section id="plotting-the-results" class="level2">
 <h2 class="anchored" data-anchor-id="plotting-the-results">Plotting the results</h2>
 <p>Finally, we plot the results; the solid lines show the results for the textured Si cell (calculated using ray-tracing), the dashed lines for the planar cell (calculated using TMM). The maximum possible currents are shown in the plot, with the value in brackets for Si being for the planar cell.</p>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">3</span>))</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, GaInP_absorption_ARC, <span class="st">"-k"</span>, label<span class="op">=</span><span class="st">"GaInP"</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, GaAs_absorption_ARC, <span class="st">"-b"</span>, label<span class="op">=</span><span class="st">"GaAs"</span>)</span>
@@ -379,16 +379,17 @@ Material main/Ta2O5/Rodriguez-de Marcos.yml loaded.</code></pre>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, GaAs_A_tmm, <span class="st">"--b"</span>)</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, Si_A_tmm, <span class="st">"--r"</span>)</span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, rt_result[<span class="st">'R'</span>], <span class="st">'-'</span>, color<span class="op">=</span><span class="st">'grey'</span>, label<span class="op">=</span><span class="st">"Reflected"</span>)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, tmm_result[<span class="st">'R'</span>], <span class="st">'--'</span>, color<span class="op">=</span><span class="st">'grey'</span>)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="dv">420</span>, <span class="fl">0.55</span>, <span class="vs">r"</span><span class="sc">{:.1f}</span><span class="vs"> mA/cm$^2$"</span>.<span class="bu">format</span>(Jmax_GaInP))</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="dv">670</span>, <span class="fl">0.55</span>, <span class="vs">r"</span><span class="sc">{:.1f}</span><span class="vs"> mA/cm$^2$"</span>.<span class="bu">format</span>(Jmax_GaAs))</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="dv">870</span>, <span class="fl">0.55</span>, <span class="vs">r"</span><span class="sc">{:.1f}</span><span class="vs"> mA/cm$^2$"</span>.<span class="bu">format</span>(Jmax_Si))</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="dv">870</span>, <span class="fl">0.45</span>, <span class="vs">r"(</span><span class="sc">{:.1f}</span><span class="vs"> mA/cm$^2)$"</span>.<span class="bu">format</span>(Jmax_Si_tmm))</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>, <span class="dv">1</span>), loc<span class="op">=</span><span class="dv">2</span>, borderaxespad<span class="op">=</span><span class="fl">0.</span>)</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, rt_result[<span class="st">'R0'</span>], <span class="st">'-'</span>, color<span class="op">=</span><span class="st">'grey'</span>, label<span class="op">=</span><span class="st">"Reflected"</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>plt.plot(wl <span class="op">*</span> <span class="fl">1e9</span>, tmm_result[<span class="st">'R'</span>], <span class="st">'-'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="dv">420</span>, <span class="fl">0.55</span>, <span class="vs">r"</span><span class="sc">{:.1f}</span><span class="vs"> mA/cm$^2$"</span>.<span class="bu">format</span>(Jmax_GaInP))</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="dv">670</span>, <span class="fl">0.55</span>, <span class="vs">r"</span><span class="sc">{:.1f}</span><span class="vs"> mA/cm$^2$"</span>.<span class="bu">format</span>(Jmax_GaAs))</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="dv">870</span>, <span class="fl">0.55</span>, <span class="vs">r"</span><span class="sc">{:.1f}</span><span class="vs"> mA/cm$^2$"</span>.<span class="bu">format</span>(Jmax_Si))</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="dv">870</span>, <span class="fl">0.45</span>, <span class="vs">r"(</span><span class="sc">{:.1f}</span><span class="vs"> mA/cm$^2)$"</span>.<span class="bu">format</span>(Jmax_Si_tmm))</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>, <span class="dv">1</span>), loc<span class="op">=</span><span class="dv">2</span>, borderaxespad<span class="op">=</span><span class="fl">0.</span>)</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="10b-GaInP_GaAs_Si_pyramids_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
 </div>
@@ -409,7 +410,7 @@ Material main/Ta2O5/Rodriguez-de Marcos.yml loaded.</code></pre>
 <h2 class="anchored" data-anchor-id="electrical-calculation">Electrical calculation</h2>
 <p>Now we can also use RayFlare’s optical results to run an electrical simulation in Solcore. To use the depletion approximation (DA) or drift-diffusion (PDD) solvers, we need the front surface reflectivity, and a depth-dependent absorption/generation profile. While so far we have been plotting total absorption per layer, RayFlare can calculate depth-dependent profiles too.</p>
 <p>We need to import some more things, and set some options for <code>solar_cell_solver</code>, as we did before. We must set the <code>optics_method</code> option to <code>'external'</code>, since we want to pass the values calculated by RayFlare into Solcore.</p>
-<div class="cell" data-execution_count="19">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell <span class="im">import</span> SolarCell, Junction</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> solcore.solar_cell_solver <span class="im">import</span> solar_cell_solver</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rayflare.utilities <span class="im">import</span> make_absorption_function</span>
@@ -430,7 +431,7 @@ Material main/Ta2O5/Rodriguez-de Marcos.yml loaded.</code></pre>
 </div>
 </div>
 <p>Now, previously we only calculate total reflection/absorption/transmission. Now we want to calculate depth-dependent absorption (generation) profiles at every wavelength. We set some options for RayFlare for this (we can use the same <code>options</code> object) and then ask RayFlare to calculate the absorption profile:</p>
-<div class="cell" data-execution_count="20">
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -462,8 +463,6 @@ INFO: Calculating next wavelength...
 INFO: Calculating next wavelength...
 INFO: Calculating next wavelength...
 INFO: Calculating next wavelength...
-/Users/z3533914/.pyenv/versions/3.11.5/lib/python3.11/site-packages/joblib/externals/loky/process_executor.py:752: UserWarning: A worker stopped while some jobs were given to the executor. This can be caused by a too short worker timeout or by a memory leak.
-  warnings.warn(
 INFO: Calculating next wavelength...
 INFO: Calculating next wavelength...
 INFO: Calculating next wavelength...
@@ -539,7 +538,6 @@ INFO: Calculating next wavelength...</code></pre>
 WARNING: The RCWA solver will not be available because an S4 installation has not been found.
 WARNING: The RCWA solver will not be available because an S4 installation has not been found.
 WARNING: The RCWA solver will not be available because an S4 installation has not been found.
-WARNING: The RCWA solver will not be available because an S4 installation has not been found.
 WARNING: The RCWA solver will not be available because an S4 installation has not been found.</code></pre>
 </div>
 </div>
@@ -547,7 +545,7 @@ WARNING: The RCWA solver will not be available because an S4 installation has no
 <pre><code>front_surf = planar_surface(interface_layers = front_layers, prof_layers=np.arange(1, len(front_layers)+1))</code></pre>
 <p>near the start of the script. The <code>prof_layers</code> argument tells RayFlare we want to calculate the absorption profile in the surface layers, in addition to the total absorption.</p>
 <p>In order for Solcore to use the information we just calculated, it must be in the right format. We need to provide Solcore with two things: the reflectance, and a function which describes the depth-dependent absorption. This function expects an argument which is an array of positions, and returns the generation (units of <span class="math inline">\(m^{-1}\)</span>) at each position and each wavelength. Fortunately, RayFlare has a function which takes your layer structure, results, and user options, and creates such a function for you:</p>
-<div class="cell" data-execution_count="21">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>depths, external_optics_func <span class="op">=</span> make_absorption_function(profile_data, optical_structure, options)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>options.position <span class="op">=</span> depths</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -556,7 +554,7 @@ WARNING: The RCWA solver will not be available because an S4 installation has no
 </div>
 </div>
 <p>Previously, we defined RayFlare <code>rt_structure</code> and <code>tmm_structure</code> objects to do the optical calculation. For the cell calculation, we need a Solcore <code>SolarCell</code> object, which needs different information (such as doping levels) to perform the electrical calculation. Here we create the junctions, making sure that the total layer thicknesses of each material are the same as they were in the ray-traced structure.</p>
-<div class="cell" data-execution_count="22">
+<div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>GaInP_emitter_thickness <span class="op">=</span> <span class="fl">100e-9</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>GaAs_emitter_thickness <span class="op">=</span> <span class="fl">200e-9</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>Si_emitter_thickness <span class="op">=</span> <span class="fl">1e-6</span></span>
@@ -589,7 +587,7 @@ WARNING: The RCWA solver will not be available because an S4 installation has no
 <span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>    external_absorbed<span class="op">=</span>external_optics_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Finally, we are ready to the our cell calculations; first, we calculate and plot the light I-V:</p>
-<div class="cell" data-execution_count="23">
+<div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell, <span class="st">'iv'</span>, options)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>plt.figure(<span class="dv">2</span>)</span>
@@ -621,7 +619,7 @@ Solving IV of the total solar cell...</code></pre>
 </div>
 </div>
 <p>And now the QE (we also plot the total absorption in each junction for comparison with the EQE):</p>
-<div class="cell" data-execution_count="24">
+<div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>solar_cell_solver(solar_cell, <span class="st">'qe'</span>, options)</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
